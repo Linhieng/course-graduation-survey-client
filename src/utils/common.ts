@@ -1,0 +1,38 @@
+/**
+ * 根据模板 template 中所拥有的 keys，将 fillData 中对应的 keys 浅拷贝到 target 中
+ * 如果忽略 fillData, 则 template 将作为 fillData
+ * @param target
+ * @param template
+ * @param fillData
+ */
+export function fillObject(target: Record<string, any>, template: Record<string, any>, fillData?: Record<string, any>) {
+
+    if (typeof fillData === 'object') {
+        Object.keys(template).forEach( key => {
+            target[key] = fillData[key]
+        })
+    } else {
+        Object.entries(template).forEach(([k, v]) => {
+            target[k] = v
+        })
+    }
+
+}
+
+/**
+ * 根据模板 template, 将 target 中的对应值重置为 defaultData
+ * 某些特殊的 key 不想重置为 defaultData, 可以在 fillData 中指定
+ * @param target
+ * @param template
+ * @param defaultData
+ * @param fillData
+ */
+export function resetObject(target: Record<string, any>, template: Record<string, any>, defaultData: any, fillData: Record<string, any> = {}) {
+    Object.keys(template).forEach( key => {
+        if (key in fillData) {
+            target[key] = fillData[key]
+        } else {
+            target[key] = defaultData
+        }
+    })
+}

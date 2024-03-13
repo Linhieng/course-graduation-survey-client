@@ -1,0 +1,35 @@
+:root {
+    /* 颜色 */
+    --c-main-2: #337ecc;
+    --c-main-3: #79bbff;
+    --c-main-5: #a0cfff;
+    --c-main-7: #c6e2ff;
+    --c-main-8: #d9ecff;
+    --c-main-9: #ecf5ff;
+    --c-theme: #409EFF;
+
+    /* 字体大小 */
+    --fs-extra-small: var(--el-font-size-extra-small);
+    --fs-small: var(--el-font-size-small);
+    --fs-base: var(--el-font-size-base);
+    --fs-medium: var(--el-font-size-medium);
+    --fs-large: var(--el-font-size-large);
+    --fs-extra-large: var(--el-font-size---fs-extra-large);
+
+    /* 边框角度 border-radius */
+    --br-small: var(--el-border-radius-small);
+    --br-base: var(--el-border-radius-base);
+    --br-large: 5px;
+    --br-round: var(--el-border-radius-round);
+
+    /* box-shadow 样式 */
+    --bs-basic : var(--el-box-shadow);
+    --bs-light : var(--el-box-shadow-light);
+    --bs-lighter : var(--el-box-shadow-lighter);
+    --bs-dark : var(--el-box-shadow-dark);
+
+    /* transition duration */
+    --td-fast: 200ms;
+    --td-base: 300ms;
+    --td-slow: 500ms;
+}

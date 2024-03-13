@@ -1,0 +1,29 @@
+@mixin width-big-800 {
+    @media screen and (min-width: 800px) {
+        @content;
+    }
+}
+
+@mixin phone {
+    @media screen and (hover: hover) {
+        @content;
+    }
+}
+
+@mixin width-sm {
+    @media screen and (max-width: 799px) {
+        @content;
+    }
+}
+
+@mixin screen-width-less-300 {
+    @media screen and (max-width: 300px) {
+        @content;
+    }
+}
+
+@mixin screen-height-less-600 {
+    @media screen and (max-height: 600px) {
+        @content;
+    }
+}

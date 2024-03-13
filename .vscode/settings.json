@@ -1,0 +1,15 @@
+{
+    "[vue][typescript]": {
+        "editor.insertSpaces": true,
+        "editor.indentSize": "tabSize",
+        "editor.tabSize": 4,
+        "editor.detectIndentation": false
+    },
+    "files.exclude": {
+        "auto-imports.d.ts": true,
+        "components.d.ts": true,
+    },
+    "cSpell.words": [
+        "pinia"
+    ]
+}

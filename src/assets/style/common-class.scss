@@ -1,0 +1,52 @@
+.ml-5 {
+    margin-left: 5px;
+}
+
+
+/*
+    由于优先级低于 element-plus 提供的媒体查询样式，所以使用 div.flex-all-center
+    来覆盖 .el-col-xs-18 样式
+*/
+
+
+.flex-align-center-right,div.flex-align-center-right {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+.flex-align-center-left,div.flex-align-center-left {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.flex-all-center, div.flex-all-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-justify-center, div.flex-justify-center {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-align-center, div.flex-align-center {
+    display: flex;
+    align-items: center;
+}
+
+//! .flex-*
+
+.clearfix {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    &:before {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
