@@ -4,6 +4,10 @@ import HomeViewAside from './HomeViewAside.vue'
 import HomeViewMain from './HomeViewMain.vue'
 import HeaderAsideMain from '@/layout/HeadAsideMain.vue'
 
+import { apiGetAllSurveys } from '@/api/survey'
+
+apiGetAllSurveys()
+
 </script>
 
 <template>

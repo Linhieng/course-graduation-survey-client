@@ -1,12 +1,25 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { ResLoginData, StoreUser } from '@/types'
-import { fillObject, resetObject } from '@/utils'
+import { fillObject, msg, resetObject, windowLocation } from '@/utils'
 import { getLocalStorage, removeLocalStorage, setLocalStorage } from '@/utils/localStorage'
-import { LOCAL_STORAGE_USER } from '@/constants'
+import { LOCAL_STORAGE_USER, STATUS_SUCCEED } from '@/constants'
+import { apiIsExpired } from '@/api'
+import { useRouter } from 'vue-router'
+
 
 export const useStoreUser = defineStore('storeUser', () => {
     const ache = getLocalStorage<StoreUser>(LOCAL_STORAGE_USER)
+    const router = useRouter()
+
+    if (ache) {
+        apiIsExpired(ache).then(data => {
+            if (data.status !== STATUS_SUCCEED) {
+                router.push({ name: 'login' })
+                msg('已过期，请重新登录')
+            }
+        })
+    }
 
     const user = ref<StoreUser>({
         id: ache.id ?? '',
@@ -18,16 +31,17 @@ export const useStoreUser = defineStore('storeUser', () => {
 
     const isLogin = computed(() => user.value.isLogin)
 
-    function loginUser (u: ResLoginData) {
+    function loginUser(u: ResLoginData) {
         fillObject(user.value, u)
         user.value.isLogin = true
         setLocalStorage(LOCAL_STORAGE_USER, user.value)
     }
-    function logoutUser () {
+    function logoutUser() {
         resetObject(user.value, user.value, '', {
             isLogin: false
         })
         removeLocalStorage(LOCAL_STORAGE_USER)
+        windowLocation('assign', '/login')
     }
 
 

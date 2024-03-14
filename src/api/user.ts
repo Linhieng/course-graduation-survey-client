@@ -1,8 +1,13 @@
 import type { ResProLogin, ResProSignup } from "@/types"
-import {post} from '.'
+import {get, post} from '.'
 
+const urlUserAuthExpired = '/user/isAuthExpired'
 const urlLogin = '/user/login'
 const urlSignup = '/user/signup'
+
+export function apiIsExpired(data: any) {
+    return get(urlUserAuthExpired, {data})
+}
 
 export function apiLogin(data: ReqUserLogin): ResProLogin {
     return post(urlLogin, { data })
