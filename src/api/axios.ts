@@ -2,10 +2,12 @@ import { CODE_UNKNOWN_ERROR } from "@/constants"
 import type { ResBase } from "@/types"
 import axios, { type AxiosRequestConfig } from "axios"
 
-const BASE_URL = 'https://api.localhost'
-
+const BASE_URL = 'http://192.168.234.222:3000/'
+let token = ''
+let userId = ''
+let username = ''
 axios.defaults.baseURL = BASE_URL
-axios.defaults.withCredentials = true
+// axios.defaults.withCredentials = true
 
 type Method = 'get' | 'post'
 
@@ -20,7 +22,6 @@ type Method = 'get' | 'post'
  *
  *      总的来说，这里要做错误处理，目的是为了让组件中能够只收到一个统一的对象，这样可以减轻组件中代码的编写
  */
-
 async function axiosRequest(method: Method, url: string, config?: AxiosRequestConfig<ReqAllowType>) {
     try {
         const response = await axios<ResBase>({
@@ -28,6 +29,9 @@ async function axiosRequest(method: Method, url: string, config?: AxiosRequestCo
             url,
             ...config
         })
+        token = response.headers['x-token']
+        userId = response.headers['x-userid']
+        username = response.headers['x-username']
         return response.data
     } catch (error: any) {
         const resData: ResBase = {
@@ -43,7 +47,23 @@ async function axiosRequest(method: Method, url: string, config?: AxiosRequestCo
     }
 }
 
-export const get = (url: string, config?: AxiosRequestConfig<ReqAllowType>) =>
-    axiosRequest('get', url, config)
-export const post = (url: string, config?: AxiosRequestConfig<ReqAllowType>) =>
-    axiosRequest('post', url, config)
+export const get = (url: string, config?: AxiosRequestConfig<ReqAllowType>) => {
+    const config2 = config || [] as any
+    config2.headers = {
+        ...config?.headers,
+        token,
+        userId,
+        username,
+    }
+    return axiosRequest('get', url, config2)
+}
+export const post = (url: string, config?: AxiosRequestConfig<ReqAllowType>) => {
+    const config2 = config || [] as any
+    config2.headers = {
+        ...config?.headers,
+        token,
+        userId,
+        username,
+    }
+    return axiosRequest('post', url, config2)
+}
