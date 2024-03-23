@@ -1,15 +1,17 @@
 <script setup lang="ts">
 
-const surveys = [
-    { title: '问卷1', time: '2024-01-01', status: '收集中' },
-    { title: '问卷2', time: '2024-01-01', status: '已停止' },
-    { title: '问卷1', time: '2024-01-01', status: '收集中' },
-    { title: '问卷2', time: '2024-01-01', status: '已停止' },
-    { title: '问卷1', time: '2024-01-01', status: '收集中' },
-    { title: '问卷2', time: '2024-01-01', status: '已停止' },
-    { title: '问卷1', time: '2024-01-01', status: '收集中' },
-    { title: '问卷2', time: '2024-01-01', status: '已停止' },
-]
+import { apiGetAllSurveys } from '@/api';
+import { STATUS_SUCCEED } from '@/constants'
+import { onMounted, ref } from 'vue'
+
+const surveys = ref()
+
+onMounted(async () => {
+    const resData = await apiGetAllSurveys()
+    if (resData.status === STATUS_SUCCEED) {
+        surveys.value = resData.data.all_surveys
+    }
+})
 
 </script>
 

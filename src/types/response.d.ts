@@ -74,6 +74,7 @@ type TypeResCode =
 
 export type ResProLogin = ResPro<ResLoginData>
 export type ResProSignup = ResPro<ResSignupData>
+export type ResProGetAllSurveys = ResPro<ResAllSurveys>
 
 /**
  * 登录接口响应的数据
@@ -91,6 +92,12 @@ interface ResSignupData {
     username: string
 }
 
+/**
+ * 获取所有问卷接口的响应 data
+ */
+interface ResAllSurveys {
+    all_surveys: any
+}
 
 /* ============================================================================ */
 /* ============================================================================ */
@@ -110,7 +117,7 @@ interface ResSignupData {
  */
 export type ResPro<T> = Promise<ResBase<T>>
 
-type ResValidObj = ResLoginData | ResSignupData
+type ResValidObj = ResLoginData | ResSignupData | ResAllSurveys
 /**
  * 与后台约定好的通用响应体包装器
  */
