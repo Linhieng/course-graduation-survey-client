@@ -13,12 +13,12 @@ export const useStoreUser = defineStore('storeUser', () => {
     const router = useRouter()
 
     if (ache) {
-        apiIsExpired(ache).then(data => {
-            if (data.status !== STATUS_SUCCEED) {
-                router.push({ name: 'login' })
-                msg('已过期，请重新登录')
-            }
-        })
+        // apiIsExpired(ache).then(data => {
+        //     if (data.status !== STATUS_SUCCEED) {
+        //         router.push({ name: 'login' })
+        //         msg('已过期，请重新登录')
+        //     }
+        // })
     }
 
     const user = ref<StoreUser>({
@@ -41,7 +41,7 @@ export const useStoreUser = defineStore('storeUser', () => {
             isLogin: false
         })
         removeLocalStorage(LOCAL_STORAGE_USER)
-        windowLocation('assign', '/login')
+        // windowLocation('assign', '/login')
     }
 
 
