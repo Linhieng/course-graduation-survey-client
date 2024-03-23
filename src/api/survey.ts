@@ -1,4 +1,4 @@
-import type { ResProGetAllSurveys } from "@/types"
+import type { ResProGetAllSurveys, ResProNewSurvey } from "@/types"
 import { get, post } from "."
 
 const urlGetAllSurveys = '/survey/get-all-surveys'
@@ -8,6 +8,6 @@ export function apiGetAllSurveys(): ResProGetAllSurveys {
     return get(urlGetAllSurveys)
 }
 
-export function apiNewSurvey() {
+export function apiNewSurvey(): ResProNewSurvey {
     return post(urlNewSurvey)
 }

@@ -1,8 +1,26 @@
 <script setup lang="ts">
+import { apiNewSurvey } from '@/api'
+import { STATUS_SUCCEED } from '@/constants'
+import { msgError } from '@/utils'
 import IconAdd from '@icon/IconAdd.vue'
 import IconFolder from '@icon/IconFolder.vue'
 import IconStat from '@icon/IconStat.vue'
+import {useRouter} from 'vue-router'
 
+const router = useRouter()
+const toCreate = async () => {
+    const data = await apiNewSurvey()
+    if (data.status === STATUS_SUCCEED) {
+        router.push({
+        name: 'create',
+        query: {
+            surveyId: data.data.surveyId
+        }
+    })
+    } else {
+        msgError(data.msg)
+    }
+}
 </script>
 
 <template>
@@ -15,14 +33,14 @@ import IconStat from '@icon/IconStat.vue'
                 我的问卷
             </p>
         </RouterLink>
-        <RouterLink to="/create" class="route-item flex-align-center">
+        <div @click="toCreate" class="route-item flex-align-center">
             <el-icon size="20">
                 <IconAdd />
             </el-icon>
             <p class="flex-align-center-left ml-5">
                 新建问卷
             </p>
-        </RouterLink>
+        </div>
         <RouterLink to="/stat" class="route-item flex-align-center">
             <el-icon size="20">
                 <IconStat />
