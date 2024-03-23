@@ -14,23 +14,10 @@
     ],
 
 
-    "html.format.wrapAttributes": "preserve-aligned",
-
-
-
-
-
-
-    "eslint.experimental.useFlatConfig": true,
-
-    "workbench.iconTheme": "material-icon-theme",
-
-
-    "editor.lineHeight": 26,
-    "editor.fontFamily": "Hack",
+    "html.format.wrapAttributes": "preserve",
 
     "editor.suggestSelection": "recentlyUsedByPrefix",
-    "editor.suggest.insertMode": "replace",
+    "editor.suggest.insertMode": "insert",
 
     "editor.emptySelectionClipboard": false,
     "editor.dragAndDrop": false,
@@ -39,8 +26,6 @@
     "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?（），。？！；：、",
     "editor.renderWhitespace": "boundary",
     "editor.stickyTabStops": true,
-
-    "terminal.integrated.lineHeight": 1.5,
 
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.expand": false,
