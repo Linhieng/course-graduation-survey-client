@@ -60,6 +60,19 @@ type TypeResCode =
     TypeResCodeUnknownError
 
 
+export interface OneSurvey {
+    id: number // 16
+    title: string // "未命名问卷"
+    comment: string // ""
+    creator_id: number // 2
+    is_deleted: number // 0
+    is_draft: number // 1
+    is_valid: number // 0
+    sort_order: number // 0
+    created_at: string // "2024-03-23T12:54:24.000Z"
+    updated_at: string // "2024-03-23T12:54:24.000Z"
+}
+
 /* ============================================================================ */
 /* ============================================================================ */
 /* ============================================================================ */
@@ -97,7 +110,7 @@ interface ResSignupData {
  * 获取所有问卷接口的响应 data
  */
 interface ResAllSurveys {
-    all_surveys: any
+    all_surveys: OneSurvey[]
 }
 
 /**
