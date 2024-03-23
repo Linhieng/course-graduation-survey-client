@@ -4,19 +4,15 @@ import {
     SURVEY_TYPE_SINGLE_SELECT,
     SURVEY_TYPE_MULTI_SELECT
 } from '@/constants'
+import type { SingleSelect } from '@/types'
 import { getUUID } from '@/utils'
 import { ref, watchEffect } from 'vue'
-
-export interface SelectItemEmitPayload {
-    selectTitles: Array<InputTextEmitPayload>,
-    selectOptions: Array<string>,
-}
 
 const props = defineProps<{
     selectType: typeof SURVEY_TYPE_SINGLE_SELECT | typeof SURVEY_TYPE_MULTI_SELECT
 }>()
 const emits = defineEmits<{
-    (e: 'update', payload: SelectItemEmitPayload): void
+    (e: 'update', payload: SingleSelect): void
 }>()
 
 // 选项
@@ -48,8 +44,8 @@ const evtRemoveTitle = (index: number) => {
 // 响应父组件，告诉它有内容更新了
 watchEffect(() => {
     emits('update', {
-        selectTitles: selectTitles.value,
-        selectOptions: selectOptions.value,
+        titles: selectTitles.value,
+        options: selectOptions.value,
     })
 })
 </script>

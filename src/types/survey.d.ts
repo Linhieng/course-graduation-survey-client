@@ -25,6 +25,7 @@ export interface Survey {
  */
 export type SurveyQuestion = {
     [Type in SurveyQuestionType]: {
+        id: string,
         isRequired: boolean,
         order: number,
         questionType: Type,
@@ -32,7 +33,7 @@ export type SurveyQuestion = {
             'input_content': InputContent,
             'single_select': SingleSelect,
             'multi_select': MultiSelect,
-        }[Type]
+        }[Type] | QuestionContentType
     }
 }[SurveyQuestionType]
 
@@ -47,6 +48,7 @@ export type SurveyQuestionType =
     SurveyTypeSingleSelect |
     SurveyTypeMultiSelect
 
+export type QuestionContentType = InputContent |  SingleSelect | MultiSelect
 
 /**
  * 主观填空题

@@ -3,7 +3,7 @@
 import { ref, onMounted, watchEffect } from 'vue'
 import type { SurveyQuestionType, SurveyQuestionStruct, Survey, SurveyQuestion } from '@/types'
 import { STATUS_SUCCEED, SURVEY_TYPE_INPUT_CONTENT } from '@/constants'
-import EditQuestion, { type OneQuestionPayload } from './widget/EditQuestion.vue'
+import EditQuestion from './widget/EditQuestion.vue'
 import NewQuestion, { type NewQuestionPayload } from './widget/NewQuestion.vue'
 import { getUUID } from '@/utils'
 import {useRoute} from 'vue-router'
@@ -12,6 +12,7 @@ const route = useRoute()
 const surveyId = Number(route.query.surveyId)
 
 const questions = ref<SurveyQuestion[]>([{
+    id: getUUID(),
     isRequired: true,
     order: 1,
     questionType: 'input_content',
@@ -40,28 +41,30 @@ watchEffect(() => {
     survey.value.comment = surveyComment.value
 })
 
-// // 生成一个问题对象
-// const generateQuestion = (order?: number, type?: SurveyQuestionType): SurveyQuestionStruct => {
-//     const question: SurveyQuestionStruct = {
-//         id: getUUID(),
-//         order: order || survey.value.length + 1,
-//         type: type || SURVEY_TYPE_INPUT_CONTENT,
-//         content: {}
-//     }
-//     return question
-// }
+// 生成一个 SurveyQuestion 对象
+const generateQuestion = (order: number, questionType: SurveyQuestionType): SurveyQuestion => {
+    const question: SurveyQuestion = {
+        id: getUUID(),
+        order: order,
+        questionType,
+        // @ts-ignore
+        questionContent: {}
+    }
+    return question
+}
 
-// // 点击新增按钮，新建一个问题，内容由子组件提供
-// const evtNewQuestion = (payload: NewQuestionPayload) => {
-//     const order = payload.order
-//     survey.value.splice(order, 0, generateQuestion(order + 1, payload.type))
-//     survey.value.forEach((item, i) => item.order = i+1)
-// }
+// 点击新增按钮，新建一个问题，内容由子组件提供
+const evtNewQuestion = (payload: NewQuestionPayload) => {
+    const order = payload.order
+    questions.value.splice(order, 0, generateQuestion(order + 1, payload.type))
+    questions.value.forEach((item, i) => item.order = i+1)
+}
 
-// // 用户编辑每个问题的内容。
-// const updateContent = (order: number, payload: OneQuestionPayload)  => {
-//     survey.value[order - 1].content = payload
-// }
+// 用户编辑每个问题的内容。
+const updateContent = (question: SurveyQuestion)  => {
+    const order = question.order
+    questions.value[order - 1].questionContent = question.questionContent
+}
 </script>
 
 <template>
@@ -85,19 +88,19 @@ watchEffect(() => {
             </p>
         </div>
         <ul class="questions-wrapper">
-            <!-- <li v-for="s of survey" :key="s.id"
+            <li v-for="q of questions" :key="q.id"
                 class="question-item-wrapper"
-                :style="{'--item-order': s.order}"
+                :style="{'--item-order': q.order}"
             >
                 <div class="survey-edit">
                     <EditQuestion
-                        :question="s"
-                        @update-content="(payload) => {updateContent(s.order, payload)}"
+                        :question="q"
+                        @update-content="updateContent"
                      />
                 </div>
-                <NewQuestion :order="s.order" @new-question="evtNewQuestion" />
+                <NewQuestion :order="q.order" @new-question="evtNewQuestion" />
                 <el-divider />
-            </li> -->
+            </li>
         </ul>
     </div>
 </template>

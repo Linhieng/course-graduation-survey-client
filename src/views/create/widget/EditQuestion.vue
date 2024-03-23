@@ -1,34 +1,29 @@
 <script setup lang="ts">
 import { SURVEY_TYPE_INPUT_CONTENT, SURVEY_TYPE_MULTI_SELECT, SURVEY_TYPE_SINGLE_SELECT } from '@/constants'
-import type { SurveyQuestionStruct } from '@/types'
+import type { SurveyQuestion, QuestionContentType } from '@/types'
 import { SurveyQuestionTypeMappingText } from '@/utils'
-import InputText, { type InputTextEmitPayload } from './InputText.vue'
-import SelectItem, { type SelectItemEmitPayload } from './SelectItem.vue'
+import InputText from './InputText.vue'
+import SelectItem from './SelectItem.vue'
 import { ref } from 'vue'
 
-export interface OneQuestionPayload<T = InputTextEmitPayload | SelectItemEmitPayload> {
-    commonInfo: {
-        isRequired: boolean
-    },
-    content: T
-}
-
 const props = defineProps<{
-    question: SurveyQuestionStruct
+    question: SurveyQuestion
 }>()
 const emits = defineEmits<{
-    (e: 'update-content', payload: OneQuestionPayload): void
+    (e: 'update-content', question: SurveyQuestion): void
 }>()
 
-const commonInfo = ref<{
-    isRequired: boolean
-}>({ isRequired: true })
+const isRequired = ref(true)
 
-const forwardEvent = (payload: any) => {
-    emits('update-content', {
-        commonInfo: commonInfo.value,
-        content: payload
-    })
+const forwardEvent = (questionContent: QuestionContentType) => {
+    const surveyQuestion: SurveyQuestion = {
+        isRequired:  isRequired.value,
+        id: props.question.id,
+        order: props.question.order,
+        questionType: props.question.questionType,
+        questionContent
+    }
+    emits('update-content', surveyQuestion)
 }
 
 </script>
@@ -36,22 +31,22 @@ const forwardEvent = (payload: any) => {
 <template>
     <div class="question-item ">
         <p class="base-info">
-            <span :class="{ 'is-required': commonInfo.isRequired }">{{ props.question.order }}</span>
-            <span>{{ SurveyQuestionTypeMappingText(props.question.type) }}</span>
+            <span :class="{ 'is-required': isRequired }">{{ props.question.order }}</span>
+            <span>{{ SurveyQuestionTypeMappingText(props.question.questionType) }}</span>
         </p>
         <div class="common-info">
-            <p>是否必填 <el-switch v-model="commonInfo.isRequired" /> </p>
+            <p>是否必填 <el-switch v-model="isRequired" /> </p>
         </div>
         <!-- 不同的问题类型，提供不同的编辑面板 -->
         <div class="question-content">
             <!-- 单文本输入框 -->
-            <template v-if="props.question.type === SURVEY_TYPE_INPUT_CONTENT">
+            <template v-if="props.question.questionType === SURVEY_TYPE_INPUT_CONTENT">
                 <InputText @update="forwardEvent" />
             </template>
             <!-- 单选或多选 -->
             <template
-                v-else-if="props.question.type === SURVEY_TYPE_SINGLE_SELECT || props.question.type === SURVEY_TYPE_MULTI_SELECT">
-                <SelectItem :selectType="props.question.type"
+                v-else-if="props.question.questionType === SURVEY_TYPE_SINGLE_SELECT || props.question.questionType === SURVEY_TYPE_MULTI_SELECT">
+                <SelectItem :selectType="props.question.questionType"
                     @update="forwardEvent" />
             </template>
         </div>
