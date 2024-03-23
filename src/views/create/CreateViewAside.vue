@@ -3,13 +3,20 @@
 </script>
 
 <template>
+    <h2>通用工具</h2>
     <ul>
-        <li>单选题</li>
-        <li>多选题</li>
-        <li>文本回答</li>
+        <!-- <li> <el-button>批量编辑顺序</el-button> </li> -->
+        <li> <el-button>导出问卷模版</el-button> </li>
+        <li> <el-button>导入问卷模版</el-button> </li>
     </ul>
 </template>
 
 <style scoped lang="scss">
+h2 {
+    margin: 10px;
+}
 
+ul > li {
+    padding: 10px;
+}
 </style>

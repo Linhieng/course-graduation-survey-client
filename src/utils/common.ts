@@ -1,4 +1,13 @@
 /**
+ *
+ * @returns 返回一个 UUID 字符串
+ */
+export function getUUID() {
+    return Math.floor(Math.random() * 100_000_000).toString().slice(2)
+}
+
+
+/**
  * 根据模板 template 中所拥有的 keys，将 fillData 中对应的 keys 浅拷贝到 target 中
  * 如果忽略 fillData, 则 template 将作为 fillData
  * @param target

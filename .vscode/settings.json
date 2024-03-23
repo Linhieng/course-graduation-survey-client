@@ -11,5 +11,78 @@
     },
     "cSpell.words": [
         "pinia"
-    ]
+    ],
+
+
+    "html.format.wrapAttributes": "preserve-aligned",
+
+
+
+
+
+
+    "eslint.experimental.useFlatConfig": true,
+
+    "workbench.iconTheme": "material-icon-theme",
+
+
+    "editor.lineHeight": 26,
+    "editor.fontFamily": "Hack",
+
+    "editor.suggestSelection": "recentlyUsedByPrefix",
+    "editor.suggest.insertMode": "replace",
+
+    "editor.emptySelectionClipboard": false,
+    "editor.dragAndDrop": false,
+    "editor.showFoldingControls": "always",
+    "editor.accessibilitySupport": "off",
+    "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?（），。？！；：、",
+    "editor.renderWhitespace": "boundary",
+    "editor.stickyTabStops": true,
+
+    "terminal.integrated.lineHeight": 1.5,
+
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.expand": false,
+
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+
+    "output.smartScroll.enabled": false,
+    "debug.console.wordWrap": false,
+    "extensions.ignoreRecommendations": true,
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "markdown.editor.pasteUrlAsFormattedLink.enabled": "always",
+
+    "javascript.format.semicolons": "remove",
+    "typescript.format.semicolons": "remove",
+
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    "git-graph.date.format": "Relative",
+    "git-graph.repository.commits.fetchAvatars": true,
+    "git-graph.repository.commits.mute.commitsThatAreNotAncestorsOfHead": true,
+
+    "cSpell.language": "en-GB,en-US",
+    "cSpell.allowCompoundWords": true,
+    "[vue]": {
+        "editor.defaultFormatter": "Vue.volar"
+    },
+    "git.confirmSync": false,
 }

@@ -14,7 +14,7 @@ import WidgetBack from '@/components/WidgetBack.vue'
             <h1> 创建问卷 </h1>
         </el-col>
         <el-col :xs="5" :sm="8" class="header__right flex-align-center-right">
-            <div> 已缓存：预览 </div>
+            <!-- <div>  </div> -->
         </el-col>
     </el-row>
 </template>
