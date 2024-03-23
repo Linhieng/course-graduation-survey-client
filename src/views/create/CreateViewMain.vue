@@ -3,7 +3,7 @@
 import{ref} from 'vue'
 import type {SurveyQuestionType,SurveyQuestionStruct} from '@/types'
 import { SURVEY_TYPE_INPUT_CONTENT } from '@/constants'
-import EditQuestion from './widget/EditQuestion.vue'
+import EditQuestion, { type OneQuestionPayload } from './widget/EditQuestion.vue'
 import NewQuestion, { type NewQuestionPayload } from './widget/NewQuestion.vue'
 import {getUUID} from '@/utils'
 
@@ -29,19 +29,13 @@ const generateQuestion = (order?: number, type?: SurveyQuestionType): SurveyQues
 // 点击新增按钮，新建一个问题，内容由子组件提供
 const evtNewQuestion = (payload: NewQuestionPayload) => {
     const order = payload.order
-
-    // if (order === survey.value.length) {
-    //     // 如果是在最后添加，则直接传递 undefined，不需要执行后面的 forEach。
-    //     survey.value.push(generateQuestion(undefined, payload.type))
-    //     return
-    // }
-
     survey.value.splice(order, 0, generateQuestion(order + 1, payload.type))
     survey.value.forEach((item, i) => item.order = i+1)
-    // const rawSurvey = survey.value
-    // rawSurvey.splice(order, 0, generateQuestion(order + 1, payload.type))
-    // rawSurvey.forEach((item, i) => item.order = i+1)
-    // survey.value = rawSurvey
+}
+
+// 用户编辑每个问题的内容。
+const updateContent = (order: number, payload: OneQuestionPayload)  => {
+    survey.value[order - 1].content = payload
 }
 </script>
 
@@ -53,7 +47,10 @@ const evtNewQuestion = (payload: NewQuestionPayload) => {
                 :style="{'--item-order': s.order}"
             >
                 <div class="survey-edit">
-                    <EditQuestion :question="s" />
+                    <EditQuestion
+                        :question="s"
+                        @update-content="(payload) => {updateContent(s.order, payload)}"
+                     />
                 </div>
                 <NewQuestion :order="s.order" @new-question="evtNewQuestion" />
                 <el-divider />

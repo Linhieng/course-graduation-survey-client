@@ -1,14 +1,22 @@
 <script setup lang="ts">
-import InputText from './InputText.vue'
+import InputText, { type InputTextEmitPayload } from './InputText.vue'
 import {
     SURVEY_TYPE_SINGLE_SELECT,
     SURVEY_TYPE_MULTI_SELECT
 } from '@/constants'
 import { getUUID } from '@/utils'
+import { ref, watchEffect } from 'vue'
 
-import { ref } from 'vue'
+export interface SelectItemEmitPayload {
+    selectTitles: Array<InputTextEmitPayload>,
+    selectOptions: Array<string>,
+}
+
 const props = defineProps<{
     selectType: typeof SURVEY_TYPE_SINGLE_SELECT | typeof SURVEY_TYPE_MULTI_SELECT
+}>()
+const emits = defineEmits<{
+    (e: 'update', payload: SelectItemEmitPayload): void
 }>()
 
 // 选项
@@ -18,7 +26,7 @@ const selectTitles = ref([{ id: getUUID(), title: '', describe: '' }])
 
 // 添加一个选项
 const evtAddOption = (index: number) => {
-    selectOptions.value.splice(index, 0, '')
+    selectOptions.value.splice(index + 1, 0, '')
 }
 const evtRemoveOption = (index: number) => {
     if (selectOptions.value.length < 2) return
@@ -26,7 +34,7 @@ const evtRemoveOption = (index: number) => {
 }
 // 添加一个标题
 const evtAddTitle = (index: number) => {
-    selectTitles.value.splice(index, 0, {
+    selectTitles.value.splice(index + 1, 0, {
         id: getUUID(),
         title: '',
         describe: ''
@@ -36,19 +44,31 @@ const evtRemoveTitle = (index: number) => {
     if (selectTitles.value.length < 2) return
     selectTitles.value.splice(index, 1)
 }
+
+// 响应父组件，告诉它有内容更新了
+watchEffect(() => {
+    emits('update', {
+        selectTitles: selectTitles.value,
+        selectOptions: selectOptions.value,
+    })
+})
 </script>
 
 <template>
     <div>
         <div class="outer-wrapper">
             <div v-for="(item, index) in selectTitles" :key="item.id"
-                 class="mid-item">
+                class="mid-item">
                 <div class="inner-shrink">
-                    <InputText />
+                    <InputText @update="({ title, describe }) => {
+                selectTitles[index].title = title
+                selectTitles[index].describe = describe
+            }" />
                 </div>
                 <div class="inner-button-s">
                     <el-button type="primary" class="btn" @click="() => { evtAddTitle(index) }" circle>＋</el-button>
-                    <el-button type="danger" :disabled="selectTitles.length < 2"  class="btn" @click="() => { evtRemoveTitle(index) }" circle>一</el-button>
+                    <el-button type="danger" :disabled="selectTitles.length < 2" class="btn"
+                        @click="() => { evtRemoveTitle(index) }" circle>一</el-button>
                 </div>
             </div>
             <!-- 选择题同样也需要标题和描述信息 -->
@@ -56,15 +76,16 @@ const evtRemoveTitle = (index: number) => {
         <div class="outer-wrapper">
             <!-- 因为这里仅仅存储字符串而已，所以可以直接使用下标作为 key -->
             <div v-for="(item, index) in selectOptions"
-                 :key="index"
-                 class="mid-item">
+                :key="index"
+                class="mid-item">
                 <el-input
-                          v-model="selectOptions[index]" autosize type="textarea"
-                          :placeholder="'请输入选项' + (index + 1) + '的内容'"
-                          class="inner-shrink" />
+                    v-model="selectOptions[index]" autosize type="textarea"
+                    :placeholder="'请输入选项' + (index + 1) + '的内容'"
+                    class="inner-shrink" />
                 <div class="inner-button-s">
                     <el-button type="primary" class="btn" @click="() => { evtAddOption(index) }" circle>＋</el-button>
-                    <el-button type="danger" class="btn" :disabled="selectOptions.length < 2" @click="() => { evtRemoveOption(index) }" circle>一</el-button>
+                    <el-button type="danger" class="btn" :disabled="selectOptions.length < 2"
+                        @click="() => { evtRemoveOption(index) }" circle>一</el-button>
                 </div>
             </div>
         </div>
@@ -90,6 +111,7 @@ const evtRemoveTitle = (index: number) => {
         }
     }
 }
+
 .btn {
     flex: 0 0;
     padding: 0 5px;
