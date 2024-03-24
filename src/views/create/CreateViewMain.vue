@@ -5,7 +5,7 @@ import type { SurveyQuestionType, Survey, SurveyQuestion } from '@/types'
 import { STATUS_SUCCEED, SURVEY_TYPE_INPUT_CONTENT } from '@/constants'
 import EditQuestion from './widget/EditQuestion.vue'
 import NewQuestion, { type NewQuestionPayload } from './widget/NewQuestion.vue'
-import { getUUID, debounce, saveFile, noticeError, noticeInfo } from '@/utils'
+import { getUUID, debounce } from '@/utils'
 import { useRoute } from 'vue-router'
 import { useStoreSurvey } from '@/stores'
 import { apiCacheSurvey } from '@/api'
@@ -114,12 +114,6 @@ storeSurvey.$onAction(
                 surveyTitle.value = s.title
                 surveyComment.value = s.comment
                 questions.value = s.questions
-            })
-        } else if (name === 'exportSurvey') {
-            after(() => {
-                const surveyJson = JSON.stringify(survey.value, null, 4)
-                saveFile(surveyJson, `问卷模版 - ${survey.value.title}.json`)
-                storeSurvey.setSurvey(survey.value)
             })
         }
     }

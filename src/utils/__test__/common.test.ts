@@ -1,6 +1,60 @@
 // @ts-nocheck
 import { describe, expect, test } from 'vitest'
-import { fillObject, resetObject } from '../common'
+import { fillObject, resetObject, unrefRecursion } from '../common'
+import { isRef, ref } from 'vue'
+
+describe('测试 unrefRecursion', () => {
+    test('单层对象解套 ref', () => {
+        const obj = {
+            a: 1,
+            b: ref(2),
+            c: ref(3)
+        }
+        const newObj = unrefRecursion(obj)
+        expect(isRef(newObj.a)).toBeFalsy()
+        expect(isRef(newObj.b)).toBeFalsy()
+        expect(isRef(newObj.c)).toBeFalsy()
+    })
+    test('直接解套 ref', () => {
+        const obj = ref({
+            id: 1,
+            title: ref('title'),
+            questions: ref([
+                {
+                    title: ref('title')
+                },
+                {
+                    title: ref('title')
+                }
+            ])
+        })
+        const newObj = unrefRecursion(obj)
+        expect(isRef(newObj)).toBeFalsy()
+        expect(isRef(newObj.title)).toBeFalsy()
+        expect(isRef(newObj.questions)).toBeFalsy()
+        expect(isRef(newObj.questions[0].title)).toBeFalsy()
+        expect(isRef(newObj.questions[1].title)).toBeFalsy()
+    })
+    test('多层对象解套 ref', () => {
+        const obj = {
+            id: 1,
+            title: ref('title'),
+            questions: ref([
+                {
+                    title: ref('title')
+                },
+                {
+                    title: ref('title')
+                }
+            ])
+        }
+        const newObj = unrefRecursion(obj)
+        expect(isRef(newObj.title)).toBeFalsy()
+        expect(isRef(newObj.questions)).toBeFalsy()
+        expect(isRef(newObj.questions[0].title)).toBeFalsy()
+        expect(isRef(newObj.questions[1].title)).toBeFalsy()
+    })
+})
 
 describe('测试 fillObject', () => {
     test('target 中应该包含 fillData 中的数据', () => {

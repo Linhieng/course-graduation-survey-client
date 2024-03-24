@@ -1,3 +1,27 @@
+import { unref } from "vue"
+
+/**
+ * 解套多层 ref
+ * @param obj
+ * @returns
+ */
+export const unrefRecursion = (obj: any): any => {
+    obj = unref(obj)
+    if (typeof obj !== 'object' || obj === null) {
+        return obj
+    }
+
+    const newObj: any = Array.isArray(obj) ? [] : {}
+
+    for (const [key, value] of Object.entries(obj)) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            newObj[key] = unrefRecursion(value)
+        }
+    }
+
+    return newObj
+}
+
 
 /**
  * 获取文件内容

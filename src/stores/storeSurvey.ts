@@ -1,7 +1,7 @@
 import { apiCacheSurvey, apiGetSurveyById } from '@/api'
 import { STATUS_FAILED, STATUS_SUCCEED } from '@/constants'
 import type { Survey } from '@/types'
-import { msg, msgError, noticeError, saveFile } from '@/utils'
+import { msg, msgError, noticeError, saveFile, unrefRecursion } from '@/utils'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -99,7 +99,11 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
         // survey.value = _survey
         return _survey
     }
+    // 导出问卷模版
     const exportSurvey = () => {
+        const _survey = unrefRecursion(survey)
+        const jsonStr = JSON.stringify(_survey, null, 4)
+        saveFile(jsonStr, `问卷模版 - ${_survey.title}.json`)
     }
 
     return {
