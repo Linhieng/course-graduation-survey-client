@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { SURVEY_TYPE_INPUT_CONTENT, SURVEY_TYPE_MULTI_SELECT, SURVEY_TYPE_SINGLE_SELECT } from '@/constants'
-import type { SurveyQuestion, QuestionContentType } from '@/types'
+import type { SurveyQuestion, SurveyQuestionContent } from '@/types'
 import { SurveyQuestionTypeMappingText } from '@/utils'
 import InputText from './InputText.vue'
 import SelectItem from './SelectItem.vue'
@@ -15,14 +15,14 @@ const emits = defineEmits<{
 
 const isRequired = ref(true)
 
-const forwardEvent = (questionContent: QuestionContentType) => {
-    const surveyQuestion: SurveyQuestion = {
+const forwardEvent = (questionContent: SurveyQuestionContent) => {
+    const surveyQuestion = {
         isRequired:  isRequired.value,
         id: props.question.id,
         order: props.question.order,
         questionType: props.question.questionType,
         questionContent
-    }
+    } as SurveyQuestion
     emits('update-content', surveyQuestion)
 }
 

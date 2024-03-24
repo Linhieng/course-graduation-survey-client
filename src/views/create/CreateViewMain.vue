@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import { ref, onMounted, watchEffect, watch, onBeforeUnmount } from 'vue'
-import type { SurveyQuestionType, SurveyQuestionStruct, Survey, SurveyQuestion } from '@/types'
+import type { SurveyQuestionType, Survey, SurveyQuestion } from '@/types'
 import { STATUS_SUCCEED, SURVEY_TYPE_INPUT_CONTENT } from '@/constants'
 import EditQuestion from './widget/EditQuestion.vue'
 import NewQuestion, { type NewQuestionPayload } from './widget/NewQuestion.vue'

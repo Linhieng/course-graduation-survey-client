@@ -4,16 +4,16 @@ import {
     SURVEY_TYPE_SINGLE_SELECT,
     SURVEY_TYPE_MULTI_SELECT
 } from '@/constants'
-import type { SingleSelect, SurveyQuestion } from '@/types'
+import type { SurveyQuestion, SurveyQuestionContent_SingleSelect } from '@/types'
 import { getUUID } from '@/utils'
 import { ref, watchEffect } from 'vue'
 
 const props = defineProps<{
     selectType: typeof SURVEY_TYPE_SINGLE_SELECT | typeof SURVEY_TYPE_MULTI_SELECT,
-    question: SurveyQuestion<SingleSelect>
+    question: SurveyQuestion
 }>()
 const emits = defineEmits<{
-    (e: 'update', payload: SingleSelect): void
+    (e: 'update', payload: SurveyQuestionContent_SingleSelect): void
 }>()
 
 // 选项

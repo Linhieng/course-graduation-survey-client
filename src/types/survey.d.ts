@@ -17,70 +17,66 @@ export interface Survey {
     id: number
     title: string
     comment: string
+    version?: '0.1.0'
     questions: SurveyQuestion[]
 }
 
 /**
- * 一道问题 。TODO: 不合适，还是更适合使用泛型。
+ * 一份问卷 ——> 一道问题
  */
-// export type SurveyQuestion = {
-//     [Type in SurveyQuestionType]: {
-//         id: string,
-//         isRequired: boolean,
-//         order: number,
-//         questionType: Type,
-//         questionContent: {
-//             'input_content': InputContent,
-//             'single_select': SingleSelect,
-//             'multi_select': MultiSelect,
-//         }[Type] | QuestionContentType
-//     }
-// }[SurveyQuestionType]
-
-export interface SurveyQuestion<T = QuestionContentType> {
+export type SurveyQuestion = { /* 虽然这种方法笨，但耐不住它易读啊，而且管用！ */
     id: string
     isRequired: boolean
     order: number
-    questionType: SurveyQuestionType
-    questionContent: T
+    questionType: SurveyQuestionType_Text
+    questionContent: SurveyQuestionContent_Text
+} | {
+    id: string
+    isRequired: boolean
+    order: number
+    questionType: SurveyQuestionType_SingleSelect
+    questionContent: SurveyQuestionContent_SingleSelect
+} | {
+    id: string
+    isRequired: boolean
+    order: number
+    questionType: SurveyQuestionType_MultiSelect
+    questionContent: SurveyQuestionContent_MultiSelect
 }
 
 /**
- * 支持的问题类型
+ * 一份问卷 ——> 一道问题 ——> 支持的问题类型
  */
-type SurveyTypeInputContent = typeof SURVEY_TYPE_INPUT_CONTENT
-type SurveyTypeSingleSelect = typeof SURVEY_TYPE_SINGLE_SELECT
-type SurveyTypeMultiSelect = typeof SURVEY_TYPE_MULTI_SELECT
+type SurveyQuestionType_Text = typeof SURVEY_TYPE_INPUT_CONTENT
+type SurveyQuestionType_SingleSelect = typeof SURVEY_TYPE_SINGLE_SELECT
+type SurveyQuestionType_MultiSelect = typeof SURVEY_TYPE_MULTI_SELECT
 export type SurveyQuestionType =
-    SurveyTypeInputContent |
-    SurveyTypeSingleSelect |
-    SurveyTypeMultiSelect
-
-export type QuestionContentType = InputContent |  SingleSelect | MultiSelect
+    SurveyQuestionType_Text |
+    SurveyQuestionType_SingleSelect |
+    SurveyQuestionType_MultiSelect
 
 /**
- * 主观填空题
+ * 一份问卷 ——> 一道问题 ——> 支持的问题内容
  */
-interface InputContent {
+export type SurveyQuestionContent =
+    SurveyQuestionContent_Text |
+    SurveyQuestionContent_SingleSelect |
+    SurveyQuestionContent_MultiSelect
+/**
+ * 一份问卷 ——> 一道问题 ——> 问题内容为：主观填空题
+ */
+interface SurveyQuestionContent_Text {
     title: string
     describe: string
 }
 /**
- * 单选题
+ * 一份问卷 ——> 一道问题 ——> 问题内容为：单选题
  */
-interface SingleSelect {
-    titles: InputContent[]
+interface SurveyQuestionContent_SingleSelect {
+    titles: SurveyQuestionContent_Text[]
     options: string[]
 }
 /**
- * 多选题，同单选题一样
+ * 一份问卷 ——> 一道问题 ——> 问题内容为：多选题（同单选题）
  */
-type MultiSelect = SingleSelect
-
-// 问卷中问题的结构
-export interface SurveyQuestionStruct {
-    id: string // 用于 vue 的 :key 。注意，不能将 order 作为 key
-    order: number // 序号
-    type: SurveyQuestionType // 问题类型
-    content: Record<string, any> // 问题信息
-}
+type SurveyQuestionContent_MultiSelect = SurveyQuestionContent_SingleSelect

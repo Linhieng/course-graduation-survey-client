@@ -1,14 +1,14 @@
 <script setup lang="ts">
 
-import type { InputContent, SurveyQuestion } from '@/types'
+import type { SurveyQuestion, SurveyQuestionContent_Text } from '@/types'
 import { ref, watchEffect } from 'vue'
 
 const props = defineProps<{
-    question?: SurveyQuestion<InputContent>
+    question?: SurveyQuestion
 }>()
 
 const emit = defineEmits<{
-    (e: 'update', payload: InputContent): void,
+    (e: 'update', payload: SurveyQuestionContent_Text): void,
 }>()
 const title = ref('')
 const describe = ref('')
