@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { apiGetAllSurveys } from '@/api'
+import { apiGetAllSurveys, apiToggleSurveyDelete, apiToggleSurveyValid } from '@/api'
 import { STATUS_SUCCEED } from '@/constants'
 import { onMounted, ref } from 'vue'
 import type { OneSurvey } from '@/types'
@@ -47,6 +47,14 @@ const copyLink = (survey: OneSurvey) => {
     copy(link)
     msgSuccess(`已复制： ${link}`)
 }
+
+const deleteSurvey = (survey: OneSurvey) => {
+    apiToggleSurveyDelete(survey.id, true)
+}
+
+const toggleSurveyValid = (survey: OneSurvey) => {
+    apiToggleSurveyValid(survey.id)
+}
 </script>
 
 <template>
@@ -63,9 +71,13 @@ const copyLink = (survey: OneSurvey) => {
             </div>
             <div class="btn-options">
                 <p class="btn-option flex-all-center" @click="() => { toChangeSurvey(survey) }">修改问卷内容</p>
-                <p class="btn-option flex-all-center"> 移入回收站 </p>
+                <p class="btn-option flex-all-center" @click="() => { deleteSurvey(survey) }">
+                    {{ survey.is_deleted ? '从回收站中恢复' : '移入回收站' }}
+                </p>
                 <p class="btn-option flex-all-center">统计数据</p>
-                <p class="btn-option flex-all-center">{{ survey.is_valid ? '停止收集' : '发布问卷' }}</p>
+                <p class="btn-option flex-all-center" @click="() => { toggleSurveyValid(survey) }">
+                    {{ survey.is_valid ? '停止收集' : '发布问卷' }}
+                </p>
                 <p class="btn-option flex-all-center" @click="() => { copyLink(survey) }">复制问卷链接</p>
             </div>
         </div>
