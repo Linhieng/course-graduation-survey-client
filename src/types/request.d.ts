@@ -2,10 +2,12 @@
  * @file 发送请求时需要的请求体类型都在这里
  */
 
+import type { SurveyQuestion } from "."
+
 /**
  * 请求体允许的类型
  */
-type ReqAllowType = ReqUserLogin | ReqUserSignup
+type ReqAllowType = ReqUserLogin | ReqUserSignup | ReqSurveyAche
 
 /**
  * 用户登录时需要的请求参数
@@ -23,3 +25,18 @@ interface ReqUserSignup {
     password: string
     email?: string
 }
+
+/**
+ * 缓存问卷信息的请求体
+ */
+interface ReqSurveyAche {
+    id: TypeID
+    title: string
+    comment: string
+    /** 这里数据库只负责储存，不负责解析，也就是说该内容由前端生成，同时也由前端解析 */
+    structure_json: Structure_Json
+}
+type Structure_Json = {
+    version: '0.1.0'
+    questions: SurveyQuestion[]
+ }

@@ -1,13 +1,14 @@
 <script setup lang="ts">
 
-import { ref, onMounted, watchEffect, watch } from 'vue'
+import { ref, onMounted, watchEffect, watch, onBeforeUnmount } from 'vue'
 import type { SurveyQuestionType, SurveyQuestionStruct, Survey, SurveyQuestion } from '@/types'
 import { STATUS_SUCCEED, SURVEY_TYPE_INPUT_CONTENT } from '@/constants'
 import EditQuestion from './widget/EditQuestion.vue'
 import NewQuestion, { type NewQuestionPayload } from './widget/NewQuestion.vue'
-import { getUUID, debounce, saveFile } from '@/utils'
+import { getUUID, debounce, saveFile, noticeError, noticeInfo } from '@/utils'
 import { useRoute } from 'vue-router'
 import { useStoreSurvey } from '@/stores'
+import { apiCacheSurvey } from '@/api'
 
 const route = useRoute()
 const surveyId = Number(route.query.surveyId)
@@ -39,6 +40,32 @@ const cacheSurvey = debounce(() => {
     storeSurvey.setSurvey(survey.value)
 }, 1000)
 
+const isFetching = ref(false)
+// 定时将问卷数据同步到数据库中
+const timer = setInterval(async () => {
+    if (isFetching.value) return
+
+    isFetching.value = true
+    const resData = await apiCacheSurvey({
+        id: survey.value.id,
+        title: survey.value.title,
+        comment: survey.value.comment,
+        structure_json: JSON.parse(JSON.stringify({
+            version: '0.0.1',
+            questions: survey.value.questions
+        }))
+    })
+    if (resData.status === STATUS_SUCCEED) {
+        console.log(resData.data)
+    } else {
+        noticeError(resData.msg)
+    }
+    isFetching.value = false
+}, 1000 * 10)
+
+onBeforeUnmount(() => {
+    clearInterval(timer)
+})
 onMounted(() => {
     // TODO: 获取问卷信息
 })
