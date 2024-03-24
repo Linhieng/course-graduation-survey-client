@@ -95,9 +95,12 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
     const setSurvey = (_survey: any) => {
         // survey.value = _survey
     }
-    const importSurvey = (_survey: any) => {
-        // survey.value = _survey
-        return _survey
+
+    // 导入问卷模版
+    const importSurvey = (_survey: Survey) => {
+        _survey.id = surveyId.value
+        survey.value = _survey
+        return survey
     }
     // 导出问卷模版
     const exportSurvey = () => {
@@ -105,6 +108,8 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
         const jsonStr = JSON.stringify(_survey, null, 4)
         saveFile(jsonStr, `问卷模版 - ${_survey.title}.json`)
     }
+    // 用于 onAction，通知所有组件，survey 已经导入
+
 
     return {
         getSurveyRef,

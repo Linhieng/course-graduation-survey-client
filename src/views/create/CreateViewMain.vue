@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
-import { ref, onMounted, watchEffect, watch, onBeforeUnmount } from 'vue'
+import { ref, onMounted, watchEffect, watch, onBeforeUnmount, nextTick } from 'vue'
 import type { SurveyQuestionType, Survey, SurveyQuestion } from '@/types'
 import { STATUS_SUCCEED, SURVEY_TYPE_INPUT_CONTENT } from '@/constants'
 import EditQuestion from './widget/EditQuestion.vue'
 import NewQuestion, { type NewQuestionPayload } from './widget/NewQuestion.vue'
-import { getUUID, debounce } from '@/utils'
+import { getUUID, debounce, msgError } from '@/utils'
 import { useRoute } from 'vue-router'
 import { useStoreSurvey } from '@/stores'
 import { apiCacheSurvey } from '@/api'
@@ -20,6 +20,15 @@ const survey_comment = ref('')
 storeSurvey.addTask((survey) => {
     survey.value.title = survey_title
     survey.value.comment = survey_comment
+})
+
+storeSurvey.$onAction(({name, after})=>{
+    if (name === 'importSurvey') {
+        after((survey) => {
+            survey_title.value = survey.value.title
+            survey_comment.value = survey.value.comment
+        })
+    }
 })
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -101,23 +110,23 @@ const updateContent = (question: SurveyQuestion) => {
 }
 
 // 监听 导入问卷事件
-storeSurvey.$onAction(
-    ({
-        name, // action 名称
-        store, // store 实例，类似 `someStore`
-        args, // 传递给 action 的参数数组
-        after, // 在 action 返回或解决后的钩子
-        onError, // action 抛出或拒绝的钩子
-    }) => {
-        if (name === 'importSurvey') {
-            after((s) => {
-                surveyTitle.value = s.title
-                surveyComment.value = s.comment
-                questions.value = s.questions
-            })
-        }
-    }
-)
+// storeSurvey.$onAction(
+//     ({
+//         name, // action 名称
+//         store, // store 实例，类似 `someStore`
+//         args, // 传递给 action 的参数数组
+//         after, // 在 action 返回或解决后的钩子
+//         onError, // action 抛出或拒绝的钩子
+//     }) => {
+//         if (name === 'importSurvey') {
+//             after((s) => {
+//                 surveyTitle.value = s.title
+//                 surveyComment.value = s.comment
+//                 questions.value = s.questions
+//             })
+//         }
+//     }
+// )
 </script>
 
 <template>

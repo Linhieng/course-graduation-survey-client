@@ -18,6 +18,7 @@ const importSurvey = async (event: Event) => {
         const survey = JSON.parse(content)
         sotreSurvey.importSurvey(survey)
     } catch (error) {
+        console.log(error)
         msgError('读取文件失败')
     }
 
