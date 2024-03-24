@@ -1,7 +1,7 @@
 import { CODE_UNKNOWN_ERROR } from "@/constants"
-import type { ResBase } from "@/types"
+import type { ResBase, ResPro } from "@/types"
 import type { ReqAllowType } from "@/types/request"
-import axios, { type AxiosRequestConfig } from "axios"
+import axios, { AxiosError, type AxiosRequestConfig } from "axios"
 
 
 const BASE_URL = import.meta.env.VITE_AXIOS_BASE_URL
@@ -24,7 +24,7 @@ type Method = 'get' | 'post'
  *
  *      总的来说，这里要做错误处理，目的是为了让组件中能够只收到一个统一的对象，这样可以减轻组件中代码的编写
  */
-async function axiosRequest(method: Method, url: string, config?: AxiosRequestConfig<ReqAllowType>) {
+async function axiosRequest(method: Method, url: string, config?: AxiosRequestConfig<ReqAllowType>): ResPro {
     try {
         const response = await axios<ResBase>({
             method,
@@ -36,14 +36,28 @@ async function axiosRequest(method: Method, url: string, config?: AxiosRequestCo
         username = response.headers['x-username']
         return response.data
     } catch (error: any) {
+        console.error(error)
         const resData: ResBase = {
             status: 'failed',
             code: CODE_UNKNOWN_ERROR,
             msg: '未知错误',
             data: error as any
         }
-        if (error.name === "AxiosError" && error.code === "ERR_NETWORK") {
-            resData.msg = '网络错误'
+        if (error.__proto__.constructor.name !== 'AxiosError') {
+            return resData
+        }
+        const e = error as AxiosError
+        if (e.response) {
+            // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
+            // @ts-ignore
+            if (e.response.data?.data) {
+                return (e.response.data as ResBase)
+            }
+            return resData
+        } else if (e.request) {
+            resData.msg = '请求已经成功发起，但没有收到响应'
+        } else {
+            resData.msg = '发送请求时出了点问题'
         }
         return resData
     }

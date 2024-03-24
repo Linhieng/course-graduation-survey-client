@@ -156,7 +156,7 @@ interface ResGetSurveyById {
 /**
  * 由于都是异步请求，所以直接提供一个类型别名，将 Promise 封装起来
  */
-export type ResPro<T> = Promise<ResBase<T>>
+export type ResPro<T = ResValidObj> = Promise<ResBase<T>>
 
 type ResValidObj = ResLoginData | ResSignupData | ResAllSurveys | ResNewSurvey | ResGetSurveyById
 /**
