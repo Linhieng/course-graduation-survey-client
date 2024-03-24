@@ -10,9 +10,25 @@ import { useRoute } from 'vue-router'
 import { useStoreSurvey } from '@/stores'
 import { apiCacheSurvey } from '@/api'
 
+// 所有数据的获取，均通过 store
+const storeSurvey = useStoreSurvey()
+const _survey = storeSurvey.getSurveyRef()
+// 该组件中，只负责修改 title 和 content
+const survey_title = ref('')
+const survey_comment = ref('')
+// 直接将 ref 传递给 survey，能够省去很多麻烦。
+storeSurvey.addTask((survey) => {
+    survey.value.title = survey_title
+    survey.value.comment = survey_comment
+})
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
 const route = useRoute()
 const surveyId = Number(route.query.surveyId)
-const storeSurvey = useStoreSurvey()
+
 
 const questions = ref<SurveyQuestion[]>([{
     id: getUUID(),
@@ -113,16 +129,17 @@ storeSurvey.$onAction(
 <template>
     <div class="create-workplace">
         <div class="top-wrapper">
+            {{ _survey }}
             <h1>
                 <el-input
-                    v-model="surveyTitle"
+                    v-model="survey_title"
                     autosize
                     type="textarea"
                     placeholder="输入问卷标题" />
             </h1>
             <p>
                 <el-input
-                    v-model="surveyComment"
+                    v-model="survey_comment"
                     autosize
                     type="textarea"
                     placeholder="输入问卷备注信息" />

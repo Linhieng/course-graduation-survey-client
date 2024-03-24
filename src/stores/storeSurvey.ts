@@ -3,15 +3,37 @@ import { STATUS_FAILED, STATUS_SUCCEED } from '@/constants'
 import type { Survey } from '@/types'
 import { msg, msgError, noticeError, saveFile } from '@/utils'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
+
+type WrapWithRef<T> = {
+    [K in keyof T]: Ref<T[K]>;
+};
 
 export const useStoreSurvey = defineStore('storeSurvey', () => {
     const surveyId = ref()
-    const survey = ref()
+    const survey = ref<Survey>()
     const newCacheTime = ref()
     const isFetching = ref(false)
     const router = useRouter()
+
+    // 存储获取 survey 后，需要执行的操作
+    let tasks: Function[] = []
+
+    // 供组件注册 task，当获取到 survey 后就会执行
+    const addTask = (cb: (survey: Ref<WrapWithRef<Survey>>)=>void) => {
+        tasks.push(() => cb(survey))
+    }
+    // 执行 tasks 中的任务，然后清空 task
+    const executeTasks = () => {
+        tasks.forEach(task => {
+            task()
+        })
+        tasks = []
+    }
+    const getSurveyRef = () => {
+        return survey
+    }
 
     /** 更新 ID 后，自动更新 survey 内容  */
     const setSurveyId = (id: number | string) => {
@@ -34,6 +56,7 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
         }
         survey.value = resData.data
         successCb && successCb(resData.data)
+        executeTasks()
     }
 
     const getSurvey = () => {
@@ -70,16 +93,23 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
     }
 
     const setSurvey = (_survey: any) => {
-        survey.value = _survey
+        // survey.value = _survey
     }
     const importSurvey = (_survey: any) => {
-        survey.value = _survey
+        // survey.value = _survey
         return _survey
     }
     const exportSurvey = () => {
     }
 
     return {
+        getSurveyRef,
+        addTask,
+        ///////////////////////////////////
+        ///////////////////////////////////
+        ///////////////////////////////////
+        ///////////////////////////////////
+
         // data
         surveyId,
         survey,
