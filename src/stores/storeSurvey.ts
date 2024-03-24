@@ -1,18 +1,26 @@
 import { apiCacheSurvey, apiGetSurveyById } from '@/api'
 import { STATUS_FAILED, STATUS_SUCCEED } from '@/constants'
 import type { Survey } from '@/types'
-import { msgError, noticeError, saveFile } from '@/utils'
+import { msg, msgError, noticeError, saveFile } from '@/utils'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export const useStoreSurvey = defineStore('storeSurvey', () => {
     const surveyId = ref()
     const survey = ref()
     const newCacheTime = ref()
     const isFetching = ref(false)
+    const router = useRouter()
 
     /** 更新 ID 后，自动更新 survey 内容  */
-    const setSurveyId = (id: number) => {
+    const setSurveyId = (id: number | string) => {
+        id = Number(id)
+        if (Number.isNaN(id)) {
+            router.replace({ name: 'home' })
+            msg('问卷 id 错误')
+            return
+        }
         surveyId.value = id
         updateSurvey()
     }

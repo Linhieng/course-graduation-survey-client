@@ -1,22 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useStoreAnswer } from '@/stores';
-import { useRouter } from 'vue-router';
 const props = defineProps<{
     id: string
 }>()
-const router = useRouter()
 const storeAnswer = useStoreAnswer()
 const isFetching = ref(true)
 
-storeAnswer.setSurveyId(Number(props.id))
+storeAnswer.setSurveyId(props.id)
 
 storeAnswer.fetchSurvey(() => {
     isFetching.value = false
-}, () => {
-    router.replace({
-        name: 'NotFound',
-    })
 })
 </script>
 
