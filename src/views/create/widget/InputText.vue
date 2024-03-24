@@ -1,18 +1,21 @@
 <script setup lang="ts">
 
+import type { InputContent, SurveyQuestion } from '@/types'
 import { ref, watchEffect } from 'vue'
 
-export interface InputTextEmitPayload {
-    title: string,
-    describe: string
-}
-
-const emit = defineEmits<{
-    (e: 'update', payload: InputTextEmitPayload): void,
+const props = defineProps<{
+    question?: SurveyQuestion<InputContent>
 }>()
 
+const emit = defineEmits<{
+    (e: 'update', payload: InputContent): void,
+}>()
 const title = ref('')
 const describe = ref('')
+
+
+if (props.question?.questionContent.title) title.value = props.question.questionContent.title
+if (props.question?.questionContent.describe) describe.value = props.question.questionContent.describe
 
 watchEffect(() => {
     emit('update', { title: title.value, describe: describe.value })

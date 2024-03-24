@@ -27,7 +27,7 @@ export function throttle<T extends (...args: any[]) => void>(
  *  每次调用函数时，都会延迟 delay 时间
  * @param func
  * @param delay 单位 ms
- * @returns
+ * @returns 返回一个防抖函数
  */
 export function debounce<T extends (...args: any[]) => void>(
     func: T,

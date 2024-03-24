@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import InputText, { type InputTextEmitPayload } from './InputText.vue'
+import InputText from './InputText.vue'
 import {
     SURVEY_TYPE_SINGLE_SELECT,
     SURVEY_TYPE_MULTI_SELECT
 } from '@/constants'
-import type { SingleSelect } from '@/types'
+import type { SingleSelect, SurveyQuestion } from '@/types'
 import { getUUID } from '@/utils'
 import { ref, watchEffect } from 'vue'
 
 const props = defineProps<{
-    selectType: typeof SURVEY_TYPE_SINGLE_SELECT | typeof SURVEY_TYPE_MULTI_SELECT
+    selectType: typeof SURVEY_TYPE_SINGLE_SELECT | typeof SURVEY_TYPE_MULTI_SELECT,
+    question: SurveyQuestion<SingleSelect>
 }>()
 const emits = defineEmits<{
     (e: 'update', payload: SingleSelect): void
@@ -19,6 +20,9 @@ const emits = defineEmits<{
 const selectOptions = ref([''])
 // 标题和描述信息
 const selectTitles = ref([{ id: getUUID(), title: '', describe: '' }])
+
+if (props.question.questionContent.options) selectOptions.value = props.question.questionContent.options
+if (props.question.questionContent.titles) selectTitles.value = props.question.questionContent.titles
 
 // 添加一个选项
 const evtAddOption = (index: number) => {
@@ -53,10 +57,15 @@ watchEffect(() => {
 <template>
     <div>
         <div class="outer-wrapper">
-            <div v-for="(item, index) in selectTitles" :key="item.id"
+            <div v-for="(item, index) in selectTitles"
                 class="mid-item">
                 <div class="inner-shrink">
-                    <InputText @update="({ title, describe }) => {
+                    <InputText :question="{
+                        questionContent: {
+                            title: item.title,
+                            describe: item.describe,
+                        }
+                    }" @update="({ title, describe }) => {
                 selectTitles[index].title = title
                 selectTitles[index].describe = describe
             }" />

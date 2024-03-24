@@ -1,3 +1,34 @@
+
+/**
+ * 获取文件内容
+ *
+ * @param blob
+ * @returns
+ */
+export const readFileContent = (blob: Blob | File) => {
+    const content = new Response(blob).text()
+    return content
+}
+
+/**
+ * 下载文件
+ * @param strContent 文件内容字符串
+ * @param filename 文件名称，带后缀名
+ */
+export const saveFile = (strContent: string, filename: string) => {
+    const blob = new Blob([strContent], { type: 'text/plain' })
+    const a = document.createElement('a')
+    a.download = filename
+    a.href = URL.createObjectURL(blob)
+    a.addEventListener('click', (e) => {
+        setTimeout(() => {
+            URL.revokeObjectURL(a.href)
+            a.remove()
+        }, 3 * 1000)
+    })
+    a.click()
+}
+
 /**
  *
  * @returns 返回一个 UUID 字符串
@@ -17,7 +48,7 @@ export function getUUID() {
 export function fillObject(target: Record<string, any>, template: Record<string, any>, fillData?: Record<string, any>) {
 
     if (typeof fillData === 'object') {
-        Object.keys(template).forEach( key => {
+        Object.keys(template).forEach(key => {
             target[key] = fillData[key]
         })
     } else {
@@ -37,7 +68,7 @@ export function fillObject(target: Record<string, any>, template: Record<string,
  * @param fillData
  */
 export function resetObject(target: Record<string, any>, template: Record<string, any>, defaultData: any, fillData: Record<string, any> = {}) {
-    Object.keys(template).forEach( key => {
+    Object.keys(template).forEach(key => {
         if (key in fillData) {
             target[key] = fillData[key]
         } else {

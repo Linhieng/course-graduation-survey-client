@@ -41,12 +41,13 @@ const forwardEvent = (questionContent: QuestionContentType) => {
         <div class="question-content">
             <!-- 单文本输入框 -->
             <template v-if="props.question.questionType === SURVEY_TYPE_INPUT_CONTENT">
-                <InputText @update="forwardEvent" />
+                <InputText :question="props.question" @update="forwardEvent" />
             </template>
             <!-- 单选或多选 -->
             <template
                 v-else-if="props.question.questionType === SURVEY_TYPE_SINGLE_SELECT || props.question.questionType === SURVEY_TYPE_MULTI_SELECT">
                 <SelectItem :selectType="props.question.questionType"
+                    :question="props.question"
                     @update="forwardEvent" />
             </template>
         </div>

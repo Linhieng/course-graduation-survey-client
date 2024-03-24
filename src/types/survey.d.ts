@@ -21,21 +21,29 @@ export interface Survey {
 }
 
 /**
- * 一道问题
+ * 一道问题 。TODO: 不合适，还是更适合使用泛型。
  */
-export type SurveyQuestion = {
-    [Type in SurveyQuestionType]: {
-        id: string,
-        isRequired: boolean,
-        order: number,
-        questionType: Type,
-        questionContent: {
-            'input_content': InputContent,
-            'single_select': SingleSelect,
-            'multi_select': MultiSelect,
-        }[Type] | QuestionContentType
-    }
-}[SurveyQuestionType]
+// export type SurveyQuestion = {
+//     [Type in SurveyQuestionType]: {
+//         id: string,
+//         isRequired: boolean,
+//         order: number,
+//         questionType: Type,
+//         questionContent: {
+//             'input_content': InputContent,
+//             'single_select': SingleSelect,
+//             'multi_select': MultiSelect,
+//         }[Type] | QuestionContentType
+//     }
+// }[SurveyQuestionType]
+
+export interface SurveyQuestion<T = QuestionContentType> {
+    id: string
+    isRequired: boolean
+    order: number
+    questionType: SurveyQuestionType
+    questionContent: T
+}
 
 /**
  * 支持的问题类型
