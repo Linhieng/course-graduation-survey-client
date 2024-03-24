@@ -33,9 +33,10 @@ const router = createRouter({
             meta: { requiresAuth: true },
         },
         {
-            path: '/answer',
+            path: '/answer/:id',
             name: 'statanswer',
             component: FillAnswer,
+            props: true,
             meta: { requiresAuth: false },
         },
         // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
