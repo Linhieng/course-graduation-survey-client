@@ -23,7 +23,7 @@ export function apiCacheSurvey(data: ReqSurveyAche): ResProCacheSurvey {
 }
 
 export function apiGetSurveyById(surveyId: number): ResProGetSurveyById {
-    return post(urlGetSurveyById + surveyId)
+    return get(urlGetSurveyById + surveyId)
 }
 
 export function apiToggleSurveyDelete(surveyId: number, isDel?: boolean) {

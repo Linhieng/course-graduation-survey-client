@@ -1,13 +1,32 @@
-import { apiCacheSurvey } from '@/api'
-import { STATUS_SUCCEED } from '@/constants'
-import { noticeError, saveFile } from '@/utils'
+import { apiCacheSurvey, apiGetSurveyById } from '@/api'
+import { STATUS_FAILED, STATUS_SUCCEED } from '@/constants'
+import type { Survey } from '@/types'
+import { msgError, noticeError, saveFile } from '@/utils'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useStoreSurvey = defineStore('storeSurvey', () => {
+    const surveyId = ref()
     const survey = ref()
     const newCacheTime = ref()
     const isFetching = ref(false)
+
+    /** 更新 ID 后，自动更新 survey 内容  */
+    const setSurveyId = (id: number) => {
+        surveyId.value = id
+        updateSurvey()
+    }
+
+    const updateSurvey = async (successCb?: (survey:Survey)=>void, errorCb?: (reason:string)=>void) => {
+        const resData = await apiGetSurveyById(surveyId.value)
+        if (resData.status === STATUS_FAILED) {
+            msgError(resData.msg)
+            errorCb && errorCb(resData.msg)
+            return
+        }
+        survey.value = resData.data
+        successCb && successCb(resData.data)
+    }
 
     const getSurvey = () => {
         return survey.value
@@ -60,6 +79,8 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
         getSurvey,
         // getNewCacheTime,
         // settter
+        setSurveyId,
+        updateSurvey,
         setSurvey,
         importSurvey,
         setNewCacheTime,
