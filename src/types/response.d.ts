@@ -89,6 +89,7 @@ export type ResProLogin = ResPro<ResLoginData>
 export type ResProSignup = ResPro<ResSignupData>
 export type ResProGetAllSurveys = ResPro<ResAllSurveys>
 export type ResProNewSurvey = ResPro<ResNewSurvey>
+export type ResProCacheSurvey = ResPro<ResCacheSurvey>
 
 /**
  * 登录接口响应的数据
@@ -118,6 +119,13 @@ interface ResAllSurveys {
  */
 interface ResNewSurvey {
     surveyId: number
+}
+
+/**
+ * 缓存文件时响应的数据
+ */
+interface ResCacheSurvey {
+    time: string
 }
 
 /* ============================================================================ */

@@ -29,6 +29,7 @@ const survey = ref<Survey>({
     id: surveyId,
     title: '未命名标题',
     comment: '',
+    // @ts-ignore
     questions // 如果设置为 questions = questions.value ，则会丢失响应式
 })
 const hasGetSurvey = ref(false)
@@ -56,7 +57,7 @@ const timer = setInterval(async () => {
         }))
     })
     if (resData.status === STATUS_SUCCEED) {
-        console.log(resData.data)
+        storeSurvey.setNewCacheTime(new Date(resData.data.time))
     } else {
         noticeError(resData.msg)
     }

@@ -1,4 +1,4 @@
-import type { ResProGetAllSurveys, ResProNewSurvey } from "@/types"
+import type { ResProCacheSurvey, ResProGetAllSurveys, ResProNewSurvey } from "@/types"
 import { get, post } from "."
 import type { ReqSurveyAche } from "@/types/request"
 
@@ -14,6 +14,6 @@ export function apiNewSurvey(): ResProNewSurvey {
     return post(urlNewSurvey)
 }
 
-export function apiCacheSurvey(data: ReqSurveyAche) {
+export function apiCacheSurvey(data: ReqSurveyAche): ResProCacheSurvey {
     return post(urlAcheSurvey, {data})
 }
