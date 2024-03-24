@@ -1,8 +1,10 @@
 import { CODE_UNKNOWN_ERROR } from "@/constants"
 import type { ResBase } from "@/types"
+import type { ReqAllowType } from "@/types/request"
 import axios, { type AxiosRequestConfig } from "axios"
 
-const BASE_URL = 'http://192.168.209.194:3000/'
+
+const BASE_URL = import.meta.env.VITE_AXIOS_BASE_URL
 let token = ''
 let userId = ''
 let username = ''

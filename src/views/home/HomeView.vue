@@ -7,7 +7,6 @@ import HeaderAsideMain from '@/layout/HeadAsideMain.vue'
 import { apiGetAllSurveys } from '@/api/survey'
 
 apiGetAllSurveys()
-
 </script>
 
 <template>
