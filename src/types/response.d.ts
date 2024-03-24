@@ -2,6 +2,8 @@
  * @file 定义了后台响应体的数据类型
  */
 
+import type { Structure_Json } from './request'
+
 
 /* ============================================================================ */
 /* ============================================================================ */
@@ -90,6 +92,7 @@ export type ResProSignup = ResPro<ResSignupData>
 export type ResProGetAllSurveys = ResPro<ResAllSurveys>
 export type ResProNewSurvey = ResPro<ResNewSurvey>
 export type ResProCacheSurvey = ResPro<ResCacheSurvey>
+export type ResProGetSurveyById = ResPro<ResGetSurveyById>
 
 /**
  * 登录接口响应的数据
@@ -122,12 +125,21 @@ interface ResNewSurvey {
 }
 
 /**
- * 缓存文件时响应的数据
+ * 缓存问卷时响应的数据
  */
 interface ResCacheSurvey {
     time: string
 }
 
+/**
+ * 获取一份问卷返回的响应体
+ */
+interface ResGetSurveyById {
+    id: number
+    title: string
+    comment: string
+    questions: Structure_Json
+}
 /* ============================================================================ */
 /* ============================================================================ */
 /* ============================================================================ */
@@ -146,7 +158,7 @@ interface ResCacheSurvey {
  */
 export type ResPro<T> = Promise<ResBase<T>>
 
-type ResValidObj = ResLoginData | ResSignupData | ResAllSurveys | ResNewSurvey
+type ResValidObj = ResLoginData | ResSignupData | ResAllSurveys | ResNewSurvey | ResGetSurveyById
 /**
  * 与后台约定好的通用响应体包装器
  */

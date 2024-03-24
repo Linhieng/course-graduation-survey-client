@@ -36,7 +36,7 @@ interface ReqSurveyAche {
     /** 这里数据库只负责储存，不负责解析，也就是说该内容由前端生成，同时也由前端解析 */
     structure_json: Structure_Json
 }
-type Structure_Json = {
+export type Structure_Json = {
     version: '0.1.0'
     questions: SurveyQuestion[]
  }
