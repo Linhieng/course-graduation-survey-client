@@ -41,28 +41,8 @@ const cacheSurvey = debounce(() => {
     storeSurvey.setSurvey(survey.value)
 }, 1000)
 
-const isFetching = ref(false)
 // 定时将问卷数据同步到数据库中
-const timer = setInterval(async () => {
-    if (isFetching.value) return
-
-    isFetching.value = true
-    const resData = await apiCacheSurvey({
-        id: survey.value.id,
-        title: survey.value.title,
-        comment: survey.value.comment,
-        structure_json: JSON.parse(JSON.stringify({
-            version: '0.0.1',
-            questions: survey.value.questions
-        }))
-    })
-    if (resData.status === STATUS_SUCCEED) {
-        storeSurvey.setNewCacheTime(new Date(resData.data.time))
-    } else {
-        noticeError(resData.msg)
-    }
-    isFetching.value = false
-}, 1000 * 10)
+const timer = setInterval(storeSurvey.cacheSurvey, 1000 * 10)
 
 onBeforeUnmount(() => {
     clearInterval(timer)

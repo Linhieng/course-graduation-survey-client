@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useStoreSurvey } from '@/stores'
-import { saveFile, readFileContent, msgError, msgSuccess } from '@/utils'
+import { readFileContent, msgError } from '@/utils'
 
 const sotreSurvey = useStoreSurvey()
 
@@ -22,12 +22,16 @@ const importSurvey = async (event: Event) => {
     }
 
 }
+
+/** 手动显式缓存问卷 */
+const cacheManual = sotreSurvey.cacheSurvey
 </script>
 
 <template>
     <h2>通用工具</h2>
     <ul>
         <!-- <li> <el-button>批量编辑顺序</el-button> </li> -->
+        <li> <el-button @click="cacheManual">立即缓存当前问卷</el-button> </li>
         <li> <el-button @click="exportSurvey">导出问卷模版</el-button> </li>
         <li class="input-file"> <el-button>导入问卷模版</el-button>
             <input type="file" accept=".json" @input="importSurvey">
