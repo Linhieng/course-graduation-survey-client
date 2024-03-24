@@ -16,15 +16,18 @@ const _survey = storeSurvey.getSurveyRef()
 // 该组件中，只负责修改 title 和 content
 const survey_title = ref('')
 const survey_comment = ref('')
-// 直接将 ref 传递给 survey，能够省去很多麻烦。
-storeSurvey.addTask((survey) => {
-    survey.value.title = survey_title
-    survey.value.comment = survey_comment
+watch([survey_title, survey_comment], () => {
+    if (!_survey || !_survey.value) return
+    _survey.value.title = survey_title.value
+    _survey.value.comment = survey_comment.value
 })
-
 storeSurvey.$onAction(({name, after})=>{
     if (name === 'importSurvey') {
         after((survey) => {
+            if (!survey || !survey.value) {
+                msgError('导入失败，检测不到 survey')
+                return
+            }
             survey_title.value = survey.value.title
             survey_comment.value = survey.value.comment
         })

@@ -7,8 +7,8 @@ import { ref, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 type WrapWithRef<T> = {
-    [K in keyof T]: Ref<T[K]>;
-};
+    [K in keyof T]: Ref<T[K]>
+}
 
 export const useStoreSurvey = defineStore('storeSurvey', () => {
     const surveyId = ref()
@@ -21,7 +21,7 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
     let tasks: Function[] = []
 
     // 供组件注册 task，当获取到 survey 后就会执行
-    const addTask = (cb: (survey: Ref<WrapWithRef<Survey>>)=>void) => {
+    const addTask = (cb: (survey: Ref<Survey | undefined>) => void) => {
         tasks.push(() => cb(survey))
     }
     // 执行 tasks 中的任务，然后清空 task
@@ -47,7 +47,7 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
         updateSurvey()
     }
 
-    const updateSurvey = async (successCb?: (survey:Survey)=>void, errorCb?: (reason:string)=>void) => {
+    const updateSurvey = async (successCb?: (survey: Survey) => void, errorCb?: (reason: string) => void) => {
         const resData = await apiGetSurveyById(surveyId.value)
         if (resData.status === STATUS_FAILED) {
             msgError(resData.msg)
