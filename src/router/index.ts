@@ -21,8 +21,9 @@ const router = createRouter({
             meta: { requiresAuth: false },
         },
         {
-            path: '/create',
+            path: '/create/:id',
             name: 'create',
+            props: true,
             component: () => import('../views/create/CreateView.vue'),
             meta: { requiresAuth: true },
         },

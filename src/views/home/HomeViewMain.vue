@@ -26,9 +26,7 @@ const toChangeSurvey = (survey: OneSurvey) => {
     }
     router.push({
         name: 'create',
-        query: {
-            surveyId: survey.id
-        }
+        params: { id: survey.id }
     })
 
 }

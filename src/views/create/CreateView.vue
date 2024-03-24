@@ -4,12 +4,15 @@ import CreateViewAside from './CreateViewAside.vue'
 import CreateViewMain from './CreateViewMain.vue'
 import HeaderAsideMain from '@/layout/HeadAsideMain.vue'
 
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useStoreSurvey } from '@/stores'
-const route = useRoute()
 const router = useRouter()
 const storeSurvey = useStoreSurvey()
-const id = Number(route.query.surveyId)
+
+const props = defineProps<{
+    id: string
+}>()
+const id = Number(props.id)
 
 if (Number.isNaN(id)) {
     router.replace({ name: 'home' })

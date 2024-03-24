@@ -13,9 +13,7 @@ const toCreate = async () => {
     if (data.status === STATUS_SUCCEED) {
         router.push({
         name: 'create',
-        query: {
-            surveyId: data.data.surveyId
-        }
+        params: { id: data.data.surveyId }
     })
     } else {
         msgError(data.msg)

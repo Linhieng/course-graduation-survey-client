@@ -44,7 +44,7 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
 
         isFetching.value = true
         const reqData = JSON.parse(JSON.stringify({
-            id: survey.value.id,
+            id: surveyId.value,
             title: survey.value.title,
             comment: survey.value.comment,
             structure_json: {
@@ -73,6 +73,7 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
 
     return {
         // data
+        surveyId,
         survey,
         newCacheTime,
         // getter
