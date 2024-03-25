@@ -17,31 +17,49 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <el-row class="header">
-        <el-col :xs="5" :sm="8" class="header__left flex-align-center-left">
-            <el-icon size="50">
-                <WidgetBack class="flex-align-center-left" />
-            </el-icon>
-        </el-col>
-        <el-col :xs="10" :sm="8" class="header__mid flex-all-center">
-            <h1> 创建问卷 </h1>
-        </el-col>
-        <el-col :xs="9" :sm="8" class="header__right flex-align-center-right">
-            <div>{{ cacheTime ?
-                `最近缓存：${ cacheTime }` :
+    <ul class="wrapper">
+        <li>
+            <WidgetBack class="flex-align-center-left" />
+        </li>
+        <li>
+            <p> 创建问卷 </p>
+        </li>
+        <li>
+            <p>{{ cacheTime ?
+                `最近缓存：${cacheTime}` :
                 '未缓存' }}
-            </div>
-        </el-col>
-    </el-row>
+            </p>
+        </li>
+    </ul>
 </template>
 
 <style scoped lang="scss">
-.header {
-    min-height: var(--layout-header-height);
+@mixin w1 {
+    @media screen and (min-width: 600px) {
+        @content;
+    }
+}
+ul {
+    list-style: none;
+}
 
-    &__left,
-    &__right {
-        padding: 0 10px;
+.wrapper {
+    height: 100%;
+
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto auto;
+
+    li {
+        min-width: max-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    @include w1{
+        li:nth-child(1) {
+            width: 100px;
+        }
     }
 }
 </style>
