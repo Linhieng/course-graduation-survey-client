@@ -23,6 +23,8 @@ const selectOptions = ref([''])
 // 标题和描述信息
 const selectTitles = ref([{ id: getUUID(), title: '', describe: '' }])
 watch(selectOptions.value, () => {
+    // TODO: 为什么这里不会变化？但是 store 中的内容却能给变化？
+    console.log('???', import.meta.env.MODE)
     if (!survey || !survey.value) {
         msgError('获取不到 survey，这里是 SelectItem')
         return
