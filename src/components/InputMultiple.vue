@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { getUUID } from '@/utils'
-import { ref } from 'vue'
 import InputRequired from './InputRequired.vue'
 import InputOptional from './InputOptional.vue'
 
@@ -18,6 +17,11 @@ const btnAdd = (index: number) => {
     })
 }
 const btnRemove = (index: number) => {
+    // 已通过 disable 标签处理
+    // if (titles.value.length < 2) {
+    //     msgWarning('至少需要一项')
+    //     return
+    // }
     titles.value.splice(index, 1)
 }
 

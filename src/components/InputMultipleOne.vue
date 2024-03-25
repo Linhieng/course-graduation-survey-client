@@ -7,6 +7,11 @@ const btnAdd = (index: number) => {
     texts.value.splice(index + 1, 0, '')
 }
 const btnRemove = (index: number) => {
+    // 已通过 disable 标签处理
+    // if (texts.value.length < 2) {
+    //     msgWarning('至少需要一项')
+    //     return
+    // }
     texts.value.splice(index, 1)
 }
 
