@@ -24,19 +24,26 @@ export interface Survey {
 /**
  * 一份问卷 ——> 一道问题
  */
-export type SurveyQuestion = { /* 虽然这种方法笨，但耐不住它易读啊，而且管用！ */
+export type SurveyQuestion =
+    SurveyQuestion_Text |
+    SurveyQuestion_SingleSelect |
+    SurveyQuestion_MultiSelect
+/* 虽然这种方法笨，但耐不住它易读啊，而且管用！ */
+export interface SurveyQuestion_Text {
     id: string
     isRequired: boolean
     order: number
     questionType: SurveyQuestionType_Text
     questionContent: SurveyQuestionContent_Text
-} | {
+}
+export interface SurveyQuestion_SingleSelect {
     id: string
     isRequired: boolean
     order: number
     questionType: SurveyQuestionType_SingleSelect
     questionContent: SurveyQuestionContent_SingleSelect
-} | {
+}
+export interface SurveyQuestion_MultiSelect {
     id: string
     isRequired: boolean
     order: number
@@ -73,7 +80,11 @@ interface SurveyQuestionContent_Text {
  * 一份问卷 ——> 一道问题 ——> 问题内容为：单选题
  */
 interface SurveyQuestionContent_SingleSelect {
-    titles: SurveyQuestionContent_Text[]
+    titles: Array<{
+        id: string,
+        title: string,
+        describe: string,
+    }>
     options: string[]
 }
 /**

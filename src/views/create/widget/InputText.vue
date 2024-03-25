@@ -4,8 +4,8 @@
 
 <script setup lang="ts">
 
-import type { SurveyQuestion, SurveyQuestionContent_Text } from '@/types'
-import { ref, watch, watchEffect } from 'vue'
+import type { SurveyQuestion_Text } from '@/types'
+import { ref, watch } from 'vue'
 import { useStoreSurvey } from '@/stores';
 import { msgError } from '@/utils'
 import InputRequired from '@/components/InputRequired.vue'
@@ -14,7 +14,7 @@ import InputOptional from '@/components/InputOptional.vue'
 const storeSurvey = useStoreSurvey()
 const survey = storeSurvey.getSurveyRef()
 const props = defineProps<{
-    question: SurveyQuestion
+    question: SurveyQuestion_Text
 }>()
 const title = ref('')
 const describe = ref('')
@@ -24,8 +24,13 @@ watch([title, describe], () => {
         return
     }
     const index = props.question.order - 1
-    survey.value.questions[index].questionContent.title = title.value
-    survey.value.questions[index].questionContent.describe = describe.value
+    const q = survey.value.questions[index]
+    if (q.questionType !== 'input_content') {
+        msgError('问题类型错误，这里是 InputText')
+        return
+    }
+    q.questionContent.title = title.value
+    q.questionContent.describe = describe.value
 })
 
 if (props.question?.questionContent.title) title.value = props.question.questionContent.title

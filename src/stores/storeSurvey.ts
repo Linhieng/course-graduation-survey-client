@@ -79,7 +79,10 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
 
     const cacheSurvey = async () => {
         if (isFetching.value) return
-
+        if (!survey.value) {
+            msgError('survey 不存在，无法缓存，这里是 storeSurvey')
+            return
+        }
         isFetching.value = true
         const reqData = JSON.parse(JSON.stringify({
             id: surveyId.value,

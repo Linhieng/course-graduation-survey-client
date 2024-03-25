@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import InputText from './InputText.vue'
 import {
     SURVEY_TYPE_SINGLE_SELECT,
     SURVEY_TYPE_MULTI_SELECT
 } from '@/constants'
-import type { SurveyQuestion, SurveyQuestionContent_SingleSelect } from '@/types'
+import type { SurveyQuestion_MultiSelect, SurveyQuestion_SingleSelect } from '@/types'
 import { getUUID, msgError } from '@/utils'
-import { ref, watch, watchEffect } from 'vue'
+import { ref, watch } from 'vue'
 import { useStoreSurvey } from '@/stores'
 import InputMultiple from '@/components/InputMultiple.vue'
 import InputMultipleOne from '@/components/InputMultipleOne.vue'
@@ -16,7 +15,7 @@ const survey = storeSurvey.getSurveyRef()
 
 const props = defineProps<{
     selectType: typeof SURVEY_TYPE_SINGLE_SELECT | typeof SURVEY_TYPE_MULTI_SELECT,
-    question: SurveyQuestion
+    question: SurveyQuestion_SingleSelect | SurveyQuestion_MultiSelect
 }>()
 
 // 选项
@@ -29,7 +28,12 @@ watch(selectOptions.value, () => {
         return
     }
     const index = props.question.order - 1
-    survey.value.questions[index].questionContent.options = selectOptions.value
+    const q = survey.value.questions[index]
+    if (q.questionType !== 'single_select') {
+        msgError('问题类型错误，这里是 SelectItem')
+        return
+    }
+    q.questionContent.options = selectOptions.value
 })
 
 if (props.question.questionContent.options) selectOptions.value = props.question.questionContent.options
@@ -44,9 +48,8 @@ if (props.question.questionContent.titles) selectTitles.value = props.question.q
     </div>
     <el-divider content-position="left">请在下面输入选项内容</el-divider>
     <div>
-        <InputMultipleOne v-model="selectOptions"/>
+        <InputMultipleOne v-model="selectOptions" />
     </div>
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>
