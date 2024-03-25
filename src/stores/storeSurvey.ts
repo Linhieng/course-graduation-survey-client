@@ -13,6 +13,7 @@ type WrapWithRef<T> = {
 export const useStoreSurvey = defineStore('storeSurvey', () => {
     const surveyId = ref()
     const survey = ref<Survey>()
+    /** 格式存储为直接可读的格式 toLocaleString() */
     const newCacheTime = ref()
     const isFetching = ref(false)
     const router = useRouter()
@@ -69,11 +70,8 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
     const getSurvey = () => {
         return survey.value
     }
-    // const getNewCacheTime = () => {
-    //     return newCacheTime.value
-    // }
     const setNewCacheTime = (time: Date) => {
-        newCacheTime.value = time
+        newCacheTime.value = time.toLocaleString()
         return time
     }
 
@@ -175,12 +173,17 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
         survey.value.questions.splice(order - 1, 1)
         survey.value.questions.forEach((item, i) => item.order = i + 1)
     }
+    // 获取实时最新缓存时间
+    const getCacheTimeRef = () => {
+        return newCacheTime
+    }
 
     return {
         getSurveyRef,
         addTask,
         addOneQuestion,
         removeOneQuestion,
+        getCacheTimeRef,
         ///////////////////////////////////
         ///////////////////////////////////
         ///////////////////////////////////

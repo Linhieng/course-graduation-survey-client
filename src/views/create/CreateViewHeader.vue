@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import WidgetBack from '@/components/WidgetBack.vue'
 import { useStoreSurvey } from '@/stores'
-import { ref } from 'vue'
+import { onBeforeUnmount } from 'vue'
 
 const storeSurvey = useStoreSurvey()
-const newTime = ref<Date>()
-storeSurvey.$onAction(({name, after}) => {
-    if (name === 'setNewCacheTime') {
-        after((time) => {
-            newTime.value = time
-        })
-    }
+const cacheTime = storeSurvey.getCacheTimeRef()
+
+// 每 3 秒缓存一次
+const timer = setInterval(() => {
+    storeSurvey.cacheSurvey()
+}, 1000 * 3)
+onBeforeUnmount(() => {
+    clearInterval(timer)
 })
+
 </script>
 
 <template>
@@ -25,8 +27,8 @@ storeSurvey.$onAction(({name, after}) => {
             <h1> 创建问卷 </h1>
         </el-col>
         <el-col :xs="9" :sm="8" class="header__right flex-align-center-right">
-            <div>{{ newTime ?
-                `已于 ${newTime.toLocaleTimeString()} 缓存` :
+            <div>{{ cacheTime ?
+                `最近缓存：${ cacheTime }` :
                 '未缓存' }}
             </div>
         </el-col>
