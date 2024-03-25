@@ -8,6 +8,7 @@ import type { SurveyQuestion, SurveyQuestionContent_SingleSelect } from '@/types
 import { getUUID, msgError } from '@/utils'
 import { ref, watch, watchEffect } from 'vue'
 import { useStoreSurvey } from '@/stores'
+import InputMultiple from '@/components/InputMultiple.vue'
 
 const storeSurvey = useStoreSurvey()
 const survey = storeSurvey.getSurveyRef()
@@ -45,51 +46,13 @@ const evtRemoveOption = (index: number) => {
     if (selectOptions.value.length < 2) return
     selectOptions.value.splice(index, 1)
 }
-// 添加一个标题
-const evtAddTitle = (index: number) => {
-    selectTitles.value.splice(index + 1, 0, {
-        id: getUUID(),
-        title: '',
-        describe: ''
-    })
-}
-const evtRemoveTitle = (index: number) => {
-    if (selectTitles.value.length < 2) return
-    selectTitles.value.splice(index, 1)
-}
 
-// 响应父组件，告诉它有内容更新了
-// watchEffect(() => {
-//     emits('update', {
-//         titles: selectTitles.value,
-//         options: selectOptions.value,
-//     })
-// })
 </script>
 
 <template>
     <div>
         <div class="outer-wrapper">
-            <!-- <div v-for="(item, index) in selectTitles"
-                class="mid-item">
-                <div class="inner-shrink">
-                    <InputText :question="{
-                        questionContent: {
-                            title: item.title,
-                            describe: item.describe,
-                        }
-                    }" @update="({ title, describe }) => {
-                selectTitles[index].title = title
-                selectTitles[index].describe = describe
-            }" />
-                </div>
-                <div class="inner-button-s">
-                    <el-button type="primary" class="btn" @click="() => { evtAddTitle(index) }" circle>＋</el-button>
-                    <el-button type="danger" :disabled="selectTitles.length < 2" class="btn"
-                        @click="() => { evtRemoveTitle(index) }" circle>一</el-button>
-                </div>
-            </div> -->
-            <!-- 选择题同样也需要标题和描述信息 -->
+            <InputMultiple v-model="selectTitles" />
         </div>
         <div class="outer-wrapper">
             <!-- 因为这里仅仅存储字符串而已，所以可以直接使用下标作为 key -->
