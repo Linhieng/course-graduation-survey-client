@@ -1,10 +1,19 @@
+<!--
+    这个组件只负责负责处理单个问题，
+    它会修改的数据只有：
+        - 单个问题是否是必选
+    然后具体的问题内容，由该组件进行分发。
+
+ -->
+
 <script setup lang="ts">
 import { SURVEY_TYPE_INPUT_CONTENT, SURVEY_TYPE_MULTI_SELECT, SURVEY_TYPE_SINGLE_SELECT } from '@/constants'
 import type { SurveyQuestion, SurveyQuestionContent } from '@/types'
-import { SurveyQuestionTypeMappingText } from '@/utils'
+import { SurveyQuestionTypeMappingText, msgError } from '@/utils'
 import InputText from './InputText.vue'
 import SelectItem from './SelectItem.vue'
-import { ref } from 'vue'
+import { ref,  watch} from 'vue'
+import { useStoreSurvey } from '@/stores'
 
 const props = defineProps<{
     question: SurveyQuestion
@@ -12,24 +21,36 @@ const props = defineProps<{
 const emits = defineEmits<{
     (e: 'update-content', question: SurveyQuestion): void
 }>()
-
+const storeSurvey = useStoreSurvey()
+const survey = storeSurvey.getSurveyRef()
 const isRequired = ref(true)
 
+// 同步更改 storeSurvey 中的内容
+watch(isRequired, () => {
+    if (!survey || !survey.value) {
+        msgError('无法获取 survey，这里是 EditQuestion')
+        return
+    }
+    const index = props.question.order - 1
+    survey.value.questions[index].isRequired = isRequired.value
+})
+
 const forwardEvent = (questionContent: SurveyQuestionContent) => {
-    const surveyQuestion = {
-        isRequired:  isRequired.value,
-        id: props.question.id,
-        order: props.question.order,
-        questionType: props.question.questionType,
-        questionContent
-    } as SurveyQuestion
-    emits('update-content', surveyQuestion)
+    // const surveyQuestion = {
+    //     isRequired:  isRequired.value,
+    //     id: props.question.id,
+    //     order: props.question.order,
+    //     questionType: props.question.questionType,
+    //     questionContent
+    // } as SurveyQuestion
+    // emits('update-content', surveyQuestion)
 }
 
 </script>
 
 <template>
     <div class="question-item ">
+        {{ props.question }}
         <p class="base-info">
             <span :class="{ 'is-required': isRequired }">{{ props.question.order }}</span>
             <span>{{ SurveyQuestionTypeMappingText(props.question.questionType) }}</span>
@@ -41,14 +62,14 @@ const forwardEvent = (questionContent: SurveyQuestionContent) => {
         <div class="question-content">
             <!-- 单文本输入框 -->
             <template v-if="props.question.questionType === SURVEY_TYPE_INPUT_CONTENT">
-                <InputText :question="props.question" @update="forwardEvent" />
+                <InputText :question="props.question" />
             </template>
             <!-- 单选或多选 -->
             <template
                 v-else-if="props.question.questionType === SURVEY_TYPE_SINGLE_SELECT || props.question.questionType === SURVEY_TYPE_MULTI_SELECT">
                 <SelectItem :selectType="props.question.questionType"
                     :question="props.question"
-                    @update="forwardEvent" />
+                     />
             </template>
         </div>
     </div>

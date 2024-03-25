@@ -5,21 +5,33 @@ import {
     SURVEY_TYPE_MULTI_SELECT
 } from '@/constants'
 import type { SurveyQuestion, SurveyQuestionContent_SingleSelect } from '@/types'
-import { getUUID } from '@/utils'
-import { ref, watchEffect } from 'vue'
+import { getUUID, msgError } from '@/utils'
+import { ref, watch, watchEffect } from 'vue'
+import { useStoreSurvey } from '@/stores'
+
+const storeSurvey = useStoreSurvey()
+const survey = storeSurvey.getSurveyRef()
 
 const props = defineProps<{
     selectType: typeof SURVEY_TYPE_SINGLE_SELECT | typeof SURVEY_TYPE_MULTI_SELECT,
     question: SurveyQuestion
 }>()
-const emits = defineEmits<{
-    (e: 'update', payload: SurveyQuestionContent_SingleSelect): void
-}>()
+// const emits = defineEmits<{
+//     (e: 'update', payload: SurveyQuestionContent_SingleSelect): void
+// }>()
 
 // 选项
 const selectOptions = ref([''])
 // 标题和描述信息
 const selectTitles = ref([{ id: getUUID(), title: '', describe: '' }])
+watch(selectOptions.value, () => {
+    if (!survey || !survey.value) {
+        msgError('获取不到 survey，这里是 SelectItem')
+        return
+    }
+    const index = props.question.order - 1
+    survey.value.questions[index].questionContent.options = selectOptions.value
+})
 
 if (props.question.questionContent.options) selectOptions.value = props.question.questionContent.options
 if (props.question.questionContent.titles) selectTitles.value = props.question.questionContent.titles
@@ -28,6 +40,7 @@ if (props.question.questionContent.titles) selectTitles.value = props.question.q
 const evtAddOption = (index: number) => {
     selectOptions.value.splice(index + 1, 0, '')
 }
+// 移除一个选项
 const evtRemoveOption = (index: number) => {
     if (selectOptions.value.length < 2) return
     selectOptions.value.splice(index, 1)
@@ -46,18 +59,18 @@ const evtRemoveTitle = (index: number) => {
 }
 
 // 响应父组件，告诉它有内容更新了
-watchEffect(() => {
-    emits('update', {
-        titles: selectTitles.value,
-        options: selectOptions.value,
-    })
-})
+// watchEffect(() => {
+//     emits('update', {
+//         titles: selectTitles.value,
+//         options: selectOptions.value,
+//     })
+// })
 </script>
 
 <template>
     <div>
         <div class="outer-wrapper">
-            <div v-for="(item, index) in selectTitles"
+            <!-- <div v-for="(item, index) in selectTitles"
                 class="mid-item">
                 <div class="inner-shrink">
                     <InputText :question="{
@@ -75,7 +88,7 @@ watchEffect(() => {
                     <el-button type="danger" :disabled="selectTitles.length < 2" class="btn"
                         @click="() => { evtRemoveTitle(index) }" circle>一</el-button>
                 </div>
-            </div>
+            </div> -->
             <!-- 选择题同样也需要标题和描述信息 -->
         </div>
         <div class="outer-wrapper">

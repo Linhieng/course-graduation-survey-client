@@ -54,8 +54,15 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
             errorCb && errorCb(resData.msg)
             return
         }
-        survey.value = resData.data
-        successCb && successCb(resData.data)
+
+        survey.value = {
+            id:  resData.data.id,
+            comment: resData.data.comment,
+            title: resData.data.title,
+            version: resData.data.questions.version,
+            questions: resData.data.questions.questions
+        }
+        successCb && successCb(survey.value)
         executeTasks()
     }
 
@@ -108,7 +115,6 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
         const jsonStr = JSON.stringify(_survey, null, 4)
         saveFile(jsonStr, `问卷模版 - ${_survey.title}.json`)
     }
-    // 用于 onAction，通知所有组件，survey 已经导入
 
 
     return {

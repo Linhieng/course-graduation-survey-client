@@ -1,3 +1,10 @@
+<!--
+    该组件负责更改的数据内容：
+        - 问卷的  title
+        - 问卷的 comment
+        - 问卷中所有问题数组，可以对他们进行增删改顺序操作
+ -->
+
 <script setup lang="ts">
 
 import { ref, onMounted, watchEffect, watch, onBeforeUnmount, nextTick } from 'vue'
@@ -16,12 +23,14 @@ const _survey = storeSurvey.getSurveyRef()
 // 该组件中，只负责修改 title 和 content
 const survey_title = ref('')
 const survey_comment = ref('')
+// 是否正在加载问卷
+const isLoading = ref(true)
 watch([survey_title, survey_comment], () => {
     if (!_survey || !_survey.value) return
     _survey.value.title = survey_title.value
     _survey.value.comment = survey_comment.value
 })
-storeSurvey.$onAction(({name, after})=>{
+storeSurvey.$onAction(({ name, after }) => {
     if (name === 'importSurvey') {
         after((survey) => {
             if (!survey || !survey.value) {
@@ -33,83 +42,86 @@ storeSurvey.$onAction(({name, after})=>{
         })
     }
 })
+storeSurvey.addTask(() => {
+    isLoading.value = false
+})
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 
-const route = useRoute()
-const surveyId = Number(route.query.surveyId)
+// const route = useRoute()
+// const surveyId = Number(route.query.surveyId)
 
 
-const questions = ref<SurveyQuestion[]>([{
-    id: getUUID(),
-    isRequired: true,
-    order: 1,
-    questionType: 'input_content',
-    questionContent: {
-        title: '',
-        describe: '',
-    }
-}])
+// const questions = ref<SurveyQuestion[]>([{
+//     id: getUUID(),
+//     isRequired: true,
+//     order: 1,
+//     questionType: 'input_content',
+//     questionContent: {
+//         title: '',
+//         describe: '',
+//     }
+// }])
 
-const survey = ref<Survey>({
-    id: surveyId,
-    title: '未命名标题',
-    comment: '',
-    // @ts-ignore
-    questions // 如果设置为 questions = questions.value ，则会丢失响应式
-})
-const hasGetSurvey = ref(false)
-const surveyTitle = ref('')
-const surveyComment = ref('')
+// const survey = ref<Survey>({
+//     id: surveyId,
+//     title: '未命名标题',
+//     comment: '',
+//     // @ts-ignore
+//     questions // 如果设置为 questions = questions.value ，则会丢失响应式
+// })
+// const hasGetSurvey = ref(false)
+// const surveyTitle = ref('')
+// const surveyComment = ref('')
 
-// 变更后，1 秒内缓存对应数据
-const cacheSurvey = debounce(() => {
-    storeSurvey.setSurvey(survey.value)
-}, 1000)
+// // 变更后，1 秒内缓存对应数据
+// const cacheSurvey = debounce(() => {
+//     storeSurvey.setSurvey(survey.value)
+// }, 1000)
 
-// 定时将问卷数据同步到数据库中
-const timer = setInterval(storeSurvey.cacheSurvey, 1000 * 10)
+// // 定时将问卷数据同步到数据库中
+// const timer = setInterval(storeSurvey.cacheSurvey, 1000 * 10)
 
-onBeforeUnmount(() => {
-    clearInterval(timer)
-})
-onMounted(() => {
-    // TODO: 获取问卷信息
-})
+// onBeforeUnmount(() => {
+//     clearInterval(timer)
+// })
+// onMounted(() => {
+//     // TODO: 获取问卷信息
+// })
 
-watchEffect(() => {
-    survey.value.title = surveyTitle.value
-    survey.value.comment = surveyComment.value
-    cacheSurvey()
-})
+// watchEffect(() => {
+//     survey.value.title = surveyTitle.value
+//     survey.value.comment = surveyComment.value
+//     cacheSurvey()
+// })
 
 
-// 生成一个 SurveyQuestion 对象
-const generateQuestion = (order: number, questionType: SurveyQuestionType): SurveyQuestion => {
-    const question: SurveyQuestion = {
-        id: getUUID(),
-        order: order,
-        questionType,
-        // @ts-ignore
-        questionContent: {}
-    }
-    return question
-}
+// // 生成一个 SurveyQuestion 对象
+// const generateQuestion = (order: number, questionType: SurveyQuestionType): SurveyQuestion => {
+//     const question: SurveyQuestion = {
+//         id: getUUID(),
+//         order: order,
+//         questionType,
+//         // @ts-ignore
+//         questionContent: {}
+//     }
+//     return question
+// }
 
-// 点击新增按钮，新建一个问题，内容由子组件提供
+// // 点击新增按钮，新建一个问题，内容由子组件提供
 const evtNewQuestion = (payload: NewQuestionPayload) => {
-    const order = payload.order
-    questions.value.splice(order, 0, generateQuestion(order + 1, payload.type))
-    questions.value.forEach((item, i) => item.order = i + 1)
+    // const order = payload.order
+    // questions.value.splice(order, 0, generateQuestion(order + 1, payload.type))
+    // questions.value.forEach((item, i) => item.order = i + 1)
 }
 
-// 用户编辑每个问题的内容。
+// // 用户编辑每个问题的内容。
 const updateContent = (question: SurveyQuestion) => {
-    const order = question.order
-    questions.value[order - 1].questionContent = question.questionContent
-    cacheSurvey()
+    // const order = question.order
+    // questions.value[order - 1].questionContent = question.questionContent
+    // cacheSurvey()
 }
 
 // 监听 导入问卷事件
@@ -152,17 +164,26 @@ const updateContent = (question: SurveyQuestion) => {
             </p>
         </div>
         <ul class="questions-wrapper">
-            <li v-for="q of questions" :key="q.id"
-                class="question-item-wrapper"
-                :style="{ '--item-order': q.order }">
-                <div class="survey-edit">
-                    <EditQuestion
-                        :question="q"
-                        @update-content="updateContent" />
-                </div>
-                <NewQuestion :order="q.order" @new-question="evtNewQuestion" />
-                <el-divider />
-            </li>
+            <div v-if="isLoading" class="loading flex-all-center" >
+                <el-skeleton animated> </el-skeleton>
+                <el-skeleton animated> </el-skeleton>
+                <el-skeleton animated> </el-skeleton>
+                <el-skeleton animated> </el-skeleton>
+                <el-skeleton animated> </el-skeleton>
+            </div>
+            <div v-else>
+                <li v-for="q of _survey?.questions" :key="q.id"
+                    class="question-item-wrapper"
+                    :style="{ '--item-order': q.order }">
+                    <div class="survey-edit">
+                        <EditQuestion
+                            :question="q"
+                            @update-content="updateContent" />
+                    </div>
+                    <NewQuestion :order="q.order" @new-question="evtNewQuestion" />
+                    <el-divider />
+                </li>
+            </div>
         </ul>
     </div>
 </template>
