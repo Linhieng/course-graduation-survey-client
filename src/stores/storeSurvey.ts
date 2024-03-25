@@ -1,7 +1,7 @@
 import { apiCacheSurvey, apiGetSurveyById } from '@/api'
-import { STATUS_FAILED, STATUS_SUCCEED } from '@/constants'
-import type { Survey } from '@/types'
-import { msg, msgError, noticeError, saveFile, unrefRecursion } from '@/utils'
+import { STATUS_FAILED, STATUS_SUCCEED, SURVEY_TYPE_INPUT_CONTENT, SURVEY_TYPE_MULTI_SELECT, SURVEY_TYPE_SINGLE_SELECT } from '@/constants'
+import type { Survey, SurveyQuestionType, SurveyQuestion_MultiSelect, SurveyQuestion_SingleSelect, SurveyQuestion_Text } from '@/types'
+import { getUUID, msg, msgError, noticeError, saveFile, unrefRecursion } from '@/utils'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -56,7 +56,7 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
         }
 
         survey.value = {
-            id:  resData.data.id,
+            id: resData.data.id,
             comment: resData.data.comment,
             title: resData.data.title,
             version: resData.data.questions.version,
@@ -119,10 +119,68 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
         saveFile(jsonStr, `问卷模版 - ${_survey.title}.json`)
     }
 
+    // TODO: 根据 type，指定返回的类型
+    const generateQuestion = (type: SurveyQuestionType, order: number) => {
+        if (type === SURVEY_TYPE_INPUT_CONTENT) {
+            const q: SurveyQuestion_Text = {
+                id: getUUID(),
+                isRequired: true,
+                order,
+                questionType: type,
+                questionContent: {
+                    title: '',
+                    describe: ''
+                }
+            }
+            return q
+        }
+        // if (type === SURVEY_TYPE_SINGLE_SELECT || type === SURVEY_TYPE_MULTI_SELECT) {
+        const q: SurveyQuestion_SingleSelect = {
+            id: getUUID(),
+            isRequired: true,
+            order,
+            // @ts-ignore
+            questionType: type,
+            questionContent: {
+                titles: [{
+                    id: getUUID(),
+                    title: '',
+                    describe: ''
+                }],
+                options: ['']
+            }
+        }
+        return q
+        // }
+    }
+    // 新建一个问题
+    const addOneQuestion = (questionType: SurveyQuestionType, order: number) => {
+        if (!survey.value) {
+            msgError('survey 不存在，这里是 storeSurvey')
+            return
+        }
+        survey.value.questions.splice(order, 0, generateQuestion(questionType, order))
+        survey.value.questions.forEach((item, i) => item.order = i + 1)
+    }
+    // 删除一个问题
+    const removeOneQuestion = (order: number) => {
+        if (!survey.value) {
+            msgError('survey 不存在，这里是 storeSurvey')
+            return
+        }
+        if (survey.value.questions.length < 2) {
+            msgError('至少需要一个问题！')
+            return
+        }
+        survey.value.questions.splice(order - 1, 1)
+        survey.value.questions.forEach((item, i) => item.order = i + 1)
+    }
 
     return {
         getSurveyRef,
         addTask,
+        addOneQuestion,
+        removeOneQuestion,
         ///////////////////////////////////
         ///////////////////////////////////
         ///////////////////////////////////

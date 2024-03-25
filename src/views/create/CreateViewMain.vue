@@ -110,11 +110,11 @@ storeSurvey.addTask(() => {
 //     return question
 // }
 
-// // 点击新增按钮，新建一个问题，内容由子组件提供
-const evtNewQuestion = (payload: NewQuestionPayload) => {
-    // const order = payload.order
-    // questions.value.splice(order, 0, generateQuestion(order + 1, payload.type))
-    // questions.value.forEach((item, i) => item.order = i + 1)
+// 新建一个问题
+const btnNewQuestion = (payload: NewQuestionPayload) => {
+    const order = payload.order
+    const type = payload.type
+    storeSurvey.addOneQuestion(type, order)
 }
 
 // // 用户编辑每个问题的内容。
@@ -180,7 +180,7 @@ const updateContent = (question: SurveyQuestion) => {
                             :question="q"
                             @update-content="updateContent" />
                     </div>
-                    <NewQuestion :order="q.order" @new-question="evtNewQuestion" />
+                    <NewQuestion :order="q.order" @new-question="btnNewQuestion" />
                     <el-divider />
                 </li>
             </div>

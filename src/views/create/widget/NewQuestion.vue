@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import {ref} from 'vue'
-import { SURVEY_TYPE_INPUT_CONTENT,SURVEY_TYPE_SINGLE_SELECT,SURVEY_TYPE_MULTI_SELECT } from '@/constants'
+import { ref } from 'vue'
+import {
+    SURVEY_TYPE_INPUT_CONTENT as input_content,
+    SURVEY_TYPE_SINGLE_SELECT as single_select,
+    SURVEY_TYPE_MULTI_SELECT as multi_select
+} from '@/constants'
 import type { SurveyQuestionType } from '@/types'
 
 export interface NewQuestionPayload {
@@ -16,21 +20,13 @@ const emit = defineEmits<{
     (e: 'new-question', payload: NewQuestionPayload): void
 }>()
 
-const input_content = SURVEY_TYPE_INPUT_CONTENT
-const single_select = SURVEY_TYPE_SINGLE_SELECT
-const multi_select = SURVEY_TYPE_MULTI_SELECT
-
 
 // 将用户最终选择的问题类型反馈给父组件
-const emitNewQuestion = (type: SurveyQuestionType) => {
+const btnAddQuestion = (type: SurveyQuestionType) => {
     emit('new-question', {
         order: props.order,
         type
     })
-}
-
-const evtNewQuestion = (type: SurveyQuestionType) => {
-    emitNewQuestion(type)
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -42,14 +38,14 @@ const showOptions = ref(false)
 <template>
     <div class="toggle-utils-show" @click="showOptions = !showOptions">
         <span></span>
-        <p>{{ showOptions ? '关闭选项': '展开选项' }}</p>
+        <p>{{ showOptions ? '关闭选项' : '展开选项' }}</p>
         <span></span>
     </div>
-    <div class="show-options" :class="{'is-show': showOptions}">
+    <div class="show-options" :class="{ 'is-show': showOptions }">
         <div class="options-content">
-            <el-button round @click="() => {evtNewQuestion(input_content)}">新建文本输入题</el-button>
-            <el-button round @click="() => {evtNewQuestion(single_select)}">新建单选题</el-button>
-            <el-button round @click="() => {evtNewQuestion(multi_select)}">新建多选题</el-button>
+            <el-button round @click="() => { btnAddQuestion(input_content) }">新建文本输入题</el-button>
+            <el-button round @click="() => { btnAddQuestion(single_select) }">新建单选题</el-button>
+            <el-button round @click="() => { btnAddQuestion(multi_select) }">新建多选题</el-button>
         </div>
     </div>
 </template>
@@ -91,7 +87,8 @@ const showOptions = ref(false)
     .options-content {
         display: flex;
         flex-wrap: wrap;
-        > * {
+
+        >* {
             margin: 10px;
         }
     }
