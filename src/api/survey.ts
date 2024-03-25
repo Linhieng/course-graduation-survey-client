@@ -23,6 +23,7 @@ export function apiCacheSurvey(data: ReqSurveyAche): ResProCacheSurvey {
 }
 
 export function apiGetSurveyById(surveyId: number): ResProGetSurveyById {
+    // TODO: 校验返回的响应体是否符合要求
     return get(urlGetSurveyById + surveyId)
 }
 

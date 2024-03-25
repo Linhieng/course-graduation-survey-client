@@ -138,6 +138,7 @@ interface ResGetSurveyById {
     id: number
     title: string
     comment: string
+    /** 这里数据库只负责储存，不负责解析，也就是说该内容由前端生成，同时也由前端解析 */
     questions: Structure_Json
 }
 /* ============================================================================ */
