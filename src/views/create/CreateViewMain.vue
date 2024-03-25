@@ -30,6 +30,7 @@ watch([survey_title, survey_comment], () => {
     _survey.value.title = survey_title.value
     _survey.value.comment = survey_comment.value
 })
+
 storeSurvey.$onAction(({ name, after }) => {
     if (name === 'importSurvey') {
         after((survey) => {
@@ -42,8 +43,14 @@ storeSurvey.$onAction(({ name, after }) => {
         })
     }
 })
-storeSurvey.addTask(() => {
+storeSurvey.addTask((survey) => {
+    if (!survey.value) {
+        msgError('无法获取 survey，这里是 create view main')
+        return
+    }
     isLoading.value = false
+    survey_title.value = survey.value.title
+    survey_comment.value = survey.value.comment
 })
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -164,7 +171,7 @@ const updateContent = (question: SurveyQuestion) => {
             </p>
         </div>
         <ul class="questions-wrapper">
-            <div v-if="isLoading" class="loading flex-all-center" >
+            <div v-if="isLoading" class="loading flex-all-center">
                 <el-skeleton animated> </el-skeleton>
                 <el-skeleton animated> </el-skeleton>
                 <el-skeleton animated> </el-skeleton>
@@ -192,6 +199,15 @@ const updateContent = (question: SurveyQuestion) => {
 .top-wrapper {
     margin-bottom: 20px;
     padding: 20px;
+    h1 :deep(textarea)  {
+        font-weight: bold;
+        font-size: 2rem;
+        text-align: center;
+    }
+    p :deep(textarea) {
+        font-size: 1.3rem;
+        text-indent: 2rem;
+    }
 }
 
 // 处理每个问题的顺序样式
