@@ -3,7 +3,7 @@
 TODO:
 
 - [x] 使用 token
-- [ ] 使用 session
+- [ ] ~~使用 session~~ 使用 localSotrage 存储 token，然后使用 axios 拦截，在每次请求前填充 token，具体细节参考 [arco-design-pro-vue]
 - [ ] 使用 pinia 进行单个页面的全局管理，不在组件中进行通信
 - [ ] 修复相关样式问题（优先级低）
 - [ ] 重构代码，让其逻辑更加清晰
@@ -15,6 +15,7 @@ TODO:
 - [ ] 重命名相关组件名称，让其更易读和有规律。
 - [x] 处理问卷的缓存
 - [ ] 提供对 PC 端的宽度适应，比如让工具直接显示在一旁，无需隐藏，但在 phone 中就隐藏为按钮
+- [ ] 重新封装 axios，参考 [arco-design-pro-vue] 中的封装方式，使用拦截器进行封装！
 
 
 
@@ -78,3 +79,5 @@ vue 只会认为你在最后添加了一个新元素，所以只在最后面新�
 ## 为 api 提供良好的类型提示
 
 不要小看这个，ts 类型很容易，但想要用好，从而提高开发效率则不容易。
+
+[arco-design-pro-vue]: https://github.com/arco-design/arco-design-pro-vue
