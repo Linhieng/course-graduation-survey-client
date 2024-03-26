@@ -84,6 +84,8 @@ const evtLogin = async () => {
 
     const resData = await apiLogin({username, password})
 
+    console.log('获得模拟到的数据：',resData)
+
     if (resData.status === STATUS_SUCCEED) {
         storeUser.loginUser(resData.data)
         routerReplace(router, '/')
