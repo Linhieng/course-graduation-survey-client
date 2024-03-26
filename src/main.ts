@@ -1,6 +1,8 @@
 import './assets/style/index.scss'
 import 'element-plus/dist/index.css'
 
+import './mock'
+
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 

@@ -19,9 +19,11 @@
     },
     "devDependencies": {
         "@tsconfig/node20": "^20.1.2",
+        "@types/mockjs": "^1.0.10",
         "@types/node": "^20.11.10",
         "@vitejs/plugin-vue": "^5.0.3",
         "@vue/tsconfig": "^0.5.1",
+        "mockjs": "^1.1.0",
         "npm-run-all2": "^6.1.1",
         "sass": "^1.71.1",
         "typescript": "~5.3.0",
