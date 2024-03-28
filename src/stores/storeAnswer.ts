@@ -29,14 +29,21 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
             router.replace({ name: 'NotFound' })
             return
         }
+        const {id, title, comment, questions} = resData.data
+        surveyData.value = {
+            id, title, comment, questions: questions.questions
+        }
+        successCb && successCb(surveyData.value)
+    }
 
-        surveyData.value = resData.data
-        successCb && successCb(resData.data)
+    const getSurveyDataRef = () => {
+        return surveyData
     }
 
     return {
         surveyData,
         setSurveyId,
-        fetchSurvey
+        fetchSurvey,
+        getSurveyDataRef
     }
 })
