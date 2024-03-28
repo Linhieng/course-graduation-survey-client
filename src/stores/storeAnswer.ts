@@ -5,7 +5,7 @@ import {
     SURVEY_TYPE_SINGLE_SELECT,
     SURVEY_TYPE_MULTI_SELECT,
 } from "@/constants"
-import type { Survey, SurveyQuestionType } from "@/types"
+import type { Survey, SurveyQuestion, SurveyQuestionType } from "@/types"
 import { msgError } from "@/utils"
 import { defineStore } from "pinia"
 import { ref } from "vue"
@@ -51,6 +51,7 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
         return surveyData
     }
 
+    // TODO 重命名为 broadcastCheck
     const checkAnswer = () => { }
     const enrollNotFill = (msg: string) => {
         if (isShowMsg.value) return
@@ -67,6 +68,55 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
         surveyAnswer.value[questionOrder-1] = answer
     }
 
+    /** 校验单个问题，其对应的 answer 是不是不合格的，返回 true 表示不合格 */
+    const isOneAnswerFailure = (q: SurveyQuestion) => {
+        const answer = surveyAnswer.value
+        const index = q.order - 1
+        if (!q.isRequired) return false
+        if (!answer[index]) return true
+
+        if (q.questionType === SURVEY_TYPE_INPUT_CONTENT) {
+            if (answer[index].trim() === '') return true
+            return false
+        }
+        if (q.questionType === SURVEY_TYPE_SINGLE_SELECT) {
+            // 长度不够，pass
+            if (answer[index].length < q.questionContent.titles.length) return true
+            // 每一个选项都选了，说明合格
+            if (answer[index].every(answerItem => answerItem)) return false
+            return true
+        }
+        if (q.questionType === SURVEY_TYPE_MULTI_SELECT) {
+            // 长度不够，pass
+            if (answer[index].length < q.questionContent.titles.length) return true
+            // 每一个选项中都有选一个，说明合格。
+            if (answer[index].every(answerItem => answerItem.length > 0)) return false
+            return true
+        }
+    }
+    const isAnswerValid = () => {
+        const len = surveyData.value?.questions.length
+        // 数量不够，pass
+        if (surveyAnswer.value.length !== len) return false
+        // 有一个不合格，pass
+        if (surveyData.value?.questions.some(isOneAnswerFailure)) {
+            return false
+        }
+        return true
+    }
+    const submitAnswer = () => {
+        if (isAnswerValid()) {
+            submit()
+        } else {
+            // TODO: 这里能有更好的触发方式吗？是我遗漏了什么 pinia 的知识点吗？
+            useStoreAnswer().checkAnswer()
+        }
+    }
+
+    function submit() {
+        console.log('已提交')
+    }
+
     return {
         surveyData,
         surveyAnswer, // 不 return，浏览器中的 pinia 插件无法检测到
@@ -74,6 +124,7 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
         fetchSurvey,
         getSurveyDataRef,
         checkAnswer,
+        submitAnswer,
         enrollNotFill,
         syncAnswer,
     }

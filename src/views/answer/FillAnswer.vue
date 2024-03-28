@@ -17,7 +17,7 @@ storeAnswer.fetchSurvey(() => {
 })
 
 const submit = () => {
-    storeAnswer.checkAnswer()
+    storeAnswer.submitAnswer()
 }
 </script>
 
