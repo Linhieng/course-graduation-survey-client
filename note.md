@@ -2,6 +2,9 @@
 
 TODO:
 
+- [ ] CI/CD, git action
+- [ ] 国际化
+- [ ] 换肤
 - [x] 使用 token
 - [ ] ~~使用 session~~ 使用 localSotrage 存储 token，然后使用 axios 拦截，在每次请求前填充 token，具体细节参考 [arco-design-pro-vue]
 - [ ] 使用 pinia 进行单个页面的全局管理，不在组件中进行通信
