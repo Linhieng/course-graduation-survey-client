@@ -36,12 +36,26 @@ if (props.question.isRequired) {
         }
     })
 }
+
+
+////////////////////////////////////////////////
+// 为 UI 服务
+////////////////////////////////////////////////
+const showOrder = (index: number) => {
+    if (titles.length > 1) {
+        return props.question.order + '-' + (index + 1)
+    } else {
+        return props.question.order
+    }
+}
 </script>
 
 <template>
     <div class="wrap" v-for="(title, index) of titles"
-        :key="title.id">
-        <p>{{ title.title }}</p>
+        :key="title.id"
+        :class="{required: props.question.isRequired}"
+        >
+        <p>{{ showOrder(index) }} {{ title.title }}</p>
         <p>{{ title.describe }}</p>
         <div>
             <el-checkbox-group v-model="answerMultiple" size="large"
@@ -60,6 +74,7 @@ if (props.question.isRequired) {
 <style scoped lang="scss">
 .wrap {
     margin-bottom: 40px;
+
     p {
         margin-bottom: 20px;
     }
@@ -73,8 +88,24 @@ if (props.question.isRequired) {
         flex-wrap: wrap;
         align-items: center;
     }
+
     .checkbox-item {
         margin: 10px;
     }
+}
+
+// 显示必选 * 符号
+.wrap {
+    position: relative;
+}
+.wrap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -0.5rem;
+}
+.wrap.required::before {
+    content: '*';
+    color: red;
 }
 </style>

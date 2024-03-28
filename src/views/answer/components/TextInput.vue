@@ -26,8 +26,10 @@ if (props.question.isRequired) {
 </script>
 
 <template>
-    <div class="wrap">
-        <p>{{ props.question.questionContent.title }}</p>
+    <div class="wrap"
+        :class="{required: props.question.isRequired}"
+    >
+        <p> {{ props.question.order }} {{ props.question.questionContent.title }}</p>
         <p>{{ props.question.questionContent.describe }}</p>
         <p>
             <el-input
@@ -48,5 +50,21 @@ if (props.question.isRequired) {
     p:nth-child(1) {
         font-size: large;
     }
+}
+
+
+// 显示必选 * 符号
+.wrap {
+    position: relative;
+}
+.wrap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -0.5rem;
+}
+.wrap.required::before {
+    content: '*';
+    color: red;
 }
 </style>

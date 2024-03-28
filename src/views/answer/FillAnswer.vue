@@ -91,22 +91,11 @@ header {
 main {
     margin-top: 30px;
     padding: 20px;
-    // ol {
-    //     list-style: none;
-    // }
+    ol {
+        list-style: none;
+    }
     li {
         margin-bottom: 30px;
-        position: relative;
-        padding-left: 9px;
-    }
-    li::before {
-        content: '';
-        position: absolute;
-        left: 0;
-    }
-    li.required::before {
-        content: '*';
-        color: red;
     }
     .btn-submit-wrap {
         display: grid;

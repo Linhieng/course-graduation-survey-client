@@ -30,12 +30,24 @@ if (props.question.isRequired) {
         }
     })
 }
+
+////////////////////////////////////////////////
+// 为 UI 服务
+////////////////////////////////////////////////
+const showOrder = (index: number) => {
+    if (titles.length > 1) {
+        return props.question.order + '-' + (index + 1)
+    } else {
+        return props.question.order
+    }
+}
 </script>
 
 <template>
     <div class="wrap" v-for="(title, index) of titles"
+        :class="{required: props.question.isRequired}"
         :key="title.id">
-        <p>{{ title.title }}</p>
+        <p> {{ showOrder(index) }} {{ title.title }}</p>
         <p>{{ title.describe }}</p>
         <div>
             <el-radio-group v-model="answerSingle[index]" size="large"
@@ -73,4 +85,20 @@ if (props.question.isRequired) {
         margin: 0;
     }
 }
+
+// 显示必选 * 符号
+.wrap {
+    position: relative;
+}
+.wrap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -0.5rem;
+}
+.wrap.required::before {
+    content: '*';
+    color: red;
+}
+
 </style>
