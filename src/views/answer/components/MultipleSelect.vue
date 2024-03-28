@@ -58,7 +58,7 @@ const showOrder = (index: number) => {
         <p>{{ showOrder(index) }} {{ title.title }}</p>
         <p>{{ title.describe }}</p>
         <div>
-            <el-checkbox-group v-model="answerMultiple" size="large"
+            <el-checkbox-group v-model="answerMultiple[index]" size="large"
                 class="checkbox-group">
                 <el-checkbox v-for="(option, index) of options"
                     border
