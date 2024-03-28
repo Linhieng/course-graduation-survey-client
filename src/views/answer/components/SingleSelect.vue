@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { SurveyQuestion_SingleSelect } from '@/types'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useStoreAnswer } from '@/stores'
 
 const storeAnswer = useStoreAnswer()
@@ -12,6 +12,9 @@ const options = props.question.questionContent.options
 
 const answerSingle = ref([])
 
+watch(answerSingle.value, () => {
+    storeAnswer.syncAnswer(props.question.order, answerSingle.value)
+})
 
 const checkRequired = () => {
     const len = titles.length

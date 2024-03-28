@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { SurveyQuestion_MultiSelect } from '@/types'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useStoreAnswer } from '@/stores'
 
 const storeAnswer = useStoreAnswer()
@@ -12,6 +12,9 @@ const options = props.question.questionContent.options
 
 const answerMultiple = ref([])
 
+watch(answerMultiple.value, () => {
+    storeAnswer.syncAnswer(props.question.order, answerMultiple.value)
+})
 
 const checkRequired = () => {
     const len = titles.length

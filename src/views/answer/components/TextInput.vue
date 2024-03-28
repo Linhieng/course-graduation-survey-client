@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { SurveyQuestion_Text } from '@/types'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useStoreAnswer } from '@/stores';
 
 const storeAnswer = useStoreAnswer()
@@ -9,6 +9,10 @@ const props = defineProps<{
 }>()
 
 const answerText = ref('')
+
+watch(answerText, () => {
+    storeAnswer.syncAnswer(props.question.order, answerText.value)
+})
 
 const checkRequired = () => {
     const text = answerText.value.trim()

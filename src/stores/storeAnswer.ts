@@ -1,16 +1,23 @@
 import { apiAnswerGetSurvey } from "@/api/answer"
-import { STATUS_SUCCEED } from "@/constants"
-import type { Survey } from "@/types"
+import {
+    STATUS_SUCCEED,
+    SURVEY_TYPE_INPUT_CONTENT,
+    SURVEY_TYPE_SINGLE_SELECT,
+    SURVEY_TYPE_MULTI_SELECT,
+} from "@/constants"
+import type { Survey, SurveyQuestionType } from "@/types"
 import { msgError } from "@/utils"
 import { defineStore } from "pinia"
 import { ref } from "vue"
 import { useRouter } from "vue-router"
 import { msgWarning } from '@/utils'
 
+type Answer = string | string[]
+
 export const useStoreAnswer = defineStore('storeAnswer', () => {
     const surveyId = ref()
     const surveyData = ref<Survey>()
-    const surveyAnswer = ref()
+    const surveyAnswer = ref<Answer[]>([])
     const router = useRouter()
     // 处理用户频繁点击提交，导致多次显示 msg 消息！
     const isShowMsg = ref(false)
@@ -45,7 +52,7 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
     }
 
     const checkAnswer = () => { }
-    const enrollNotFill = (msg:string) => {
+    const enrollNotFill = (msg: string) => {
         if (isShowMsg.value) return
         msgWarning(msg)
         setTimeout(() => {
@@ -56,12 +63,18 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
         }, 3000)
     }
 
+    const syncAnswer = (questionOrder: number, answer: any) => {
+        surveyAnswer.value[questionOrder-1] = answer
+    }
+
     return {
         surveyData,
+        surveyAnswer, // 不 return，浏览器中的 pinia 插件无法检测到
         setSurveyId,
         fetchSurvey,
         getSurveyDataRef,
         checkAnswer,
         enrollNotFill,
+        syncAnswer,
     }
 })
