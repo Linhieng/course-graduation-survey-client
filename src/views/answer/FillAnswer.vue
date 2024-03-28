@@ -15,6 +15,10 @@ storeAnswer.setSurveyId(props.id)
 storeAnswer.fetchSurvey(() => {
     isFetching.value = false
 })
+
+const submit = () => {
+    storeAnswer.checkAnswer()
+}
 </script>
 
 <template>
@@ -39,7 +43,7 @@ storeAnswer.fetchSurvey(() => {
                     </li>
                 </ol>
                 <div class="btn-submit-wrap">
-                    <el-button class="btn-submit" type="primary">提交</el-button>
+                    <el-button class="btn-submit" type="primary" @click="submit">提交</el-button>
                 </div>
             </main>
             <footer>

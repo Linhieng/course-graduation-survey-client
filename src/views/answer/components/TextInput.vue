@@ -1,12 +1,28 @@
 <script setup lang="ts">
 import type { SurveyQuestion_Text } from '@/types'
 import { ref } from 'vue'
+import { useStoreAnswer } from '@/stores';
 
+const storeAnswer = useStoreAnswer()
 const props = defineProps<{
     question: SurveyQuestion_Text
 }>()
 
 const answerText = ref('')
+
+const checkRequired = () => {
+    const text = answerText.value.trim()
+    if (text === '') {
+        storeAnswer.enrollNotFill(`第 ${props.question.order} 题还未填写！`)
+    }
+}
+if (props.question.isRequired) {
+    storeAnswer.$onAction(({name})=> {
+        if (name === 'checkAnswer') {
+            checkRequired()
+        }
+    })
+}
 </script>
 
 <template>

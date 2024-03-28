@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { SurveyQuestion_MultiSelect } from '@/types'
 import { ref } from 'vue'
+import { useStoreAnswer } from '@/stores'
 
+const storeAnswer = useStoreAnswer()
 const props = defineProps<{
     question: SurveyQuestion_MultiSelect
 }>()
@@ -9,6 +11,31 @@ const titles = props.question.questionContent.titles
 const options = props.question.questionContent.options
 
 const answerMultiple = ref([])
+
+
+const checkRequired = () => {
+    const len = titles.length
+    if (len === 1) {
+        if (!answerMultiple.value[0]) {
+            storeAnswer.enrollNotFill(`第 ${props.question.order} 题还未填写！`)
+        }
+    } else {
+        for (let i = 0; i < len; i++) {
+            let ans = answerMultiple.value[i]
+            if (!ans) {
+                storeAnswer.enrollNotFill(`第 ${props.question.order} - ${i + 1} 题还未填写！`)
+                return
+            }
+        }
+    }
+}
+if (props.question.isRequired) {
+    storeAnswer.$onAction(({ name }) => {
+        if (name === 'checkAnswer') {
+            checkRequired()
+        }
+    })
+}
 </script>
 
 <template>
