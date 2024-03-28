@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { SurveyQuestion_MultiSelect } from '@/types'
-import { ref, watch } from 'vue'
+import { ref, watch, toRaw } from 'vue'
 import { useStoreAnswer } from '@/stores'
 
 const storeAnswer = useStoreAnswer()
@@ -13,20 +13,21 @@ const options = props.question.questionContent.options
 const answerMultiple = ref([])
 
 watch(answerMultiple.value, () => {
-    storeAnswer.syncAnswer(props.question.order, answerMultiple.value)
+    storeAnswer.syncAnswer(props.question.order, toRaw(answerMultiple.value))
 })
 
 const checkRequired = () => {
     const len = titles.length
     if (len === 1) {
-        if (!answerMultiple.value[0]) {
-            storeAnswer.enrollNotFill(`第 ${props.question.order} 题还未填写！`)
+        const ans = answerMultiple.value[0]
+        if (!ans || answerMultiple.value[0].length < 1) {
+            storeAnswer.enrollNotFill(`第 ${props.question.order} 题至少选一个！`)
         }
     } else {
         for (let i = 0; i < len; i++) {
             let ans = answerMultiple.value[i]
-            if (!ans) {
-                storeAnswer.enrollNotFill(`第 ${props.question.order} - ${i + 1} 题还未填写！`)
+            if (!ans || ans.length < 1) {
+                storeAnswer.enrollNotFill(`第 ${props.question.order} - ${i + 1} 题至少选一个！`)
                 return
             }
         }
