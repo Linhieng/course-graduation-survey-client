@@ -120,7 +120,12 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
             answerDetail: toRaw(surveyAnswer.value)
         })
         if (resData.status === STATUS_SUCCEED) {
-            msgSuccess(resData.msg)
+            router.replace({
+                name: 'answer-over',
+                params: {
+                    msg: resData.msg
+                }
+            })
         } else {
             msgError(resData.msg)
         }

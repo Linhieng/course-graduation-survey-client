@@ -40,6 +40,13 @@ const router = createRouter({
             props: true,
             meta: { requiresAuth: false },
         },
+        {
+            path: '/answer-over/:msg',
+            name: 'answer-over',
+            component: () => import('../views/answer/complete.vue'),
+            props: true,
+            meta: { requiresAuth: false },
+        },
         // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
         {
             path: '/:pathMatch(.*)*',
