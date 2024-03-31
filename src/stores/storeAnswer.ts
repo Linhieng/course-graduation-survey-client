@@ -1,4 +1,4 @@
-import { apiAnswerGetSurvey } from "@/api/answer"
+import { apiAnswerGetSurvey, apiAnswerPost } from "@/api/answer"
 import {
     STATUS_SUCCEED,
     SURVEY_TYPE_INPUT_CONTENT,
@@ -6,9 +6,9 @@ import {
     SURVEY_TYPE_MULTI_SELECT,
 } from "@/constants"
 import type { Survey, SurveyQuestion, SurveyQuestionType } from "@/types"
-import { msgError } from "@/utils"
+import { msgError, msgSuccess } from "@/utils"
 import { defineStore } from "pinia"
-import { ref } from "vue"
+import { ref, toRaw } from "vue"
 import { useRouter } from "vue-router"
 import { msgWarning } from '@/utils'
 
@@ -113,8 +113,17 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
         }
     }
 
-    function submit() {
-        console.log('已提交')
+    async function submit() {
+        const resData = await apiAnswerPost(surveyId.value, {
+            surveyId: surveyId.value,
+            spendTime: 0,
+            answerDetail: toRaw(surveyAnswer.value)
+        })
+        if (resData.status === STATUS_SUCCEED) {
+            msgSuccess(resData.msg)
+        } else {
+            msgError(resData.msg)
+        }
     }
 
     return {
