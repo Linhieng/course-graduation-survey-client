@@ -41,7 +41,7 @@ const copy = (txt: string) => {
 }
 
 const copyLink = (survey: OneSurvey) => {
-    const link = `http://localhost:5173/answer?surveyId=${survey.id}`
+    const link = `http://localhost:5173/answer/${survey.id}`
     copy(link)
     msgSuccess(`已复制： ${link}`)
 }
