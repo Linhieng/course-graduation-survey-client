@@ -53,6 +53,15 @@ const deleteSurvey = (survey: OneSurvey) => {
 const toggleSurveyValid = (survey: OneSurvey) => {
     apiToggleSurveyValid(survey.id)
 }
+
+const toStatAnswer = (survey: OneSurvey) => {
+    router.push({
+        name: 'stat',
+        params: {
+            surveyId: survey.id
+        }
+    })
+}
 </script>
 
 <template>
@@ -72,7 +81,7 @@ const toggleSurveyValid = (survey: OneSurvey) => {
                 <p class="btn-option flex-all-center" @click="() => { deleteSurvey(survey) }">
                     {{ survey.is_deleted ? '从回收站中恢复' : '移入回收站' }}
                 </p>
-                <p class="btn-option flex-all-center">统计数据</p>
+                <p class="btn-option flex-all-center" @click="() => { toStatAnswer(survey) }">统计数据</p>
                 <p class="btn-option flex-all-center" @click="() => { toggleSurveyValid(survey) }">
                     {{ survey.is_valid ? '停止收集' : '发布问卷' }}
                 </p>

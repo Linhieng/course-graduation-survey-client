@@ -4,6 +4,15 @@ import StatViewAside from './StatViewAside.vue'
 import StatViewMain from './StatViewMain.vue'
 import HeaderAsideMain from '@/layout/HeadAsideMain.vue'
 
+import { useStoreStat } from '@/stores'
+
+const storeStat = useStoreStat()
+const props = defineProps<{
+    surveyId: number
+}>()
+
+storeStat.setSurveyId(props.surveyId)
+
 </script>
 
 

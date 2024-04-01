@@ -28,8 +28,9 @@ const router = createRouter({
             meta: { requiresAuth: true },
         },
         {
-            path: '/stat',
+            path: '/stat/:surveyId',
             name: 'stat',
+            props: true,
             component: () => import('../views/stat/StatView.vue'),
             meta: { requiresAuth: true },
         },
