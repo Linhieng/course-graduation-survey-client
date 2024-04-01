@@ -10,6 +10,8 @@
         "components.d.ts": true,
     },
     "cSpell.words": [
+        "echart",
+        "echarts",
         "Linhieng",
         "pinia"
     ],
