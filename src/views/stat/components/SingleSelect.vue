@@ -2,14 +2,16 @@
 import type { SurveyQuestion_SingleSelect } from '@/types'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useStoreStat } from '@/stores'
+import { debounce } from '@/utils'
+import type { EChartsOption } from 'echarts'
 const storeStat = useStoreStat()
 
 const props = defineProps<{
     question: SurveyQuestion_SingleSelect
 }>()
-
+const ul = ref(null)
 const echartDoms = ref([])
-const echartInstances = []
+const echartInstances = [] as EChartsOption[]
 
 onMounted(() => {
     const options = storeStat.getAnswerItemOptions(props.question.questionType, props.question.order)
@@ -17,15 +19,23 @@ onMounted(() => {
         const dom = echartDoms.value[i].querySelector('.echarts-box')
         render(dom, option)
     })
+
+
+    const resizeObserver = new ResizeObserver(debounce(() => {
+        echartInstances.forEach(ins => {
+            ins.resize()
+        })
+    }, 500))
+
+    resizeObserver.observe(ul.value)
 })
 onBeforeUnmount(() => {
-    echartInstances.forEach(echartsInstance=> {
+    echartInstances.forEach(echartsInstance => {
         echartsInstance.dispose()
     })
 })
 async function render(dom, data) {
     const echarts = await import('echarts')
-    type EChartsOption = echarts.EChartsOption
     const myChart = echarts.init(dom)
     echartInstances.push(myChart)
     let options: EChartsOption
@@ -78,10 +88,9 @@ const showOrder = (i) => {
 </script>
 
 <template>
-    <ul>
+    <ul ref="ul">
         <li v-for="(title, i) of props.question.questionContent.titles"
-            ref="echartDoms"
-        >
+            ref="echartDoms">
             <p>
                 {{ showOrder(i) }}
                 {{ title.title }}
