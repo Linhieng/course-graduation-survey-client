@@ -8,7 +8,7 @@ import { useStoreStat } from '@/stores'
 
 const storeStat = useStoreStat()
 const props = defineProps<{
-    surveyId: number
+    surveyId: string
 }>()
 
 storeStat.setSurveyId(props.surveyId)

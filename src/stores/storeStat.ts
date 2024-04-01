@@ -5,8 +5,8 @@ import { ref } from "vue"
 export const useStoreStat = defineStore('storeStat', () => {
     const surveyId = ref()
 
-    function setSurveyId(id: number) {
-        surveyId.value = id
+    function setSurveyId(id: number|string) {
+        surveyId.value = Number(id)
         fetchStatData()
     }
 
