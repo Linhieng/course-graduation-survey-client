@@ -12,6 +12,7 @@ const props = defineProps<{
 const ul = ref(null)
 const echartDoms = ref([])
 const echartInstances = [] as EChartsOption[]
+let resizeObserver
 
 onMounted(() => {
     const options = storeStat.getAnswerItemOptions(
@@ -23,7 +24,7 @@ onMounted(() => {
         render(dom, option)
     })
 
-    const resizeObserver = new ResizeObserver(
+    resizeObserver = new ResizeObserver(
         debounce(() => {
             echartInstances.forEach((ins) => {
                 ins.resize()
@@ -34,6 +35,7 @@ onMounted(() => {
     resizeObserver.observe(ul.value)
 })
 onBeforeUnmount(() => {
+    resizeObserver.unobserve(ul.value)
     echartInstances.forEach((echartsInstance) => {
         echartsInstance.dispose()
     })
