@@ -50,12 +50,14 @@ export const useStoreHome = defineStore('storeHome', () => {
         msgSuccess(`已复制： ${link}`)
     }
 
-    const deleteSurvey = (survey: OneSurvey) => {
-        apiToggleSurveyDelete(survey.id, true)
+    const deleteSurvey = async (survey: OneSurvey) => {
+        await apiToggleSurveyDelete(survey.id, true)
+        fetchAllSurvey()
     }
 
-    const toggleSurveyValid = (survey: OneSurvey) => {
-        apiToggleSurveyValid(survey.id)
+    const toggleSurveyValid = async (survey: OneSurvey) => {
+        await apiToggleSurveyValid(survey.id)
+        fetchAllSurvey()
     }
 
     const toStatAnswer = (survey: OneSurvey) => {
