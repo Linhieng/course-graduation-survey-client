@@ -11,7 +11,7 @@ import { useStoreHome } from '@/stores'
 
 const storeHome = useStoreHome()
 const isFetch = storeHome.gerIsFetchRef()
-const showSurveys = storeHome.getAllSurveyRef()
+const showSurveys = storeHome.getValidSurveyRef()
 const toChangeSurvey = storeHome.toChangeSurvey
 const copyLink = storeHome.copyLink
 const deleteSurvey = storeHome.deleteSurvey

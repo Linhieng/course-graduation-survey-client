@@ -12,21 +12,40 @@ import { useRouter } from 'vue-router'
 
 export const useStoreHome = defineStore('storeHome', () => {
     const allSurvey = ref<OneSurvey[]>()
+    const validSurvey = ref<OneSurvey[]>()
+    const dumpSurvey = ref<OneSurvey[]>()
     const router = useRouter()
     const isFetch = ref(true)
 
     const gerIsFetchRef = () => {
         return isFetch
     }
+    const getDumpSurveyRef = () => {
+        return dumpSurvey
+    }
+    const getValidSurveyRef = () => {
+        return validSurvey
+    }
     const getAllSurveyRef = () => {
         return allSurvey
     }
+    /** 区分出已删除和未删除的问卷 */
+    function filterValidSurvey() {
+        const dump = [] as OneSurvey[]
+        validSurvey.value = allSurvey.value?.filter((survey) => {
+            if (!survey.is_deleted) return true
+            dump.push(survey)
+        })
+        dumpSurvey.value = dump
+    }
+    /** 从服务器获取问卷统统使用该入口！ */
     async function fetchAllSurvey() {
         isFetch.value = true
         const data = await apiGetAllSurveys()
         isFetch.value = false
         if (data.status === STATUS_SUCCEED) {
             allSurvey.value = data.data.all_surveys
+            filterValidSurvey()
         }
     }
 
@@ -73,6 +92,8 @@ export const useStoreHome = defineStore('storeHome', () => {
         allSurvey,
         gerIsFetchRef,
         fetchAllSurvey,
+        getDumpSurveyRef,
+        getValidSurveyRef,
         getAllSurveyRef,
         toChangeSurvey,
         copyLink,
