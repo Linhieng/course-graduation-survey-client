@@ -84,13 +84,22 @@ const toStatAnswer = (survey: OneSurvey) => {
                 <p>更新时间：{{ new Date(survey.updated_at).toLocaleString() }}</p>
             </div>
             <div class="btn-options">
-                <p class="btn-option flex-all-center" @click="() => { toChangeSurvey(survey) }"
-                    title="编辑问卷"
-                    >
-                    <el-icon size="20">
-                        <IconEdit/>
-                    </el-icon>
-                </p>
+                <el-tooltip
+                content="编辑问卷"
+                :hide-after="0"
+                >
+                    <p class="btn-option flex-all-center" @click="() => { toChangeSurvey(survey) }"
+                        title="编辑问卷"
+                        >
+                        <el-icon size="20">
+                            <IconEdit/>
+                        </el-icon>
+                    </p>
+                </el-tooltip>
+                <el-tooltip
+                :content="survey.is_deleted ? '从回收站中恢复' : '移入回收站'"
+                :hide-after="0"
+                >
                 <p class="btn-option flex-all-center" @click="() => { deleteSurvey(survey) }"
                     :title="survey.is_deleted ? '从回收站中恢复' : '移入回收站'"
                     >
@@ -105,6 +114,11 @@ const toStatAnswer = (survey: OneSurvey) => {
                         </el-icon>
                     </template>
                 </p>
+                </el-tooltip>
+                <el-tooltip
+                content="统计数据"
+                :hide-after="0"
+                >
                 <p class="btn-option flex-all-center" @click="() => { toStatAnswer(survey) }"
                     title="统计数据"
                     >
@@ -112,6 +126,11 @@ const toStatAnswer = (survey: OneSurvey) => {
                         <IconStat/>
                     </el-icon>
                 </p>
+                </el-tooltip>
+                <el-tooltip
+                :content="survey.is_valid ? '停止收集' : '发布问卷'"
+                :hide-after="0"
+                >
                 <p class="btn-option flex-all-center" @click="() => { toggleSurveyValid(survey) }"
                     :title="survey.is_valid ? '停止收集' : '发布问卷'"
                     >
@@ -126,6 +145,11 @@ const toStatAnswer = (survey: OneSurvey) => {
                         </el-icon>
                     </template>
                 </p>
+                </el-tooltip>
+                <el-tooltip
+                content="复制问卷链接"
+                :hide-after="0"
+                >
                 <p class="btn-option flex-all-center" @click="() => { copyLink(survey) }"
                     title="复制问卷链接"
                     >
@@ -133,6 +157,7 @@ const toStatAnswer = (survey: OneSurvey) => {
                         <IconCopy/>
                     </el-icon>
                 </p>
+                </el-tooltip>
             </div>
         </div>
         <div v-if="showSurveys && showSurveys.length < 1">
