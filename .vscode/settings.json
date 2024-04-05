@@ -1,5 +1,7 @@
 {
     "[vue][typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
         "editor.insertSpaces": true,
         "editor.indentSize": "tabSize",
         "editor.tabSize": 4,
@@ -46,8 +48,6 @@
     "diffEditor.hideUnchangedRegions.enabled": true,
     "markdown.editor.pasteUrlAsFormattedLink.enabled": "always",
 
-    "javascript.format.semicolons": "remove",
-    "typescript.format.semicolons": "remove",
 
     ////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////
@@ -69,8 +69,8 @@
 
     "cSpell.language": "en-GB,en-US",
     "cSpell.allowCompoundWords": true,
-    "[vue]": {
-        "editor.defaultFormatter": "Vue.volar"
-    },
+    // "[vue]": {
+    //     "editor.defaultFormatter": "Vue.volar"
+    // },
     "git.confirmSync": false,
 }
