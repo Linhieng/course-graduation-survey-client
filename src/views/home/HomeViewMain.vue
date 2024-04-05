@@ -70,7 +70,7 @@ const toStatAnswer = (survey: OneSurvey) => {
             :class="{ is_draft: survey.is_draft }">
             <div class="base-info">
                 <p>标题：{{ survey.title }}</p>
-                <p><el-text truncated>
+                <p v-if="survey.comment && survey.comment !== ''"><el-text truncated>
                         备注：{{ survey.comment }}
                     </el-text></p>
                 <p>创建时间：{{ new Date(survey.created_at).toLocaleString() }}</p>
