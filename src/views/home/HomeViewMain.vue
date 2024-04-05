@@ -85,78 +85,68 @@ const toStatAnswer = (survey: OneSurvey) => {
             </div>
             <div class="btn-options">
                 <el-tooltip
-                content="编辑问卷"
-                :hide-after="0"
-                >
+                    content="编辑问卷"
+                    :hide-after="0">
                     <p class="btn-option flex-all-center" @click="() => { toChangeSurvey(survey) }"
-                        title="编辑问卷"
-                        >
+                        title="编辑问卷">
                         <el-icon size="20">
-                            <IconEdit/>
+                            <IconEdit />
                         </el-icon>
                     </p>
                 </el-tooltip>
                 <el-tooltip
-                :content="survey.is_deleted ? '从回收站中恢复' : '移入回收站'"
-                :hide-after="0"
-                >
-                <p class="btn-option flex-all-center" @click="() => { deleteSurvey(survey) }"
-                    :title="survey.is_deleted ? '从回收站中恢复' : '移入回收站'"
-                    >
-                    <template v-if="survey.is_deleted">
-                        <el-icon size="20">
-                            <IconDelRedo />
-                        </el-icon>
-                    </template>
-                    <template v-else>
-                        <el-icon size="20">
-                            <IconDel />
-                        </el-icon>
-                    </template>
-                </p>
+                    :content="survey.is_deleted ? '从回收站中恢复' : '移入回收站'"
+                    :hide-after="0">
+                    <p class="btn-option flex-all-center" @click="() => { deleteSurvey(survey) }"
+                        :title="survey.is_deleted ? '从回收站中恢复' : '移入回收站'">
+                        <template v-if="survey.is_deleted">
+                            <el-icon size="20">
+                                <IconDelRedo />
+                            </el-icon>
+                        </template>
+                        <template v-else>
+                            <el-icon size="20">
+                                <IconDel />
+                            </el-icon>
+                        </template>
+                    </p>
                 </el-tooltip>
                 <el-tooltip
-                content="统计数据"
-                :hide-after="0"
-                >
-                <p class="btn-option flex-all-center" @click="() => { toStatAnswer(survey) }"
-                    title="统计数据"
-                    >
-                    <el-icon size="20">
-                        <IconStat/>
-                    </el-icon>
-                </p>
+                    content="统计数据"
+                    :hide-after="0">
+                    <p class="btn-option flex-all-center" @click="() => { toStatAnswer(survey) }"
+                        title="统计数据">
+                        <el-icon size="20">
+                            <IconStat />
+                        </el-icon>
+                    </p>
                 </el-tooltip>
                 <el-tooltip
-                :content="survey.is_valid ? '停止收集' : '发布问卷'"
-                :hide-after="0"
-                >
-                <p class="btn-option flex-all-center" @click="() => { toggleSurveyValid(survey) }"
-                    :title="survey.is_valid ? '停止收集' : '发布问卷'"
-                    >
-                    <template v-if="survey.is_valid">
-                        <el-icon size="20">
-                            <IconStop />
-                        </el-icon>
-                    </template>
-                    <template v-else>
-                        <el-icon size="20">
-                            <IconPublish />
-                        </el-icon>
-                    </template>
-                </p>
+                    :content="survey.is_valid ? '停止收集' : '发布问卷'"
+                    :hide-after="0">
+                    <p class="btn-option flex-all-center" @click="() => { toggleSurveyValid(survey) }"
+                        :title="survey.is_valid ? '停止收集' : '发布问卷'">
+                        <template v-if="survey.is_valid">
+                            <el-icon size="20">
+                                <IconStop />
+                            </el-icon>
+                        </template>
+                        <template v-else>
+                            <el-icon size="20">
+                                <IconPublish />
+                            </el-icon>
+                        </template>
+                    </p>
                 </el-tooltip>
                 <el-tooltip
-                content="复制问卷链接"
-                :hide-after="0"
-                >
-                <p class="btn-option flex-all-center" @click="() => { copyLink(survey) }"
-                    title="复制问卷链接"
-                    >
-                    <el-icon size="20">
-                        <IconCopy/>
-                    </el-icon>
-                </p>
+                    content="复制问卷链接"
+                    :hide-after="0">
+                    <p class="btn-option flex-all-center" @click="() => { copyLink(survey) }"
+                        title="复制问卷链接">
+                        <el-icon size="20">
+                            <IconCopy />
+                        </el-icon>
+                    </p>
                 </el-tooltip>
             </div>
         </div>
