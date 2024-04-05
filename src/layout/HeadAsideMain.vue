@@ -104,6 +104,7 @@ $asideWidth: 150px;
             overflow-y: auto;
 
             .main-content {
+                min-height: 100%;
                 position: relative;
                 padding-bottom: $toggleShowWidth;
 
