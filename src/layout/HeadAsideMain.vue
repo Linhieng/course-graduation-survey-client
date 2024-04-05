@@ -70,8 +70,7 @@ $asideWidth: 150px;
         height: calc(100vh - var(--layout-header-height));
         overflow: hidden;
 
-        display: grid;
-        grid-template-columns: $asideWidth 1fr;
+        display: flex;
 
         &,
         aside,
@@ -82,20 +81,24 @@ $asideWidth: 150px;
 
 
         aside {
+            transition: width 300ms;
+            flex: none;
             width: $asideWidth;
             height: calc(100vh - var(--layout-header-height));
             padding-bottom: $toggleShowWidth;
-            overflow: auto;
+            overflow: hidden;
 
             z-index: 10;
             border-right: 1px solid #eee;
 
             .aside-content {
                 width: $asideWidth;
+                overflow: auto;
             }
         }
 
         main {
+            flex: 1;
             height: calc(100vh - var(--layout-header-height));
             overflow-y: auto;
 
@@ -133,14 +136,8 @@ $asideWidth: 150px;
         }
 
         &.shrink {
-            grid-template-columns: 0 1fr;
-
             aside {
-                transform: translateX(-100%);
-
-                .aside-content {
-                    opacity: 0;
-                }
+                width: 0;
             }
 
             .toggle-show {
