@@ -1,14 +1,4 @@
 <script setup lang="ts">
-import {
-    apiGetAllSurveys,
-    apiToggleSurveyDelete,
-    apiToggleSurveyValid,
-} from '@/api'
-import { STATUS_SUCCEED } from '@/constants'
-import { onMounted, ref } from 'vue'
-import type { OneSurvey } from '@/types'
-import { msgSuccess, msgWarning } from '@/utils'
-import { useRouter } from 'vue-router'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconCopy from '@/components/icons/IconCopy.vue'
 import IconDel from '@/components/icons/IconDel.vue'
@@ -17,61 +7,17 @@ import IconStat from '@/components/icons/IconStat.vue'
 import IconPublish from '@/components/icons/IconPublish.vue'
 import IconStop from '@/components/icons/IconStop.vue'
 import bgImg from '@/assets/img/survey-bg.png'
+import { useStoreHome } from '@/stores'
 
-const allSurveys = ref<OneSurvey[]>()
-const showSurveys = ref<OneSurvey[]>()
-const router = useRouter()
+const storeHome = useStoreHome()
+const showSurveys = storeHome.getAllSurveyRef()
+const toChangeSurvey = storeHome.toChangeSurvey
+const copyLink = storeHome.copyLink
+const deleteSurvey = storeHome.deleteSurvey
+const toggleSurveyValid = storeHome.toggleSurveyValid
+const toStatAnswer = storeHome.toStatAnswer
 
-onMounted(async () => {
-    const resData = await apiGetAllSurveys()
-    if (resData.status === STATUS_SUCCEED) {
-        allSurveys.value = resData.data.all_surveys
-        showSurveys.value = allSurveys.value
-    }
-})
-
-const toChangeSurvey = (survey: OneSurvey) => {
-    if (!survey.is_draft) {
-        msgWarning('已发布的问卷不允许修改，请重新创建')
-        return
-    }
-    router.push({
-        name: 'create',
-        params: { id: survey.id },
-    })
-}
-
-const copy = (txt: string) => {
-    const input = document.createElement('input')
-    input.value = txt
-    document.body.appendChild(input)
-    input.select()
-    document.execCommand('Copy')
-    input.remove()
-}
-
-const copyLink = (survey: OneSurvey) => {
-    const link = `http://localhost:5173/answer/${survey.id}`
-    copy(link)
-    msgSuccess(`已复制： ${link}`)
-}
-
-const deleteSurvey = (survey: OneSurvey) => {
-    apiToggleSurveyDelete(survey.id, true)
-}
-
-const toggleSurveyValid = (survey: OneSurvey) => {
-    apiToggleSurveyValid(survey.id)
-}
-
-const toStatAnswer = (survey: OneSurvey) => {
-    router.push({
-        name: 'stat',
-        params: {
-            surveyId: survey.id,
-        },
-    })
-}
+storeHome.fetchAllSurvey()
 </script>
 
 <template>

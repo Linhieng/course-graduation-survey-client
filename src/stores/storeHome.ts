@@ -1,0 +1,80 @@
+import {
+    apiGetAllSurveys,
+    apiToggleSurveyDelete,
+    apiToggleSurveyValid,
+} from '@/api'
+import { STATUS_SUCCEED } from '@/constants'
+import type { OneSurvey } from '@/types'
+import { msgSuccess, msgWarning } from '@/utils'
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+export const useStoreHome = defineStore('storeHome', () => {
+    const allSurvey = ref<OneSurvey[]>()
+    const router = useRouter()
+
+    const getAllSurveyRef = () => {
+        return allSurvey
+    }
+    async function fetchAllSurvey() {
+        const data = await apiGetAllSurveys()
+        if (data.status === STATUS_SUCCEED) {
+            allSurvey.value = data.data.all_surveys
+        }
+    }
+
+    const toChangeSurvey = (survey: OneSurvey) => {
+        if (!survey.is_draft) {
+            msgWarning('已发布的问卷不允许修改，请重新创建')
+            return
+        }
+        router.push({
+            name: 'create',
+            params: { id: survey.id },
+        })
+    }
+
+    const copy = (txt: string) => {
+        const input = document.createElement('input')
+        input.value = txt
+        document.body.appendChild(input)
+        input.select()
+        document.execCommand('Copy')
+        input.remove()
+    }
+
+    const copyLink = (survey: OneSurvey) => {
+        const link = `http://localhost:5173/answer/${survey.id}`
+        copy(link)
+        msgSuccess(`已复制： ${link}`)
+    }
+
+    const deleteSurvey = (survey: OneSurvey) => {
+        apiToggleSurveyDelete(survey.id, true)
+    }
+
+    const toggleSurveyValid = (survey: OneSurvey) => {
+        apiToggleSurveyValid(survey.id)
+    }
+
+    const toStatAnswer = (survey: OneSurvey) => {
+        router.push({
+            name: 'stat',
+            params: {
+                surveyId: survey.id,
+            },
+        })
+    }
+
+    return {
+        allSurvey,
+        fetchAllSurvey,
+        getAllSurveyRef,
+        toChangeSurvey,
+        copyLink,
+        deleteSurvey,
+        toggleSurveyValid,
+        toStatAnswer,
+    }
+})
