@@ -156,8 +156,10 @@ const toStatAnswer = (survey: OneSurvey) => {
     .surveys-item {
         max-width: 350px;
         padding: 20px;
-        box-shadow: 0 0 10px 0 #eee;
+        box-shadow: 0 0 20px 0 #eee;
         margin: 10px;
+        background-color: white;
+        border-radius: 4px;
     }
 
 }
