@@ -6,6 +6,13 @@ import { onMounted, ref } from 'vue'
 import type { OneSurvey } from '@/types'
 import { msgSuccess, msgWarning } from '@/utils'
 import { useRouter } from 'vue-router'
+import IconEdit from '@/components/icons/IconEdit.vue'
+import IconCopy from '@/components/icons/IconCopy.vue'
+import IconDel from '@/components/icons/IconDel.vue'
+import IconDelRedo from '@/components/icons/IconDelRedo.vue'
+import IconStat from '@/components/icons/IconStat.vue'
+import IconPublish from '@/components/icons/IconPublish.vue'
+import IconStop from '@/components/icons/IconStop.vue'
 
 const allSurveys = ref<OneSurvey[]>()
 const showSurveys = ref<OneSurvey[]>()
@@ -77,15 +84,55 @@ const toStatAnswer = (survey: OneSurvey) => {
                 <p>更新时间：{{ new Date(survey.updated_at).toLocaleString() }}</p>
             </div>
             <div class="btn-options">
-                <p class="btn-option flex-all-center" @click="() => { toChangeSurvey(survey) }">修改问卷内容</p>
-                <p class="btn-option flex-all-center" @click="() => { deleteSurvey(survey) }">
-                    {{ survey.is_deleted ? '从回收站中恢复' : '移入回收站' }}
+                <p class="btn-option flex-all-center" @click="() => { toChangeSurvey(survey) }"
+                    title="编辑问卷"
+                    >
+                    <el-icon size="20">
+                        <IconEdit/>
+                    </el-icon>
                 </p>
-                <p class="btn-option flex-all-center" @click="() => { toStatAnswer(survey) }">统计数据</p>
-                <p class="btn-option flex-all-center" @click="() => { toggleSurveyValid(survey) }">
-                    {{ survey.is_valid ? '停止收集' : '发布问卷' }}
+                <p class="btn-option flex-all-center" @click="() => { deleteSurvey(survey) }"
+                    :title="survey.is_deleted ? '从回收站中恢复' : '移入回收站'"
+                    >
+                    <template v-if="survey.is_deleted">
+                        <el-icon size="20">
+                            <IconDelRedo />
+                        </el-icon>
+                    </template>
+                    <template v-else>
+                        <el-icon size="20">
+                            <IconDel />
+                        </el-icon>
+                    </template>
                 </p>
-                <p class="btn-option flex-all-center" @click="() => { copyLink(survey) }">复制问卷链接</p>
+                <p class="btn-option flex-all-center" @click="() => { toStatAnswer(survey) }"
+                    title="统计数据"
+                    >
+                    <el-icon size="20">
+                        <IconStat/>
+                    </el-icon>
+                </p>
+                <p class="btn-option flex-all-center" @click="() => { toggleSurveyValid(survey) }"
+                    :title="survey.is_valid ? '停止收集' : '发布问卷'"
+                    >
+                    <template v-if="survey.is_valid">
+                        <el-icon size="20">
+                            <IconStop />
+                        </el-icon>
+                    </template>
+                    <template v-else>
+                        <el-icon size="20">
+                            <IconPublish />
+                        </el-icon>
+                    </template>
+                </p>
+                <p class="btn-option flex-all-center" @click="() => { copyLink(survey) }"
+                    title="复制问卷链接"
+                    >
+                    <el-icon size="20">
+                        <IconCopy/>
+                    </el-icon>
+                </p>
             </div>
         </div>
         <div v-if="showSurveys && showSurveys.length < 1">
@@ -139,7 +186,7 @@ const toStatAnswer = (survey: OneSurvey) => {
     .btn-option {
         flex: 1 1 auto;
         min-width: max-content;
-        padding: 20px;
+        padding: 4px;
         margin: 4px;
         text-decoration: underline;
         cursor: pointer;
