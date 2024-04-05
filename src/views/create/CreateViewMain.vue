@@ -6,22 +6,11 @@
  -->
 
 <script setup lang="ts">
-import {
-    ref,
-    onMounted,
-    watchEffect,
-    watch,
-    onBeforeUnmount,
-    nextTick,
-} from 'vue'
-import type { SurveyQuestionType, Survey, SurveyQuestion } from '@/types'
-import { STATUS_SUCCEED, SURVEY_TYPE_INPUT_CONTENT } from '@/constants'
+import { ref, watch } from 'vue'
 import EditQuestion from './widget/EditQuestion.vue'
 import NewQuestion, { type NewQuestionPayload } from './widget/NewQuestion.vue'
-import { getUUID, debounce, msgError } from '@/utils'
-import { useRoute } from 'vue-router'
+import { msgError } from '@/utils'
 import { useStoreSurvey } from '@/stores'
-import { apiCacheSurvey } from '@/api'
 
 // 所有数据的获取，均通过 store
 const storeSurvey = useStoreSurvey()
@@ -58,68 +47,6 @@ storeSurvey.addTask((survey) => {
     survey_title.value = survey.value.title
     survey_comment.value = survey.value.comment
 })
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-
-// const route = useRoute()
-// const surveyId = Number(route.query.surveyId)
-
-// const questions = ref<SurveyQuestion[]>([{
-//     id: getUUID(),
-//     isRequired: true,
-//     order: 1,
-//     questionType: 'input_content',
-//     questionContent: {
-//         title: '',
-//         describe: '',
-//     }
-// }])
-
-// const survey = ref<Survey>({
-//     id: surveyId,
-//     title: '未命名标题',
-//     comment: '',
-//     // @ts-ignore
-//     questions // 如果设置为 questions = questions.value ，则会丢失响应式
-// })
-// const hasGetSurvey = ref(false)
-// const surveyTitle = ref('')
-// const surveyComment = ref('')
-
-// // 变更后，1 秒内缓存对应数据
-// const cacheSurvey = debounce(() => {
-//     storeSurvey.setSurvey(survey.value)
-// }, 1000)
-
-// // 定时将问卷数据同步到数据库中
-// const timer = setInterval(storeSurvey.cacheSurvey, 1000 * 10)
-
-// onBeforeUnmount(() => {
-//     clearInterval(timer)
-// })
-// onMounted(() => {
-//     // TODO: 获取问卷信息
-// })
-
-// watchEffect(() => {
-//     survey.value.title = surveyTitle.value
-//     survey.value.comment = surveyComment.value
-//     cacheSurvey()
-// })
-
-// // 生成一个 SurveyQuestion 对象
-// const generateQuestion = (order: number, questionType: SurveyQuestionType): SurveyQuestion => {
-//     const question: SurveyQuestion = {
-//         id: getUUID(),
-//         order: order,
-//         questionType,
-//         // @ts-ignore
-//         questionContent: {}
-//     }
-//     return question
-// }
 
 // 新建一个问题
 const btnNewQuestion = (payload: NewQuestionPayload) => {
@@ -127,32 +54,6 @@ const btnNewQuestion = (payload: NewQuestionPayload) => {
     const type = payload.type
     storeSurvey.addOneQuestion(type, order)
 }
-
-// // 用户编辑每个问题的内容。
-const updateContent = (question: SurveyQuestion) => {
-    // const order = question.order
-    // questions.value[order - 1].questionContent = question.questionContent
-    // cacheSurvey()
-}
-
-// 监听 导入问卷事件
-// storeSurvey.$onAction(
-//     ({
-//         name, // action 名称
-//         store, // store 实例，类似 `someStore`
-//         args, // 传递给 action 的参数数组
-//         after, // 在 action 返回或解决后的钩子
-//         onError, // action 抛出或拒绝的钩子
-//     }) => {
-//         if (name === 'importSurvey') {
-//             after((s) => {
-//                 surveyTitle.value = s.title
-//                 surveyComment.value = s.comment
-//                 questions.value = s.questions
-//             })
-//         }
-//     }
-// )
 </script>
 
 <template>
@@ -192,10 +93,7 @@ const updateContent = (question: SurveyQuestion) => {
                     :style="{ '--item-order': q.order }"
                 >
                     <div class="survey-edit">
-                        <EditQuestion
-                            :question="q"
-                            @update-content="updateContent"
-                        />
+                        <EditQuestion :question="q" />
                     </div>
                     <NewQuestion
                         :order="q.order"

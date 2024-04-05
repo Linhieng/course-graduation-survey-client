@@ -12,7 +12,7 @@ import {
     SURVEY_TYPE_MULTI_SELECT,
     SURVEY_TYPE_SINGLE_SELECT,
 } from '@/constants'
-import type { SurveyQuestion, SurveyQuestionContent } from '@/types'
+import type { SurveyQuestion } from '@/types'
 import { SurveyQuestionTypeMappingText, msgError } from '@/utils'
 import InputText from './InputText.vue'
 import SelectItem from './SelectItem.vue'
@@ -21,9 +21,6 @@ import { useStoreSurvey } from '@/stores'
 
 const props = defineProps<{
     question: SurveyQuestion
-}>()
-const emits = defineEmits<{
-    (e: 'update-content', question: SurveyQuestion): void
 }>()
 const storeSurvey = useStoreSurvey()
 const survey = storeSurvey.getSurveyRef()
@@ -38,17 +35,6 @@ watch(isRequired, () => {
     const index = props.question.order - 1
     survey.value.questions[index].isRequired = isRequired.value
 })
-
-const forwardEvent = (questionContent: SurveyQuestionContent) => {
-    // const surveyQuestion = {
-    //     isRequired:  isRequired.value,
-    //     id: props.question.id,
-    //     order: props.question.order,
-    //     questionType: props.question.questionType,
-    //     questionContent
-    // } as SurveyQuestion
-    // emits('update-content', surveyQuestion)
-}
 </script>
 
 <template>
