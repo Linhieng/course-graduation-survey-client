@@ -10,7 +10,7 @@ const props = defineProps<{
     mainStyle?: StyleValue,
 }>()
 
-const isExpand = ref(true)
+const isExpand = ref(false)
 
 const evtToggleShow = () => {
     isExpand.value = !isExpand.value
