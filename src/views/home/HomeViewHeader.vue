@@ -50,7 +50,6 @@ const evtConfirmLogout = () => {
 // @import '../../assets/style/mixin.scss';
 
 .header {
-    min-height: var(--layout-header-height);
 
     &__left,
     &__right {

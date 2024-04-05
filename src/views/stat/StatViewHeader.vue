@@ -20,7 +20,6 @@ import WidgetBack from '@/components/WidgetBack.vue'
 
 <style scoped lang="scss">
 .header {
-    min-height: var(--layout-header-height);
 
     &__left,
     &__right {

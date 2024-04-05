@@ -47,10 +47,7 @@ const evtToggleShow = () => {
 </template>
 
 <style scoped lang="scss">
-:global(.container) {
-    --layout-header-height: 70px;
-}
-
+$headerHeight: 70px;
 $toggleShowWidth: 50px;
 $asideWidth: 150px;
 
@@ -58,16 +55,22 @@ $asideWidth: 150px;
     width: 100vw;
     height: 100vh;
 
+    display: flex;
+    flex-direction: column;
+
     header {
+        flex: none;
         width: 100%;
-        height: var(--layout-header-height);
+        height: $headerHeight;
         border-bottom: 1px solid #eee;
-        overflow: auto;
+
+        display: grid;
+        align-items: center;
     }
 
     section {
+        flex: auto;
         width: 100%;
-        height: calc(100vh - var(--layout-header-height));
         overflow: hidden;
 
         display: flex;
@@ -84,7 +87,6 @@ $asideWidth: 150px;
             transition: width 300ms;
             flex: none;
             width: $asideWidth;
-            height: calc(100vh - var(--layout-header-height));
             padding-bottom: $toggleShowWidth;
             overflow: hidden;
 
@@ -99,11 +101,9 @@ $asideWidth: 150px;
 
         main {
             flex: 1;
-            height: calc(100vh - var(--layout-header-height));
             overflow-y: auto;
 
             .main-content {
-                min-height: calc(100vh - var(--layout-header-height));
                 position: relative;
                 padding-bottom: $toggleShowWidth;
 
