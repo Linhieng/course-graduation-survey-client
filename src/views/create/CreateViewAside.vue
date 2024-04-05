@@ -32,10 +32,11 @@ const cacheManual = sotreSurvey.cacheSurvey
     <h2>通用工具</h2>
     <ul>
         <!-- <li> <el-button>批量编辑顺序</el-button> </li> -->
-        <li> <el-button @click="cacheManual">立即缓存当前问卷</el-button> </li>
-        <li> <el-button @click="exportSurvey">导出问卷模版</el-button> </li>
-        <li class="input-file"> <el-button>导入问卷模版</el-button>
-            <input type="file" accept=".json" @input="importSurvey">
+        <li> <el-button @click="cacheManual">立即缓存</el-button> </li>
+        <li> <el-button @click="exportSurvey">导出模版</el-button> </li>
+        <li class="input-file">
+            <el-button><label for="uploadFile">导入模版</label></el-button>
+            <input type="file" id="uploadFile" accept=".json" @input="importSurvey">
         </li>
     </ul>
 </template>
@@ -45,13 +46,22 @@ h2 {
     margin: 10px;
 }
 
-ul>li {
+ul {
     padding: 10px;
+    width: max-content;
+    list-style: none
+}
+ul>li {
+    padding-bottom: 10px;
 }
 
 // 隐藏文件输入框，让其等于父元素大小
 .input-file {
     position: relative;
+
+    label {
+        cursor: pointer;
+    }
 
     >input[type=file] {
         position: absolute;
@@ -59,8 +69,7 @@ ul>li {
         left: 0;
         width: 100%;
         height: 100%;
-        opacity: 0;
-        cursor: pointer;
+        visibility: hidden;
     }
 }
 </style>
