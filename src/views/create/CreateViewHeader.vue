@@ -56,6 +56,9 @@ ul {
         align-items: center;
         justify-content: center;
     }
+    li:nth-child(1) {
+        min-width: 30px;
+    }
     @include w1{
         li:nth-child(1) {
             width: 100px;
