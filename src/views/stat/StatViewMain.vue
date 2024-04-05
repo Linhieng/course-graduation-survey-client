@@ -18,9 +18,7 @@ const surveyData = storeStat.getSurveyDataRef()
             </ul>
         </template>
         <template v-else>
-            <div class="loading-box">
-                加载中……
-            </div>
+            <div class="loading-box">加载中……</div>
         </template>
     </div>
 </template>

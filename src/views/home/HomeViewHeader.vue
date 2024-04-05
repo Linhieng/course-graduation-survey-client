@@ -9,9 +9,8 @@ const router = useRouter()
 
 const evtConfirmLogout = () => {
     storeUser.logoutUser()
-    router.push({name: 'login'})
+    router.push({ name: 'login' })
 }
-
 </script>
 
 <template>
@@ -32,7 +31,10 @@ const evtConfirmLogout = () => {
                 <template #dropdown>
                     <el-dropdown-menu>
                         <el-dropdown-item>
-                            <el-popconfirm title="确定退出登录吗？" @confirm="evtConfirmLogout">
+                            <el-popconfirm
+                                title="确定退出登录吗？"
+                                @confirm="evtConfirmLogout"
+                            >
                                 <template #reference>
                                     <el-button>退出登录</el-button>
                                 </template>
@@ -41,7 +43,6 @@ const evtConfirmLogout = () => {
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
-
         </el-col>
     </el-row>
 </template>
@@ -50,7 +51,6 @@ const evtConfirmLogout = () => {
 // @import '../../assets/style/mixin.scss';
 
 .header {
-
     &__left,
     &__right {
         padding: 0 10px;
@@ -59,6 +59,5 @@ const evtConfirmLogout = () => {
             padding: 0 30px;
         }
     }
-
 }
 </style>

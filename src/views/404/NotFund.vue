@@ -5,7 +5,6 @@ import { RouterLink, useRoute } from 'vue-router'
 const route = useRoute()
 
 const msg = route.query.msg || '恭喜你发现了新大陆'
-
 </script>
 
 <template>
@@ -21,12 +20,12 @@ const msg = route.query.msg || '恭喜你发现了新大陆'
 </template>
 
 <style scoped lang="scss">
-$m-01: #FB8A8A;
-$m-02: #FFEDC0;
+$m-01: #fb8a8a;
+$m-02: #ffedc0;
 
 $bg-root: #695681;
-$bg-02: #36184F;
-$bg-03: #32243E;
+$bg-02: #36184f;
+$bg-03: #32243e;
 
 article {
     width: 100vw;

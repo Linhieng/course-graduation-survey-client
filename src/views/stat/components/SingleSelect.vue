@@ -14,23 +14,27 @@ const echartDoms = ref([])
 const echartInstances = [] as EChartsOption[]
 
 onMounted(() => {
-    const options = storeStat.getAnswerItemOptions(props.question.questionType, props.question.order)
+    const options = storeStat.getAnswerItemOptions(
+        props.question.questionType,
+        props.question.order,
+    )
     options.forEach((option, i) => {
         const dom = echartDoms.value[i].querySelector('.echarts-box')
         render(dom, option)
     })
 
-
-    const resizeObserver = new ResizeObserver(debounce(() => {
-        echartInstances.forEach(ins => {
-            ins.resize()
-        })
-    }, 500))
+    const resizeObserver = new ResizeObserver(
+        debounce(() => {
+            echartInstances.forEach((ins) => {
+                ins.resize()
+            })
+        }, 500),
+    )
 
     resizeObserver.observe(ul.value)
 })
 onBeforeUnmount(() => {
-    echartInstances.forEach(echartsInstance => {
+    echartInstances.forEach((echartsInstance) => {
         echartsInstance.dispose()
     })
 })
@@ -41,7 +45,7 @@ async function render(dom, data) {
     let options: EChartsOption
     options = {
         tooltip: {
-            trigger: 'item'
+            trigger: 'item',
         },
         series: [
             {
@@ -51,7 +55,7 @@ async function render(dom, data) {
                 avoidLabelOverlap: false,
                 padAngle: 5,
                 itemStyle: {
-                    borderRadius: 10
+                    borderRadius: 10,
                 },
                 label: {
                     show: true,
@@ -62,19 +66,18 @@ async function render(dom, data) {
                     label: {
                         show: true,
                         fontSize: 20,
-                        fontWeight: 'bold'
-                    }
+                        fontWeight: 'bold',
+                    },
                 },
                 labelLine: {
-                    show: false
+                    show: false,
                 },
-                data
-            }
-        ]
+                data,
+            },
+        ],
     }
 
     options && myChart.setOption(options)
-
 }
 
 const showOrder = (i) => {
@@ -89,8 +92,10 @@ const showOrder = (i) => {
 
 <template>
     <ul ref="ul">
-        <li v-for="(title, i) of props.question.questionContent.titles"
-            ref="echartDoms">
+        <li
+            v-for="(title, i) of props.question.questionContent.titles"
+            ref="echartDoms"
+        >
             <p>
                 {{ showOrder(i) }}
                 {{ title.title }}
@@ -109,7 +114,7 @@ const showOrder = (i) => {
     padding: 10px;
     display: flex;
     align-items: center;
-    justify-content: center
+    justify-content: center;
 }
 
 .echarts-box {

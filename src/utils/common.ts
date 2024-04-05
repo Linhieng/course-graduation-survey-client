@@ -1,4 +1,4 @@
-import { unref } from "vue"
+import { unref } from 'vue'
 
 /**
  * 解套多层 ref
@@ -21,7 +21,6 @@ export const unrefRecursion = (obj: any): any => {
 
     return newObj
 }
-
 
 /**
  * 获取文件内容
@@ -58,9 +57,10 @@ export const saveFile = (strContent: string, filename: string) => {
  * @returns 返回一个 UUID 字符串
  */
 export function getUUID() {
-    return Math.floor(Math.random() * 100_000_000).toString().slice(2)
+    return Math.floor(Math.random() * 100_000_000)
+        .toString()
+        .slice(2)
 }
-
 
 /**
  * 根据模板 template 中所拥有的 keys，将 fillData 中对应的 keys 浅拷贝到 target 中
@@ -69,10 +69,13 @@ export function getUUID() {
  * @param template
  * @param fillData
  */
-export function fillObject(target: Record<string, any>, template: Record<string, any>, fillData?: Record<string, any>) {
-
+export function fillObject(
+    target: Record<string, any>,
+    template: Record<string, any>,
+    fillData?: Record<string, any>,
+) {
     if (typeof fillData === 'object') {
-        Object.keys(template).forEach(key => {
+        Object.keys(template).forEach((key) => {
             target[key] = fillData[key]
         })
     } else {
@@ -80,7 +83,6 @@ export function fillObject(target: Record<string, any>, template: Record<string,
             target[k] = v
         })
     }
-
 }
 
 /**
@@ -91,8 +93,13 @@ export function fillObject(target: Record<string, any>, template: Record<string,
  * @param defaultData
  * @param fillData
  */
-export function resetObject(target: Record<string, any>, template: Record<string, any>, defaultData: any, fillData: Record<string, any> = {}) {
-    Object.keys(template).forEach(key => {
+export function resetObject(
+    target: Record<string, any>,
+    template: Record<string, any>,
+    defaultData: any,
+    fillData: Record<string, any> = {},
+) {
+    Object.keys(template).forEach((key) => {
         if (key in fillData) {
             target[key] = fillData[key]
         } else {

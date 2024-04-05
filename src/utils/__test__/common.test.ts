@@ -8,7 +8,7 @@ describe('测试 unrefRecursion', () => {
         const obj = {
             a: 1,
             b: ref(2),
-            c: ref(3)
+            c: ref(3),
         }
         const newObj = unrefRecursion(obj)
         expect(isRef(newObj.a)).toBeFalsy()
@@ -21,12 +21,12 @@ describe('测试 unrefRecursion', () => {
             title: ref('title'),
             questions: ref([
                 {
-                    title: ref('title')
+                    title: ref('title'),
                 },
                 {
-                    title: ref('title')
-                }
-            ])
+                    title: ref('title'),
+                },
+            ]),
         })
         const newObj = unrefRecursion(obj)
         expect(isRef(newObj)).toBeFalsy()
@@ -41,12 +41,12 @@ describe('测试 unrefRecursion', () => {
             title: ref('title'),
             questions: ref([
                 {
-                    title: ref('title')
+                    title: ref('title'),
                 },
                 {
-                    title: ref('title')
-                }
-            ])
+                    title: ref('title'),
+                },
+            ]),
         }
         const newObj = unrefRecursion(obj)
         expect(isRef(newObj.title)).toBeFalsy()
@@ -72,7 +72,9 @@ describe('测试 fillObject', () => {
     test('target 中应该只包含 template 中定义的 key, 并且 value 值等于 fillData 中的数据', () => {
         const target = {}
         const template = {
-            id: '', username: '', token: ''
+            id: '',
+            username: '',
+            token: '',
         }
         const fillData = {
             id: '123',
@@ -94,17 +96,22 @@ describe('测试 fillObject', () => {
 describe('测试 resetObject', () => {
     test('期待 target 中的值全为空字符串', () => {
         const target = {
-            a: 1, b: 2, c: 3
+            a: 1,
+            b: 2,
+            c: 3,
         }
         resetObject(target, target, '')
 
-        Object.values(target).forEach(value => {
+        Object.values(target).forEach((value) => {
             expect(value).toBe('')
         })
     })
     test('期待 target 中的值全为空字符串，但 d 属性的值为 0 ', () => {
         const target = {
-            a: 1, b: 2, c: 3, d: 4
+            a: 1,
+            b: 2,
+            c: 3,
+            d: 4,
         }
         resetObject(target, target, '', { d: 0 })
 

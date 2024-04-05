@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue"
-import { RouterLink } from "vue-router"
+import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import IconBack from '@/components/icons/IconBack.vue'
 
 const props = defineProps<{
-  to?: string,
-  className?: string[]
+    to?: string
+    className?: string[]
 }>()
 
 const backRouter = ref(props.to || '/')
@@ -20,7 +20,6 @@ const backRouter = ref(props.to || '/')
 </template>
 
 <style scoped lang="scss">
-
 .back-link {
     width: 100%;
     height: 100%;
@@ -28,5 +27,4 @@ const backRouter = ref(props.to || '/')
         background-color: #eee;
     }
 }
-
 </style>

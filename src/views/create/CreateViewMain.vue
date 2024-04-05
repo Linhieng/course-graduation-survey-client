@@ -6,8 +6,14 @@
  -->
 
 <script setup lang="ts">
-
-import { ref, onMounted, watchEffect, watch, onBeforeUnmount, nextTick } from 'vue'
+import {
+    ref,
+    onMounted,
+    watchEffect,
+    watch,
+    onBeforeUnmount,
+    nextTick,
+} from 'vue'
 import type { SurveyQuestionType, Survey, SurveyQuestion } from '@/types'
 import { STATUS_SUCCEED, SURVEY_TYPE_INPUT_CONTENT } from '@/constants'
 import EditQuestion from './widget/EditQuestion.vue'
@@ -60,7 +66,6 @@ storeSurvey.addTask((survey) => {
 // const route = useRoute()
 // const surveyId = Number(route.query.surveyId)
 
-
 // const questions = ref<SurveyQuestion[]>([{
 //     id: getUUID(),
 //     isRequired: true,
@@ -103,7 +108,6 @@ storeSurvey.addTask((survey) => {
 //     survey.value.comment = surveyComment.value
 //     cacheSurvey()
 // })
-
 
 // // 生成一个 SurveyQuestion 对象
 // const generateQuestion = (order: number, questionType: SurveyQuestionType): SurveyQuestion => {
@@ -160,14 +164,16 @@ const updateContent = (question: SurveyQuestion) => {
                     v-model="survey_title"
                     autosize
                     type="textarea"
-                    placeholder="输入问卷标题" />
+                    placeholder="输入问卷标题"
+                />
             </h1>
             <p>
                 <el-input
                     v-model="survey_comment"
                     autosize
                     type="textarea"
-                    placeholder="输入问卷备注信息" />
+                    placeholder="输入问卷备注信息"
+                />
             </p>
         </div>
         <ul class="questions-wrapper">
@@ -179,15 +185,22 @@ const updateContent = (question: SurveyQuestion) => {
                 <el-skeleton animated> </el-skeleton>
             </div>
             <div v-else>
-                <li v-for="q of _survey?.questions" :key="q.id"
+                <li
+                    v-for="q of _survey?.questions"
+                    :key="q.id"
                     class="question-item-wrapper"
-                    :style="{ '--item-order': q.order }">
+                    :style="{ '--item-order': q.order }"
+                >
                     <div class="survey-edit">
                         <EditQuestion
                             :question="q"
-                            @update-content="updateContent" />
+                            @update-content="updateContent"
+                        />
                     </div>
-                    <NewQuestion :order="q.order" @new-question="btnNewQuestion" />
+                    <NewQuestion
+                        :order="q.order"
+                        @new-question="btnNewQuestion"
+                    />
                     <el-divider />
                 </li>
             </div>
@@ -199,7 +212,7 @@ const updateContent = (question: SurveyQuestion) => {
 .top-wrapper {
     margin-bottom: 20px;
     padding: 20px;
-    h1 :deep(textarea)  {
+    h1 :deep(textarea) {
         font-weight: bold;
         font-size: 2rem;
         text-align: center;

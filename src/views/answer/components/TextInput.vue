@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SurveyQuestion_Text } from '@/types'
 import { ref, watch } from 'vue'
-import { useStoreAnswer } from '@/stores';
+import { useStoreAnswer } from '@/stores'
 
 const storeAnswer = useStoreAnswer()
 const props = defineProps<{
@@ -21,7 +21,7 @@ const checkRequired = () => {
     }
 }
 if (props.question.isRequired) {
-    storeAnswer.$onAction(({name})=> {
+    storeAnswer.$onAction(({ name }) => {
         if (name === 'checkAnswer') {
             checkRequired()
         }
@@ -30,10 +30,11 @@ if (props.question.isRequired) {
 </script>
 
 <template>
-    <div class="wrap"
-        :class="{required: props.question.isRequired}"
-    >
-        <p> {{ props.question.order }} {{ props.question.questionContent.title }}</p>
+    <div class="wrap" :class="{ required: props.question.isRequired }">
+        <p>
+            {{ props.question.order }}
+            {{ props.question.questionContent.title }}
+        </p>
         <p>{{ props.question.questionContent.describe }}</p>
         <p>
             <el-input
@@ -55,7 +56,6 @@ if (props.question.isRequired) {
         font-size: large;
     }
 }
-
 
 // 显示必选 * 符号
 .wrap {

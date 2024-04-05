@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import WidgetBack from '@/components/WidgetBack.vue'
-
 </script>
 
 <template>
@@ -20,7 +19,6 @@ import WidgetBack from '@/components/WidgetBack.vue'
 
 <style scoped lang="scss">
 .header {
-
     &__left,
     &__right {
         padding: 0 10px;

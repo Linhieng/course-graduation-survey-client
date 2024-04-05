@@ -5,11 +5,8 @@
 <template>
     <!-- adapted from: https://codepen.io/rafaelavlucas/pen/NWWQNjZ -->
     <div class="wrapper">
-
         <div class="container">
-
             <div id="scene" class="scene" data-hover-only="false">
-
                 <div class="circle" data-depth="1.2"></div>
 
                 <div class="one" data-depth="0.9">
@@ -40,23 +37,23 @@
             <div class="slot">
                 <slot></slot>
             </div>
-
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-$m-01: #FB8A8A;
-$m-02: #FFEDC0;
+$m-01: #fb8a8a;
+$m-02: #ffedc0;
 
 $bg-root: #695681;
-$bg-02: #36184F;
-$bg-03: #32243E;
+$bg-02: #36184f;
+$bg-03: #32243e;
 
-$g-01: linear-gradient(90deg, #FFEDC0 0%, #FF9D87 100%);
-$g-02: linear-gradient(90deg, #8077EA 13.7%, #EB73FF 94.65%);
+$g-01: linear-gradient(90deg, #ffedc0 0%, #ff9d87 100%);
+$g-02: linear-gradient(90deg, #8077ea 13.7%, #eb73ff 94.65%);
 
-$circleShadow: inset 5px 20px 40px rgba($bg-02, 0.25),
+$circleShadow:
+    inset 5px 20px 40px rgba($bg-02, 0.25),
     inset 5px 0px 5px rgba($bg-03, 0.3),
     inset 5px 5px 20px rgba($bg-03, 0.25),
     2px 2px 5px rgba(white, 0.2);
@@ -129,33 +126,34 @@ $circleShadow: inset 5px 20px 40px rgba($bg-02, 0.25),
                     border-radius: 80px;
                     z-index: 1;
 
-                    animation: pieceLeft 8s cubic-bezier(1, 0.06, 0.25, 1) infinite both;
-
+                    animation: pieceLeft 8s cubic-bezier(1, 0.06, 0.25, 1)
+                        infinite both;
 
                     @keyframes pieceLeft {
-                        0% {}
+                        0% {
+                        }
 
                         50% {
                             left: 80%;
                             width: 10%;
                         }
 
-                        100% {}
-
+                        100% {
+                        }
                     }
 
                     @keyframes pieceRight {
-                        0% {}
+                        0% {
+                        }
 
                         50% {
                             right: 80%;
                             width: 10%;
                         }
 
-                        100% {}
-
+                        100% {
+                        }
                     }
-
                 }
             }
         }
@@ -177,7 +175,6 @@ $circleShadow: inset 5px 20px 40px rgba($bg-02, 0.25),
                 box-shadow: $circleShadow;
                 animation: circle 0.8s cubic-bezier(1, 0.06, 0.25, 1) backwards;
 
-
                 @keyframes circle {
                     0% {
                         width: 0;
@@ -190,7 +187,6 @@ $circleShadow: inset 5px 20px 40px rgba($bg-02, 0.25),
         // Container 1
         .one {
             .content {
-
                 // Smaller Circle
                 &:before {
                     content: '';
@@ -200,7 +196,8 @@ $circleShadow: inset 5px 20px 40px rgba($bg-02, 0.25),
                     background-color: rgba($bg-02, 0.3);
                     border-radius: 100%;
                     box-shadow: $circleShadow;
-                    animation: circle 0.8s 0.4s cubic-bezier(1, 0.06, 0.25, 1) backwards;
+                    animation: circle 0.8s 0.4s cubic-bezier(1, 0.06, 0.25, 1)
+                        backwards;
                 }
 
                 .piece {
@@ -232,10 +229,7 @@ $circleShadow: inset 5px 20px 40px rgba($bg-02, 0.25),
                         animation-delay: 1.5s;
                         animation-name: pieceLeft;
                     }
-
                 }
-
-
             }
         }
 
@@ -271,7 +265,6 @@ $circleShadow: inset 5px 20px 40px rgba($bg-02, 0.25),
                         animation-delay: 3s;
                         animation-name: pieceRight;
                     }
-
                 }
             }
         }
@@ -308,14 +301,9 @@ $circleShadow: inset 5px 20px 40px rgba($bg-02, 0.25),
                         animation-name: pieceLeft;
                         animation-delay: 4.5s;
                     }
-
                 }
-
-
             }
         }
-
-
     }
 }
 

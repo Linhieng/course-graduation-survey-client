@@ -4,7 +4,6 @@
 
 import type { Structure_Json } from './request'
 
-
 /* ============================================================================ */
 /* ============================================================================ */
 /* ============================================================================ */
@@ -17,8 +16,6 @@ import type { Structure_Json } from './request'
 /* ============================================================================ */
 /* ============================================================================ */
 
-
-
 /** 只有符合理想情况时才会设置为该值 */
 type StatusSucceed = typeof import('../constants').STATUS_SUCCEED
 /** 任何不符合理想情况，都设置为 StatusFailed */
@@ -28,7 +25,6 @@ type StatusFailed = typeof import('../constants').STATUS_FAILED
  * 响应的状态，只提供两种！
  */
 type TypeResStatus = StatusSucceed | StatusFailed
-
 
 /**
  * - 成功
@@ -56,11 +52,10 @@ type TypeResCodeUnknownError = typeof import('../constants').CODE_UNKNOWN_ERROR
  *  - 未知错误 (3)
  */
 type TypeResCode =
-    TypeResCodeSucceed |
-    TypeResCodeFailed |
-    TypeResCodeError |
-    TypeResCodeUnknownError
-
+    | TypeResCodeSucceed
+    | TypeResCodeFailed
+    | TypeResCodeError
+    | TypeResCodeUnknownError
 
 export interface OneSurvey {
     id: number // 16
@@ -153,13 +148,17 @@ interface ResGetSurveyById {
 /* ============================================================================ */
 /* ============================================================================ */
 
-
 /**
  * 由于都是异步请求，所以直接提供一个类型别名，将 Promise 封装起来
  */
 export type ResPro<T = ResValidObj> = Promise<ResBase<T>>
 
-type ResValidObj = ResLoginData | ResSignupData | ResAllSurveys | ResNewSurvey | ResGetSurveyById
+type ResValidObj =
+    | ResLoginData
+    | ResSignupData
+    | ResAllSurveys
+    | ResNewSurvey
+    | ResGetSurveyById
 /**
  * 与后台约定好的通用响应体包装器
  */

@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { debounce, msgSuccess, noticeError, msgInfo, routerReplace, windowLocation, msgError } from '@/utils'
+import {
+    debounce,
+    msgSuccess,
+    noticeError,
+    msgInfo,
+    routerReplace,
+    windowLocation,
+    msgError,
+} from '@/utils'
 import { apiLogin, apiSignup } from '@/api'
 import { useRouter } from 'vue-router'
 import { useStoreUser } from '@/stores'
@@ -40,7 +48,6 @@ const signupPasswordAgain = debounce((e: Event) => {
     }
 })
 
-
 /*
 处理 登录/注册 的切换
  */
@@ -64,10 +71,8 @@ const listenHashChange = () => {
 }
 const initListenHash = () => {
     listenHashChange()
-    window.addEventListener("hashchange", listenHashChange)
+    window.addEventListener('hashchange', listenHashChange)
 }
-
-
 
 // 点击登录
 const evtLogin = async () => {
@@ -82,7 +87,7 @@ const evtLogin = async () => {
         return
     }
 
-    const resData = await apiLogin({username, password})
+    const resData = await apiLogin({ username, password })
 
     if (resData.status === STATUS_SUCCEED) {
         storeUser.loginUser(resData.data)
@@ -92,10 +97,8 @@ const evtLogin = async () => {
     }
 }
 
-
 // 点击注册
 const evtSignup = async () => {
-
     if (signup_password1.value !== signup_password2.value) {
         msgInfo('密码前后不一致')
         return
@@ -111,7 +114,7 @@ const evtSignup = async () => {
         return
     }
 
-    const resData = await apiSignup({username, password})
+    const resData = await apiSignup({ username, password })
     if (resData.status === STATUS_SUCCEED) {
         msgSuccess('注册成功！')
         windowLocation('replace', '#login')
@@ -119,17 +122,26 @@ const evtSignup = async () => {
         msgError('注册失败。' + resData.msg)
     }
 }
-
 </script>
 
 <template>
     <div class="formContainer login" ref="formRoot">
         <ul class="tab-group clearfix">
             <li class="tab active">
-                <a href="#signup" data-id="signup" @click.prevent="windowLocation('replace', '#signup')">注册</a>
+                <a
+                    href="#signup"
+                    data-id="signup"
+                    @click.prevent="windowLocation('replace', '#signup')"
+                    >注册</a
+                >
             </li>
             <li class="tab">
-                <a href="#login" data-id="login" @click.prevent="windowLocation('replace', '#login')">登录</a>
+                <a
+                    href="#login"
+                    data-id="login"
+                    @click.prevent="windowLocation('replace', '#login')"
+                    >登录</a
+                >
             </li>
         </ul>
 
@@ -139,16 +151,36 @@ const evtSignup = async () => {
 
                 <form @submit.prevent="evtSignup">
                     <div class="field-wrap">
-                        <input  id="signup_username" type="text" required autocomplete="off" v-model="signup_username" />
+                        <input
+                            id="signup_username"
+                            type="text"
+                            required
+                            autocomplete="off"
+                            v-model="signup_username"
+                        />
                         <label for="signup_username"> 用户名 </label>
                     </div>
 
                     <div class="field-wrap">
-                        <input  id="signup_password" type="password" required autocomplete="off" @input="signupPassword" v-model="signup_password1" />
+                        <input
+                            id="signup_password"
+                            type="password"
+                            required
+                            autocomplete="off"
+                            @input="signupPassword"
+                            v-model="signup_password1"
+                        />
                         <label for="signup_password"> 密码 </label>
                     </div>
                     <div class="field-wrap">
-                        <input  id="signup_password2" type="password" required autocomplete="off" @input="signupPasswordAgain" v-model="signup_password2" />
+                        <input
+                            id="signup_password2"
+                            type="password"
+                            required
+                            autocomplete="off"
+                            @input="signupPasswordAgain"
+                            v-model="signup_password2"
+                        />
                         <label for="signup_password2"> 确认密码 </label>
                     </div>
 
@@ -163,12 +195,24 @@ const evtSignup = async () => {
 
                 <form @submit.prevent="evtLogin">
                     <div class="field-wrap">
-                        <input  id="login_username" type="text" required autocomplete="off" v-model="login_username" />
+                        <input
+                            id="login_username"
+                            type="text"
+                            required
+                            autocomplete="off"
+                            v-model="login_username"
+                        />
                         <label for="login_username"> 用户名 </label>
                     </div>
 
                     <div class="field-wrap">
-                        <input  id="login_password" type="password" required autocomplete="off" v-model="login_password" />
+                        <input
+                            id="login_password"
+                            type="password"
+                            required
+                            autocomplete="off"
+                            v-model="login_password"
+                        />
                         <label for="login_password"> 密码 </label>
                     </div>
 
@@ -202,12 +246,19 @@ $br: 4px;
 
 // 切换“登录”和“注册”
 .formContainer {
-    #login, #signup { display: none; }
-    &.login #login { display: block; }
-    &.signup #signup { display: block; }
+    #login,
+    #signup {
+        display: none;
+    }
+    &.login #login {
+        display: block;
+    }
+    &.signup #signup {
+        display: block;
+    }
 
-    &.login a[data-id=login],
-    &.signup a[data-id=signup] {
+    &.login a[data-id='login'],
+    &.signup a[data-id='signup'] {
         background: $main;
         color: white;
     }
@@ -296,7 +347,7 @@ $br: 4px;
                 border-color: $main;
             }
 
-            input:focus+label {
+            input:focus + label {
                 color: $main;
             }
         }

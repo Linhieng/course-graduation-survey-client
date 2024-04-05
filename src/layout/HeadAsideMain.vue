@@ -4,10 +4,10 @@ import IconExpand from '@icon/IconExpand.vue'
 import IconShrink from '@/components/icons/IconShrink.vue'
 
 const props = defineProps<{
-    headerStyle?: StyleValue,
-    sectionStyle?: StyleValue,
-    asideStyle?: StyleValue,
-    mainStyle?: StyleValue,
+    headerStyle?: StyleValue
+    sectionStyle?: StyleValue
+    asideStyle?: StyleValue
+    mainStyle?: StyleValue
 }>()
 
 const isExpand = ref(false)
@@ -82,7 +82,6 @@ $asideWidth: 150px;
             transition: all 300ms;
         }
 
-
         aside {
             transition: width 300ms;
             flex: none;
@@ -116,7 +115,6 @@ $asideWidth: 150px;
                     font-size: 12px;
                 }
             }
-
         }
 
         .toggle-show {

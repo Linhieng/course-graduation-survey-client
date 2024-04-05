@@ -3,10 +3,9 @@
  -->
 
 <script setup lang="ts">
-
 import type { SurveyQuestion_Text } from '@/types'
 import { ref, watch } from 'vue'
-import { useStoreSurvey } from '@/stores';
+import { useStoreSurvey } from '@/stores'
 import { msgError } from '@/utils'
 import InputRequired from '@/components/InputRequired.vue'
 import InputOptional from '@/components/InputOptional.vue'
@@ -33,9 +32,10 @@ watch([title, describe], () => {
     q.questionContent.describe = describe.value
 })
 
-if (props.question?.questionContent.title) title.value = props.question.questionContent.title
-if (props.question?.questionContent.describe) describe.value = props.question.questionContent.describe
-
+if (props.question?.questionContent.title)
+    title.value = props.question.questionContent.title
+if (props.question?.questionContent.describe)
+    describe.value = props.question.questionContent.describe
 </script>
 
 <template>

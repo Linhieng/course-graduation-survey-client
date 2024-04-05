@@ -5,16 +5,16 @@ import { msgError } from '@/utils'
 import IconAdd from '@icon/IconAdd.vue'
 import IconFolder from '@icon/IconFolder.vue'
 import IconStat from '@icon/IconStat.vue'
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const toCreate = async () => {
     const data = await apiNewSurvey()
     if (data.status === STATUS_SUCCEED) {
         router.push({
-        name: 'create',
-        params: { id: data.data.surveyId }
-    })
+            name: 'create',
+            params: { id: data.data.surveyId },
+        })
     } else {
         msgError(data.msg)
     }
@@ -27,25 +27,19 @@ const toCreate = async () => {
             <el-icon size="20">
                 <IconFolder />
             </el-icon>
-            <p class="flex-align-center-left ml-5">
-                我的问卷
-            </p>
+            <p class="flex-align-center-left ml-5">我的问卷</p>
         </RouterLink>
         <div @click="toCreate" class="route-item flex-align-center">
             <el-icon size="20">
                 <IconAdd />
             </el-icon>
-            <p class="flex-align-center-left ml-5">
-                新建问卷
-            </p>
+            <p class="flex-align-center-left ml-5">新建问卷</p>
         </div>
         <RouterLink to="/stat" class="route-item flex-align-center">
             <el-icon size="20">
                 <IconStat />
             </el-icon>
-            <p class="flex-align-center-left ml-5">
-                数据分析
-            </p>
+            <p class="flex-align-center-left ml-5">数据分析</p>
         </RouterLink>
     </div>
 </template>

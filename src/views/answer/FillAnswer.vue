@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useStoreAnswer } from '@/stores';
+import { useStoreAnswer } from '@/stores'
 import QuestionAssign from './QuestionAssign.vue'
 
 const props = defineProps<{
@@ -37,13 +37,18 @@ const submit = () => {
             </header>
             <main>
                 <ol>
-                    <li v-for="question of surveyData?.questions" :key="question.id"
-                        :class="{required: question.isRequired}">
+                    <li
+                        v-for="question of surveyData?.questions"
+                        :key="question.id"
+                        :class="{ required: question.isRequired }"
+                    >
                         <QuestionAssign :question="question" />
                     </li>
                 </ol>
                 <div class="btn-submit-wrap">
-                    <el-button class="btn-submit" type="primary" @click="submit">提交</el-button>
+                    <el-button class="btn-submit" type="primary" @click="submit"
+                        >提交</el-button
+                    >
                 </div>
             </main>
             <footer>
@@ -53,7 +58,6 @@ const submit = () => {
             </footer>
         </div>
     </div>
-
 </template>
 
 <style scoped lang="scss">

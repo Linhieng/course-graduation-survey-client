@@ -2,7 +2,7 @@
  * @file 发送请求时需要的请求体类型都在这里
  */
 
-import type { SurveyQuestion } from "."
+import type { SurveyQuestion } from '.'
 
 /**
  * 请求体允许的类型
@@ -40,4 +40,4 @@ interface ReqSurveyAche {
 export type Structure_Json = {
     version: '0.1.0'
     questions: SurveyQuestion[]
- }
+}

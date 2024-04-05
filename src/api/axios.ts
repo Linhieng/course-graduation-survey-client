@@ -1,8 +1,7 @@
-import { CODE_UNKNOWN_ERROR } from "@/constants"
-import type { ResBase, ResPro } from "@/types"
-import type { ReqAllowType } from "@/types/request"
-import axios, { AxiosError, type AxiosRequestConfig } from "axios"
-
+import { CODE_UNKNOWN_ERROR } from '@/constants'
+import type { ResBase, ResPro } from '@/types'
+import type { ReqAllowType } from '@/types/request'
+import axios, { AxiosError, type AxiosRequestConfig } from 'axios'
 
 const BASE_URL = import.meta.env.VITE_AXIOS_BASE_URL
 let token = ''
@@ -24,12 +23,16 @@ type Method = 'get' | 'post'
  *
  *      总的来说，这里要做错误处理，目的是为了让组件中能够只收到一个统一的对象，这样可以减轻组件中代码的编写
  */
-async function axiosRequest(method: Method, url: string, config?: AxiosRequestConfig<ReqAllowType>): ResPro {
+async function axiosRequest(
+    method: Method,
+    url: string,
+    config?: AxiosRequestConfig<ReqAllowType>,
+): ResPro {
     try {
         const response = await axios<ResBase>({
             method,
             url,
-            ...config
+            ...config,
         })
         token = response.headers['x-token']
         userId = response.headers['x-userid']
@@ -41,7 +44,7 @@ async function axiosRequest(method: Method, url: string, config?: AxiosRequestCo
             status: 'failed',
             code: CODE_UNKNOWN_ERROR,
             msg: '未知错误',
-            data: error as any
+            data: error as any,
         }
         if (error.__proto__.constructor.name !== 'AxiosError') {
             return resData
@@ -51,7 +54,7 @@ async function axiosRequest(method: Method, url: string, config?: AxiosRequestCo
             // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
             // @ts-ignore
             if (e.response.data?.data) {
-                return (e.response.data as ResBase)
+                return e.response.data as ResBase
             }
             return resData
         } else if (e.request) {
@@ -64,7 +67,7 @@ async function axiosRequest(method: Method, url: string, config?: AxiosRequestCo
 }
 
 export const get = (url: string, config?: AxiosRequestConfig<ReqAllowType>) => {
-    const config2 = config || [] as any
+    const config2 = config || ([] as any)
     config2.headers = {
         ...config?.headers,
         token,
@@ -73,8 +76,11 @@ export const get = (url: string, config?: AxiosRequestConfig<ReqAllowType>) => {
     }
     return axiosRequest('get', url, config2)
 }
-export const post = (url: string, config?: AxiosRequestConfig<ReqAllowType>) => {
-    const config2 = config || [] as any
+export const post = (
+    url: string,
+    config?: AxiosRequestConfig<ReqAllowType>,
+) => {
+    const config2 = config || ([] as any)
     config2.headers = {
         ...config?.headers,
         token,

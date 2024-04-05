@@ -1,5 +1,5 @@
-import type { ResPro, SurveyQuestion } from "@/types"
-import { get, post } from "."
+import type { ResPro, SurveyQuestion } from '@/types'
+import { get, post } from '.'
 
 const urlAnswerGetSurvey = '/answer/'
 
@@ -8,7 +8,7 @@ interface AnswerGetSurvey {
     title: string
     comment: string
     questions: {
-        version: '0.1.0',
+        version: '0.1.0'
         questions: SurveyQuestion[]
     }
 }
@@ -28,6 +28,6 @@ export function apiAnswerGetSurvey(surveyId: number): ResPro<AnswerGetSurvey> {
 
 export function apiAnswerPost(surveyId: number, data: ReqSurveyAnswer): ResPro {
     return post('/answer/' + surveyId, {
-        data
+        data,
     })
 }

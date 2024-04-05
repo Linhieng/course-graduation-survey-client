@@ -1,4 +1,4 @@
-import { type RouteLocationRaw, type Router } from "vue-router"
+import { type RouteLocationRaw, type Router } from 'vue-router'
 
 /**
  * 不要滥用 window.location!

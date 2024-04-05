@@ -11,7 +11,6 @@ apiGetAllSurveys()
 
 <template>
     <HeaderAsideMain :asideWidth="150">
-
         <template #header>
             <HomeViewHeader />
         </template>
@@ -22,7 +21,6 @@ apiGetAllSurveys()
         <template #main>
             <HomeViewMain />
         </template>
-
     </HeaderAsideMain>
 </template>
 

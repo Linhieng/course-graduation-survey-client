@@ -4,11 +4,10 @@ import { ref } from 'vue'
 const props = defineProps({
     placeholder: {
         type: String,
-        default: '请输入'
-    }
+        default: '请输入',
+    },
 })
 const describe = defineModel({ required: true })
-
 
 //////////////////////////////////////////////////////
 // UI 相关
@@ -18,11 +17,15 @@ const isHasInputDescribe = ref(false)
 </script>
 
 <template>
-    <div class="wrapper" :class="{ 'hide': !isHasInputDescribe }">
-        <el-input v-model="describe" autosize type="textarea" :disabled="!isHasInputDescribe"
-            :placeholder="props.placeholder" />
-        <el-switch v-model="isHasInputDescribe"
-            class="switch" />
+    <div class="wrapper" :class="{ hide: !isHasInputDescribe }">
+        <el-input
+            v-model="describe"
+            autosize
+            type="textarea"
+            :disabled="!isHasInputDescribe"
+            :placeholder="props.placeholder"
+        />
+        <el-switch v-model="isHasInputDescribe" class="switch" />
     </div>
 </template>
 

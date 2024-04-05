@@ -2,7 +2,7 @@
  * @file element-plus 封装一些 element-plus 中的常用函数
  */
 
-import { ElMessage, ElNotification } from "element-plus"
+import { ElMessage, ElNotification } from 'element-plus'
 
 /**
  * 什么情况下使用 msg：
@@ -11,19 +11,19 @@ import { ElMessage, ElNotification } from "element-plus"
  *      - 比如提示密码不能为空等信息
  */
 
-export const msg = (message: string,) => {
+export const msg = (message: string) => {
     ElMessage({ showClose: true, grouping: true, message })
 }
-export const msgSuccess = (message: string,) => {
+export const msgSuccess = (message: string) => {
     ElMessage({ showClose: true, grouping: true, message, type: 'success' })
 }
-export const msgWarning = (message: string,) => {
+export const msgWarning = (message: string) => {
     ElMessage({ showClose: true, grouping: true, message, type: 'warning' })
 }
-export const msgInfo = (message: string,) => {
+export const msgInfo = (message: string) => {
     ElMessage({ showClose: true, grouping: true, message, type: 'info' })
 }
-export const msgError = (message: string,) => {
+export const msgError = (message: string) => {
     ElMessage({ showClose: true, grouping: true, message, type: 'error' })
 }
 
@@ -36,15 +36,31 @@ export const msgError = (message: string,) => {
 export const notice = (message: string, title = '', duration = 3000) => {
     ElNotification({ title, message, duration })
 }
-export const noticeSuccess = (message: string, title = 'Success', duration = 3000) => {
+export const noticeSuccess = (
+    message: string,
+    title = 'Success',
+    duration = 3000,
+) => {
     ElNotification({ title, message, type: 'success', duration })
 }
-export const noticeWarning = (message: string, title = 'Warning', duration = 3000) => {
+export const noticeWarning = (
+    message: string,
+    title = 'Warning',
+    duration = 3000,
+) => {
     ElNotification({ title, message, type: 'warning', duration })
 }
-export const noticeInfo = (message: string, title = 'Info', duration = 3000) => {
+export const noticeInfo = (
+    message: string,
+    title = 'Info',
+    duration = 3000,
+) => {
     ElNotification({ title, message, type: 'info', duration })
 }
-export const noticeError = (message: string, title = 'Error', duration = 3000) => {
+export const noticeError = (
+    message: string,
+    title = 'Error',
+    duration = 3000,
+) => {
     ElNotification({ title, message, type: 'error', duration })
 }

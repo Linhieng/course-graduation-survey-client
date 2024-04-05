@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import {
     SURVEY_TYPE_SINGLE_SELECT,
-    SURVEY_TYPE_MULTI_SELECT
+    SURVEY_TYPE_MULTI_SELECT,
 } from '@/constants'
-import type { SurveyQuestion_MultiSelect, SurveyQuestion_SingleSelect } from '@/types'
+import type {
+    SurveyQuestion_MultiSelect,
+    SurveyQuestion_SingleSelect,
+} from '@/types'
 import { getUUID, msgError } from '@/utils'
 import { ref, watch } from 'vue'
 import { useStoreSurvey } from '@/stores'
@@ -14,7 +17,9 @@ const storeSurvey = useStoreSurvey()
 const survey = storeSurvey.getSurveyRef()
 
 const props = defineProps<{
-    selectType: typeof SURVEY_TYPE_SINGLE_SELECT | typeof SURVEY_TYPE_MULTI_SELECT,
+    selectType:
+        | typeof SURVEY_TYPE_SINGLE_SELECT
+        | typeof SURVEY_TYPE_MULTI_SELECT
     question: SurveyQuestion_SingleSelect | SurveyQuestion_MultiSelect
 }>()
 
@@ -38,9 +43,10 @@ watch(selectOptions.value, () => {
     q.questionContent.options = selectOptions.value
 })
 
-if (props.question.questionContent.options) selectOptions.value = props.question.questionContent.options
-if (props.question.questionContent.titles) selectTitles.value = props.question.questionContent.titles
-
+if (props.question.questionContent.options)
+    selectOptions.value = props.question.questionContent.options
+if (props.question.questionContent.titles)
+    selectTitles.value = props.question.questionContent.titles
 </script>
 
 <template>

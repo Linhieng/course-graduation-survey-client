@@ -14,10 +14,8 @@ const props = defineProps<{
 storeSurvey.setSurveyId(props.id)
 </script>
 
-
 <template>
     <HeaderAsideMain asideWidth="150px">
-
         <template #header>
             <CreateViewHeader />
         </template>
@@ -28,9 +26,7 @@ storeSurvey.setSurveyId(props.id)
         <template #main>
             <CreateViewMain />
         </template>
-
     </HeaderAsideMain>
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

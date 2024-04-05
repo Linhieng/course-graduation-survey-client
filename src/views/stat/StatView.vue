@@ -12,13 +12,10 @@ const props = defineProps<{
 }>()
 
 storeStat.setSurveyId(props.surveyId)
-
 </script>
-
 
 <template>
     <HeaderAsideMain asideWidth="150px">
-
         <template #header>
             <StatViewHeader />
         </template>
@@ -29,13 +26,11 @@ storeStat.setSurveyId(props.surveyId)
         <template #main>
             <StatViewMain />
         </template>
-
     </HeaderAsideMain>
 </template>
 
 <style scoped lang="scss">
 .stat-layout {
-
     .el-header {
         background-color: #c6e2ff;
     }
@@ -47,6 +42,5 @@ storeStat.setSurveyId(props.surveyId)
     .el-main {
         background-color: #ecf5ff;
     }
-
 }
 </style>

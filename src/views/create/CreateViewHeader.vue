@@ -13,7 +13,6 @@ const timer = setInterval(() => {
 onBeforeUnmount(() => {
     clearInterval(timer)
 })
-
 </script>
 
 <template>
@@ -22,13 +21,10 @@ onBeforeUnmount(() => {
             <WidgetBack class="flex-align-center-left" />
         </li>
         <li>
-            <p> 创建问卷 </p>
+            <p>创建问卷</p>
         </li>
         <li>
-            <p>{{ cacheTime ?
-                `最近缓存：${cacheTime}` :
-                '未缓存' }}
-            </p>
+            <p>{{ cacheTime ? `最近缓存：${cacheTime}` : '未缓存' }}</p>
         </li>
     </ul>
 </template>
@@ -59,7 +55,7 @@ ul {
     li:nth-child(1) {
         min-width: 30px;
     }
-    @include w1{
+    @include w1 {
         li:nth-child(1) {
             width: 100px;
         }

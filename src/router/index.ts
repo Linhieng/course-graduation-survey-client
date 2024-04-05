@@ -55,7 +55,7 @@ const router = createRouter({
             component: NotFound,
             meta: { requiresAuth: false },
         },
-    ]
+    ],
 })
 
 router.beforeEach(async (to, from) => {

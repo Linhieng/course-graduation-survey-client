@@ -1,7 +1,7 @@
 import {
     SURVEY_TYPE_INPUT_CONTENT,
     SURVEY_TYPE_SINGLE_SELECT,
-    SURVEY_TYPE_MULTI_SELECT
+    SURVEY_TYPE_MULTI_SELECT,
 } from '../constants'
 
 /**
@@ -25,9 +25,9 @@ export interface Survey {
  * 一份问卷 ——> 一道问题
  */
 export type SurveyQuestion =
-    SurveyQuestion_Text |
-    SurveyQuestion_SingleSelect |
-    SurveyQuestion_MultiSelect
+    | SurveyQuestion_Text
+    | SurveyQuestion_SingleSelect
+    | SurveyQuestion_MultiSelect
 /* 虽然这种方法笨，但耐不住它易读啊，而且管用！ */
 export interface SurveyQuestion_Text {
     id: string
@@ -58,17 +58,17 @@ type SurveyQuestionType_Text = typeof SURVEY_TYPE_INPUT_CONTENT
 type SurveyQuestionType_SingleSelect = typeof SURVEY_TYPE_SINGLE_SELECT
 type SurveyQuestionType_MultiSelect = typeof SURVEY_TYPE_MULTI_SELECT
 export type SurveyQuestionType =
-    SurveyQuestionType_Text |
-    SurveyQuestionType_SingleSelect |
-    SurveyQuestionType_MultiSelect
+    | SurveyQuestionType_Text
+    | SurveyQuestionType_SingleSelect
+    | SurveyQuestionType_MultiSelect
 
 /**
  * 一份问卷 ——> 一道问题 ——> 支持的问题内容
  */
 export type SurveyQuestionContent =
-    SurveyQuestionContent_Text |
-    SurveyQuestionContent_SingleSelect |
-    SurveyQuestionContent_MultiSelect
+    | SurveyQuestionContent_Text
+    | SurveyQuestionContent_SingleSelect
+    | SurveyQuestionContent_MultiSelect
 /**
  * 一份问卷 ——> 一道问题 ——> 问题内容为：主观填空题
  */
@@ -81,9 +81,9 @@ interface SurveyQuestionContent_Text {
  */
 interface SurveyQuestionContent_SingleSelect {
     titles: Array<{
-        id: string,
-        title: string,
-        describe: string,
+        id: string
+        title: string
+        describe: string
     }>
     options: string[]
 }

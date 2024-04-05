@@ -6,7 +6,7 @@
  */
 export function throttle<T extends (...args: any[]) => void>(
     func: T,
-    duration = 500
+    duration = 500,
 ): (...args: Parameters<T>) => void {
     let timer: null | number = null
     return function (...args: Parameters<T>) {
@@ -31,7 +31,7 @@ export function throttle<T extends (...args: any[]) => void>(
  */
 export function debounce<T extends (...args: any[]) => void>(
     func: T,
-    delay = 500
+    delay = 500,
 ): (...args: Parameters<T>) => void {
     let timer: number
 

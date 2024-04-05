@@ -1,7 +1,26 @@
 import { apiCacheSurvey, apiGetSurveyById } from '@/api'
-import { STATUS_FAILED, STATUS_SUCCEED, SURVEY_TYPE_INPUT_CONTENT, SURVEY_TYPE_MULTI_SELECT, SURVEY_TYPE_SINGLE_SELECT } from '@/constants'
-import type { Survey, SurveyQuestionType, SurveyQuestion_MultiSelect, SurveyQuestion_SingleSelect, SurveyQuestion_Text } from '@/types'
-import { getUUID, msg, msgError, noticeError, saveFile, unrefRecursion } from '@/utils'
+import {
+    STATUS_FAILED,
+    STATUS_SUCCEED,
+    SURVEY_TYPE_INPUT_CONTENT,
+    SURVEY_TYPE_MULTI_SELECT,
+    SURVEY_TYPE_SINGLE_SELECT,
+} from '@/constants'
+import type {
+    Survey,
+    SurveyQuestionType,
+    SurveyQuestion_MultiSelect,
+    SurveyQuestion_SingleSelect,
+    SurveyQuestion_Text,
+} from '@/types'
+import {
+    getUUID,
+    msg,
+    msgError,
+    noticeError,
+    saveFile,
+    unrefRecursion,
+} from '@/utils'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -27,7 +46,7 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
     }
     // 执行 tasks 中的任务，然后清空 task
     const executeTasks = () => {
-        tasks.forEach(task => {
+        tasks.forEach((task) => {
             task()
         })
         tasks = []
@@ -48,7 +67,10 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
         updateSurvey()
     }
 
-    const updateSurvey = async (successCb?: (survey: Survey) => void, errorCb?: (reason: string) => void) => {
+    const updateSurvey = async (
+        successCb?: (survey: Survey) => void,
+        errorCb?: (reason: string) => void,
+    ) => {
         const resData = await apiGetSurveyById(surveyId.value)
         if (resData.status === STATUS_FAILED) {
             msgError(resData.msg)
@@ -61,7 +83,7 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
             comment: resData.data.comment,
             title: resData.data.title,
             version: resData.data.questions.version,
-            questions: resData.data.questions.questions
+            questions: resData.data.questions.questions,
         }
         successCb && successCb(survey.value)
         executeTasks()
@@ -82,15 +104,17 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
             return
         }
         isFetching.value = true
-        const reqData = JSON.parse(JSON.stringify({
-            id: surveyId.value,
-            title: survey.value.title,
-            comment: survey.value.comment,
-            structure_json: {
-                version: '0.0.1',
-                questions: survey.value.questions
-            }
-        }))
+        const reqData = JSON.parse(
+            JSON.stringify({
+                id: surveyId.value,
+                title: survey.value.title,
+                comment: survey.value.comment,
+                structure_json: {
+                    version: '0.0.1',
+                    questions: survey.value.questions,
+                },
+            }),
+        )
         const resData = await apiCacheSurvey(reqData)
         if (resData.status === STATUS_SUCCEED) {
             setNewCacheTime(new Date(resData.data.time))
@@ -127,8 +151,8 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
                 questionType: type,
                 questionContent: {
                     title: '',
-                    describe: ''
-                }
+                    describe: '',
+                },
             }
             return q
         }
@@ -140,25 +164,34 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
             // @ts-ignore
             questionType: type,
             questionContent: {
-                titles: [{
-                    id: getUUID(),
-                    title: '',
-                    describe: ''
-                }],
-                options: ['']
-            }
+                titles: [
+                    {
+                        id: getUUID(),
+                        title: '',
+                        describe: '',
+                    },
+                ],
+                options: [''],
+            },
         }
         return q
         // }
     }
     // 新建一个问题
-    const addOneQuestion = (questionType: SurveyQuestionType, order: number) => {
+    const addOneQuestion = (
+        questionType: SurveyQuestionType,
+        order: number,
+    ) => {
         if (!survey.value) {
             msgError('survey 不存在，这里是 storeSurvey')
             return
         }
-        survey.value.questions.splice(order, 0, generateQuestion(questionType, order))
-        survey.value.questions.forEach((item, i) => item.order = i + 1)
+        survey.value.questions.splice(
+            order,
+            0,
+            generateQuestion(questionType, order),
+        )
+        survey.value.questions.forEach((item, i) => (item.order = i + 1))
     }
     // 删除一个问题
     const removeOneQuestion = (order: number) => {
@@ -171,7 +204,7 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
             return
         }
         survey.value.questions.splice(order - 1, 1)
-        survey.value.questions.forEach((item, i) => item.order = i + 1)
+        survey.value.questions.forEach((item, i) => (item.order = i + 1))
     }
     // 获取实时最新缓存时间
     const getCacheTimeRef = () => {

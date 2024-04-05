@@ -21,7 +21,6 @@ const importSurvey = async (event: Event) => {
         console.log(error)
         msgError('读取文件失败')
     }
-
 }
 
 /** 手动显式缓存问卷 */
@@ -32,11 +31,16 @@ const cacheManual = sotreSurvey.cacheSurvey
     <h2>通用工具</h2>
     <ul>
         <!-- <li> <el-button>批量编辑顺序</el-button> </li> -->
-        <li> <el-button @click="cacheManual">立即缓存</el-button> </li>
-        <li> <el-button @click="exportSurvey">导出模版</el-button> </li>
+        <li><el-button @click="cacheManual">立即缓存</el-button></li>
+        <li><el-button @click="exportSurvey">导出模版</el-button></li>
         <li class="input-file">
             <el-button><label for="uploadFile">导入模版</label></el-button>
-            <input type="file" id="uploadFile" accept=".json" @input="importSurvey">
+            <input
+                type="file"
+                id="uploadFile"
+                accept=".json"
+                @input="importSurvey"
+            />
         </li>
     </ul>
 </template>
@@ -49,9 +53,9 @@ h2 {
 ul {
     padding: 10px;
     width: max-content;
-    list-style: none
+    list-style: none;
 }
-ul>li {
+ul > li {
     padding-bottom: 10px;
 }
 
@@ -63,7 +67,7 @@ ul>li {
         cursor: pointer;
     }
 
-    >input[type=file] {
+    > input[type='file'] {
         position: absolute;
         top: 0;
         left: 0;

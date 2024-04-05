@@ -21,7 +21,9 @@ const checkRequired = () => {
     for (let i = 0; i < len; i++) {
         let ans = answerSingle.value[i]
         if (!ans) {
-            storeAnswer.enrollNotFill(`第 ${props.question.order} - ${i + 1} 题还未填写！`)
+            storeAnswer.enrollNotFill(
+                `第 ${props.question.order} - ${i + 1} 题还未填写！`,
+            )
             return
         }
     }
@@ -47,20 +49,28 @@ const showOrder = (index: number) => {
 </script>
 
 <template>
-    <div class="wrap" v-for="(title, index) of titles"
-        :class="{required: props.question.isRequired}"
-        :key="title.id">
-        <p> {{ showOrder(index) }} {{ title.title }}</p>
+    <div
+        class="wrap"
+        v-for="(title, index) of titles"
+        :class="{ required: props.question.isRequired }"
+        :key="title.id"
+    >
+        <p>{{ showOrder(index) }} {{ title.title }}</p>
         <p>{{ title.describe }}</p>
         <div>
-            <el-radio-group v-model="answerSingle[index]" size="large"
-                class="radio-group">
-                <el-radio v-for="(option, index) of options"
+            <el-radio-group
+                v-model="answerSingle[index]"
+                size="large"
+                class="radio-group"
+            >
+                <el-radio
+                    v-for="(option, index) of options"
                     class="radio"
                     border
                     :key="index"
                     :label="option"
-                    :value="option" />
+                    :value="option"
+                />
             </el-radio-group>
         </div>
     </div>
@@ -103,5 +113,4 @@ const showOrder = (index: number) => {
     content: '*';
     color: red;
 }
-
 </style>

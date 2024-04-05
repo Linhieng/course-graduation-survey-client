@@ -1,15 +1,15 @@
-import { apiAnswerGetSurvey, apiAnswerPost } from "@/api/answer"
+import { apiAnswerGetSurvey, apiAnswerPost } from '@/api/answer'
 import {
     STATUS_SUCCEED,
     SURVEY_TYPE_INPUT_CONTENT,
     SURVEY_TYPE_SINGLE_SELECT,
     SURVEY_TYPE_MULTI_SELECT,
-} from "@/constants"
-import type { Survey, SurveyQuestion, SurveyQuestionType } from "@/types"
-import { msgError, msgSuccess } from "@/utils"
-import { defineStore } from "pinia"
-import { ref, toRaw } from "vue"
-import { useRouter } from "vue-router"
+} from '@/constants'
+import type { Survey, SurveyQuestion, SurveyQuestionType } from '@/types'
+import { msgError, msgSuccess } from '@/utils'
+import { defineStore } from 'pinia'
+import { ref, toRaw } from 'vue'
+import { useRouter } from 'vue-router'
 import { msgWarning } from '@/utils'
 
 type Answer = string | string[]
@@ -32,7 +32,10 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
         surveyId.value = id
     }
 
-    const fetchSurvey = async (successCb?: (successData: Survey) => void, errorCb?: (errorMsg: string) => void) => {
+    const fetchSurvey = async (
+        successCb?: (successData: Survey) => void,
+        errorCb?: (errorMsg: string) => void,
+    ) => {
         const resData = await apiAnswerGetSurvey(surveyId.value)
         if (resData.status !== STATUS_SUCCEED) {
             msgError(resData.msg)
@@ -42,7 +45,10 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
         }
         const { id, title, comment, questions } = resData.data
         surveyData.value = {
-            id, title, comment, questions: questions.questions
+            id,
+            title,
+            comment,
+            questions: questions.questions,
         }
         successCb && successCb(surveyData.value)
     }
@@ -52,7 +58,7 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
     }
 
     // TODO 重命名为 broadcastCheck
-    const checkAnswer = () => { }
+    const checkAnswer = () => {}
     const enrollNotFill = (msg: string) => {
         if (isShowMsg.value) return
         msgWarning(msg)
@@ -65,7 +71,7 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
     }
 
     const syncAnswer = (questionOrder: number, answer: any) => {
-        surveyAnswer.value[questionOrder-1] = answer
+        surveyAnswer.value[questionOrder - 1] = answer
     }
 
     /** 校验单个问题，其对应的 answer 是不是不合格的，返回 true 表示不合格 */
@@ -81,16 +87,19 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
         }
         if (q.questionType === SURVEY_TYPE_SINGLE_SELECT) {
             // 长度不够，pass
-            if (answer[index].length < q.questionContent.titles.length) return true
+            if (answer[index].length < q.questionContent.titles.length)
+                return true
             // 每一个选项都选了，说明合格
-            if (answer[index].every(answerItem => answerItem)) return false
+            if (answer[index].every((answerItem) => answerItem)) return false
             return true
         }
         if (q.questionType === SURVEY_TYPE_MULTI_SELECT) {
             // 长度不够，pass
-            if (answer[index].length < q.questionContent.titles.length) return true
+            if (answer[index].length < q.questionContent.titles.length)
+                return true
             // 每一个选项中都有选一个，说明合格。
-            if (answer[index].every(answerItem => answerItem.length > 0)) return false
+            if (answer[index].every((answerItem) => answerItem.length > 0))
+                return false
             return true
         }
     }
@@ -117,14 +126,14 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
         const resData = await apiAnswerPost(surveyId.value, {
             surveyId: surveyId.value,
             spendTime: 0,
-            answerDetail: toRaw(surveyAnswer.value)
+            answerDetail: toRaw(surveyAnswer.value),
         })
         if (resData.status === STATUS_SUCCEED) {
             router.replace({
                 name: 'answer-over',
                 params: {
-                    msg: resData.msg
-                }
+                    msg: resData.msg,
+                },
             })
         } else {
             msgError(resData.msg)

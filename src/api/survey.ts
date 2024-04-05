@@ -1,7 +1,12 @@
-import type { ResProCacheSurvey, ResProGetAllSurveys, ResProNewSurvey, ResProGetSurveyById } from "@/types"
-import { get, post } from "."
-import type { ReqSurveyAche } from "@/types/request"
-import type { AxiosRequestConfig } from "axios"
+import type {
+    ResProCacheSurvey,
+    ResProGetAllSurveys,
+    ResProNewSurvey,
+    ResProGetSurveyById,
+} from '@/types'
+import { get, post } from '.'
+import type { ReqSurveyAche } from '@/types/request'
+import type { AxiosRequestConfig } from 'axios'
 
 const urlGetAllSurveys = '/survey/get-all-surveys'
 const urlNewSurvey = '/survey/create'
@@ -33,7 +38,7 @@ export function apiToggleSurveyDelete(surveyId: number, isDel?: boolean) {
         del = isDel ? 1 : 0
     }
     return post(urlToggleSurveyDelete + surveyId, {
-        params: { del }
+        params: { del },
     })
 }
 
@@ -43,6 +48,6 @@ export function apiToggleSurveyValid(surveyId: number, isValid?: boolean) {
         valid = isValid ? 1 : 0
     }
     return post(urlToggleSurveyValid + surveyId, {
-        params: { valid }
+        params: { valid },
     })
 }

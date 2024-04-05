@@ -21,13 +21,17 @@ const checkRequired = () => {
     if (len === 1) {
         const ans = answerMultiple.value[0]
         if (!ans || answerMultiple.value[0].length < 1) {
-            storeAnswer.enrollNotFill(`第 ${props.question.order} 题至少选一个！`)
+            storeAnswer.enrollNotFill(
+                `第 ${props.question.order} 题至少选一个！`,
+            )
         }
     } else {
         for (let i = 0; i < len; i++) {
             let ans = answerMultiple.value[i]
             if (!ans || ans.length < 1) {
-                storeAnswer.enrollNotFill(`第 ${props.question.order} - ${i + 1} 题至少选一个！`)
+                storeAnswer.enrollNotFill(
+                    `第 ${props.question.order} - ${i + 1} 题至少选一个！`,
+                )
                 return
             }
         }
@@ -40,7 +44,6 @@ if (props.question.isRequired) {
         }
     })
 }
-
 
 ////////////////////////////////////////////////
 // 为 UI 服务
@@ -55,21 +58,28 @@ const showOrder = (index: number) => {
 </script>
 
 <template>
-    <div class="wrap" v-for="(title, index) of titles"
+    <div
+        class="wrap"
+        v-for="(title, index) of titles"
         :key="title.id"
-        :class="{required: props.question.isRequired}"
-        >
+        :class="{ required: props.question.isRequired }"
+    >
         <p>{{ showOrder(index) }} {{ title.title }}</p>
         <p>{{ title.describe }}</p>
         <div>
-            <el-checkbox-group v-model="answerMultiple[index]" size="large"
-                class="checkbox-group">
-                <el-checkbox v-for="(option, index) of options"
+            <el-checkbox-group
+                v-model="answerMultiple[index]"
+                size="large"
+                class="checkbox-group"
+            >
+                <el-checkbox
+                    v-for="(option, index) of options"
                     border
                     class="checkbox-item"
                     :key="index"
                     :label="option"
-                    :value="option" />
+                    :value="option"
+                />
             </el-checkbox-group>
         </div>
     </div>
