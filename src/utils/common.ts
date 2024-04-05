@@ -1,5 +1,14 @@
 import { unref } from 'vue'
 
+export const copyToClipboard = (txt: string) => {
+    const input = document.createElement('input')
+    input.value = txt
+    document.body.appendChild(input)
+    input.select()
+    document.execCommand('Copy')
+    input.remove()
+}
+
 /**
  * 解套多层 ref
  * @param obj

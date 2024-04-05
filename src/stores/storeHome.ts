@@ -5,7 +5,7 @@ import {
 } from '@/api'
 import { STATUS_SUCCEED } from '@/constants'
 import type { OneSurvey } from '@/types'
-import { msgSuccess, msgWarning } from '@/utils'
+import { copyToClipboard, msgSuccess, msgWarning } from '@/utils'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -35,18 +35,9 @@ export const useStoreHome = defineStore('storeHome', () => {
         })
     }
 
-    const copy = (txt: string) => {
-        const input = document.createElement('input')
-        input.value = txt
-        document.body.appendChild(input)
-        input.select()
-        document.execCommand('Copy')
-        input.remove()
-    }
-
     const copyLink = (survey: OneSurvey) => {
         const link = `http://localhost:5173/answer/${survey.id}`
-        copy(link)
+        copyToClipboard(link)
         msgSuccess(`已复制： ${link}`)
     }
 
