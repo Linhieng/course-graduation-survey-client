@@ -16,6 +16,7 @@ import IconDelRedo from '@/components/icons/IconDelRedo.vue'
 import IconStat from '@/components/icons/IconStat.vue'
 import IconPublish from '@/components/icons/IconPublish.vue'
 import IconStop from '@/components/icons/IconStop.vue'
+import bgImg from '@/assets/img/survey-bg.png'
 
 const allSurveys = ref<OneSurvey[]>()
 const showSurveys = ref<OneSurvey[]>()
@@ -82,6 +83,9 @@ const toStatAnswer = (survey: OneSurvey) => {
             :class="{ is_draft: survey.is_draft }"
         >
             <div class="base-info">
+                <div class="bg-box">
+                    <img :src="bgImg" alt="没啥用的背景图片" />
+                </div>
                 <p>标题：{{ survey.title }}</p>
                 <p v-if="survey.comment && survey.comment !== ''">
                     <el-text truncated> 备注：{{ survey.comment }} </el-text>
@@ -227,6 +231,13 @@ const toStatAnswer = (survey: OneSurvey) => {
     display: flex;
     flex-direction: column;
 
+    .bg-box {
+        width: 250px;
+        margin-bottom: 10px;
+        img {
+            width: 100%;
+        }
+    }
     & > p {
         margin-bottom: 10px;
         font-size: 1.1rem;
