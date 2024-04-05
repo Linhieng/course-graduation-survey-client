@@ -13,12 +13,18 @@ import { useRouter } from 'vue-router'
 export const useStoreHome = defineStore('storeHome', () => {
     const allSurvey = ref<OneSurvey[]>()
     const router = useRouter()
+    const isFetch = ref(true)
 
+    const gerIsFetchRef = () => {
+        return isFetch
+    }
     const getAllSurveyRef = () => {
         return allSurvey
     }
     async function fetchAllSurvey() {
+        isFetch.value = true
         const data = await apiGetAllSurveys()
+        isFetch.value = false
         if (data.status === STATUS_SUCCEED) {
             allSurvey.value = data.data.all_surveys
         }
@@ -42,11 +48,13 @@ export const useStoreHome = defineStore('storeHome', () => {
     }
 
     const deleteSurvey = async (survey: OneSurvey) => {
+        isFetch.value = true
         await apiToggleSurveyDelete(survey.id, true)
         fetchAllSurvey()
     }
 
     const toggleSurveyValid = async (survey: OneSurvey) => {
+        isFetch.value = true
         await apiToggleSurveyValid(survey.id)
         fetchAllSurvey()
     }
@@ -61,7 +69,9 @@ export const useStoreHome = defineStore('storeHome', () => {
     }
 
     return {
+        isFetch,
         allSurvey,
+        gerIsFetchRef,
         fetchAllSurvey,
         getAllSurveyRef,
         toChangeSurvey,
