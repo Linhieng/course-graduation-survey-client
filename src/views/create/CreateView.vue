@@ -24,9 +24,23 @@ storeSurvey.setSurveyId(props.id)
             <CreateViewAside />
         </template>
         <template #main>
-            <CreateViewMain />
+            <CreateViewMain class="create-container" />
         </template>
     </HeaderAsideMain>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@mixin w600 {
+    @media screen and (min-width: 600px) {
+        @content;
+    }
+}
+
+.create-container {
+    @include w600 {
+        margin: auto;
+        max-width: 600px;
+        box-shadow: 0 0 20px #eee;
+    }
+}
+</style>
