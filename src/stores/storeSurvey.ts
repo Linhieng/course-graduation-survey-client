@@ -83,7 +83,7 @@ export const useStoreSurvey = defineStore('storeSurvey', () => {
             comment: resData.data.comment,
             title: resData.data.title,
             version: resData.data.questions.version,
-            questions: resData.data.questions.questions,
+            questions: resData.data.questions.questions || [], // 服务器可能返回一个 undefined
         }
         successCb && successCb(survey.value)
         executeTasks()

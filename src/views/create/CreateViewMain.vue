@@ -85,6 +85,15 @@ const btnNewQuestion = (payload: NewQuestionPayload) => {
                 <el-skeleton animated> </el-skeleton>
                 <el-skeleton animated> </el-skeleton>
             </div>
+            <div v-else-if="!_survey">
+                <p>出错了，不存在问卷</p>
+            </div>
+            <div v-else-if="_survey.questions.length < 1">
+                <li class="question-item-wrapper">
+                    <NewQuestion :order="1" @new-question="btnNewQuestion" />
+                    <el-divider />
+                </li>
+            </div>
             <div v-else>
                 <li
                     v-for="q of _survey?.questions"
@@ -107,6 +116,10 @@ const btnNewQuestion = (payload: NewQuestionPayload) => {
 </template>
 
 <style scoped lang="scss">
+ul {
+    list-style: none;
+}
+
 .top-wrapper {
     margin-bottom: 20px;
     padding: 20px;
