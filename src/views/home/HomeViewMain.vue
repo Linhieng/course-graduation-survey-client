@@ -6,6 +6,7 @@ import IconDelRedo from '@/components/icons/IconDelRedo.vue'
 import IconStat from '@/components/icons/IconStat.vue'
 import IconPublish from '@/components/icons/IconPublish.vue'
 import IconStop from '@/components/icons/IconStop.vue'
+import LoadingLine from '@/components/LoadingLine.vue'
 import bgImg from '@/assets/img/survey-bg.png'
 import { useStoreHome } from '@/stores'
 
@@ -23,8 +24,13 @@ storeHome.fetchAllSurvey()
 
 <template>
     <div class="surveys-container">
-        <template v-if="isFetch"> 加载中…… </template>
-        <template v-else>
+        <div v-if="isFetch" class="loading-wrap">
+            <LoadingLine />
+            <br />
+            <p>加载中……</p>
+        </div>
+        <!-- TODO: 这里如果不添加 v-if="true"，那么就不会显示数据 -->
+        <template v-if="true">
             <div
                 v-for="survey of showSurveys"
                 class="surveys-item"
@@ -182,6 +188,13 @@ storeHome.fetchAllSurvey()
         margin: 10px;
         background-color: white;
         border-radius: 4px;
+    }
+
+    position: relative;
+    .loading-wrap {
+        position: absolute;
+        width: 100%;
+        top: 0;
     }
 }
 
