@@ -7,7 +7,7 @@ import { STATUS_SUCCEED } from '@/constants'
 import type { OneSurvey } from '@/types'
 import { copyToClipboard, msgSuccess, msgWarning } from '@/utils'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 export const useStoreHome = defineStore('storeHome', () => {
@@ -90,6 +90,8 @@ export const useStoreHome = defineStore('storeHome', () => {
     return {
         isFetch,
         allSurvey,
+        validSurvey,
+        dumpSurvey,
         gerIsFetchRef,
         fetchAllSurvey,
         getDumpSurveyRef,
