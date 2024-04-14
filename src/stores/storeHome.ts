@@ -7,15 +7,32 @@ import { STATUS_SUCCEED } from '@/constants'
 import type { OneSurvey } from '@/types'
 import { copyToClipboard, msgSuccess, msgWarning } from '@/utils'
 import { defineStore } from 'pinia'
-import { ref, type Ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, watch, type Ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 export const useStoreHome = defineStore('storeHome', () => {
     const allSurvey = ref<OneSurvey[]>()
     const validSurvey = ref<OneSurvey[]>()
     const dumpSurvey = ref<OneSurvey[]>()
+    const showSurvey = ref<OneSurvey[]>()
     const router = useRouter()
+    const route = useRoute()
     const isFetch = ref(true)
+
+    // TODO: 更新的这一步操作，会阻塞页面，怎么解决？
+    const updateShowSurvey = async () => {
+        isFetch.value = true
+        if (route.path === '/dump') {
+            showSurvey.value = dumpSurvey.value
+        } else {
+            showSurvey.value = validSurvey.value
+        }
+        isFetch.value = false
+    }
+
+    watch(route, (to, from) => {
+        updateShowSurvey()
+    })
 
     const gerIsFetchRef = () => {
         return isFetch
@@ -24,7 +41,7 @@ export const useStoreHome = defineStore('storeHome', () => {
         return dumpSurvey
     }
     const getValidSurveyRef = () => {
-        return validSurvey
+        return showSurvey
     }
     const getAllSurveyRef = () => {
         return allSurvey
@@ -37,6 +54,7 @@ export const useStoreHome = defineStore('storeHome', () => {
             dump.push(survey)
         })
         dumpSurvey.value = dump
+        updateShowSurvey()
     }
     /** 从服务器获取问卷统统使用该入口！ */
     async function fetchAllSurvey() {
