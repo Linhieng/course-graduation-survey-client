@@ -1,6 +1,10 @@
 import axios from 'axios'
 // import type { RouteRecordNormalized } from 'vue-router'
-import type { UserState } from '@/stores/modules/user/types'
+import type { UserState } from '@/store/modules/user/types'
+
+if (import.meta.env.VITE_AXIOS_BASE_URL) {
+    axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL
+}
 
 export type LoginData = {
     username: string

@@ -1,31 +1,25 @@
 import axios from 'axios'
-import type { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { useUserStore } from '@/stores'
+import { useUserStore } from '@/store'
 import { getToken } from '@/utils/auth'
 import { msgError } from '@/utils'
 
-export interface HttpResponse<T = unknown> {
+export interface HttpResponse<T = any> {
     status: number
     msg: string
     code: number
     data: T
 }
 
-if (import.meta.env.VITE_API_BASE_URL) {
-    axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL
+if (import.meta.env.VITE_AXIOS_BASE_URL) {
+    axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL
 }
 
 axios.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
-        // let each request carry token
-        // this example using the JWT token
-        // Authorization is a custom headers key
-        // please modify it according to the actual situation
+    (config) => {
+        // 如果存在 token 的话，请求时自动添加上 token 到请求头
+        // 的 Authorization 中。
         const token = getToken()
         if (token) {
-            if (!config.headers) {
-                config.headers = {}
-            }
             config.headers.Authorization = `Bearer ${token}`
         }
         return config
@@ -37,20 +31,21 @@ axios.interceptors.request.use(
 )
 // add response interceptors
 axios.interceptors.response.use(
-    (response: AxiosResponse<HttpResponse>) => {
+    (response) => {
         const res = response.data
-        // if the custom code is not 20000, it is judged as an error.
+        // code 大于 20000 的，被认为是请求错误
         if (res.code !== 20000) {
             msgError(res.msg || 'Error')
-            // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+            // 50008: 非法的 token
+            // 50014: token 已过期
             if (
-                [50008, 50012, 50014].includes(res.code) &&
+                [50008, 50014].includes(res.code) &&
                 response.config.url !== '/api/user/info'
             ) {
-                msgError('你已经退出登录')
+                msgError('token 无效')
                 const userStore = useUserStore()
                 ;(async () => {
-                    await userStore.logout()
+                    // await userStore.logout()
                     window.location.reload()
                 })()
             }

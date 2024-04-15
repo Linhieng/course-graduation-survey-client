@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStoreUser } from '@/stores'
+import { useStoreUser } from '@/store'
 import { UserFilled } from '@element-plus/icons-vue'
 import IconLogo from '@icon/IconLogo.vue'
 import { useRouter } from 'vue-router'

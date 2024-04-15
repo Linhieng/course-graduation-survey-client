@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SurveyQuestion_SingleSelect } from '@/types'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { useStoreStat } from '@/stores'
+import { useStoreStat } from '@/store'
 import { debounce } from '@/utils'
 import type { EChartsOption } from 'echarts'
 const storeStat = useStoreStat()

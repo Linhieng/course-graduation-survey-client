@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SurveyQuestion_MultiSelect } from '@/types'
 import { ref, watch, toRaw } from 'vue'
-import { useStoreAnswer } from '@/stores'
+import { useStoreAnswer } from '@/store'
 
 const storeAnswer = useStoreAnswer()
 const props = defineProps<{

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useStoreAnswer } from '@/stores'
+import { useStoreAnswer } from '@/store'
 import QuestionAssign from './QuestionAssign.vue'
 
 const props = defineProps<{

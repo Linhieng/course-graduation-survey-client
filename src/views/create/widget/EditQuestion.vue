@@ -17,7 +17,7 @@ import { SurveyQuestionTypeMappingText, msgError } from '@/utils'
 import InputText from './InputText.vue'
 import SelectItem from './SelectItem.vue'
 import { ref, watch } from 'vue'
-import { useStoreSurvey } from '@/stores'
+import { useStoreSurvey } from '@/store'
 
 const props = defineProps<{
     question: SurveyQuestion

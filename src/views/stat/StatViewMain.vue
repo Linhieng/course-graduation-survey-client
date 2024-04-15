@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStoreStat } from '@/stores'
+import { useStoreStat } from '@/store'
 import AssignItem from './components/AssignItem.vue'
 import LoadingLine from '@/components/LoadingLine.vue'
 

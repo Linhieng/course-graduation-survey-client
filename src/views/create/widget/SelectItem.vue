@@ -9,7 +9,7 @@ import type {
 } from '@/types'
 import { getUUID, msgError } from '@/utils'
 import { ref, watch } from 'vue'
-import { useStoreSurvey } from '@/stores'
+import { useStoreSurvey } from '@/store'
 import InputMultiple from '@/components/InputMultiple.vue'
 import InputMultipleOne from '@/components/InputMultipleOne.vue'
 

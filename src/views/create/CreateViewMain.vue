@@ -10,7 +10,7 @@ import { ref, watch } from 'vue'
 import EditQuestion from './widget/EditQuestion.vue'
 import NewQuestion, { type NewQuestionPayload } from './widget/NewQuestion.vue'
 import { msgError } from '@/utils'
-import { useStoreSurvey } from '@/stores'
+import { useStoreSurvey } from '@/store'
 
 // 所有数据的获取，均通过 store
 const storeSurvey = useStoreSurvey()

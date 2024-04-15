@@ -11,7 +11,7 @@ import {
 } from '@/utils'
 import { apiLogin, apiSignup } from '@/api'
 import { useRouter } from 'vue-router'
-import { useStoreUser } from '@/stores'
+import { useStoreUser } from '@/store'
 import { STATUS_SUCCEED } from '@/constants'
 
 const storeUser = useStoreUser()

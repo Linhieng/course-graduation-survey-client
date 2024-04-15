@@ -3,7 +3,7 @@ import HomeView from '@/views/home/HomeView.vue'
 import LoginView from '@/views/login/LoginView.vue'
 import NotFound from '@/views/404/NotFund.vue'
 import FillAnswer from '@/views/answer/FillAnswer.vue'
-import { useStoreUser } from '@/stores'
+import { useStoreUser } from '@/store'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),

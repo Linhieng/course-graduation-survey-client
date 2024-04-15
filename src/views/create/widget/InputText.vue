@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import type { SurveyQuestion_Text } from '@/types'
 import { ref, watch } from 'vue'
-import { useStoreSurvey } from '@/stores'
+import { useStoreSurvey } from '@/store'
 import { msgError } from '@/utils'
 import InputRequired from '@/components/InputRequired.vue'
 import InputOptional from '@/components/InputOptional.vue'

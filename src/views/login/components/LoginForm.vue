@@ -33,9 +33,10 @@ import { reactive, ref } from 'vue'
 import { useStorage } from '@vueuse/core'
 import useLoading from '@/hooks/loading'
 import { useI18n } from 'vue-i18n'
-import { useUserStore } from '@/stores'
+import { useUserStore } from '@/store'
 import type { FormInstance, FormRules } from 'element-plus'
 import type { LoginData } from '@/api/user'
+import { msgError } from '@/utils'
 
 const userStore = useUserStore()
 const { t } = useI18n()
@@ -104,7 +105,7 @@ const submit = async () => {
         // loginConfig.value.username = rememberPassword ? username : ''
         // loginConfig.value.password = rememberPassword ? password : ''
     } catch (err) {
-        errorMessage.value = (err as Error).message
+        msgError((err as Error).message)
     } finally {
         setLoading(false)
     }

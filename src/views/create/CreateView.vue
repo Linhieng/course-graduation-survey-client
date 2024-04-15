@@ -4,7 +4,7 @@ import CreateViewAside from './CreateViewAside.vue'
 import CreateViewMain from './CreateViewMain.vue'
 import HeaderAsideMain from '@/layout/HeadAsideMain.vue'
 
-import { useStoreSurvey } from '@/stores'
+import { useStoreSurvey } from '@/store'
 const storeSurvey = useStoreSurvey()
 
 const props = defineProps<{

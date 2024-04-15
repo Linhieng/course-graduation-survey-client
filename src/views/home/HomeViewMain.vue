@@ -8,7 +8,7 @@ import IconPublish from '@/components/icons/IconPublish.vue'
 import IconStop from '@/components/icons/IconStop.vue'
 import LoadingLine from '@/components/LoadingLine.vue'
 import bgImg from '@/assets/img/survey-bg.png'
-import { useStoreHome } from '@/stores'
+import { useStoreHome } from '@/store'
 
 const storeHome = useStoreHome()
 const isFetch = storeHome.gerIsFetchRef()

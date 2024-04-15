@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import WidgetBack from '@/components/WidgetBack.vue'
-import { useStoreSurvey } from '@/stores'
+import { useStoreSurvey } from '@/store'
 import { onBeforeUnmount } from 'vue'
 
 const storeSurvey = useStoreSurvey()

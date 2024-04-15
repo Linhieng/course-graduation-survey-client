@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStoreSurvey } from '@/stores'
+import { useStoreSurvey } from '@/store'
 import { readFileContent, msgError } from '@/utils'
 
 const sotreSurvey = useStoreSurvey()
