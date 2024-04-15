@@ -40,13 +40,13 @@ const router = createRouter({
             component: () => import('../views/stat/StatView.vue'),
             meta: { requiresAuth: true },
         },
-        {
-            path: '/answer/:id',
-            name: 'statanswer',
-            component: FillAnswer,
-            props: true,
-            meta: { requiresAuth: false },
-        },
+        // {
+        //     path: '/answer/:id',
+        //     name: 'statanswer',
+        //     component: FillAnswer,
+        //     props: true,
+        //     meta: { requiresAuth: false },
+        // },
         {
             path: '/answer-over/:msg',
             name: 'answer-over',

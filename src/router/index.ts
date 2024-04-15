@@ -23,6 +23,15 @@ const router = createRouter({
                 requiresAuth: false,
             },
         },
+        {
+            path: '/answer/:id',
+            props: true,
+            name: 'answer',
+            component: () => import('@/views/answer/index.vue'),
+            meta: {
+                requiresAuth: false,
+            },
+        },
         ...appRoutes,
         REDIRECT_MAIN,
         NOT_FOUND_ROUTE,

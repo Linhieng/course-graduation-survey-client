@@ -1,6 +1,7 @@
 {
     "workbench.editor.customLabels.patterns": {
-        "src/views/**": "/${dirname}.${extname}"
+        "src/views/**": "/${dirname}.${extname}",
+        "src/*/index.ts": "/${dirname}.${extname}",
     },
 
     "[vue][typescript]": {

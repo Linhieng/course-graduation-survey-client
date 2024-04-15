@@ -14,7 +14,7 @@ import { msgWarning } from '@/utils'
 
 type Answer = string | string[]
 
-export const useStoreAnswer = defineStore('storeAnswer', () => {
+const useStoreAnswer = defineStore('storeAnswer', () => {
     const surveyId = ref()
     const surveyData = ref<Survey>()
     const surveyAnswer = ref<Answer[]>([])
@@ -152,3 +152,5 @@ export const useStoreAnswer = defineStore('storeAnswer', () => {
         syncAnswer,
     }
 })
+
+export default useStoreAnswer
