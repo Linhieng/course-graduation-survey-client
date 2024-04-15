@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useStoreStat } from '@/stores'
 import AssignItem from './components/AssignItem.vue'
+import LoadingLine from '@/components/LoadingLine.vue'
 
 const storeStat = useStoreStat()
 const surveyData = storeStat.getSurveyDataRef()
@@ -18,7 +19,11 @@ const surveyData = storeStat.getSurveyDataRef()
             </ul>
         </template>
         <template v-else>
-            <div class="loading-box">加载中……</div>
+            <div class="loading-box">
+                <LoadingLine />
+                <br />
+                <p>加载中……</p>
+            </div>
         </template>
     </div>
 </template>
