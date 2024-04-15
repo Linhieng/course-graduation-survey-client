@@ -36,7 +36,7 @@ import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/store'
 import type { FormInstance, FormRules } from 'element-plus'
 import type { LoginData } from '@/api/user'
-import { msgError } from '@/utils'
+import { msgError, msgSuccess } from '@/utils'
 import { useRouter } from 'vue-router'
 import { DEFAULT_ROUTE_NAME } from '@/router/constants'
 
@@ -101,13 +101,12 @@ const submit = async () => {
                 ...othersQuery,
             },
         })
-        // Message.success(t('login.form.login.success'))
-        // const { rememberPassword } = loginConfig.value
-        // const { username, password } = values
-        // // 实际生产环境需要进行加密存储。
-        // // The actual production environment requires encrypted storage.
-        // loginConfig.value.username = rememberPassword ? username : ''
-        // loginConfig.value.password = rememberPassword ? password : ''
+        msgSuccess('login.form.login.success')
+        const { rememberPassword } = loginConfig.value
+        const { username, password } = formLogin
+        // 🚨 这里并没有对密码进行加密处理，因为后台还没有处理。
+        loginConfig.value.username = rememberPassword ? username : ''
+        loginConfig.value.password = rememberPassword ? password : ''
     } catch (err) {
         console.error(err)
     } finally {

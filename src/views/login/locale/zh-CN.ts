@@ -7,13 +7,16 @@ export default {
     'login.form.rememberPassword': '记住密码',
     'login.form.userName.errMsg': '用户名不能为空',
     'login.form.password.errMsg': '密码不能为空',
+    'login.form.login.success': '登录成功，欢迎使用！',
 
     'register.form.label.userName': '用户名',
     'register.form.label.password': '密码',
     'register.form.label.passwordAgain': '确认密码',
 
+
+
+
     'login.form.login.errMsg': '登录出错，轻刷新重试',
-    'login.form.login.success': '欢迎使用',
     'login.form.forgetPassword': '忘记密码',
     'login.banner.slogan1': '开箱即用的高质量模板',
     'login.banner.subSlogan1': '丰富的的页面模板，覆盖大多数典型业务场景',

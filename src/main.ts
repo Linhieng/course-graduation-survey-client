@@ -1,7 +1,7 @@
 import './assets/style/index.scss'
 import 'element-plus/dist/index.css'
 // 使用 mock 模拟请求得到的数据
-// import './mock'
+import './mock'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
