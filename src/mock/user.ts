@@ -67,5 +67,21 @@ setupMock({
         Mock.mock(new RegExp('/api/user/logout'), () => {
             return successResponseWrap(null)
         })
+
+        // 注册
+        Mock.mock(new RegExp('/api/user/signup'), (params: MockParams) => {
+            const { username, password } = JSON.parse(params.body)
+            if (!username) {
+                return failResponseWrap(null, '用户名不能为空', 50000)
+            }
+            if (!password) {
+                return failResponseWrap(null, '密码不能为空', 50000)
+            }
+            if (username === 'admin' || username === 'alan') {
+                return failResponseWrap(null, '用户已存在', 40000)
+            }
+
+            return successResponseWrap(null)
+        })
     },
 })

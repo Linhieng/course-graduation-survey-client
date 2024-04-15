@@ -3,6 +3,8 @@
  */
 
 import { ElMessage, ElNotification } from 'element-plus'
+import i18n from '@/locale'
+const { t } = i18n.global
 
 /**
  * 什么情况下使用 msg：
@@ -12,19 +14,39 @@ import { ElMessage, ElNotification } from 'element-plus'
  */
 
 export const msg = (message: string) => {
-    ElMessage({ showClose: true, grouping: true, message })
+    ElMessage({ showClose: true, grouping: true, message: t(message) })
 }
 export const msgSuccess = (message: string) => {
-    ElMessage({ showClose: true, grouping: true, message, type: 'success' })
+    ElMessage({
+        showClose: true,
+        grouping: true,
+        message: t(message),
+        type: 'success',
+    })
 }
 export const msgWarning = (message: string) => {
-    ElMessage({ showClose: true, grouping: true, message, type: 'warning' })
+    ElMessage({
+        showClose: true,
+        grouping: true,
+        message: t(message),
+        type: 'warning',
+    })
 }
 export const msgInfo = (message: string) => {
-    ElMessage({ showClose: true, grouping: true, message, type: 'info' })
+    ElMessage({
+        showClose: true,
+        grouping: true,
+        message: t(message),
+        type: 'info',
+    })
 }
 export const msgError = (message: string) => {
-    ElMessage({ showClose: true, grouping: true, message, type: 'error' })
+    ElMessage({
+        showClose: true,
+        grouping: true,
+        message: t(message),
+        type: 'error',
+    })
 }
 
 /**
@@ -34,33 +56,33 @@ export const msgError = (message: string) => {
  */
 
 export const notice = (message: string, title = '', duration = 3000) => {
-    ElNotification({ title, message, duration })
+    ElNotification({ title, message: t(message), duration })
 }
 export const noticeSuccess = (
     message: string,
     title = 'Success',
     duration = 3000,
 ) => {
-    ElNotification({ title, message, type: 'success', duration })
+    ElNotification({ title, message: t(message), type: 'success', duration })
 }
 export const noticeWarning = (
     message: string,
     title = 'Warning',
     duration = 3000,
 ) => {
-    ElNotification({ title, message, type: 'warning', duration })
+    ElNotification({ title, message: t(message), type: 'warning', duration })
 }
 export const noticeInfo = (
     message: string,
     title = 'Info',
     duration = 3000,
 ) => {
-    ElNotification({ title, message, type: 'info', duration })
+    ElNotification({ title, message: t(message), type: 'info', duration })
 }
 export const noticeError = (
     message: string,
     title = 'Error',
     duration = 3000,
 ) => {
-    ElNotification({ title, message, type: 'error', duration })
+    ElNotification({ title, message: t(message), type: 'error', duration })
 }

@@ -6,13 +6,16 @@ import IconLogo from '@icon/IconLogo.vue'
 import useLocale from '@/hooks/locale'
 import useUser from '@/hooks/user'
 import { useFullscreen } from '@vueuse/core'
+import { msgSuccess } from '@/utils'
+import { useI18n } from 'vue-i18n'
 
 const { isFullscreen, toggle: toggleFullScreen } = useFullscreen()
 const { toggleZhEn } = useLocale()
-
+const { t } = useI18n()
 const { logout } = useUser()
-const handleLogout = () => {
-    logout()
+const handleLogout = async () => {
+    await logout()
+    msgSuccess(t('msg.user.logout.success'))
 }
 </script>
 

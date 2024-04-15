@@ -10,6 +10,5 @@ const router = useRouter()
 const route = useRoute()
 
 const gotoPath = route.params.path as string
-console.log('??? ', gotoPath)
 router.replace({ path: gotoPath })
 </script>

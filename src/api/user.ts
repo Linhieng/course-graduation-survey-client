@@ -26,6 +26,10 @@ export function logout() {
     return post('/api/user/logout')
 }
 
+export function register(data: LoginData) {
+    return post('/api/user/signup', data)
+}
+
 // export function getMenuList() {
 //     return axios.post<RouteRecordNormalized[]>('/api/user/menu')
 // }

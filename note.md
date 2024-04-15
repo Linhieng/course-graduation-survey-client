@@ -24,6 +24,20 @@
     在里面返回一个 useLocale 函数
     函数返回一个 changeLocale 函数和一个属性 currentLocale
 
+i18n 只能用在 setup 中，在 hook 中或者 api 函数中都是无效的。
+但我确实想要在 axios 拦截请求时使用国际化，怎么弄？
+
+分析原因，之所以只能在 setup 中使用，是因为我调用的是 useI18n。
+而 useI18n 只能在 setup 中使用。
+
+想要解决，那么就是不使用 useI18n，而是直接获取到 i18n 对象。
+下面代码就可以解决问题：
+    import i18n from '@/locale'
+    const {t} = i18n.global
+
+
+
+
 ## 使用 loading
 
 通过创建一个 src\hooks\loading.ts 文件，来使用加载状态，这个 hooks 返回

@@ -1,6 +1,7 @@
 import localeLogin from '@/views/login/locale/en-US'
 import footerInfo from '@/components/footer/locale/en-US'
 import layoutInfo from '@/layout/locale/en-US'
+import utilsMsg from '@/utils/locale/en-US'
 
 // import localeMessageBox from '@/components/message-box/locale/en-US';
 
@@ -48,8 +49,7 @@ export default {
     'navbar.docs': 'Docs',
     'navbar.action.locale': 'Switch to English',
 
-    'user.logout.success': 'Log out successfully',
-
+    ...utilsMsg,
     ...localeLogin,
     ...footerInfo,
     ...layoutInfo,
