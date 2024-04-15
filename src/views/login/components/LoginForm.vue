@@ -109,7 +109,7 @@ const submit = async () => {
         // loginConfig.value.username = rememberPassword ? username : ''
         // loginConfig.value.password = rememberPassword ? password : ''
     } catch (err) {
-        msgError(err as string)
+        console.error(err)
     } finally {
         setLoading(false)
     }
