@@ -1,5 +1,9 @@
-export * from './storeUser'
-export * from './storeSurvey'
-export * from './storeAnswer'
-export * from './storeStat'
-export * from './storeHome'
+import { createPinia } from 'pinia'
+// import useAppStore from './modules/app'
+import useUserStore from './modules/user'
+// import useTabBarStore from './modules/tab-bar'
+
+const pinia = createPinia()
+
+export { /* useAppStore,  */ useUserStore /* , useTabBarStore */ }
+export default pinia

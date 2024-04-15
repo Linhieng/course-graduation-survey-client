@@ -15,7 +15,8 @@
         "echart",
         "echarts",
         "Linhieng",
-        "pinia"
+        "pinia",
+        "vueuse"
     ],
 
 
