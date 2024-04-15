@@ -15,8 +15,13 @@ export default function useLocale() {
         localStorage.setItem('arco-locale', value)
         msgSuccess(i18.t('navbar.action.locale'))
     }
+    const toggleZhEn = () => {
+        const locale = i18.locale.value === 'zh-CN' ? 'en-US' : 'zh-CN'
+        changeLocale(locale)
+    }
     return {
         currentLocale,
         changeLocale,
+        toggleZhEn,
     }
 }

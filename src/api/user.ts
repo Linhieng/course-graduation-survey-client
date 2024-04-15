@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios, { post } from './axios'
+import type { R } from './axios'
 // import type { RouteRecordNormalized } from 'vue-router'
 import type { UserState } from '@/store/modules/user/types'
 
@@ -15,15 +16,14 @@ export type LoginRes = {
     token: string
 }
 export function login(data: LoginData) {
-    return axios.post<LoginRes>('/api/user/login', data)
+    return post<LoginRes>('/api/user/login', data)
+}
+export function getUserInfo() {
+    return post<UserState>('/api/user/info')
 }
 
-// export function logout() {
-//     return axios.post<LoginRes>('/api/user/logout')
-// }
-
-export function getUserInfo() {
-    return axios.post<UserState>('/api/user/info')
+export function logout() {
+    return post('/api/user/logout')
 }
 
 // export function getMenuList() {

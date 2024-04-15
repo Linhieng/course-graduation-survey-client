@@ -60,7 +60,7 @@ export default {
     name: 'Dashboard', // If you want the include property of keep-alive to take effect, you must name the component
 }
 </script>
-
+<!--
 <style lang="less" scoped>
 .container {
     background-color: var(--color-fill-2);
@@ -146,4 +146,4 @@ export default {
         margin-top: 16px;
     }
 }
-</style>
+</style> -->

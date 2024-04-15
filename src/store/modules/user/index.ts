@@ -2,14 +2,14 @@ import { defineStore } from 'pinia'
 import type { LoginData } from '@/api/user'
 import {
     login as userLogin,
-    // logout as userLogout,
+    logout as userLogout,
     // getUserInfo,
     // LoginData,
 } from '@/api/user'
 import { setToken, clearToken } from '@/utils/auth'
 // import { removeRouteListener } from '@/utils/route-listener'
 import type { UserState } from './types'
-// import useAppStore from '../app'
+import useAppStore from '../app'
 
 const useUserStore = defineStore('user', {
     state: (): UserState => ({
@@ -49,10 +49,9 @@ const useUserStore = defineStore('user', {
         //     this.$patch(partial)
         // },
 
-        // // Reset user's information
-        // resetInfo() {
-        //     this.$reset()
-        // },
+        resetInfo() {
+            this.$reset()
+        },
 
         // // Get user's information
         // async info() {
@@ -61,11 +60,9 @@ const useUserStore = defineStore('user', {
         //     this.setInfo(res.data)
         // },
 
-        // Login
         async login(loginForm: LoginData) {
             try {
                 const res = await userLogin(loginForm)
-                console.log(res)
                 setToken(res.data.token)
             } catch (err) {
                 clearToken()
@@ -73,21 +70,21 @@ const useUserStore = defineStore('user', {
             }
         },
 
-        // logoutCallBack() {
-        //     const appStore = useAppStore()
-        //     this.resetInfo()
-        //     clearToken()
-        //     removeRouteListener()
-        //     appStore.clearServerMenu()
-        // },
-        // // Logout
-        // async logout() {
-        //     try {
-        //         await userLogout()
-        //     } finally {
-        //         this.logoutCallBack()
-        //     }
-        // },
+        logoutCallBack() {
+            // const appStore = useAppStore()
+            this.resetInfo()
+            clearToken()
+            // removeRouteListener()
+            // appStore.clearServerMenu()
+        },
+        // Logout
+        async logout() {
+            try {
+                await userLogout()
+            } finally {
+                this.logoutCallBack()
+            }
+        },
     },
 })
 

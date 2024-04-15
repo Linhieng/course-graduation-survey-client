@@ -1,15 +1,17 @@
 <template>
     <section class="layout" :class="{ mobile: appStore.hideMenu }">
         <!-- 顶部 -->
-        <header class="layout-header"></header>
+        <header class="layout-header">
+            <TopHeader />
+        </header>
         <!-- 主体容器 -->
         <section class="layout-main container">
             <!-- 侧边栏 -->
             <nav class="container-sidebar"></nav>
             <!-- 主体 -->
             <section class="container-content content">
-                <!-- 面包屑 -->
-                <TabBar class="content-tabbar" />
+                <!-- 顶部标签 -->
+                <!-- <TabBar class="content-tabbar" /> -->
                 <!-- 内容主体 -->
                 <main class="content-main">
                     <!-- 同时也是路由渲染的主体 -->
@@ -23,6 +25,8 @@
 </template>
 
 <script lang="ts" setup>
+import TopHeader from './components/TopHeader.vue'
+
 // import { ref, computed, watch, provide, onMounted } from 'vue'
 // import { useRouter, useRoute } from 'vue-router'
 import { useAppStore, useUserStore } from '@/store'
@@ -88,9 +92,11 @@ const appStore = useAppStore()
 .layout {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 
     .layout-header {
-        height: 50px;
+        min-height: 60px;
+        border-bottom: 1px solid #eee;
     }
     .layout-main {
         flex: 1 0 auto;
@@ -98,11 +104,12 @@ const appStore = useAppStore()
         display: flex;
 
         &.container .container-sidebar {
-            width: 100px;
+            min-width: 150px;
             flex: 0 0 auto;
         }
         &.container .container-content {
             flex: 1 0 auto;
+            padding: 20px;
 
             display: flex;
             flex-direction: column;

@@ -1,3 +1,74 @@
+# 重构 ing
+
+## 实现国际化
+
+实现国际化
+
+安装 vue-i18n
+创建 src\locale\index.ts
+    在其中返回一个 createI18n 对象
+    createI18n 对象中的  messages 就是具体的语言类型。
+    通常会在每个 view 中单独创建一个 '@/views/login/locale/zh-CN' 然后统一在 src\locale\zh-CN.ts 中导入和导出，也就是将所有 locale 中的文本到放到 createI18n 对象中的  messages  里面。
+在 main.ts 到 use
+    import i18n from './locale'
+    app.use(i18n)
+组件中使用
+    组件中可以直接使用 $t('') 获取文本
+编程式使用
+    import { useI18n } from 'vue-i18n'
+    const i18 = useI18n()
+    i18.t('navbar.action.locale')
+
+实现语言切换
+    使用一个 src\hooks\locale.ts
+    在里面返回一个 useLocale 函数
+    函数返回一个 changeLocale 函数和一个属性 currentLocale
+
+## 使用 loading
+
+通过创建一个 src\hooks\loading.ts 文件，来使用加载状态，这个 hooks 返回
+- loading 属性
+- setLoading 方法
+- toggle 方法
+
+## 登录功能的实现
+
+表单，校验、loading。
+组件中负责校验。
+store 中负责登录逻辑，同时将 token 存储在 localStorage 中。
+
+setToken 和 getToken 放在 src\utils\auth.ts 文件中。他返回四个方法
+    isLogin, getToken, setToken, clearToken
+
+logout 的逻辑，拆分到 hook/useUser 和 store 中的 logout。
+在 store 中只专注于数据的处理，hook/useUser 类似于一个调度人。
+
+使用 mock 模拟登录后的数据
+    安装 mockjs
+    在 main.ts 中导入 mock
+    创建 mock 文件夹！
+    保证 mock 的 setup，实现简单的 mock 开关
+
+
+## axios 封装
+
+acro-design-pro-vue 组件中的 axios 实际上并没有封装。因为他在每个 api 中都直接获取了 axios 对象，仅仅只是在 interceptor.ts 中进行了拦截，所以实际的封装还是需要我们自己来。不过他确实给我提供了参考。
+
+我现在有了新的封装思路，是这样的：
+- 在 axios.ts 中新建一个 axios 实例，然后我们后续的所有请求都将在这个实例上面进行处理
+- interceptor.ts 文件中返回两个拦截函数，分别对请求和响应进行拦截。他们都接收一个 axios 实际对象。
+- 然后，暂时不推荐将所以 api 都通过 index.ts 导出，原因是电脑太差了，统一导出时 vscode 并没办法快速给出对应的类型，这违背了我使用 index.ts 统一导出的初衷——方便。而且，我的文件名基本不会改变。
+- 每一个 api 还是通过 axios.ts 获取 get 和 post，只不过这一次他们的类型不再是之前那样。这一次重构，我发现可以直接在 axios.ts 中的 get 和 post 中指定返回类型为 `Promise<HttpResponse<T>>`，然后在实际使用时，只需一次 `return get<T>` 就可以直接获取到内容了。这比起之前那种封装类型的方式好太多了！
+- 此外，api 的类型不需要再写在 types 文件中了。原因是我发现统一写在 types 中并没有带来多大的便利，直接写在对应文件夹中挺好的，别人看也能直接看到，不需要跳转（还是那个原因，vscode 太卡了）
+
+## vue use
+
+使用 useStorage 可以自动响应 localStorage。
+可以通过 storage.value.xx 获取值
+也可以通过 storage.xx 直接获取响应式，用于 v-model
+
+useFullscreen 切换全屏
+
 # 笔记
 
 TODO:
@@ -22,8 +93,6 @@ TODO:
 - [ ] 重新封装 axios，参考 [arco-design-pro-vue] 中的封装方式，使用拦截器进行封装！
 - [ ] 使用 localStorage 缓存用户输入的答案！
 - [ ] 监听用户从进入问卷，到提交问卷的总时长
-
-
 
 
 ## 自问自答

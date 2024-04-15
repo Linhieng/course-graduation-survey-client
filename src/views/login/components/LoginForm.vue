@@ -37,7 +37,10 @@ import { useUserStore } from '@/store'
 import type { FormInstance, FormRules } from 'element-plus'
 import type { LoginData } from '@/api/user'
 import { msgError } from '@/utils'
+import { useRouter } from 'vue-router'
+import { DEFAULT_ROUTE_NAME } from '@/router/constants'
 
+const router = useRouter()
 const userStore = useUserStore()
 const { t } = useI18n()
 const { loading, setLoading } = useLoading()
@@ -90,13 +93,14 @@ const submit = async () => {
             username: formLogin.username,
             password: formLogin.password,
         } as LoginData)
-        // const { redirect, ...othersQuery } = router.currentRoute.value.query
-        // router.push({
-        //     name: (redirect as string) || 'Workplace',
-        //     query: {
-        //         ...othersQuery,
-        //     },
-        // })
+        const { redirect, ...othersQuery } = router.currentRoute.value.query
+
+        router.push({
+            name: (redirect as string) || DEFAULT_ROUTE_NAME,
+            query: {
+                ...othersQuery,
+            },
+        })
         // Message.success(t('login.form.login.success'))
         // const { rememberPassword } = loginConfig.value
         // const { username, password } = values

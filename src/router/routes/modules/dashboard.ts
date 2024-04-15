@@ -1,5 +1,5 @@
 import { DEFAULT_LAYOUT } from '../base'
-import { AppRouteRecordRaw } from '../types'
+import type { AppRouteRecordRaw } from '../types'
 
 const DASHBOARD: AppRouteRecordRaw = {
     path: '/dashboard',
@@ -14,7 +14,7 @@ const DASHBOARD: AppRouteRecordRaw = {
     children: [
         {
             path: 'workplace',
-            name: 'Workplace',
+            name: 'Workplace', // 这是默认路由
             component: () => import('@/views/dashboard/workplace/index.vue'),
             meta: {
                 locale: 'menu.dashboard.workplace',
