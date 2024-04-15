@@ -11,7 +11,6 @@ const props = defineProps<{
             <IconComplete />
         </el-icon>
         <p>{{ props.msg }}</p>
-        <el-button type="primary">创建问卷</el-button>
     </div>
 </template>
 
