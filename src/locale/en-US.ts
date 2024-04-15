@@ -2,6 +2,7 @@ import localeLogin from '@/views/login/locale/en-US'
 import footerInfo from '@/components/footer/locale/en-US'
 import layoutInfo from '@/layout/locale/en-US'
 import utilsMsg from '@/utils/locale/en-US'
+import apiInfo from '@/api/locale/en-US'
 
 // import localeMessageBox from '@/components/message-box/locale/en-US';
 
@@ -53,6 +54,7 @@ export default {
     ...localeLogin,
     ...footerInfo,
     ...layoutInfo,
+    ...apiInfo,
 
     //   ...localeSettings,
     //   ...localeMessageBox,

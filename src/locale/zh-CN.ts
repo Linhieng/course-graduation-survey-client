@@ -2,6 +2,7 @@ import localeLogin from '@/views/login/locale/zh-CN'
 import footerInfo from '@/components/footer/locale/zh-CN'
 import layoutInfo from '@/layout/locale/zh-CN'
 import utilsMsg from '@/utils/locale/zh-CN'
+import apiInfo from '@/api/locale/zh-CN'
 // import localeMessageBox from '@/components/message-box/locale/zh-CN';
 
 // import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
@@ -52,6 +53,7 @@ export default {
     ...localeLogin,
     ...footerInfo,
     ...layoutInfo,
+    ...apiInfo,
 
     //   ...localeSettings,
     //   ...localeMessageBox,

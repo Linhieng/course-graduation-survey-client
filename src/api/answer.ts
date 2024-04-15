@@ -1,7 +1,5 @@
 import type { ResPro, SurveyQuestion } from '@/types'
-import { get, post } from '.'
-
-const urlAnswerGetSurvey = '/answer/'
+import { get, post } from './axios'
 
 interface AnswerGetSurvey {
     id: number
@@ -22,12 +20,10 @@ interface ReqSurveyAnswer {
     answerDetail: Object
 }
 
-export function apiAnswerGetSurvey(surveyId: number): ResPro<AnswerGetSurvey> {
-    return get(urlAnswerGetSurvey + surveyId)
+export function apiAnswerGetSurvey(surveyId: number) {
+    return get<AnswerGetSurvey>('/api/answer/' + surveyId)
 }
 
-export function apiAnswerPost(surveyId: number, data: ReqSurveyAnswer): ResPro {
-    return post('/answer/' + surveyId, {
-        data,
-    })
+export function apiAnswerPost(surveyId: number, data: ReqSurveyAnswer) {
+    return post('/api/answer/' + surveyId, { data })
 }

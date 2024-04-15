@@ -28,28 +28,38 @@ export function interceptResponse(axios: AxiosInstance) {
         (response) => {
             const res = response.data as HttpResponse
 
-            // code 大于 20000 的，被认为是请求错误
+            // 会进入到这里的，说明状态码是 2xx
+            // 然后由于 status 错误，这种情况应该交给顶层处理
+            // 也就是说，msg 的错误展示应该由顶层展示？
+            // 但这里既然由 status，其实也就说明了肯定由 msg 字段了
+            // 那我为何不直接在这里 msg 展示，而非要在 顶层处理呢？
             if (res.status === 'failed') {
-                msgError(res.msg || 'Error')
+                // 后台保证返回一个 msg 字段，并且该字段是 i18n 格式。
+                msgError(res.msg)
+
                 // 50008: 非法的 token
                 // 50014: token 已过期
                 if (
                     [50008, 50014].includes(res.code) &&
                     response.config.url !== '/api/user/info'
                 ) {
-                    msgError('msg.InvalidToken')
                     const userStore = useUserStore()
                     ;(async () => {
                         await userStore.logout()
                         window.location.reload()
                     })()
                 }
-                return Promise.reject(new Error(res.msg || 'Error'))
+                // 出错时，我们的目的有两个
+                // 一个是展示错误信息
+                // 还有一个是通知顶层应用，该请求出错了，后续的步骤不能继续下去
+                return Promise.reject(res)
             }
             return res
         },
         (error) => {
-            msgError(error.msg || 'Request Error')
+            // 这里是非 2xx 状态码
+
+            msgError(error.msg || 'api.error.request')
             return Promise.reject(error)
         },
     )

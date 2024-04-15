@@ -51,7 +51,7 @@ const loginConfig = useStorage('login-config', {
     password: '1234', // 演示
 })
 
-const formRef = ref(null)
+const formRef = ref()
 const formRules = reactive<FormRules>({
     username: [
         {
@@ -93,8 +93,8 @@ const submit = async () => {
             username: formLogin.username,
             password: formLogin.password,
         } as LoginData)
-        const { redirect, ...othersQuery } = router.currentRoute.value.query
 
+        const { redirect, ...othersQuery } = router.currentRoute.value.query
         router.push({
             name: (redirect as string) || DEFAULT_ROUTE_NAME,
             query: {
@@ -109,7 +109,7 @@ const submit = async () => {
         // loginConfig.value.username = rememberPassword ? username : ''
         // loginConfig.value.password = rememberPassword ? password : ''
     } catch (err) {
-        msgError((err as Error).message)
+        msgError(err as string)
     } finally {
         setLoading(false)
     }

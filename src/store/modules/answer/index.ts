@@ -37,6 +37,8 @@ const useStoreAnswer = defineStore('storeAnswer', () => {
         errorCb?: (errorMsg: string) => void,
     ) => {
         const resData = await apiAnswerGetSurvey(surveyId.value)
+        console.log(resData)
+
         if (resData.status !== STATUS_SUCCEED) {
             msgError(resData.msg)
             errorCb && errorCb(resData.msg)
