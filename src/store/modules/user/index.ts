@@ -63,9 +63,9 @@ const useUserStore = defineStore('user', {
         async login(loginForm: LoginData) {
             const res = await userLogin(loginForm)
 
-            if (res.status === 'failed') {
+            if (!res.ok) {
                 clearToken()
-                throw res.msg
+                throw res
             }
 
             setToken(res.data.token)

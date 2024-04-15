@@ -1,6 +1,5 @@
-import axios, { AxiosError, type AxiosRequestConfig, type Method } from 'axios'
+import axios, { type AxiosRequestConfig } from 'axios'
 import { interceptRequest, interceptResponse } from './interceptor'
-import { CODE_UNKNOWN_ERROR } from '@/constants'
 export type R<T> = HttpResponse<T>
 export interface HttpResponse<T = any> {
     // 后端还没有添加属性，这是在拦截器中添加的。
@@ -35,29 +34,5 @@ export function get<T>(
 ): Promise<HttpResponse<T>> {
     return axiosInstance.get(...args)
 }
-// export function post<T>(
-//     url: string,
-//     data?: any,
-//     config?: AxiosRequestConfig<any> | undefined,
-// ): Promise<HttpResponse<T>> {
-
-//     return axiosRequest({
-//         method: 'post',
-//         url,
-//         data,
-//         ...config,
-//     })
-// }
-
-// export function get<T>(
-//     url: string,
-//     config?: AxiosRequestConfig<any> | undefined,
-// ): Promise<HttpResponse<T>> {
-//     return axiosRequest({
-//         method: 'get',
-//         url,
-//         ...config,
-//     })
-// }
 
 export default axiosInstance
