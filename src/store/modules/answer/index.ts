@@ -42,7 +42,7 @@ const useStoreAnswer = defineStore('storeAnswer', () => {
         if (resData.status !== STATUS_SUCCEED) {
             msgError(resData.msg)
             errorCb && errorCb(resData.msg)
-            router.replace({ name: 'NotFound' })
+            router.push({ name: 'NotFound' })
             return
         }
         const { id, title, comment, questions } = resData.data
