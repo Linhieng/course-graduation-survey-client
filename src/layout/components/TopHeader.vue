@@ -1,18 +1,49 @@
 <script lang="ts" setup>
-import Fullscreen from '@icon/IconFullscreen.vue'
-import FullscreenExit from '@icon/IconFullscreenExit.vue'
-import { UserFilled } from '@element-plus/icons-vue'
 import IconLogo from '@icon/IconLogo.vue'
+import IconZhEn from '@icon/IconZhEn.vue'
+import IconLogout from '@icon/IconLogout.vue'
+import Fullscreen from '@icon/IconFullscreen.vue'
+import AutoDrawer from '@/components/AutoDrawer.vue'
+import AutoDropdown from '@/components/AutoDropdown.vue'
+
 import useLocale from '@/hooks/locale'
+import { useI18n } from 'vue-i18n'
 import useUser from '@/hooks/user'
 import { useFullscreen } from '@vueuse/core'
 
-const { isFullscreen, toggle: toggleFullScreen } = useFullscreen()
+const { toggle: toggleFullScreen } = useFullscreen()
 const { toggleZhEn } = useLocale()
+const { t } = useI18n()
 const { logout } = useUser()
-const handleLogout = async () => {
-    await logout()
+
+const handleSomething = (
+    action: 'toggleZhEn' | 'toggleFullScreen' | 'handleLogout',
+) => {
+    if (action === 'handleLogout') {
+        logout()
+    } else if (action === 'toggleFullScreen') {
+        toggleFullScreen()
+    } else if (action === 'toggleZhEn') {
+        toggleZhEn()
+    }
 }
+const slotItems = [
+    {
+        text: 'layout.header.toggleLanguage',
+        action: 'toggleZhEn',
+        icon: IconZhEn,
+    },
+    {
+        text: 'layout.header.toggleFullscreen',
+        action: 'toggleFullScreen',
+        icon: Fullscreen,
+    },
+    {
+        text: 'layout.header.logout',
+        action: 'handleLogout',
+        icon: IconLogout,
+    },
+]
 </script>
 
 <template>
@@ -25,47 +56,49 @@ const handleLogout = async () => {
         <!-- <div class="center-side">
             <Menu v-if="topMenu" />
         </div> -->
-        <ul class="right-side">
-            <li>
-                <el-button text @click="toggleZhEn">{{
-                    $t('layout.header.toggleLanguage')
-                }}</el-button>
-            </li>
-            <el-tooltip
-                :content="
-                    isFullscreen
-                        ? $t('layout.header.exitFullscreen')
-                        : $t('layout.header.toFullscreen')
-                "
-            >
-                <li @click="toggleFullScreen" class="cursor-pointer">
-                    <el-icon size="30">
-                        <template v-if="isFullscreen">
-                            <FullscreenExit />
-                        </template>
-                        <template v-else>
-                            <Fullscreen />
-                        </template>
-                    </el-icon>
+        <div class="right-side">
+            <AutoDropdown :slotItems :titleShow="$t('layout.settings')">
+                <template #item="{ action, text, icon }">
+                    <li>
+                        <el-button @click="handleSomething(action)">
+                            <el-icon size="20">
+                                <component :is="icon" />
+                            </el-icon>
+                            {{ $t(text) }}
+                        </el-button>
+                    </li>
+                </template>
+            </AutoDropdown>
+            <!-- <AutoDrawer>
+                <li>
+                    <el-button @click="toggleZhEn">{{
+                        $t('layout.header.toggleLanguage')
+                    }}</el-button>
                 </li>
-            </el-tooltip>
-            <li>
-                <el-dropdown>
-                    <span>
-                        <el-avatar :icon="UserFilled" />
-                    </span>
-                    <template #dropdown>
-                        <el-dropdown-menu>
-                            <el-dropdown-item>
-                                <el-button text @click="handleLogout">{{
-                                    $t('layout.header.logout')
-                                }}</el-button>
-                            </el-dropdown-item>
-                        </el-dropdown-menu>
-                    </template>
-                </el-dropdown>
-            </li>
-        </ul>
+                <li class="cursor-pointer">
+                    <el-button @click="toggleFullScreen">
+                        <el-icon size="20">
+                            <template v-if="isFullscreen">
+                                <FullscreenExit />
+                            </template>
+                            <template v-else>
+                                <Fullscreen />
+                            </template>
+                        </el-icon>
+                        {{
+                            isFullscreen
+                                ? $t('layout.header.exitFullscreen')
+                                : $t('layout.header.toFullscreen')
+                        }}
+                    </el-button>
+                </li>
+                <li>
+                    <el-button @click="handleLogout">{{
+                        $t('layout.header.logout')
+                    }}</el-button>
+                </li>
+            </AutoDrawer> -->
+        </div>
     </div>
 </template>
 
@@ -153,21 +186,18 @@ ul {
         display: flex;
     }
     .right-side {
-        display: flex;
         align-self: stretch;
 
+        display: flex;
         align-items: center;
+        padding-right: 10px;
 
         li {
-            margin: 0 10px;
+            margin: 10px;
         }
         .cursor-pointer {
             display: flex;
             align-items: center;
-
-            align-self: stretch;
-            padding: 0 10px;
-            display: flex;
         }
     }
 }
