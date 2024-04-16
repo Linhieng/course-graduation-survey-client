@@ -20,12 +20,12 @@ const router = createRouter({
             component: HomeView,
             meta: { requiresAuth: true },
         },
-        {
-            path: '/login',
-            name: 'login',
-            component: LoginView,
-            meta: { requiresAuth: false },
-        },
+        // {
+        //     path: '/login',
+        //     name: 'login',
+        //     component: LoginView,
+        //     meta: { requiresAuth: false },
+        // },
         {
             path: '/create/:id',
             name: 'create',
@@ -54,13 +54,13 @@ const router = createRouter({
             props: true,
             meta: { requiresAuth: false },
         },
-        // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
-        {
-            path: '/:pathMatch(.*)*',
-            name: 'NotFound',
-            component: NotFound,
-            meta: { requiresAuth: false },
-        },
+        // // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
+        // {
+        //     path: '/:pathMatch(.*)*',
+        //     name: 'NotFound',
+        //     component: NotFound,
+        //     meta: { requiresAuth: false },
+        // },
     ],
 })
 
