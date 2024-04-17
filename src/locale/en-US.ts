@@ -7,6 +7,8 @@ import notFoundInfo from '@/views/not-found/locale/en-US'
 
 import sidebarMenuInfo from '@/router/locale/en-US'
 
+import workplace from '@/views/dashboard/workplace/locale/en-US';
+
 import surveyDraft from '@/views/survey/draft/locale/en-US'
 import surveyPublish from '@/views/survey/publish/locale/en-US'
 import surveyStop from '@/views/survey/stop/locale/en-US'
@@ -16,6 +18,8 @@ import statAnalysis from '@/views/stat/analysis/locale/en-US'
 import statVisual from '@/views/stat/visual/locale/en-US'
 
 export default {
+    'navbar.action.locale': 'Switch to English',
+
     ...utilsMsg,
     ...localeLogin,
     ...footerInfo,
@@ -24,6 +28,8 @@ export default {
     ...notFoundInfo,
 
     ...sidebarMenuInfo,
+
+    ...workplace,
 
     ...surveyDraft,
     ...surveyPublish,

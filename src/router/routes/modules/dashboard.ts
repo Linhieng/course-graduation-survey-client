@@ -14,14 +14,12 @@ const DASHBOARD: AppRouteRecordRaw = {
     },
     children: [
         {
-            path: 'workplace',
+            path: '/dashboard/workplace',
             name: 'Workplace', // 这是默认路由
             component: () => import('@/views/dashboard/workplace/index.vue'),
             meta: {
                 locale: 'menu.dashboard.workplace',
                 requiresAuth: true,
-                hideInMenu: false,
-                activeMenu: false,
             },
         },
     ],

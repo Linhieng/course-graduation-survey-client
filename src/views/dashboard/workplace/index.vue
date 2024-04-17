@@ -1,5 +1,6 @@
 <template>
-    <div>仪表盘</div>
+    <h1>{{ $t('view.dashboard.workplace') }}</h1>
+
     <!-- <div class="container">
     <div class="left-side">
       <div class="panel">
