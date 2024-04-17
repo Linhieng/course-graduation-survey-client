@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import TopHeader from './components/TopHeader.vue'
+import SidebarMenu from '@/components/sidebar-menu/index.vue'
+import { useAppStore } from '@/store'
+import PageLayout from './page-layout.vue'
+const appStore = useAppStore()
+</script>
+
 <template>
     <section class="layout" :class="{ mobile: appStore.hideMenu }">
         <!-- 顶部 -->
@@ -7,7 +15,9 @@
         <!-- 主体容器 -->
         <section class="layout-main container">
             <!-- 侧边栏 -->
-            <nav class="container-sidebar"></nav>
+            <nav class="container-sidebar">
+                <SidebarMenu />
+            </nav>
             <!-- 主体 -->
             <section class="container-content content">
                 <!-- 顶部标签 -->
@@ -24,22 +34,18 @@
     </section>
 </template>
 
-<script lang="ts" setup>
-import TopHeader from './components/TopHeader.vue'
+<!-- <script lang="ts" setup>
 
 // import { ref, computed, watch, provide, onMounted } from 'vue'
 // import { useRouter, useRoute } from 'vue-router'
-import { useAppStore, useUserStore } from '@/store'
 // import NavBar from '@/components/navbar/index.vue'
 // import Menu from '@/components/menu/index.vue'
 // import Footer from '@/components/footer/index.vue'
 // import TabBar from '@/components/tab-bar/index.vue'
 // import usePermission from '@/hooks/permission'
 // import useResponsive from '@/hooks/responsive'
-import PageLayout from './page-layout.vue'
 
 // const isInit = ref(false)
-const appStore = useAppStore()
 
 // const userStore = useUserStore()
 // const router = useRouter()
@@ -86,7 +92,7 @@ const appStore = useAppStore()
 // onMounted(() => {
 //     isInit.value = true
 // })
-</script>
+</script> -->
 
 <style scoped lang="scss">
 .layout {
@@ -104,7 +110,8 @@ const appStore = useAppStore()
         display: flex;
 
         &.container .container-sidebar {
-            min-width: 150px;
+            // min-width: 150px;
+            width: auto;
             flex: 0 0 auto;
         }
         &.container .container-content {

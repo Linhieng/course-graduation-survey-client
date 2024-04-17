@@ -85,6 +85,10 @@ useFullscreen 切换全屏
 
 useWindowSize 获取窗口大小，也就是媒体查询！
 
+## nprogress 使用
+
+使用真的很简单，直接在路由守卫中的 before 中添加 start()，在 after 中添加 done()。
+
 # 笔记
 
 TODO:
