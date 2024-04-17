@@ -1,5 +1,6 @@
 import { DEFAULT_LAYOUT } from '../base'
 import type { AppRouteRecordRaw } from '../types'
+import Icon from '@icon/IconDashboard.vue'
 
 const DASHBOARD: AppRouteRecordRaw = {
     path: '/dashboard',
@@ -8,7 +9,7 @@ const DASHBOARD: AppRouteRecordRaw = {
     meta: {
         locale: 'menu.dashboard',
         requiresAuth: true,
-        icon: 'icon-dashboard',
+        icon: Icon,
         order: 0,
     },
     children: [
@@ -19,6 +20,8 @@ const DASHBOARD: AppRouteRecordRaw = {
             meta: {
                 locale: 'menu.dashboard.workplace',
                 requiresAuth: true,
+                hideInMenu: false,
+                activeMenu: false,
                 // roles: ['*'],
             },
         },

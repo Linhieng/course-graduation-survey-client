@@ -12,7 +12,7 @@ const props = defineProps<{
                 <el-icon :size="20">
                     <component :is="props.route.meta.icon" />
                 </el-icon>
-                <span>{{ $t(props.route.name) }}</span>
+                <span>{{ $t(props.route.meta.locale) }}</span>
             </template>
             <template v-for="route in props.route.children">
                 <sub-menu :route />
@@ -25,7 +25,7 @@ const props = defineProps<{
                 <component :is="props.route.meta.icon" />
             </el-icon>
             <template #title>
-                {{ $t(props.route.name) }}
+                {{ $t(props.route.meta.locale) }}
             </template>
         </el-menu-item>
     </template>

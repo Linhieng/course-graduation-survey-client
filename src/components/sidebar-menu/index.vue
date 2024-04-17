@@ -5,117 +5,121 @@ import IconExpand from '@icon/IconExpand.vue'
 import IconShrink from '@icon/IconShrink.vue'
 import IconDashboard from '@icon/IconDashboard.vue'
 import { ref } from 'vue'
+import appClientMenus from '@/router/app-menus'
 
 const isCollapse = ref(false)
 
-const menuTree: RouteRecordNormalized = [
-    {
-        path: '/dashboard',
-        name: 'menu.dashboard',
-        meta: {
-            locale: '',
-            icon: IconDashboard,
-            hideInMenu: false,
-            activeMenu: false,
-        },
-        children: [
-            {
-                path: '/dashboard/workplace',
-                name: 'menu.dashboard.workplace',
-                meta: {
-                    locale: '',
-                    icon: IconDashboard,
-                    hideInMenu: false,
-                    activeMenu: false,
-                },
-            },
-        ],
-    },
-    {
-        path: '/survey',
-        name: 'menu.survey',
-        meta: {
-            locale: '',
-            icon: IconDashboard,
-            hideInMenu: false,
-            activeMenu: false,
-        },
-        children: [
-            {
-                path: '/dashboard/workplace',
-                name: 'menu.survey.draft',
-                meta: {
-                    locale: '',
-                    icon: IconDashboard,
-                    hideInMenu: false,
-                    activeMenu: false,
-                },
-            },
-            {
-                path: '/dashboard/workplace',
-                name: 'menu.survey.publish',
-                meta: {
-                    locale: '',
-                    icon: IconDashboard,
-                    hideInMenu: false,
-                    activeMenu: false,
-                },
-            },
-            {
-                path: '/dashboard/workplace',
-                name: 'menu.survey.stop',
-                meta: {
-                    locale: '',
-                    icon: IconDashboard,
-                    hideInMenu: false,
-                    activeMenu: false,
-                },
-            },
-            {
-                path: '/dashboard/workplace',
-                name: 'menu.survey.dump',
-                meta: {
-                    locale: '',
-                    icon: IconDashboard,
-                    hideInMenu: false,
-                    activeMenu: false,
-                },
-            },
-        ],
-    },
-    {
-        path: '/answer',
-        name: 'menu.answer',
-        meta: {
-            locale: '',
-            icon: IconDashboard,
-            hideInMenu: false,
-            activeMenu: false,
-        },
-        children: [
-            {
-                path: '/dashboard/workplace',
-                name: 'menu.answer.analysis',
-                meta: {
-                    locale: '',
-                    icon: IconDashboard,
-                    hideInMenu: false,
-                    activeMenu: false,
-                },
-            },
-            {
-                path: '/dashboard/workplace',
-                name: 'menu.answer.visualization',
-                meta: {
-                    locale: '',
-                    icon: IconDashboard,
-                    hideInMenu: false,
-                    activeMenu: false,
-                },
-            },
-        ],
-    },
-]
+const menuTree = appClientMenus
+console.log(appClientMenus)
+
+// const menuTree: RouteRecordNormalized = [
+//     {
+//         path: '/dashboard',
+//         name: 'menu.dashboard',
+//         meta: {
+//             locale: '',
+//             icon: IconDashboard,
+//             hideInMenu: false,
+//             activeMenu: false,
+//         },
+//         children: [
+//             {
+//                 path: '/dashboard/workplace',
+//                 name: 'menu.dashboard.workplace',
+//                 meta: {
+//                     locale: '',
+//                     icon: IconDashboard,
+//                     hideInMenu: false,
+//                     activeMenu: false,
+//                 },
+//             },
+//         ],
+//     },
+//     {
+//         path: '/survey',
+//         name: 'menu.survey',
+//         meta: {
+//             locale: '',
+//             icon: IconDashboard,
+//             hideInMenu: false,
+//             activeMenu: false,
+//         },
+//         children: [
+//             {
+//                 path: '/dashboard/workplace',
+//                 name: 'menu.survey.draft',
+//                 meta: {
+//                     locale: '',
+//                     icon: IconDashboard,
+//                     hideInMenu: false,
+//                     activeMenu: false,
+//                 },
+//             },
+//             {
+//                 path: '/dashboard/workplace',
+//                 name: 'menu.survey.publish',
+//                 meta: {
+//                     locale: '',
+//                     icon: IconDashboard,
+//                     hideInMenu: false,
+//                     activeMenu: false,
+//                 },
+//             },
+//             {
+//                 path: '/dashboard/workplace',
+//                 name: 'menu.survey.stop',
+//                 meta: {
+//                     locale: '',
+//                     icon: IconDashboard,
+//                     hideInMenu: false,
+//                     activeMenu: false,
+//                 },
+//             },
+//             {
+//                 path: '/dashboard/workplace',
+//                 name: 'menu.survey.dump',
+//                 meta: {
+//                     locale: '',
+//                     icon: IconDashboard,
+//                     hideInMenu: false,
+//                     activeMenu: false,
+//                 },
+//             },
+//         ],
+//     },
+//     {
+//         path: '/answer',
+//         name: 'menu.answer',
+//         meta: {
+//             locale: '',
+//             icon: IconDashboard,
+//             hideInMenu: false,
+//             activeMenu: false,
+//         },
+//         children: [
+//             {
+//                 path: '/dashboard/workplace',
+//                 name: 'menu.answer.analysis',
+//                 meta: {
+//                     locale: '',
+//                     icon: IconDashboard,
+//                     hideInMenu: false,
+//                     activeMenu: false,
+//                 },
+//             },
+//             {
+//                 path: '/dashboard/workplace',
+//                 name: 'menu.answer.visualization',
+//                 meta: {
+//                     locale: '',
+//                     icon: IconDashboard,
+//                     hideInMenu: false,
+//                     activeMenu: false,
+//                 },
+//             },
+//         ],
+//     },
+// ]
 </script>
 
 <template>
