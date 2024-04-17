@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import 'nprogress/nprogress.css'
 
 import { appRoutes } from './routes'
-import { REDIRECT_MAIN, NOT_FOUND_ROUTE } from './routes/base'
+import { REDIRECT_MAIN, NOT_FOUND_ROUTE, EXCEPTION } from './routes/base'
 import createRouteGuard from './guard'
 
 // NProgress.configure({ showSpinner: false }) // NProgress Configuration
@@ -39,6 +39,7 @@ const router = createRouter({
             },
         },
         ...appRoutes,
+        EXCEPTION,
         REDIRECT_MAIN,
         NOT_FOUND_ROUTE,
     ],

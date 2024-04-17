@@ -5,8 +5,8 @@ export default {
     'menu.survey.draft': '草稿箱',
     'menu.survey.publish': '发布中',
     'menu.survey.stop': '已停止',
-    'menu.survey.dump': '回收站',
-    'menu.answer': '答案统计',
-    'menu.answer.analysis': '答案分析',
-    'menu.answer.visualization': '数据可视化',
+    'menu.survey.trash': '回收站',
+    'menu.stat': '答案统计',
+    'menu.stat.analysis': '答案分析',
+    'menu.stat.visual': '数据可视化',
 }

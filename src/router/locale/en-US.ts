@@ -5,8 +5,8 @@ export default {
     'menu.survey.draft': 'drafts',
     'menu.survey.publish': 'In release',
     'menu.survey.stop': 'stopped',
-    'menu.survey.dump': 'Recycle bin',
-    'menu.answer': 'Answer statistics',
-    'menu.answer.analysis': 'Answer analysis',
-    'menu.answer.visualization': 'Data visualization',
+    'menu.survey.trash': 'trash',
+    'menu.stat': 'Answer statistics',
+    'menu.stat.analysis': 'Answer analysis',
+    'menu.stat.visual': 'Data visualization',
 }

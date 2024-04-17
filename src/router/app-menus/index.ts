@@ -10,5 +10,8 @@ const appClientMenus = appRoutes.map((el) => {
         children,
     }
 })
+appClientMenus.sort((a, b) => {
+    return (a.meta.order || 0) - (b.meta.order || 0)
+})
 
 export default appClientMenus

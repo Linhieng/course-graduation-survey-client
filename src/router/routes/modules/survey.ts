@@ -14,39 +14,35 @@ const SURVEY: AppRouteRecordRaw = {
     },
     children: [
         {
-            path: '/dashboard/workplace',
-            component: () => import('@/views/dashboard/workplace/index.vue'),
+            path: '/survey/draft',
+            component: () => import('@/views/survey/draft/index.vue'),
             meta: {
                 locale: 'menu.survey.draft',
-                hideInMenu: false,
-                activeMenu: false,
+                requiresAuth: true,
             },
         },
         {
-            path: '/dashboard/workplace',
-            component: () => import('@/views/dashboard/workplace/index.vue'),
+            path: '/survey/publish',
+            component: () => import('@/views/survey/publish/index.vue'),
             meta: {
                 locale: 'menu.survey.publish',
-                hideInMenu: false,
-                activeMenu: false,
+                requiresAuth: true,
             },
         },
         {
-            path: '/dashboard/workplace',
-            component: () => import('@/views/dashboard/workplace/index.vue'),
+            path: '/survey/stop',
+            component: () => import('@/views/survey/stop/index.vue'),
             meta: {
                 locale: 'menu.survey.stop',
-                hideInMenu: false,
-                activeMenu: false,
+                requiresAuth: true,
             },
         },
         {
-            path: '/dashboard/workplace',
-            component: () => import('@/views/dashboard/workplace/index.vue'),
+            path: '/survey/trash',
+            component: () => import('@/views/survey/trash/index.vue'),
             meta: {
-                locale: 'menu.survey.dump',
-                hideInMenu: false,
-                activeMenu: false,
+                locale: 'menu.survey.trash',
+                requiresAuth: true,
             },
         },
     ],
