@@ -10,4 +10,6 @@ export default {
     'view.survey.create.placeholder.input-command': 'Enter the remarks',
     'view.survey.create.preview': 'Preview questionnaire',
     'view.survey.create.publish-attention-info': 'After the questionnaire is published, the questionnaire information cannot be modified. Please confirm the questionnaire before publication.',
+    'view.survey.create.new-cache-time': 'Latest cache time:',
+    'view.survey.create.not-cached': 'Not cached',
 }

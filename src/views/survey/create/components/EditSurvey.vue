@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import EditQuestion from './widget/EditQuestion.vue'
 import NewQuestion from './widget/NewQuestion.vue'
+import EditSurveyUtil from './widget/EditSurveyUtil.vue'
 
-import { useStoreSurvey } from '@/store'
-const storeSurvey = useStoreSurvey()
+import { useSurveyStore } from '@/store'
+const storeSurvey = useSurveyStore()
 
 // 所有数据的获取，均通过 store
-const survey = storeSurvey.getSurveyRef()
+const survey = computed(() => storeSurvey.getCurEditSurvey)
 
 // 该组件中，只负责修改 title 和 content
 const survey_title = ref('')
@@ -18,6 +19,15 @@ const survey_comment = ref('')
     <h1>
         {{ $t('view.survey.create.step.edit') }}
     </h1>
+    <p>
+        {{
+            $t('view.survey.create.new-cache-time') +
+            storeSurvey.getNewCacheTime
+        }}
+    </p>
+    <div class="util">
+        <EditSurveyUtil />
+    </div>
     <div class="top-wrapper">
         {{ survey }}
         <h1>

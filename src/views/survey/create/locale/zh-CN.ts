@@ -10,4 +10,6 @@ export default {
     'view.survey.create.placeholder.input-command': '输入问卷备注信息',
     'view.survey.create.preview': '预览问卷',
     'view.survey.create.publish-attention-info': '问卷一经发布，则不可重新修改问卷信息，发布前请先确认好问卷',
+    'view.survey.create.new-cache-time': '最新缓存时间: ',
+    'view.survey.create.not-cached': '还未缓存',
 }

@@ -92,41 +92,41 @@ export default defineStore('storeSurvey', () => {
     const getSurvey = () => {
         return survey.value
     }
-    const setNewCacheTime = (time: Date) => {
-        newCacheTime.value = time.toLocaleString()
-        return time
-    }
+    // const setNewCacheTime = (time: Date) => {
+    //     newCacheTime.value = time.toLocaleString()
+    //     return time
+    // }
 
-    const cacheSurvey = async () => {
-        if (isFetching.value) return
-        if (!survey.value) {
-            msgError('survey 不存在，无法缓存，这里是 storeSurvey')
-            return
-        }
-        isFetching.value = true
-        const reqData = JSON.parse(
-            JSON.stringify({
-                id: surveyId.value,
-                title: survey.value.title,
-                comment: survey.value.comment,
-                structure_json: {
-                    version: '0.0.1',
-                    questions: survey.value.questions,
-                },
-            }),
-        )
-        const resData = await apiCacheSurvey(reqData)
-        if (resData.status === STATUS_SUCCEED) {
-            setNewCacheTime(new Date(resData.data.time))
-        } else {
-            noticeError(resData.msg)
-        }
-        isFetching.value = false
-    }
+    // const cacheSurvey = async () => {
+    //     if (isFetching.value) return
+    //     if (!survey.value) {
+    //         msgError('survey 不存在，无法缓存，这里是 storeSurvey')
+    //         return
+    //     }
+    //     isFetching.value = true
+    //     const reqData = JSON.parse(
+    //         JSON.stringify({
+    //             id: surveyId.value,
+    //             title: survey.value.title,
+    //             comment: survey.value.comment,
+    //             structure_json: {
+    //                 version: '0.0.1',
+    //                 questions: survey.value.questions,
+    //             },
+    //         }),
+    //     )
+    //     const resData = await apiCacheSurvey(reqData)
+    //     if (resData.status === STATUS_SUCCEED) {
+    //         setNewCacheTime(new Date(resData.data.time))
+    //     } else {
+    //         noticeError(resData.msg)
+    //     }
+    //     isFetching.value = false
+    // }
 
-    const setSurvey = (_survey: any) => {
-        // survey.value = _survey
-    }
+    // const setSurvey = (_survey: any) => {
+    //     // survey.value = _survey
+    // }
 
     // 导入问卷模版
     const importSurvey = (_survey: Survey) => {
@@ -206,17 +206,17 @@ export default defineStore('storeSurvey', () => {
         survey.value.questions.splice(order - 1, 1)
         survey.value.questions.forEach((item, i) => (item.order = i + 1))
     }
-    // 获取实时最新缓存时间
-    const getCacheTimeRef = () => {
-        return newCacheTime
-    }
+    // // 获取实时最新缓存时间
+    // const getCacheTimeRef = () => {
+    //     return newCacheTime
+    // }
 
     return {
         getSurveyRef,
         addTask,
         addOneQuestion,
         removeOneQuestion,
-        getCacheTimeRef,
+        // getCacheTimeRef,/
         ///////////////////////////////////
         ///////////////////////////////////
         ///////////////////////////////////
@@ -232,10 +232,10 @@ export default defineStore('storeSurvey', () => {
         // settter
         setSurveyId,
         updateSurvey,
-        setSurvey,
+        // setSurvey,
         importSurvey,
-        setNewCacheTime,
-        cacheSurvey,
+        // setNewCacheTime,
+        // cacheSurvey,
         // actions
         exportSurvey,
     }

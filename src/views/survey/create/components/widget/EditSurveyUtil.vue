@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { useStoreSurvey } from '@/store'
+import { useStoreSurvey, useSurveyStore } from '@/store'
 import { readFileContent, msgError } from '@/utils'
 
 const sotreSurvey = useStoreSurvey()
+const surveyStore = useSurveyStore()
 
 const exportSurvey = () => {
     sotreSurvey.exportSurvey()
@@ -24,11 +25,11 @@ const importSurvey = async (event: Event) => {
 }
 
 /** 手动显式缓存问卷 */
-const cacheManual = sotreSurvey.cacheSurvey
+const cacheManual = surveyStore.cacheCurEditSurvey
 </script>
 
 <template>
-    <h2>通用工具</h2>
+    <p>工具栏：</p>
     <ul>
         <!-- <li> <el-button>批量编辑顺序</el-button> </li> -->
         <li><el-button @click="cacheManual">立即缓存</el-button></li>
@@ -54,9 +55,10 @@ ul {
     padding: 10px;
     width: max-content;
     list-style: none;
+    display: flex;
 }
 ul > li {
-    padding-bottom: 10px;
+    padding-right: 10px;
 }
 
 // 隐藏文件输入框，让其等于父元素大小

@@ -1,39 +1,66 @@
 export { default as useStoreSurvey } from './storeSurvey'
 
-import { apiNewSurvey } from '@/api'
-import { msgError } from '@/utils'
+import { apiCacheSurvey, apiNewSurvey } from '@/api'
+import type { Survey } from '@/types'
+import { msgError, noticeError } from '@/utils'
 import { defineStore } from 'pinia'
+import i18n from '@/locale'
+const { t } = i18n.global
+
+type MakeOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
 
 interface SurveyStore {
     create: {
         curStep: 1 | 2 | 3
-        surveyId?: number
+        survey: MakeOptional<Survey, 'id'>
+        isCaching: boolean
+        cacheTime: string
     }
 }
 
 const useSurveyStore = defineStore('survey', {
     state: (): SurveyStore => ({
         create: {
+            isCaching: false,
+            cacheTime: '',
+
             curStep: 1,
-            surveyId: undefined,
+            survey: {
+                id: undefined,
+                title: '',
+                comment: '',
+                version: '0.1.0',
+                questions: [],
+            },
         },
     }),
 
     getters: {
         /** 获取当前正在编辑的问卷 id，可能为空 */
-        getCurEditSurveyId(state: SurveyStore) {
-            return state.create.surveyId
+        getCurEditSurveyId(state) {
+            return state.create.survey.id
         },
         /** 获取当前创建问卷处于哪一步 */
-        getCurEditSurveyStep(state: SurveyStore) {
+        getCurEditSurveyStep(state) {
             return state.create.curStep
+        },
+        /** 获取当前正在编辑的问卷 */
+        getCurEditSurvey(state) {
+            return state.create.survey
+        },
+        /** 获取最新的缓存时间 */
+        getNewCacheTime(state) {
+            if (state.create.cacheTime === '') {
+                return t('view.survey.create.not-cached')
+            }
+            return state.create.cacheTime
         },
     },
 
     actions: {
         /** 创建问卷三步走 */
         createGotoNext(step: 1 | 2 | 3) {
-            const surveyId = this.$state.create.surveyId
+            const surveyId = this.$state.create.survey.id
             console.log(step, surveyId)
             if (step > 1 && !surveyId) {
                 msgError('view.survey.create.pleaseCreateFirst')
@@ -54,8 +81,43 @@ const useSurveyStore = defineStore('survey', {
                 msgError('view.survey.crate.wrong')
                 return
             }
-            this.$state.create.surveyId = data.data.surveyId
+            this.$state.create.survey.id = data.data.surveyId
+            console.log(data)
             this.createGotoNext(2)
+        },
+
+        /** 缓存当前正在编辑的问卷 */
+        async cacheCurEditSurvey() {
+            const isCaching = this.$state.create.isCaching
+            if (isCaching) return
+            const surveyID = this.$state.create.survey.id
+            console.log(surveyID)
+            if (!surveyID) {
+                msgError('surveyId 不存在，无法缓存，这里是 surveyStore')
+                return
+            }
+            this.$state.create.isCaching = true
+
+            const reqData = JSON.parse(
+                JSON.stringify({
+                    id: surveyID,
+                    title: this.$state.create.survey.title,
+                    comment: this.$state.create.survey.comment,
+                    structure_json: {
+                        version: '0.0.1',
+                        questions: this.$state.create.survey.questions,
+                    },
+                }),
+            )
+            const resData = await apiCacheSurvey(reqData)
+            if (!resData.ok) {
+                noticeError(resData.msg)
+            } else {
+                this.$state.create.cacheTime = new Date(
+                    resData.data.time,
+                ).toLocaleTimeString()
+            }
+            this.$state.create.isCaching = false
         },
     },
 })
