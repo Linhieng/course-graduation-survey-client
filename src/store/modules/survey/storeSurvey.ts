@@ -128,18 +128,18 @@ export default defineStore('storeSurvey', () => {
     //     // survey.value = _survey
     // }
 
-    // 导入问卷模版
-    const importSurvey = (_survey: Survey) => {
-        _survey.id = surveyId.value
-        survey.value = _survey
-        return survey
-    }
-    // 导出问卷模版
-    const exportSurvey = () => {
-        const _survey = unrefRecursion(survey)
-        const jsonStr = JSON.stringify(_survey, null, 4)
-        saveFile(jsonStr, `问卷模版 - ${_survey.title}.json`)
-    }
+    // // 导入问卷模版
+    // const importSurvey = (_survey: Survey) => {
+    //     _survey.id = surveyId.value
+    //     survey.value = _survey
+    //     return survey
+    // }
+    // // 导出问卷模版
+    // const exportSurvey = () => {
+    //     const _survey = unrefRecursion(survey)
+    //     const jsonStr = JSON.stringify(_survey, null, 4)
+    //     saveFile(jsonStr, `问卷模版 - ${_survey.title}.json`)
+    // }
 
     // TODO: 根据 type，指定返回的类型
     const generateQuestion = (type: SurveyQuestionType, order: number) => {
@@ -233,10 +233,10 @@ export default defineStore('storeSurvey', () => {
         setSurveyId,
         updateSurvey,
         // setSurvey,
-        importSurvey,
+        // importSurvey,
         // setNewCacheTime,
         // cacheSurvey,
         // actions
-        exportSurvey,
+        // exportSurvey,
     }
 })

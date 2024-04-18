@@ -20,7 +20,7 @@ export function apiNewSurvey() {
 }
 
 export function apiCacheSurvey(data: ReqSurveyAche) {
-    return post('/api/survey/cache', data)
+    return post<{ time: string }>('/api/survey/cache', data)
 }
 
 export function apiGetSurveyById(surveyId: number): ResProGetSurveyById {

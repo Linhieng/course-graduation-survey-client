@@ -2,7 +2,7 @@ export { default as useStoreSurvey } from './storeSurvey'
 
 import { apiCacheSurvey, apiNewSurvey } from '@/api'
 import type { Survey } from '@/types'
-import { msgError, noticeError } from '@/utils'
+import { msgError, noticeError, saveFile, unrefRecursion } from '@/utils'
 import { defineStore } from 'pinia'
 import i18n from '@/locale'
 const { t } = i18n.global
@@ -118,6 +118,24 @@ const useSurveyStore = defineStore('survey', {
                 ).toLocaleTimeString()
             }
             this.$state.create.isCaching = false
+        },
+
+        /** 导入问卷模版 */
+        importSurvey(_survey: Survey) {
+            if (!this.$state.create.survey.id) {
+                msgError('view.survey.error.not-survey-id')
+                return
+            }
+            this.$state.create.survey.title = _survey.title
+            this.$state.create.survey.comment = _survey.comment
+            this.$state.create.survey.questions = _survey.questions
+            this.$state.create.survey.version = _survey.version
+        },
+        /** 导出问卷模版 */
+        exportSurvey() {
+            const _survey = unrefRecursion(this.$state.create.survey)
+            const jsonStr = JSON.stringify(_survey, null, 4)
+            saveFile(jsonStr, `问卷模版 - ${_survey.title}.json`)
         },
     },
 })

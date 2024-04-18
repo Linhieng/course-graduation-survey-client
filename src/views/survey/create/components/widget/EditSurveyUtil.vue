@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { useStoreSurvey, useSurveyStore } from '@/store'
+import { useSurveyStore } from '@/store'
 import { readFileContent, msgError } from '@/utils'
+import NProgress from 'nprogress'
 
-const sotreSurvey = useStoreSurvey()
 const surveyStore = useSurveyStore()
 
 const exportSurvey = () => {
-    sotreSurvey.exportSurvey()
+    NProgress.start()
+    surveyStore.exportSurvey()
+    NProgress.done()
 }
 
 const importSurvey = async (event: Event) => {
@@ -15,12 +17,15 @@ const importSurvey = async (event: Event) => {
         const target = event.target as any
         if (!target) return
         if (target.files.length < 0) return
+        NProgress.start()
         const content = await readFileContent(target.files[0])
         const survey = JSON.parse(content)
-        sotreSurvey.importSurvey(survey)
+        surveyStore.importSurvey(survey)
     } catch (error) {
         console.log(error)
         msgError('读取文件失败')
+    } finally {
+        NProgress.done()
     }
 }
 
