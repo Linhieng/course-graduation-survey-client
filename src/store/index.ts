@@ -2,7 +2,7 @@ import { createPinia } from 'pinia'
 import useAppStore from './modules/app'
 import useUserStore from './modules/user'
 import useStoreAnswer from './modules/answer'
-import useSurveyStore, { useStoreSurvey } from './modules/survey'
+import useSurveyStore from './modules/survey'
 // import useTabBarStore from './modules/tab-bar'
 
 const pinia = createPinia()
@@ -12,6 +12,6 @@ export {
     useUserStore,
     useStoreAnswer,
     useSurveyStore,
-    useStoreSurvey /* , useTabBarStore */,
+    /* , useTabBarStore */
 }
 export default pinia

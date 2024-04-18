@@ -1,4 +1,3 @@
-export { default as useStoreSurvey } from './storeSurvey'
 import NProgress from 'nprogress'
 import router from '@/router'
 
@@ -220,6 +219,20 @@ const useSurveyStore = defineStore('survey', {
             this.$state.create.survey.questions.forEach(
                 (item, i) => (item.order = i + 1),
             )
+        },
+
+        /** 编辑问卷时，删除一个问题 */
+        removeOneQuestionInEdit(order: number) {
+            // if (!survey.value) {
+            //     msgError('survey 不存在，这里是 storeSurvey')
+            //     return
+            // }
+            // if (survey.value.questions.length < 2) {
+            //     msgError('至少需要一个问题！')
+            //     return
+            // }
+            // survey.value.questions.splice(order - 1, 1)
+            // survey.value.questions.forEach((item, i) => (item.order = i + 1))
         },
 
         /** 后台异步获取用户的所有问卷 */
