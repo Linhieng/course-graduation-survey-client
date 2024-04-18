@@ -85,7 +85,8 @@ ul {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    // 添加这一项，在手机端会导致左侧缩了一部分，导致看不到内容
+    // justify-content: space-evenly;
 
     .active {
         background-color: skyblue;

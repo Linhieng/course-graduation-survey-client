@@ -18,7 +18,6 @@ export default {
 
     'view.survey.create.is-required': '是否必填',
 
-
     'view.survey.create.utils': '工具：',
     'view.survey.create.utils.cache': '立即缓存',
     'view.survey.create.utils.export': '导出模版',
