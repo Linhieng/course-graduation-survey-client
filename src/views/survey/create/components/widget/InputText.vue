@@ -6,7 +6,6 @@
 import type { SurveyQuestion_Text } from '@/types'
 import { ref, watch } from 'vue'
 import { useSurveyStore } from '@/store'
-import { msgError } from '@/utils'
 import InputRequired from '@/components/InputRequired.vue'
 import InputOptional from '@/components/InputOptional.vue'
 
@@ -18,15 +17,15 @@ const title = ref('')
 const describe = ref('')
 watch([title, describe], () => {
     const index = props.question.order - 1
-    surveyStore.$state.create.survey.questions[index].questionContent.title =
+    (surveyStore.$state.create.survey.questions[index] as SurveyQuestion_Text).questionContent.title =
         title.value
-    surveyStore.$state.create.survey.questions[index].questionContent.describe =
+    (surveyStore.$state.create.survey.questions[index] as SurveyQuestion_Text).questionContent.describe =
         describe.value
 })
 
-if (props.question?.questionContent.title)
+if (props.question.questionContent.title)
     title.value = props.question.questionContent.title
-if (props.question?.questionContent.describe)
+if (props.question.questionContent.describe)
     describe.value = props.question.questionContent.describe
 </script>
 

@@ -7,14 +7,10 @@ import type {
     SurveyQuestion_MultiSelect,
     SurveyQuestion_SingleSelect,
 } from '@/types'
-import { getUUID, msgError } from '@/utils'
-import { ref, watch } from 'vue'
-import { useStoreSurvey } from '@/store'
+import { getUUID } from '@/utils'
+import { ref } from 'vue'
 import InputMultiple from '@/components/InputMultiple.vue'
 import InputMultipleOne from '@/components/InputMultipleOne.vue'
-
-const storeSurvey = useStoreSurvey()
-const survey = storeSurvey.getSurveyRef()
 
 const props = defineProps<{
     selectType:
@@ -27,22 +23,8 @@ const props = defineProps<{
 const selectOptions = ref([''])
 // 标题和描述信息
 const selectTitles = ref([{ id: getUUID(), title: '', describe: '' }])
-watch(selectOptions.value, () => {
-    // TODO: 为什么这里不会变化？但是 store 中的内容却能给变化？
-    console.log('???', import.meta.env.MODE)
-    if (!survey || !survey.value) {
-        msgError('获取不到 survey，这里是 SelectItem')
-        return
-    }
-    const index = props.question.order - 1
-    const q = survey.value.questions[index]
-    if (q.questionType !== 'single_select') {
-        msgError('问题类型错误，这里是 SelectItem')
-        return
-    }
-    q.questionContent.options = selectOptions.value
-})
 
+// TODO 理清楚这里的原理。真没想到自己写着写着，就写出了这么吊的代码。
 if (props.question.questionContent.options)
     selectOptions.value = props.question.questionContent.options
 if (props.question.questionContent.titles)
