@@ -20,84 +20,27 @@ const appStore = useAppStore()
             </nav>
             <!-- 主体 -->
             <section class="container-content content">
-                <!-- 顶部标签 -->
-                <!-- <TabBar class="content-tabbar" /> -->
-                <!-- 内容主体 -->
-                <main class="content-main">
+                <!-- 这里用到了一种特殊的布局技巧 -->
+                <div class="width-0">
+                    <!-- 顶部标签 -->
+                    <!-- <TabBar class="content-tabbar" /> -->
                     <!-- 同时也是路由渲染的主体 -->
-                    <PageLayout />
-                </main>
-                <!-- 底部版权 -->
-                <footer class="content-footer"></footer>
+                    <main class="content-main">
+                        <PageLayout />
+                    </main>
+                    <!-- 底部版权 -->
+                    <footer class="content-footer"></footer>
+                </div>
             </section>
         </section>
     </section>
 </template>
 
-<!-- <script lang="ts" setup>
-
-// import { ref, computed, watch, provide, onMounted } from 'vue'
-// import { useRouter, useRoute } from 'vue-router'
-// import NavBar from '@/components/navbar/index.vue'
-// import Menu from '@/components/menu/index.vue'
-// import Footer from '@/components/footer/index.vue'
-// import TabBar from '@/components/tab-bar/index.vue'
-// import usePermission from '@/hooks/permission'
-// import useResponsive from '@/hooks/responsive'
-
-// const isInit = ref(false)
-
-// const userStore = useUserStore()
-// const router = useRouter()
-// const route = useRoute()
-// const permission = usePermission()
-// useResponsive(true)
-// const navbarHeight = `60px`
-// const navbar = computed(() => appStore.navbar)
-// const renderMenu = computed(() => appStore.menu && !appStore.topMenu)
-// const hideMenu = computed(() => appStore.hideMenu)
-// const footer = computed(() => appStore.footer)
-// const menuWidth = computed(() => {
-//     return appStore.menuCollapse ? 48 : appStore.menuWidth
-// })
-// const collapsed = computed(() => {
-//     return appStore.menuCollapse
-// })
-// const paddingStyle = computed(() => {
-//     const paddingLeft =
-//         renderMenu.value && !hideMenu.value
-//             ? { paddingLeft: `${menuWidth.value}px` }
-//             : {}
-//     const paddingTop = navbar.value ? { paddingTop: navbarHeight } : {}
-//     return { ...paddingLeft, ...paddingTop }
-// })
-// const setCollapsed = (val: boolean) => {
-//     if (!isInit.value) return // for page initialization menu state problem
-//     appStore.updateSettings({ menuCollapse: val })
-// }
-// watch(
-//     () => userStore.role,
-//     (roleValue) => {
-//         if (roleValue && !permission.accessRouter(route))
-//             router.push({ name: 'notFound' })
-//     },
-// )
-// const drawerVisible = ref(false)
-// const drawerCancel = () => {
-//     drawerVisible.value = false
-// }
-// provide('toggleDrawerMenu', () => {
-//     drawerVisible.value = !drawerVisible.value
-// })
-// onMounted(() => {
-//     isInit.value = true
-// })
-</script> -->
-
 <style scoped lang="scss">
 .layout {
     display: flex;
     flex-direction: column;
+    max-width: 100vw;
     min-height: 100vh;
 
     .layout-header {
@@ -108,91 +51,35 @@ const appStore = useAppStore()
         flex: 1 0 auto;
 
         display: flex;
+    }
+}
+.layout-main.container {
+    .container-sidebar {
+        // min-width: 150px;
+        width: auto;
+        flex: 0 0 auto;
+    }
+    .container-content {
+        flex: 1 0 auto;
+        padding: 20px;
 
-        &.container .container-sidebar {
-            // min-width: 150px;
-            width: auto;
-            flex: 0 0 auto;
-        }
-        &.container .container-content {
-            flex: 1 0 auto;
-            padding: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+}
 
-            display: flex;
-            flex-direction: column;
-        }
+.container-content.content {
+    // 当子元素不超出大小时，这个盒子的宽度就能够由父元素控制
+    // 也就是始终撑满剩余宽度。
+    // 当子元素溢出时，就会导致这里的盒子也溢出，但我们又不能把这里的盒子写死
+    // 那么解决方案就是让子元素宽度永远为 0
+    // 这样我们就能保证该元素的宽度始终等于
+    overflow: auto;
+
+    .width-0 {
+        // 因为子元素宽度为 0，那么当孙子元素溢出时，他也影响不到 .content 盒子的宽度
+        // 这样就可以只在 content 中生成滚动条。
+        width: 0;
     }
 }
 </style>
-
-<!-- <style scoped lang="less">
-@nav-size-height: 60px;
-@layout-max-width: 1100px;
-
-.layout {
-    width: 100%;
-    height: 100%;
-}
-
-.layout-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    width: 100%;
-    height: @nav-size-height;
-}
-
-.layout-sider {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99;
-    height: 100%;
-    transition: all 0.2s cubic-bezier(0.34, 0.69, 0.1, 1);
-    &::after {
-        position: absolute;
-        top: 0;
-        right: -1px;
-        display: block;
-        width: 1px;
-        height: 100%;
-        background-color: var(--color-border);
-        content: '';
-    }
-
-    > :deep(.arco-layout-sider-children) {
-        overflow-y: hidden;
-    }
-}
-
-.menu-wrapper {
-    height: 100%;
-    overflow: auto;
-    overflow-x: hidden;
-    :deep(.arco-menu) {
-        ::-webkit-scrollbar {
-            width: 12px;
-            height: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            border: 4px solid transparent;
-            background-clip: padding-box;
-            border-radius: 7px;
-            background-color: var(--color-text-4);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: var(--color-text-3);
-        }
-    }
-}
-
-.layout-content {
-    min-height: 100vh;
-    overflow-y: hidden;
-    background-color: var(--color-fill-2);
-    transition: padding 0.2s cubic-bezier(0.34, 0.69, 0.1, 1);
-}
-</style> -->
