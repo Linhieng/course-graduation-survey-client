@@ -14,6 +14,9 @@ const survey = computed(() => storeSurvey.getCurEditSurvey)
 const survey_title = ref('')
 const survey_comment = ref('')
 
+survey_title.value = storeSurvey.$state.create.survey.title
+survey_comment.value = storeSurvey.$state.create.survey.comment
+
 watch([survey_title, survey_comment], () => {
     storeSurvey.$state.create.survey.title = survey_title.value
     storeSurvey.$state.create.survey.comment = survey_comment.value
