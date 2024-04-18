@@ -153,7 +153,8 @@ const useSurveyStore = defineStore('survey', {
         exportSurvey() {
             const _survey = unrefRecursion(this.$state.create.survey)
             const jsonStr = JSON.stringify(_survey, null, 4)
-            saveFile(jsonStr, `问卷模版 - ${_survey.title}.json`)
+            const x = t('view.survey.create.utils.export.filename-template')
+            saveFile(jsonStr, `${x} - ${_survey.title}.json`)
         },
 
         /** 编辑问卷时，点击新增一个问题 */

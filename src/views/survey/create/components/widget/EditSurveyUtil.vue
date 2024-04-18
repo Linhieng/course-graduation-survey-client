@@ -23,7 +23,7 @@ const importSurvey = async (event: Event) => {
         surveyStore.importSurvey(survey)
     } catch (error) {
         console.log(error)
-        msgError('读取文件失败')
+        msgError('view.survey.error.can-not-read-file')
     } finally {
         NProgress.done()
     }
@@ -34,13 +34,25 @@ const cacheManual = surveyStore.cacheCurEditSurvey
 </script>
 
 <template>
-    <p>工具栏：</p>
+    <p>{{ $t('view.survey.create.utils') }}</p>
     <ul>
         <!-- <li> <el-button>批量编辑顺序</el-button> </li> -->
-        <li><el-button @click="cacheManual">立即缓存</el-button></li>
-        <li><el-button @click="exportSurvey">导出模版</el-button></li>
+        <li>
+            <el-button @click="cacheManual">{{
+                $t('view.survey.create.utils.cache')
+            }}</el-button>
+        </li>
+        <li>
+            <el-button @click="exportSurvey">{{
+                $t('view.survey.create.utils.export')
+            }}</el-button>
+        </li>
         <li class="input-file">
-            <el-button><label for="uploadFile">导入模版</label></el-button>
+            <el-button
+                ><label for="uploadFile">{{
+                    $t('view.survey.create.utils.import')
+                }}</label></el-button
+            >
             <input
                 type="file"
                 id="uploadFile"

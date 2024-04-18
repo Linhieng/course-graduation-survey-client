@@ -11,6 +11,17 @@ export default {
     'view.survey.create.preview': 'Preview questionnaire',
     'view.survey.create.publish-attention-info': 'After the questionnaire is published, the questionnaire information cannot be modified. Please confirm the questionnaire before publication.',
     'view.survey.create.new-cache-time': 'Latest cache time:',
+
     'view.survey.create.not-cached': 'Not cached',
+    'view.survey.error.can-not-read-file': 'File reading failure',
+
     'view.survey.error.not-survey-id': 'The questionnaire id does not exist',
+    'view.survey.create.is-required': 'required',
+
+    'view.survey.create.utils': 'tool: ',
+    'view.survey.create.utils.cache': 'cache',
+    'view.survey.create.utils.export': 'Export',
+    'view.survey.create.utils.import': 'Import',
+    'view.survey.create.utils.export.filename-template': 'Questionnaire-Template'
+
 }

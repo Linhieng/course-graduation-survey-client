@@ -17,39 +17,37 @@ import { SurveyQuestionTypeMappingText, msgError } from '@/utils'
 import InputText from './InputText.vue'
 import SelectItem from './SelectItem.vue'
 import { ref, watch } from 'vue'
-import { useStoreSurvey } from '@/store'
+import { useSurveyStore } from '@/store'
+
+const surveyStore = useSurveyStore()
 
 const props = defineProps<{
     question: SurveyQuestion
 }>()
-const storeSurvey = useStoreSurvey()
-const survey = storeSurvey.getSurveyRef()
 const isRequired = ref(true)
 
 // 同步更改 storeSurvey 中的内容
 watch(isRequired, () => {
-    if (!survey || !survey.value) {
-        msgError('无法获取 survey，这里是 EditQuestion')
-        return
-    }
     const index = props.question.order - 1
-    survey.value.questions[index].isRequired = isRequired.value
+    surveyStore.$state.create.survey.questions[index].isRequired =
+        isRequired.value
 })
 </script>
 
 <template>
     <div class="question-item">
         {{ props.question }}
-        <p class="base-info">
-            <span :class="{ 'is-required': isRequired }">{{
-                props.question.order
-            }}</span>
+        <p class="base-info" :class="{ 'is-required': isRequired }">
+            <span>{{ props.question.order }}</span>
             <span>{{
                 SurveyQuestionTypeMappingText(props.question.questionType)
             }}</span>
         </p>
         <div class="common-info">
-            <p>是否必填 <el-switch v-model="isRequired" /></p>
+            <p>
+                {{ $t('view.survey.create.is-required') }}
+                <el-switch v-model="isRequired" />
+            </p>
         </div>
         <!-- 不同的问题类型，提供不同的编辑面板 -->
         <div class="question-content">
@@ -112,8 +110,13 @@ watch(isRequired, () => {
     }
 }
 
+.base-info {
+    position: relative;
+}
 .is-required::before {
     content: '*';
     color: red;
+    position: absolute;
+    left: -10px;
 }
 </style>
