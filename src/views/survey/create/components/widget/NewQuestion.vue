@@ -6,8 +6,8 @@ import {
     SURVEY_TYPE_MULTI_SELECT as multi_select,
 } from '@/constants'
 import type { SurveyQuestionType } from '@/types'
-import { useStoreSurvey } from '@/store'
-const storeSurvey = useStoreSurvey()
+import { useSurveyStore } from '@/store'
+const surveyStore = useSurveyStore()
 
 const props = defineProps<{
     order: number
@@ -15,7 +15,7 @@ const props = defineProps<{
 
 const btnAddQuestion = (type: SurveyQuestionType) => {
     const order = props.order
-    storeSurvey.addOneQuestion(type, order)
+    surveyStore.addNewQuestionInEdit(type, order)
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -32,31 +32,13 @@ const showOptions = ref(false)
     </div>
     <div class="show-options" :class="{ 'is-show': showOptions }">
         <div class="options-content">
-            <el-button
-                round
-                @click="
-                    () => {
-                        btnAddQuestion(input_content)
-                    }
-                "
+            <el-button round @click="btnAddQuestion(input_content)"
                 >新建文本输入题</el-button
             >
-            <el-button
-                round
-                @click="
-                    () => {
-                        btnAddQuestion(single_select)
-                    }
-                "
+            <el-button round @click="btnAddQuestion(single_select)"
                 >新建单选题</el-button
             >
-            <el-button
-                round
-                @click="
-                    () => {
-                        btnAddQuestion(multi_select)
-                    }
-                "
+            <el-button round @click="btnAddQuestion(multi_select)"
                 >新建多选题</el-button
             >
         </div>

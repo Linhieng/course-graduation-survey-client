@@ -141,58 +141,58 @@ export default defineStore('storeSurvey', () => {
     //     saveFile(jsonStr, `问卷模版 - ${_survey.title}.json`)
     // }
 
-    // TODO: 根据 type，指定返回的类型
-    const generateQuestion = (type: SurveyQuestionType, order: number) => {
-        if (type === SURVEY_TYPE_INPUT_CONTENT) {
-            const q: SurveyQuestion_Text = {
-                id: getUUID(),
-                isRequired: true,
-                order,
-                questionType: type,
-                questionContent: {
-                    title: '',
-                    describe: '',
-                },
-            }
-            return q
-        }
-        // if (type === SURVEY_TYPE_SINGLE_SELECT || type === SURVEY_TYPE_MULTI_SELECT) {
-        const q: SurveyQuestion_SingleSelect = {
-            id: getUUID(),
-            isRequired: true,
-            order,
-            // @ts-ignore
-            questionType: type,
-            questionContent: {
-                titles: [
-                    {
-                        id: getUUID(),
-                        title: '',
-                        describe: '',
-                    },
-                ],
-                options: [''],
-            },
-        }
-        return q
-        // }
-    }
-    // 新建一个问题
-    const addOneQuestion = (
-        questionType: SurveyQuestionType,
-        order: number,
-    ) => {
-        if (!survey.value) {
-            msgError('survey 不存在，这里是 storeSurvey')
-            return
-        }
-        survey.value.questions.splice(
-            order,
-            0,
-            generateQuestion(questionType, order),
-        )
-        survey.value.questions.forEach((item, i) => (item.order = i + 1))
-    }
+    // // TODO: 根据 type，指定返回的类型
+    // const generateQuestion = (type: SurveyQuestionType, order: number) => {
+    //     if (type === SURVEY_TYPE_INPUT_CONTENT) {
+    //         const q: SurveyQuestion_Text = {
+    //             id: getUUID(),
+    //             isRequired: true,
+    //             order,
+    //             questionType: type,
+    //             questionContent: {
+    //                 title: '',
+    //                 describe: '',
+    //             },
+    //         }
+    //         return q
+    //     }
+    //     // if (type === SURVEY_TYPE_SINGLE_SELECT || type === SURVEY_TYPE_MULTI_SELECT) {
+    //     const q: SurveyQuestion_SingleSelect = {
+    //         id: getUUID(),
+    //         isRequired: true,
+    //         order,
+    //         // @ts-ignore
+    //         questionType: type,
+    //         questionContent: {
+    //             titles: [
+    //                 {
+    //                     id: getUUID(),
+    //                     title: '',
+    //                     describe: '',
+    //                 },
+    //             ],
+    //             options: [''],
+    //         },
+    //     }
+    //     return q
+    //     // }
+    // }
+    // // 新建一个问题
+    // const addOneQuestion = (
+    //     questionType: SurveyQuestionType,
+    //     order: number,
+    // ) => {
+    //     if (!survey.value) {
+    //         msgError('survey 不存在，这里是 storeSurvey')
+    //         return
+    //     }
+    //     survey.value.questions.splice(
+    //         order,
+    //         0,
+    //         generateQuestion(questionType, order),
+    //     )
+    //     survey.value.questions.forEach((item, i) => (item.order = i + 1))
+    // }
     // 删除一个问题
     const removeOneQuestion = (order: number) => {
         if (!survey.value) {
@@ -214,7 +214,7 @@ export default defineStore('storeSurvey', () => {
     return {
         getSurveyRef,
         addTask,
-        addOneQuestion,
+        // addOneQuestion,
         removeOneQuestion,
         // getCacheTimeRef,/
         ///////////////////////////////////
