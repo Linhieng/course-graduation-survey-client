@@ -1,8 +1,7 @@
-import type { OneSurvey, ResProGetSurveyById } from '@/types'
+import type { OneSurvey, ResGetSurveyById, ResProGetSurveyById } from '@/types'
 import { get, post } from './axios'
 import type { ReqSurveyAche } from '@/types/request'
 
-const urlGetSurveyById = 'survey/id-'
 const urlToggleSurveyDelete = 'survey/toggle-del/'
 const urlToggleSurveyValid = 'survey/toggle-valid/'
 
@@ -20,9 +19,9 @@ export function apiCacheSurvey(data: ReqSurveyAche) {
     return post<{ time: string }>('/api/survey/cache', data)
 }
 
-export function apiGetSurveyById(surveyId: number): ResProGetSurveyById {
+export function apiGetSurveyById(surveyId: number) {
     // TODO: 校验返回的响应体是否符合要求
-    return get(urlGetSurveyById + surveyId)
+    return get<ResGetSurveyById>('/api/survey/id-' + surveyId)
 }
 
 export function apiToggleSurveyDelete(surveyId: number, isDel?: boolean) {

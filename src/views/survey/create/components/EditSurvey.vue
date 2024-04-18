@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { watch, computed, ref } from 'vue'
 import EditQuestion from './widget/EditQuestion.vue'
 import NewQuestion from './widget/NewQuestion.vue'
 import EditSurveyUtil from './widget/EditSurveyUtil.vue'
@@ -13,6 +13,11 @@ const survey = computed(() => storeSurvey.getCurEditSurvey)
 // 该组件中，只负责修改 title 和 content
 const survey_title = ref('')
 const survey_comment = ref('')
+
+watch([survey_title, survey_comment], () => {
+    storeSurvey.$state.create.survey.title = survey_title.value
+    storeSurvey.$state.create.survey.comment = survey_comment.value
+})
 </script>
 
 <template>

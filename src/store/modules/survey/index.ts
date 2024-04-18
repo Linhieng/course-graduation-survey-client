@@ -1,7 +1,13 @@
 export { default as useStoreSurvey } from './storeSurvey'
 import NProgress from 'nprogress'
+import router from '@/router'
 
-import { apiCacheSurvey, apiGetAllSurveys, apiNewSurvey } from '@/api'
+import {
+    apiCacheSurvey,
+    apiGetAllSurveys,
+    apiGetSurveyById,
+    apiNewSurvey,
+} from '@/api'
 import type {
     OneSurvey,
     Survey,
@@ -27,6 +33,7 @@ interface SurveyStore {
     create: {
         curStep: 1 | 2 | 3
         survey: MakeOptional<Survey, 'id'>
+        isFetch: boolean
         isCaching: boolean
         cacheTime: string
     }
@@ -46,6 +53,7 @@ const useSurveyStore = defineStore('survey', {
     state: (): SurveyStore => ({
         create: {
             isCaching: false,
+            isFetch: false,
             cacheTime: '',
 
             curStep: 1,
@@ -90,6 +98,32 @@ const useSurveyStore = defineStore('survey', {
     },
 
     actions: {
+        /** 获取一份问卷的信息，用于编辑 */
+        async fetchOneSurveyEdit(surveyId: number) {
+            if (this.$state.create.isFetch) return
+
+            this.$state.create.isFetch = true
+            const res = await apiGetSurveyById(surveyId)
+            if (res.ok) {
+                this.$state.create.survey.title = res.data.title
+                this.$state.create.survey.comment = res.data.comment
+                this.$state.create.survey.version = res.data.questions.version
+                this.$state.create.survey.questions =
+                    res.data.questions.questions
+            } else {
+                noticeError(res.msg)
+            }
+            this.$state.create.isFetch = false
+        },
+
+        /** 编辑一份已经存在的问卷 */
+        editSurvey(survey: OneSurvey) {
+            this.$state.create.survey.id = survey.id
+            this.fetchOneSurveyEdit(survey.id)
+            router.push({ path: '/survey/create' })
+            this.createGotoNext(2)
+        },
+
         /** 创建问卷三步走 */
         createGotoNext(step: 1 | 2 | 3) {
             const surveyId = this.$state.create.survey.id
@@ -198,11 +232,38 @@ const useSurveyStore = defineStore('survey', {
             const res = await apiGetAllSurveys()
             if (res.ok) {
                 this.$state.allSurvey.all = res.data.all_surveys
+                this.getAllSurveysSuccessCallback()
             } else {
                 noticeError(res.msg)
             }
 
             this.$state.allSurvey.isFetch = false
+        },
+        /** 成功获取所有问卷后的回调 */
+        getAllSurveysSuccessCallback() {
+            // TODO: 这里其实是纯计算，可以考虑使用使用 worker 实现
+            const allSurvey = this.$state.allSurvey.all
+            const draft: OneSurvey[] = []
+            const publish: OneSurvey[] = []
+            const stop: OneSurvey[] = []
+            const trash: OneSurvey[] = []
+            // allSurvey.sort((a, b) => a.sort_order - b.sort_order)
+
+            allSurvey.forEach((s) => {
+                if (s.is_deleted) {
+                    trash.push(s)
+                } else if (s.is_draft) {
+                    draft.push(s)
+                } else if (s.is_valid) {
+                    publish.push(s)
+                } else {
+                    stop.push(s)
+                }
+            })
+            this.$state.allSurvey.draft = draft
+            this.$state.allSurvey.publish = publish
+            this.$state.allSurvey.stop = stop
+            this.$state.allSurvey.trash = trash
         },
     },
 })

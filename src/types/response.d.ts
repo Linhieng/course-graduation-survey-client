@@ -64,6 +64,7 @@ export interface OneSurvey {
     creator_id: number // 2
     is_deleted: number // 0
     is_draft: number // 1
+    /** 问卷是否还有效、是否可以继续收集，0 为否；1 为是 */
     is_valid: number // 0
     sort_order: number // 0
     created_at: string // "2024-03-23T12:54:24.000Z"
