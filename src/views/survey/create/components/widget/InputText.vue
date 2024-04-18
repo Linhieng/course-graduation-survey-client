@@ -5,31 +5,23 @@
 <script setup lang="ts">
 import type { SurveyQuestion_Text } from '@/types'
 import { ref, watch } from 'vue'
-import { useStoreSurvey } from '@/store'
+import { useSurveyStore } from '@/store'
 import { msgError } from '@/utils'
 import InputRequired from '@/components/InputRequired.vue'
 import InputOptional from '@/components/InputOptional.vue'
 
-const storeSurvey = useStoreSurvey()
-const survey = storeSurvey.getSurveyRef()
+const surveyStore = useSurveyStore()
 const props = defineProps<{
     question: SurveyQuestion_Text
 }>()
 const title = ref('')
 const describe = ref('')
 watch([title, describe], () => {
-    if (!survey || !survey.value) {
-        msgError('无法获取 survey，这里是 InputText')
-        return
-    }
     const index = props.question.order - 1
-    const q = survey.value.questions[index]
-    if (q.questionType !== 'input_content') {
-        msgError('问题类型错误，这里是 InputText')
-        return
-    }
-    q.questionContent.title = title.value
-    q.questionContent.describe = describe.value
+    surveyStore.$state.create.survey.questions[index].questionContent.title =
+        title.value
+    surveyStore.$state.create.survey.questions[index].questionContent.describe =
+        describe.value
 })
 
 if (props.question?.questionContent.title)
