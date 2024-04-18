@@ -131,10 +131,10 @@ const useSurveyStore = defineStore('survey', {
                 msgError('view.survey.create.pleaseCreateFirst')
                 return
             }
-            if (step === 1 && surveyId) {
-                msgError('view.survey.create.hasOneEditSurvey')
-                return
-            }
+            // if (step === 1 && surveyId) {
+            //     msgError('view.survey.create.hasOneEditSurvey')
+            //     return
+            // }
 
             this.$state.create.curStep = step
         },

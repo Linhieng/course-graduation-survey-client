@@ -30,11 +30,12 @@ watch([survey_title, survey_comment], () => {
             storeSurvey.getNewCacheTime
         }}
     </p>
+    <br />
     <div class="util">
         <EditSurveyUtil />
     </div>
     <div class="top-wrapper">
-        {{ survey }}
+        <!-- {{ survey }} -->
         <h1>
             <el-input
                 v-model="survey_title"

@@ -36,7 +36,7 @@ watch(isRequired, () => {
 
 <template>
     <div class="question-item">
-        {{ props.question }}
+        <!-- {{ props.question }} -->
         <p class="base-info" :class="{ 'is-required': isRequired }">
             <span>{{ props.question.order }}</span>
             <span>{{
