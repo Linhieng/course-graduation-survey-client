@@ -53,18 +53,22 @@ const clickTo = (nextStep: 1 | 2 | 3) => {
                 </KeepAlive>
             </div>
             <div v-show="curStep === 3">
-                <h1>发布问卷</h1>
+                <h1>
+                    {{ $t('view.survey.create.step.publish') }}
+                </h1>
                 <p>
-                    问卷一经发布，则不可重新修改问卷信息，发布前请先确认好问卷
+                    {{ $t('view.survey.create.publish-attention-info') }}
                 </p>
                 <br />
                 <br />
-                <el-button>预览问卷</el-button>
+                <el-button>{{ $t('view.survey.create.preview') }}</el-button>
                 <br />
                 <br />
                 <br />
                 <br />
-                <el-button>发布问卷</el-button>
+                <el-button>{{
+                    $t('view.survey.create.step.publish')
+                }}</el-button>
             </div>
         </div>
     </div>

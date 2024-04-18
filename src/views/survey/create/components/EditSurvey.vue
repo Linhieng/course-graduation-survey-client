@@ -15,7 +15,9 @@ const survey_comment = ref('')
 </script>
 
 <template>
-    <h1>编辑问卷</h1>
+    <h1>
+        {{ $t('view.survey.create.step.edit') }}
+    </h1>
     <div class="top-wrapper">
         {{ survey }}
         <h1>
@@ -23,7 +25,7 @@ const survey_comment = ref('')
                 v-model="survey_title"
                 autosize
                 type="textarea"
-                placeholder="输入问卷标题"
+                :placeholder="$t('view.survey.create.placeholder.input-title')"
             />
         </h1>
         <p>
@@ -31,7 +33,9 @@ const survey_comment = ref('')
                 v-model="survey_comment"
                 autosize
                 type="textarea"
-                placeholder="输入问卷备注信息"
+                :placeholder="
+                    $t('view.survey.create.placeholder.input-command')
+                "
             />
         </p>
     </div>
@@ -70,6 +74,9 @@ ul {
 .top-wrapper {
     margin-bottom: 20px;
     padding: 20px;
+    :deep(textarea) {
+        field-sizing: content;
+    }
     h1 :deep(textarea) {
         font-weight: bold;
         font-size: 2rem;
