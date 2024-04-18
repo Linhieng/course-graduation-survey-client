@@ -10,7 +10,9 @@ export function interceptRequest(axios: AxiosInstance) {
             // 的 Authorization 中。
             const token = getToken()
             if (token) {
-                config.headers.Authorization = `Bearer ${token}`
+                config.headers.Authorization = token.token
+                config.headers.userid = token.userId
+                config.headers.username = token.username
             }
             return config
         },

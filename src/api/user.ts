@@ -1,4 +1,4 @@
-import axios, { post } from './axios'
+import axios, { get, post } from './axios'
 import type { R } from './axios'
 // import type { RouteRecordNormalized } from 'vue-router'
 import type { UserState } from '@/store/modules/user/types'
@@ -11,12 +11,12 @@ export type LoginData = {
     username: string
     password: string
 }
-
-export type LoginRes = {
-    token: string
-}
 export function login(data: LoginData) {
-    return post<LoginRes>('/api/user/login', data)
+    return post<{
+        userId: number
+        username: string
+        token: string
+    }>('/api/user/login', data)
 }
 export function getUserInfo() {
     return post<UserState>('/api/user/info')
@@ -28,6 +28,10 @@ export function logout() {
 
 export function register(data: LoginData) {
     return post('/api/user/signup', data)
+}
+
+export function isExpired() {
+    return get('/api/user/isAuthExpired')
 }
 
 // export function getMenuList() {

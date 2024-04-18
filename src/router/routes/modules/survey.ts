@@ -1,6 +1,7 @@
 import { DEFAULT_LAYOUT } from '../base'
 import type { AppRouteRecordRaw } from '../types'
 import Icon from '@icon/IconSurvey.vue'
+import IconAdd from '@icon/IconAdd.vue'
 
 const SURVEY: AppRouteRecordRaw = {
     path: '/survey',
@@ -18,6 +19,7 @@ const SURVEY: AppRouteRecordRaw = {
             component: () => import('@/views/survey/create/index.vue'),
             meta: {
                 locale: 'menu.survey.create',
+                icon: IconAdd,
                 requiresAuth: true,
             },
         },

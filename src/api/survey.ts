@@ -1,18 +1,15 @@
-import type {
-    ResProCacheSurvey,
-    ResProGetAllSurveys,
-    ResProGetSurveyById,
-} from '@/types'
+import type { OneSurvey, ResProGetSurveyById } from '@/types'
 import { get, post } from './axios'
 import type { ReqSurveyAche } from '@/types/request'
 
-const urlGetAllSurveys = '/survey/get-all-surveys'
 const urlGetSurveyById = 'survey/id-'
 const urlToggleSurveyDelete = 'survey/toggle-del/'
 const urlToggleSurveyValid = 'survey/toggle-valid/'
 
-export function apiGetAllSurveys(): ResProGetAllSurveys {
-    return get(urlGetAllSurveys)
+export function apiGetAllSurveys(userId?: number) {
+    return get<{ all_surveys: OneSurvey[] }>(
+        `/api/survey/get-all-surveys/${userId || ''}`,
+    )
 }
 
 export function apiNewSurvey() {

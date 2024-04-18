@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import EditSurvey from './components/EditSurvey.vue'
 import IconNext from '@icon/IconNext.vue'
 import IconNextDown from '@icon/IconNextDown.vue'
 import SelectSurvey from './components/SelectSurvey.vue'
-import { msgError } from '@/utils'
 import { useSurveyStore } from '@/store'
 import { useWindowSize } from '@vueuse/core'
 const storeSurvey = useSurveyStore()
 const { width } = useWindowSize()
 
 const curStep = computed(() => storeSurvey.getCurEditSurveyStep)
-const curSurveyId = computed(() => storeSurvey.getCurEditSurveyId)
 
 const clickTo = (nextStep: 1 | 2 | 3) => {
     storeSurvey.createGotoNext(nextStep)

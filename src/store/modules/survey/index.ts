@@ -1,8 +1,9 @@
 export { default as useStoreSurvey } from './storeSurvey'
 import NProgress from 'nprogress'
 
-import { apiCacheSurvey, apiNewSurvey } from '@/api'
+import { apiCacheSurvey, apiGetAllSurveys, apiNewSurvey } from '@/api'
 import type {
+    OneSurvey,
     Survey,
     SurveyQuestionType,
     SurveyQuestion_SingleSelect,
@@ -29,6 +30,16 @@ interface SurveyStore {
         isCaching: boolean
         cacheTime: string
     }
+    allSurvey: {
+        isFetch: boolean
+
+        /** 所有问卷，包含已删除的等等 */
+        all: OneSurvey[]
+        draft: OneSurvey[]
+        publish: OneSurvey[]
+        stop: OneSurvey[]
+        trash: OneSurvey[]
+    }
 }
 
 const useSurveyStore = defineStore('survey', {
@@ -45,6 +56,14 @@ const useSurveyStore = defineStore('survey', {
                 version: '0.1.0',
                 questions: [],
             },
+        },
+        allSurvey: {
+            isFetch: false,
+            all: [],
+            draft: [],
+            publish: [],
+            stop: [],
+            trash: [],
         },
     }),
 
@@ -167,6 +186,23 @@ const useSurveyStore = defineStore('survey', {
             this.$state.create.survey.questions.forEach(
                 (item, i) => (item.order = i + 1),
             )
+        },
+
+        /** 后台异步获取用户的所有问卷 */
+        async getAllSurveys() {
+            if (this.$state.allSurvey.isFetch) {
+                return
+            }
+            this.$state.allSurvey.isFetch = true
+
+            const res = await apiGetAllSurveys()
+            if (res.ok) {
+                this.$state.allSurvey.all = res.data.all_surveys
+            } else {
+                noticeError(res.msg)
+            }
+
+            this.$state.allSurvey.isFetch = false
         },
     },
 })

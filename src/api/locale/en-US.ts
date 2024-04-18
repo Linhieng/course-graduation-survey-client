@@ -10,4 +10,12 @@ export default {
     'api.error.survey-deleted': 'The questionnaire has been deleted',
     'api.error.survey-stop': 'The questionnaire collection has stopped',
     'api.error.survey-content-not-exist': 'The questionnaire does not exist',
+
+    'api.error.not-user-id': 'Please provide the user id',
+    'api.error.password-wrong': 'wrong password',
+
+    'api.warn.had-user': 'The user already exists',
+
+    'api.success.create-user': 'Created successfully',
+    'api.success.login-ok': 'Login successfully',
 }

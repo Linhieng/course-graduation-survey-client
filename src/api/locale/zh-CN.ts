@@ -10,4 +10,12 @@ export default {
     'api.error.survey-deleted': '问卷已经被删除',
     'api.error.survey-stop': '问卷已经停止收集',
     'api.error.survey-content-not-exist': '问卷内容不存在',
+
+    'api.error.not-user-id': '请提供用户 id',
+    'api.error.password-wrong': '密码错误',
+
+    'api.warn.had-user': '已经存在该用户',
+
+    'api.success.create-user': '成功创建新用户',
+    'api.success.login-ok': '登录成功',
 }
