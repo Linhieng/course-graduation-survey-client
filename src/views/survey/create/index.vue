@@ -2,10 +2,13 @@
 import { ref, computed } from 'vue'
 import EditSurvey from './components/EditSurvey.vue'
 import IconNext from '@icon/IconNext.vue'
+import IconNextDown from '@icon/IconNextDown.vue'
 import SelectSurvey from './components/SelectSurvey.vue'
 import { msgError } from '@/utils'
 import { useSurveyStore } from '@/store'
+import { useWindowSize } from '@vueuse/core'
 const storeSurvey = useSurveyStore()
+const { width } = useWindowSize()
 
 const curStep = computed(() => storeSurvey.getCurEditSurveyStep)
 const curSurveyId = computed(() => storeSurvey.getCurEditSurveyId)
@@ -25,7 +28,12 @@ const clickTo = (nextStep: 1 | 2 | 3) => {
                 </button>
             </li>
             <el-icon :size="30">
-                <IconNext />
+                <template v-if="width >= 600">
+                    <IconNext />
+                </template>
+                <template v-else>
+                    <IconNextDown />
+                </template>
             </el-icon>
             <li :class="{ active: curStep === 2 }">
                 <button text @click="() => clickTo(2)">
@@ -33,7 +41,12 @@ const clickTo = (nextStep: 1 | 2 | 3) => {
                 </button>
             </li>
             <el-icon :size="30">
-                <IconNext />
+                <template v-if="width >= 600">
+                    <IconNext />
+                </template>
+                <template v-else>
+                    <IconNextDown />
+                </template>
             </el-icon>
             <li :class="{ active: curStep === 3 }">
                 <button text @click="() => clickTo(3)">
@@ -75,6 +88,12 @@ const clickTo = (nextStep: 1 | 2 | 3) => {
 </template>
 
 <style scoped lang="scss">
+@mixin wl600 {
+    @media screen and (max-width: 600px) {
+        @content;
+    }
+}
+
 ul {
     list-style: none;
 }
@@ -87,6 +106,10 @@ ul {
     align-items: center;
     // 添加这一项，在手机端会导致左侧缩了一部分，导致看不到内容
     // justify-content: space-evenly;
+
+    @include wl600 {
+        flex-direction: column;
+    }
 
     .active {
         background-color: skyblue;
