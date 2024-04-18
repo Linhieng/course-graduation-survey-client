@@ -1,28 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import EditSurvey from './components/EditSurvey.vue'
 import IconNext from '@icon/IconNext.vue'
 import SelectSurvey from './components/SelectSurvey.vue'
 import { msgError } from '@/utils'
-import { useStoreSurvey } from '@/store'
-const storeSurvey = useStoreSurvey()
+import { useSurveyStore } from '@/store'
+const storeSurvey = useSurveyStore()
 
-const curStep = ref(1)
-const curSurveyId = ref()
+const curStep = computed(() => storeSurvey.getCurEditSurveyStep)
+const curSurveyId = computed(() => storeSurvey.getCurEditSurveyId)
 
-const clickTo = (nextStep: number) => {
-    if (nextStep > 1 && !curSurveyId.value) {
-        msgError('view.survey.create.placeCreateFirst')
-        return
-    }
-
-    curStep.value = nextStep
-}
-
-const createSurvey = (id: number) => {
-    curSurveyId.value = id
-    storeSurvey.setSurveyId(id)
-    clickTo(2)
+const clickTo = (nextStep: 1 | 2 | 3) => {
+    storeSurvey.createGotoNext(nextStep)
 }
 </script>
 
@@ -31,25 +20,31 @@ const createSurvey = (id: number) => {
         <!-- TODO: 封装成组件 -->
         <ul class="steps">
             <li :class="{ active: curStep === 1 }">
-                <button text @click="() => clickTo(1)">选择问卷</button>
+                <button text @click="() => clickTo(1)">
+                    {{ $t('view.survey.create.step.select') }}
+                </button>
             </li>
             <el-icon :size="30">
                 <IconNext />
             </el-icon>
             <li :class="{ active: curStep === 2 }">
-                <button text @click="() => clickTo(2)">编辑问卷</button>
+                <button text @click="() => clickTo(2)">
+                    {{ $t('view.survey.create.step.edit') }}
+                </button>
             </li>
             <el-icon :size="30">
                 <IconNext />
             </el-icon>
             <li :class="{ active: curStep === 3 }">
-                <button text @click="() => clickTo(3)">发布问卷</button>
+                <button text @click="() => clickTo(3)">
+                    {{ $t('view.survey.create.step.publish') }}
+                </button>
             </li>
         </ul>
         <div class="content">
             <div v-show="curStep === 1">
                 <KeepAlive>
-                    <SelectSurvey @create="createSurvey" />
+                    <SelectSurvey />
                 </KeepAlive>
             </div>
             <div v-show="curStep === 2">

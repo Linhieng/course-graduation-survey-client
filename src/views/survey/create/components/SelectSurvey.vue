@@ -1,18 +1,10 @@
 <script setup lang="ts">
 import { apiNewSurvey } from '@/api/survey'
+import { useSurveyStore } from '@/store'
 import { msgError } from '@/utils'
 
-const emit = defineEmits<{
-    (e: 'create', id: number): void
-}>()
-
 const createOne = async () => {
-    const data = await apiNewSurvey()
-    if (!data.ok) {
-        msgError('view.survey.crate.wrong')
-        return
-    }
-    emit('create', data.data.surveyId)
+    useSurveyStore().createNewSurvey()
 }
 </script>
 
