@@ -17,10 +17,12 @@ const title = ref('')
 const describe = ref('')
 watch([title, describe], () => {
     const index = props.question.order - 1
-    (surveyStore.$state.create.survey.questions[index] as SurveyQuestion_Text).questionContent.title =
-        title.value
-    (surveyStore.$state.create.survey.questions[index] as SurveyQuestion_Text).questionContent.describe =
-        describe.value
+    ;(
+        surveyStore.$state.create.survey.questions[index] as SurveyQuestion_Text
+    ).questionContent.title = title.value
+    ;(
+        surveyStore.$state.create.survey.questions[index] as SurveyQuestion_Text
+    ).questionContent.describe = describe.value
 })
 
 if (props.question.questionContent.title)
