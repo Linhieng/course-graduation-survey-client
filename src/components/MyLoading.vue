@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span>加载中……</span>
+        <span>{{ $t('loading') }}</span>
         <el-icon size="30"> <IconLoading /> </el-icon>
     </div>
 </template>

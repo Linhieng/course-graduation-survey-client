@@ -86,7 +86,7 @@ watch(isRequired, () => {
         align-items: center;
 
         > * {
-            margin-right: 20px;
+            margin-right: 6px;
         }
     }
 

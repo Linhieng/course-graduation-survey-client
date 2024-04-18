@@ -32,15 +32,15 @@ const showOptions = ref(false)
     </div>
     <div class="show-options" :class="{ 'is-show': showOptions }">
         <div class="options-content">
-            <el-button round @click="btnAddQuestion(input_content)"
-                >新建文本输入题</el-button
-            >
-            <el-button round @click="btnAddQuestion(single_select)"
-                >新建单选题</el-button
-            >
-            <el-button round @click="btnAddQuestion(multi_select)"
-                >新建多选题</el-button
-            >
+            <el-button round @click="btnAddQuestion(input_content)">{{
+                $t('view.survey.create.new.input')
+            }}</el-button>
+            <el-button round @click="btnAddQuestion(single_select)">{{
+                $t('view.survey.create.new.single-select')
+            }}</el-button>
+            <el-button round @click="btnAddQuestion(multi_select)">{{
+                $t('view.survey.create.new.multi-select')
+            }}</el-button>
         </div>
     </div>
 </template>

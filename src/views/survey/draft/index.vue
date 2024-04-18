@@ -41,7 +41,9 @@ const editSurvey = (survey: OneSurvey) => {
                     width="120"
                 >
                     <template #="{ row }">
-                        <el-button @click="editSurvey(row)">编辑</el-button>
+                        <el-button @click="editSurvey(row)">{{
+                            $t('view.survey.item.option.edit')
+                        }}</el-button>
                     </template>
                 </el-table-column>
             </el-table>

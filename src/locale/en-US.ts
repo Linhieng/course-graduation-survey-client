@@ -20,6 +20,7 @@ import statVisual from '@/views/stat/visual/locale/en-US'
 
 export default {
     'navbar.action.locale': 'Switch to English',
+    'loading': 'loading......',
 
     ...utilsMsg,
     ...localeLogin,

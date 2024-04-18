@@ -6,4 +6,5 @@ export default {
     'view.survey.item.created_at': 'created at',
     'view.survey.item.updated_at': 'updated at',
     'view.survey.item.option': 'operate',
+    'view.survey.item.option.edit': 'edit',
 }

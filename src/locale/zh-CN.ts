@@ -20,6 +20,7 @@ import statVisual from '@/views/stat/visual/locale/zh-CN'
 
 export default {
     'navbar.action.locale': '切换为中文',
+    'loading': '加载中……',
 
     ...utilsMsg,
     ...localeLogin,

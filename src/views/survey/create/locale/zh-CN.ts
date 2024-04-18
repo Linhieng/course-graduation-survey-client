@@ -22,5 +22,9 @@ export default {
     'view.survey.create.utils.cache': '立即缓存',
     'view.survey.create.utils.export': '导出模版',
     'view.survey.create.utils.import': '导入模版',
-    'view.survey.create.utils.export.filename-template': '问卷模版'
+    'view.survey.create.utils.export.filename-template': '问卷模版',
+
+    'view.survey.create.new.input': '新建文本输入题',
+    'view.survey.create.new.single-select': '新建单选题',
+    'view.survey.create.new.multi-select': '新建多选题',
 }

@@ -22,6 +22,8 @@ export default {
     'view.survey.create.utils.cache': 'cache',
     'view.survey.create.utils.export': 'Export',
     'view.survey.create.utils.import': 'Import',
-    'view.survey.create.utils.export.filename-template': 'Questionnaire-Template'
-
+    'view.survey.create.utils.export.filename-template': 'Questionnaire-Template',
+    'view.survey.create.new.input': 'New text input',
+    'view.survey.create.new.single-select': 'New single select',
+    'view.survey.create.new.multi-select': 'New multiple select',
 }

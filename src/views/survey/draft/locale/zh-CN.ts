@@ -6,4 +6,5 @@ export default {
     'view.survey.item.created_at': '创建时间',
     'view.survey.item.updated_at': '最近更新',
     'view.survey.item.option': '操作',
+    'view.survey.item.option.edit': '编辑',
 }
