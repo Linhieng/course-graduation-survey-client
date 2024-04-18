@@ -14,16 +14,4 @@ export default {
     'register.form.label.passwordAgain': '确认密码',
     'register.form.warn.password-not-same': '两次密码不一致',
     'register.form.success': '注册成功，请登录',
-
-
-
-
-    'login.form.login.errMsg': '登录出错，轻刷新重试',
-    'login.form.forgetPassword': '忘记密码',
-    'login.banner.slogan1': '开箱即用的高质量模板',
-    'login.banner.subSlogan1': '丰富的的页面模板，覆盖大多数典型业务场景',
-    'login.banner.slogan2': '内置了常见问题的解决方案',
-    'login.banner.subSlogan2': '国际化，路由配置，状态管理应有尽有',
-    'login.banner.slogan3': '接入可视化增强工具AUX',
-    'login.banner.subSlogan3': '实现灵活的区块式开发',
 }
