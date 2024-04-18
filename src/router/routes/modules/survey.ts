@@ -1,6 +1,6 @@
 import { DEFAULT_LAYOUT } from '../base'
 import type { AppRouteRecordRaw } from '../types'
-import Icon from '@icon/IconDashboard.vue'
+import Icon from '@icon/IconSurvey.vue'
 
 const SURVEY: AppRouteRecordRaw = {
     path: '/survey',
