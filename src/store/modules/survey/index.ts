@@ -1,4 +1,5 @@
 export { default as useStoreSurvey } from './storeSurvey'
+import NProgress from 'nprogress'
 
 import { apiCacheSurvey, apiNewSurvey } from '@/api'
 import type { Survey } from '@/types'
@@ -76,14 +77,17 @@ const useSurveyStore = defineStore('survey', {
 
         /** 新建一份问卷 */
         async createNewSurvey() {
+            NProgress.start()
             const data = await apiNewSurvey()
             if (!data.ok) {
+                NProgress.done()
                 msgError('view.survey.crate.wrong')
                 return
             }
             this.$state.create.survey.id = data.data.surveyId
             console.log(data)
             this.createGotoNext(2)
+            NProgress.done()
         },
 
         /** 缓存当前正在编辑的问卷 */
@@ -96,6 +100,7 @@ const useSurveyStore = defineStore('survey', {
                 msgError('surveyId 不存在，无法缓存，这里是 surveyStore')
                 return
             }
+            NProgress.start()
             this.$state.create.isCaching = true
 
             const reqData = JSON.parse(
@@ -118,6 +123,7 @@ const useSurveyStore = defineStore('survey', {
                 ).toLocaleTimeString()
             }
             this.$state.create.isCaching = false
+            NProgress.done()
         },
 
         /** 导入问卷模版 */
