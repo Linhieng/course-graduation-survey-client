@@ -12,7 +12,9 @@ const publishSurvey = (survey: OneSurvey) => {
 </script>
 <template>
     <h1>{{ $t('view.survey.stop.title') }}</h1>
-    <template v-if="surveyStore.$state.allSurvey.isFetch"> 加载中…… </template>
+    <template v-if="surveyStore.$state.allSurvey.isFetch">
+        <MyLoading />
+    </template>
     <template v-else-if="surveyStore.$state.allSurvey.stop.length < 1">
         <el-empty :description="$t('view.survey.stop.empty')" />
     </template>

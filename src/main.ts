@@ -1,5 +1,7 @@
 import './assets/style/index.scss'
 import 'element-plus/dist/index.css'
+import MyLoading from '@/components/MyLoading.vue'
+
 // 使用 mock 模拟请求得到的数据
 // import './mock'
 
@@ -12,6 +14,7 @@ import i18n from './locale'
 
 const app = createApp(App)
 
+app.component('MyLoading', MyLoading)
 app.use(createPinia())
 app.use(router)
 app.use(i18n)
