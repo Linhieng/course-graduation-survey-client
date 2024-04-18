@@ -21,7 +21,7 @@ const appStore = useAppStore()
             <!-- 主体 -->
             <section class="container-content content">
                 <!-- 这里用到了一种特殊的布局技巧 -->
-                <div class="width-0">
+                <div class="zero">
                     <!-- 顶部标签 -->
                     <!-- <TabBar class="content-tabbar" /> -->
                     <!-- 同时也是路由渲染的主体 -->
@@ -76,10 +76,11 @@ const appStore = useAppStore()
     // 这样我们就能保证该元素的宽度始终等于
     overflow: auto;
 
-    .width-0 {
+    .zero {
         // 因为子元素宽度为 0，那么当孙子元素溢出时，他也影响不到 .content 盒子的宽度
         // 这样就可以只在 content 中生成滚动条。
         width: 0;
+        height: 0;
 
         .content-main {
             min-width: 300px;

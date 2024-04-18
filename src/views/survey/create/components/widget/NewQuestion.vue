@@ -6,26 +6,16 @@ import {
     SURVEY_TYPE_MULTI_SELECT as multi_select,
 } from '@/constants'
 import type { SurveyQuestionType } from '@/types'
-
-export interface NewQuestionPayload {
-    order: number
-    type: SurveyQuestionType
-}
+import { useStoreSurvey } from '@/store'
+const storeSurvey = useStoreSurvey()
 
 const props = defineProps<{
     order: number
 }>()
 
-const emit = defineEmits<{
-    (e: 'new-question', payload: NewQuestionPayload): void
-}>()
-
-// 将用户最终选择的问题类型反馈给父组件
 const btnAddQuestion = (type: SurveyQuestionType) => {
-    emit('new-question', {
-        order: props.order,
-        type,
-    })
+    const order = props.order
+    storeSurvey.addOneQuestion(type, order)
 }
 
 ////////////////////////////////////////////////////////////////////

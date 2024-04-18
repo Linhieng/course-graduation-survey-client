@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import CreateViewMain from './CreateViewMain.vue'
+import EditSurvey from './components/EditSurvey.vue'
 import IconNext from '@icon/IconNext.vue'
 import SelectSurvey from './components/SelectSurvey.vue'
 import { msgError } from '@/utils'
+import { useStoreSurvey } from '@/store'
+const storeSurvey = useStoreSurvey()
 
 const curStep = ref(1)
 const curSurveyId = ref()
@@ -19,6 +21,7 @@ const clickTo = (nextStep: number) => {
 
 const createSurvey = (id: number) => {
     curSurveyId.value = id
+    storeSurvey.setSurveyId(id)
     clickTo(2)
 }
 </script>
@@ -44,15 +47,30 @@ const createSurvey = (id: number) => {
             </li>
         </ul>
         <div class="content">
-            <template v-if="curStep === 1">
-                <SelectSurvey @create="createSurvey" />
-            </template>
-            <template v-else-if="curStep === 2">
-                <CreateViewMain :id="curSurveyId" />
-            </template>
-            <template v-else-if="curStep === 3">
+            <div v-show="curStep === 1">
+                <KeepAlive>
+                    <SelectSurvey @create="createSurvey" />
+                </KeepAlive>
+            </div>
+            <div v-show="curStep === 2">
+                <KeepAlive>
+                    <EditSurvey />
+                </KeepAlive>
+            </div>
+            <div v-show="curStep === 3">
                 <h1>发布问卷</h1>
-            </template>
+                <p>
+                    问卷一经发布，则不可重新修改问卷信息，发布前请先确认好问卷
+                </p>
+                <br />
+                <br />
+                <el-button>预览问卷</el-button>
+                <br />
+                <br />
+                <br />
+                <br />
+                <el-button>发布问卷</el-button>
+            </div>
         </div>
     </div>
 </template>

@@ -4,12 +4,11 @@ import type {
     ResProNewSurvey,
     ResProGetSurveyById,
 } from '@/types'
-import { get, post } from '.'
+import { get, post } from './axios'
 import type { ReqSurveyAche } from '@/types/request'
 import type { AxiosRequestConfig } from 'axios'
 
 const urlGetAllSurveys = '/survey/get-all-surveys'
-const urlNewSurvey = '/survey/create'
 const urlAcheSurvey = '/survey/cache'
 const urlGetSurveyById = 'survey/id-'
 const urlToggleSurveyDelete = 'survey/toggle-del/'
@@ -19,8 +18,8 @@ export function apiGetAllSurveys(): ResProGetAllSurveys {
     return get(urlGetAllSurveys)
 }
 
-export function apiNewSurvey(): ResProNewSurvey {
-    return post(urlNewSurvey)
+export function apiNewSurvey() {
+    return post<{ surveyId: number }>('/api/survey/create')
 }
 
 export function apiCacheSurvey(data: ReqSurveyAche): ResProCacheSurvey {
