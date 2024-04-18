@@ -80,6 +80,10 @@ const appStore = useAppStore()
         // 因为子元素宽度为 0，那么当孙子元素溢出时，他也影响不到 .content 盒子的宽度
         // 这样就可以只在 content 中生成滚动条。
         width: 0;
+
+        .content-main {
+            min-width: 300px;
+        }
     }
 }
 </style>

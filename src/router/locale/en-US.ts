@@ -2,6 +2,7 @@ export default {
     'menu.dashboard': 'Dashboard',
     'menu.dashboard.workplace': 'Workplace',
     'menu.survey': 'My questionnaire',
+    'menu.survey.create': 'create a questionnaire',
     'menu.survey.draft': 'drafts',
     'menu.survey.publish': 'In release',
     'menu.survey.stop': 'stopped',

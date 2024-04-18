@@ -29,7 +29,7 @@ type WrapWithRef<T> = {
     [K in keyof T]: Ref<T[K]>
 }
 
-export const useStoreSurvey = defineStore('storeSurvey', () => {
+export default defineStore('storeSurvey', () => {
     const surveyId = ref()
     const survey = ref<Survey>()
     /** 格式存储为直接可读的格式 toLocaleString() */

@@ -58,6 +58,7 @@ const btnNewQuestion = (payload: NewQuestionPayload) => {
 
 <template>
     <div class="create-workplace">
+        <h1>编辑问卷</h1>
         <div class="top-wrapper">
             {{ _survey }}
             <h1>

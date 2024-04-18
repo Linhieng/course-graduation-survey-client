@@ -14,6 +14,14 @@ const SURVEY: AppRouteRecordRaw = {
     },
     children: [
         {
+            path: '/survey/create',
+            component: () => import('@/views/survey/create/index.vue'),
+            meta: {
+                locale: 'menu.survey.create',
+                requiresAuth: true,
+            },
+        },
+        {
             path: '/survey/draft',
             component: () => import('@/views/survey/draft/index.vue'),
             meta: {

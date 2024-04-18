@@ -9,6 +9,7 @@ import sidebarMenuInfo from '@/router/locale/en-US'
 
 import workplace from '@/views/dashboard/workplace/locale/en-US';
 
+import surveyCreate from '@/views/survey/create/locale/en-US'
 import surveyDraft from '@/views/survey/draft/locale/en-US'
 import surveyPublish from '@/views/survey/publish/locale/en-US'
 import surveyStop from '@/views/survey/stop/locale/en-US'
@@ -31,6 +32,7 @@ export default {
 
     ...workplace,
 
+    ...surveyCreate,
     ...surveyDraft,
     ...surveyPublish,
     ...surveyStop,
