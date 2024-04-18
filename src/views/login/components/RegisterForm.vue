@@ -10,7 +10,7 @@
             <el-input v-model="formRegister.passwordAgain" type="password" />
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="onSubmit">
+            <el-button type="primary" @click="onSubmit" :loading="loading">
                 {{ $t('login.form.register') }}
             </el-button>
         </el-form-item>
@@ -18,15 +18,45 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
+import { useUserStore } from '@/store'
+import { msgSuccess, msgWarning } from '@/utils'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
+const userStore = useUserStore()
+const loading = ref(false)
 const formRegister = reactive({
     username: '',
     password: '',
     passwordAgain: '',
 })
 
-function onSubmit() {}
+async function onSubmit() {
+    if (formRegister.password !== formRegister.passwordAgain) {
+        msgWarning('register.form.warn.password-not-same')
+        return
+    }
+
+    if (loading.value) return
+    loading.value = true
+
+    try {
+        await userStore.register({
+            username: formRegister.username,
+            password: formRegister.password,
+        })
+
+        // router.push({
+        //     name: 'login',
+        // })
+        msgSuccess('register.form.success')
+    } catch (err) {
+        console.error(err)
+    } finally {
+        loading.value = false
+    }
+}
 </script>
 
 <style scoped lang="scss"></style>

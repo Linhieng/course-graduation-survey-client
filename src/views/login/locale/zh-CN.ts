@@ -12,6 +12,8 @@ export default {
     'register.form.label.userName': '用户名',
     'register.form.label.password': '密码',
     'register.form.label.passwordAgain': '确认密码',
+    'register.form.warn.password-not-same': '两次密码不一致',
+    'register.form.success': '注册成功，请登录',
 
 
 

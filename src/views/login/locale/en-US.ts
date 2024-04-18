@@ -12,6 +12,8 @@ export default {
     'register.form.label.userName': 'username',
     'register.form.label.password': 'password',
     'register.form.label.passwordAgain': 'confirm password',
+    'register.form.warn.password-not-same': 'Two passwords do not match',
+    'register.form.success': 'Registration successful, please login',
 
     'login.form.login.errMsg': 'Login error, refresh and try again',
     'login.form.userName.placeholder': 'Username: admin',

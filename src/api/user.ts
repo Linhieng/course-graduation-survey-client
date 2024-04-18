@@ -27,7 +27,10 @@ export function logout() {
 }
 
 export function register(data: LoginData) {
-    return post('/api/user/signup', data)
+    return post<{
+        id: number
+        username: string
+    }>('/api/user/signup', data)
 }
 
 export function isExpired() {
