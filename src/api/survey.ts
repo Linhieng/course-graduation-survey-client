@@ -5,6 +5,10 @@ import type { ReqSurveyAche } from '@/types/request'
 const urlToggleSurveyDelete = 'survey/toggle-del/'
 const urlToggleSurveyValid = 'survey/toggle-valid/'
 
+export function publishSurvey(surveyId: number) {
+    return post('/api/survey/publish/' + surveyId)
+}
+
 export function apiGetAllSurveys(userId?: number) {
     return get<{ all_surveys: OneSurvey[] }>(
         `/api/survey/get-all-surveys/${userId || ''}`,

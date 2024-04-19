@@ -12,6 +12,7 @@ export default {
     'api.error.survey-content-not-exist': '问卷内容不存在',
 
     'api.error.not-user-id': '请提供用户 id',
+    'api.error.not-survey-id': '请提供问卷 id',
     'api.error.password-wrong': '密码错误',
 
     'api.warn.had-user': '已经存在该用户',

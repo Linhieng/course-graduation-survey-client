@@ -6,6 +6,7 @@ import {
     apiGetAllSurveys,
     apiGetSurveyById,
     apiNewSurvey,
+    publishSurvey,
 } from '@/api'
 import type {
     OneSurvey,
@@ -17,6 +18,7 @@ import type {
 import {
     getUUID,
     msgError,
+    msgSuccess,
     noticeError,
     saveFile,
     unrefRecursion,
@@ -233,6 +235,46 @@ const useSurveyStore = defineStore('survey', {
             // }
             // survey.value.questions.splice(order - 1, 1)
             // survey.value.questions.forEach((item, i) => (item.order = i + 1))
+        },
+
+        /** 清空当前正在编辑的问卷 */
+        resetCreateSurvey() {
+            this.$state.create = {
+                isCaching: false,
+                isFetch: false,
+                cacheTime: '',
+
+                curStep: 1,
+                survey: {
+                    id: undefined,
+                    title: '',
+                    comment: '',
+                    version: '0.1.0',
+                    questions: [],
+                },
+            }
+        },
+
+        /** 发布问卷 */
+        async publishSurveyAfterEdit() {
+            if (this.$state.create.isFetch) {
+                return
+            }
+
+            this.$state.create.isFetch = true
+
+            if (!this.$state.create.survey.id) {
+                msgError('view.survey.error.not-survey-id')
+                return
+            }
+            const res = await publishSurvey(this.$state.create.survey.id)
+            if (!res.ok) {
+                msgError(res.msg)
+            } else {
+                msgSuccess('view.survey.create.success.publish')
+                this.resetCreateSurvey()
+            }
+            this.$state.create.isFetch = false
         },
 
         /** 后台异步获取用户的所有问卷 */

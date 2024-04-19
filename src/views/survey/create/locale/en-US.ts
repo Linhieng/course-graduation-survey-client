@@ -26,4 +26,6 @@ export default {
     'view.survey.create.new.input': 'New text input',
     'view.survey.create.new.single-select': 'New single select',
     'view.survey.create.new.multi-select': 'New multiple select',
+
+    'view.survey.create.success.publish': 'Release success',
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import EditSurvey from './components/EditSurvey.vue'
+import PublishSurvey from './components/PublishSurvey.vue'
 import IconNext from '@icon/IconNext.vue'
 import IconNextDown from '@icon/IconNextDown.vue'
 import SelectSurvey from './components/SelectSurvey.vue'
@@ -64,22 +65,9 @@ const clickTo = (nextStep: 1 | 2 | 3) => {
                 </KeepAlive>
             </div>
             <div v-show="curStep === 3">
-                <h1>
-                    {{ $t('view.survey.create.step.publish') }}
-                </h1>
-                <p>
-                    {{ $t('view.survey.create.publish-attention-info') }}
-                </p>
-                <br />
-                <br />
-                <el-button>{{ $t('view.survey.create.preview') }}</el-button>
-                <br />
-                <br />
-                <br />
-                <br />
-                <el-button>{{
-                    $t('view.survey.create.step.publish')
-                }}</el-button>
+                <KeepAlive>
+                    <PublishSurvey />
+                </KeepAlive>
             </div>
         </div>
     </div>

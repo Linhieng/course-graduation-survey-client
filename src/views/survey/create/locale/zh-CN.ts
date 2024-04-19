@@ -27,4 +27,6 @@ export default {
     'view.survey.create.new.input': '新建文本输入题',
     'view.survey.create.new.single-select': '新建单选题',
     'view.survey.create.new.multi-select': '新建多选题',
+
+    'view.survey.create.success.publish': '发布成功',
 }
