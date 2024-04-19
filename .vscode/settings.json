@@ -1,0 +1,17 @@
+{
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always"
+    },
+    "[vue][typescript][json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.detectIndentation": false,
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true
+    },
+    "workbench.editor.customLabels.patterns": {
+        // "src/views/**": "/${dirname}.${extname}",
+        "src/**/index.ts": "/${dirname}.${extname}",
+        "src/**/index.vue": "/${dirname}.${extname}",
+        "src/**/types.ts": "/${dirname}-types.${extname}"
+    }
+}
