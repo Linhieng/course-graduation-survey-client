@@ -52,6 +52,10 @@ const useUserStore = defineStore('user', {
         async info() {
             const res = await getUserInfo();
 
+            if (!res.ok) {
+                throw new Error(res.msg);
+            }
+
             this.setInfo(res.data);
         },
 
