@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useSurveyStore } from '@/store'
+import { copyLink } from '@/utils/survey'
 import type { OneSurvey } from '@/types'
 
 const surveyStore = useSurveyStore()
@@ -10,9 +11,6 @@ const stopSurvey = (survey: OneSurvey) => {
     // surveyStore.stopSurvey(survey)
 }
 const previewSurvey = (survey: OneSurvey) => {}
-const copyLink = (survey: OneSurvey) => {
-    surveyStore.copyLink(survey)
-}
 </script>
 <template>
     <h1>{{ $t('view.survey.publish.title') }}</h1>
@@ -45,18 +43,44 @@ const copyLink = (survey: OneSurvey) => {
                     width="120"
                 >
                     <template #="{ row }">
-                        <el-button @click="stopSurvey(row)">{{
-                            $t('view.survey.publish.stop')
-                        }}</el-button>
-                        <el-button @click="previewSurvey(row)">{{
-                            $t('view.survey.publish.preview')
-                        }}</el-button>
-                        <el-button @click="copyLink(row)">{{
-                            $t('view.survey.publish.copy-link')
-                        }}</el-button>
+                        <div class="btns">
+                            <el-button class="btn" @click="stopSurvey(row)">{{
+                                $t('view.survey.publish.stop')
+                            }}</el-button>
+                            <el-button
+                                class="btn"
+                                @click="previewSurvey(row)"
+                                >{{
+                                    $t('view.survey.publish.preview')
+                                }}</el-button
+                            >
+                            <el-button class="btn" @click="copyLink(row)">{{
+                                $t('view.survey.publish.copy-link')
+                            }}</el-button>
+                        </div>
                     </template>
                 </el-table-column>
             </el-table>
         </div>
     </template>
 </template>
+
+<style scoped lang="scss">
+@mixin wb600 {
+    @media screen and (max-width: 600px) {
+        @content;
+    }
+}
+
+.btns {
+    display: flex;
+    overflow: auto;
+
+    @include wb600 {
+        flex-direction: column;
+    }
+    .btn {
+        margin: 4px;
+    }
+}
+</style>

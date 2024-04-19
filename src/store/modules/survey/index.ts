@@ -321,17 +321,6 @@ const useSurveyStore = defineStore('survey', {
             this.$state.allSurvey.stop = stop
             this.$state.allSurvey.trash = trash
         },
-
-        copyLink(survey: OneSurvey) {
-            let link = import.meta.env.VITE_SURVEY_BASE_URL as string
-            if (link.endsWith('/')) {
-                link += survey.id
-            } else {
-                link += '/' + survey.id
-            }
-            copyToClipboard(link)
-            msgSuccess('view.survey.publish.success-copy')
-        },
     },
 })
 
