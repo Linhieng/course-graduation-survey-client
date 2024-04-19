@@ -9,6 +9,10 @@ surveyStore.getAllSurveys()
 const stopSurvey = (survey: OneSurvey) => {
     // surveyStore.stopSurvey(survey)
 }
+const previewSurvey = (survey: OneSurvey) => {}
+const copyLink = (survey: OneSurvey) => {
+    surveyStore.copyLink(survey)
+}
 </script>
 <template>
     <h1>{{ $t('view.survey.publish.title') }}</h1>
@@ -41,7 +45,15 @@ const stopSurvey = (survey: OneSurvey) => {
                     width="120"
                 >
                     <template #="{ row }">
-                        <el-button @click="stopSurvey(row)">停止</el-button>
+                        <el-button @click="stopSurvey(row)">{{
+                            $t('view.survey.publish.stop')
+                        }}</el-button>
+                        <el-button @click="previewSurvey(row)">{{
+                            $t('view.survey.publish.preview')
+                        }}</el-button>
+                        <el-button @click="copyLink(row)">{{
+                            $t('view.survey.publish.copy-link')
+                        }}</el-button>
                     </template>
                 </el-table-column>
             </el-table>
