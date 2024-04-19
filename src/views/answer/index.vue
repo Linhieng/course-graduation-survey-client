@@ -2,10 +2,17 @@
 import { ref } from 'vue'
 import { useStoreAnswer } from '@/store'
 import QuestionAssign from './QuestionAssign.vue'
+import Footer from '@/components/footer/index.vue'
 
-const props = defineProps<{
-    id: string
-}>()
+const props = withDefaults(
+    defineProps<{
+        id: string
+        isReadonly?: boolean
+    }>(),
+    {
+        isReadonly: false,
+    },
+)
 const storeAnswer = useStoreAnswer()
 const surveyData = storeAnswer.getSurveyDataRef()
 const isFetching = ref(true)
@@ -17,6 +24,7 @@ storeAnswer.fetchSurvey(() => {
 })
 
 const submit = () => {
+    if (props.isReadonly) return
     storeAnswer.submitAnswer()
 }
 </script>
@@ -52,9 +60,7 @@ const submit = () => {
                 </div>
             </main>
             <footer>
-                <ul>
-                    <li>Copyright © Linhieng</li>
-                </ul>
+                <Footer />
             </footer>
         </div>
     </div>

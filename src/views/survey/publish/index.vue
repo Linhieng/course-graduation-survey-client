@@ -1,16 +1,23 @@
 <script setup lang="ts">
+import PreviewComp from '@/views/answer/index.vue'
 import { useSurveyStore } from '@/store'
 import { copyLink } from '@/utils/survey'
 import type { OneSurvey } from '@/types'
+import { ref } from 'vue'
 
 const surveyStore = useSurveyStore()
+const showPreview = ref(false)
+const previewSurveyId = ref()
 
 surveyStore.getAllSurveys()
 
 const stopSurvey = (survey: OneSurvey) => {
     // surveyStore.stopSurvey(survey)
 }
-const previewSurvey = (survey: OneSurvey) => {}
+const previewSurvey = (survey: OneSurvey) => {
+    previewSurveyId.value = survey.id
+    showPreview.value = true
+}
 </script>
 <template>
     <h1>{{ $t('view.survey.publish.title') }}</h1>
@@ -62,6 +69,10 @@ const previewSurvey = (survey: OneSurvey) => {}
                 </el-table-column>
             </el-table>
         </div>
+
+        <el-dialog v-model="showPreview" width="100%">
+            <PreviewComp :id="previewSurveyId" :isReadonly="true" />
+        </el-dialog>
     </template>
 </template>
 
