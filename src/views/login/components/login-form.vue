@@ -41,20 +41,26 @@
                     >
                         {{ $t('login.form.rememberPassword') }}
                     </a-checkbox>
-                    <a-link>{{ $t('login.form.forgetPassword') }}</a-link>
                 </div>
                 <a-button type="primary" html-type="submit" long :loading="loading">
                     {{ $t('login.form.login') }}
                 </a-button>
-                <a-button type="text" long class="login-form-register-btn">
+                <a-button type="text" long class="login-form-register-btn" @click="registerVisible = true">
                     {{ $t('login.form.register') }}
                 </a-button>
             </a-space>
         </a-form>
     </div>
+    <a-modal v-model:visible="registerVisible" draggable ok-text="已注册" cancel-text="取消">
+        <template #title> 注册账户 </template>
+        <div>
+            <signup-form></signup-form>
+        </div>
+    </a-modal>
 </template>
 
 <script lang="ts" setup>
+import SignupForm from './signup-form.vue';
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { Message } from '@arco-design/web-vue';
@@ -117,6 +123,9 @@ const handleSubmit = async ({
 const setRememberPassword = (value: boolean) => {
     loginConfig.value.rememberPassword = value;
 };
+
+//
+const registerVisible = ref(false);
 </script>
 
 <style lang="less" scoped>

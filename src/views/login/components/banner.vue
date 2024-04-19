@@ -17,24 +17,32 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import bannerImage from '@/assets/images/login-banner.png';
+import imgLogin1 from '@/assets/images/login1.png';
+import imgLogin2 from '@/assets/images/login2.png';
+import imgLogin3 from '@/assets/images/login3.png';
+import imgLogin4 from '@/assets/images/login4.png';
 
 const { t } = useI18n();
 const carouselItem = computed(() => [
     {
         slogan: t('login.banner.slogan1'),
         subSlogan: t('login.banner.subSlogan1'),
-        image: bannerImage,
+        image: imgLogin1,
     },
     {
         slogan: t('login.banner.slogan2'),
         subSlogan: t('login.banner.subSlogan2'),
-        image: bannerImage,
+        image: imgLogin2,
     },
     {
         slogan: t('login.banner.slogan3'),
         subSlogan: t('login.banner.subSlogan3'),
-        image: bannerImage,
+        image: imgLogin3,
+    },
+    {
+        slogan: t('login.banner.slogan3'),
+        subSlogan: t('login.banner.subSlogan3'),
+        image: imgLogin4,
     },
 ]);
 </script>
