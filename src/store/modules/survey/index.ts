@@ -274,6 +274,9 @@ const useSurveyStore = defineStore('survey', {
             } else {
                 msgSuccess('view.survey.create.success.publish')
                 this.resetCreateSurvey()
+                router.push({
+                    path: '/survey/publish',
+                })
             }
             this.$state.create.isFetch = false
         },
