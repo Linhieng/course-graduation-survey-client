@@ -64,7 +64,7 @@ export function interceptRequest(axios: AxiosInstance) {
                 if (!config.headers) {
                     config.headers = {};
                 }
-                config.headers.Authorization = token;
+                config.headers.Authorization = `Bearer ${token}`;
             }
             return config;
         },

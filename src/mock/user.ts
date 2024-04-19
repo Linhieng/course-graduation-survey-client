@@ -34,11 +34,6 @@ setupMock({
             return failResponseWrap(null, '未登录', 50008);
         });
 
-        // 登出
-        Mock.mock(new RegExp('/api/user/logout'), () => {
-            return successResponseWrap(null);
-        });
-
         // 用户的服务端菜单
         Mock.mock(new RegExp('/api/user/menu'), () => {
             const menuList = [

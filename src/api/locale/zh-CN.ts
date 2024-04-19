@@ -22,6 +22,8 @@ export default {
     'api.success.create-user': '成功创建新用户',
     'api.success.login-ok': '登录成功',
 
+    'api.error.token-invalid': '无效的 token',
     'api.error.token-expired': '凭据已过期',
     'api.error.not-authorized': '未获得授权',
+    'api.error.default.unknown': '未知错误！请联系网站负责人。',
 }
