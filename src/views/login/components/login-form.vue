@@ -98,8 +98,10 @@ const handleSubmit = async ({
     if (loading.value) return;
     if (!errors) {
         setLoading(true);
-        try {
-            await userStore.login(values as LoginData);
+        const ok = await userStore.login(values as LoginData);
+        setLoading(false);
+
+        if (ok) {
             const { redirect, ...othersQuery } = router.currentRoute.value.query;
             router.push({
                 name: (redirect as string) || 'Workplace',
@@ -114,10 +116,6 @@ const handleSubmit = async ({
             // The actual production environment requires encrypted storage.
             loginConfig.value.username = rememberPassword ? username : '';
             loginConfig.value.password = rememberPassword ? password : '';
-        } catch (err) {
-            errorMessage.value = (err as Error).message;
-        } finally {
-            setLoading(false);
         }
     }
 };
