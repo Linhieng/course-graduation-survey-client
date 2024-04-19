@@ -18,11 +18,17 @@
             >
         </div>
     </div>
+
+    <el-dialog v-model="showPreview" width="100%">
+        <!-- <PreviewComp :id="previewSurveyId" :isReadonly="true" /> -->
+    </el-dialog>
 </template>
 
 <script setup lang="ts">
 import { useSurveyStore } from '@/store'
-import { msgSuccess } from '@/utils'
+import { ref } from 'vue'
+
+const showPreview = ref(false)
 const surveyStore = useSurveyStore()
 const preview = () => {}
 
