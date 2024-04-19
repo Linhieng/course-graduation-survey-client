@@ -1,4 +1,15 @@
 {
+    "files.exclude": {
+        "node_modules": true,
+        ".husky": true,
+        "pnpm-lock.yaml": true,
+        "commitlint.config.js": true,
+        "babel.config.js": true,
+        ".stylelintrc.js": true,
+        ".eslintignore": true,
+        ".eslintrc.js": true,
+        "components.d.ts": true,
+    },
     "editor.codeActionsOnSave": {
         "source.fixAll": "always"
     },
