@@ -28,7 +28,9 @@ import localeUserSetting from '@/views/user/setting/locale/en-US';
 /** simple end */
 import localeSettings from './en-US/settings';
 
+import apiInfo from '@/api/locale/en-US'
 export default {
+    ...apiInfo,
   'menu.dashboard': 'Dashboard',
   'menu.server.dashboard': 'Dashboard-Server',
   'menu.server.workplace': 'Workplace-Server',

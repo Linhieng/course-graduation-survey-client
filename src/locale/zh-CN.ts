@@ -27,8 +27,9 @@ import localeUserInfo from '@/views/user/info/locale/zh-CN';
 import localeUserSetting from '@/views/user/setting/locale/zh-CN';
 /** simple end */
 import localeSettings from './zh-CN/settings';
-
+import apiInfo from '@/api/locale/zh-CN'
 export default {
+    ...apiInfo,
   'menu.dashboard': '仪表盘',
   'menu.server.dashboard': '仪表盘-服务端',
   'menu.server.workplace': '工作台-服务端',
