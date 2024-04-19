@@ -41,24 +41,24 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { queryChatList, ChatRecord } from '@/api/message'
-import useLoading from '@/hooks/loading'
-import ChatList from './chat-list.vue'
+import { ref } from 'vue';
+import { queryChatList, ChatRecord } from '@/api/message';
+import useLoading from '@/hooks/loading';
+import ChatList from './chat-list.vue';
 
-const { loading, setLoading } = useLoading(true)
-const chatData = ref<ChatRecord[]>([])
+const { loading, setLoading } = useLoading(true);
+const chatData = ref<ChatRecord[]>([]);
 const fetchData = async () => {
     try {
-        const { data } = await queryChatList()
-        chatData.value = data
+        const { data } = await queryChatList();
+        chatData.value = data;
     } catch (err) {
         // you can report use errorHandler or other
     } finally {
-        setLoading(false)
+        setLoading(false);
     }
-}
-fetchData()
+};
+fetchData();
 </script>
 
 <style scoped lang="less">

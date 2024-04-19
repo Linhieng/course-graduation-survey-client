@@ -80,30 +80,30 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { FormInstance } from '@arco-design/web-vue/es/form'
-import { ChannelInfoModel } from '@/api/form'
+import { ref } from 'vue';
+import { FormInstance } from '@arco-design/web-vue/es/form';
+import { ChannelInfoModel } from '@/api/form';
 
-const emits = defineEmits(['changeStep'])
+const emits = defineEmits(['changeStep']);
 
-const formRef = ref<FormInstance>()
+const formRef = ref<FormInstance>();
 const formData = ref<ChannelInfoModel>({
     advertisingSource: '',
     advertisingMedia: '',
     keyword: [],
     pushNotify: true,
     advertisingContent: '',
-})
+});
 
 const onNextClick = async () => {
-    const res = await formRef.value?.validate()
+    const res = await formRef.value?.validate();
     if (!res) {
-        emits('changeStep', 'submit', { ...formData.value })
+        emits('changeStep', 'submit', { ...formData.value });
     }
-}
+};
 const goPrev = () => {
-    emits('changeStep', 'backward')
-}
+    emits('changeStep', 'backward');
+};
 </script>
 
 <style scoped lang="less">

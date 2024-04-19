@@ -18,14 +18,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { LineSeriesOption } from 'echarts'
-import { queryDataOverview } from '@/api/visualization'
-import useLoading from '@/hooks/loading'
-import { ToolTipFormatterParams } from '@/types/echarts'
-import useThemes from '@/hooks/themes'
-import useChartOption from '@/hooks/chart-option'
+import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { LineSeriesOption } from 'echarts';
+import { queryDataOverview } from '@/api/visualization';
+import useLoading from '@/hooks/loading';
+import { ToolTipFormatterParams } from '@/types/echarts';
+import useThemes from '@/hooks/themes';
+import useChartOption from '@/hooks/chart-option';
 
 const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
     return items
@@ -38,8 +38,8 @@ const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
       </div>`,
         )
         .reverse()
-        .join('')
-}
+        .join('');
+};
 
 const generateSeries = (name: string, lineColor: string, itemBorderColor: string, data: number[]): LineSeriesOption => {
     return {
@@ -70,11 +70,11 @@ const generateSeries = (name: string, lineColor: string, itemBorderColor: string
             opacity: 0.1,
             color: lineColor,
         },
-    }
-}
-const { t } = useI18n()
-const { loading, setLoading } = useLoading(true)
-const { isDark } = useThemes()
+    };
+};
+const { t } = useI18n();
+const { loading, setLoading } = useLoading(true);
+const { isDark } = useThemes();
 const renderData = computed(() => [
     {
         title: t('multiDAnalysis.dataOverview.contentProduction'),
@@ -112,12 +112,12 @@ const renderData = computed(() => [
             iconColor: isDark.value ? '#8558D3' : '#722ED1',
         },
     },
-])
-const xAxis = ref<string[]>([])
-const contentProductionData = ref<number[]>([])
-const contentClickData = ref<number[]>([])
-const contentExposureData = ref<number[]>([])
-const activeUsersData = ref<number[]>([])
+]);
+const xAxis = ref<string[]>([]);
+const contentProductionData = ref<number[]>([]);
+const contentClickData = ref<number[]>([]);
+const contentExposureData = ref<number[]>([]);
+const activeUsersData = ref<number[]>([]);
 const { chartOption } = useChartOption((dark) => {
     return {
         grid: {
@@ -134,9 +134,9 @@ const { chartOption } = useChartOption((dark) => {
             axisLabel: {
                 color: '#4E5969',
                 formatter(value: number, idx: number) {
-                    if (idx === 0) return ''
-                    if (idx === xAxis.value.length - 1) return ''
-                    return `${value}`
+                    if (idx === 0) return '';
+                    if (idx === xAxis.value.length - 1) return '';
+                    return `${value}`;
                 },
             },
             axisLine: {
@@ -163,8 +163,8 @@ const { chartOption } = useChartOption((dark) => {
             },
             axisLabel: {
                 formatter(value: number, idx: number) {
-                    if (idx === 0) return String(value)
-                    return `${value / 1000}k`
+                    if (idx === 0) return String(value);
+                    return `${value / 1000}k`;
                 },
             },
             splitLine: {
@@ -176,11 +176,11 @@ const { chartOption } = useChartOption((dark) => {
         tooltip: {
             trigger: 'axis',
             formatter(params) {
-                const [firstElement] = params as ToolTipFormatterParams[]
+                const [firstElement] = params as ToolTipFormatterParams[];
                 return `<div>
             <p class="tooltip-title">${firstElement.axisValueLabel}</p>
             ${tooltipItemsHtmlString(params as ToolTipFormatterParams[])}
-          </div>`
+          </div>`;
             },
             className: 'echarts-tooltip-diy',
         },
@@ -216,30 +216,30 @@ const { chartOption } = useChartOption((dark) => {
             generateSeries('内容曝光量', '#33D1C9', '#E8FFFB', contentExposureData.value),
             generateSeries('活跃用户数', '#3469FF', '#E8F3FF', activeUsersData.value),
         ],
-    }
-})
+    };
+});
 const fetchData = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-        const { data } = await queryDataOverview()
-        xAxis.value = data.xAxis
+        const { data } = await queryDataOverview();
+        xAxis.value = data.xAxis;
         data.data.forEach((el) => {
             if (el.name === '内容生产量') {
-                contentProductionData.value = el.value
+                contentProductionData.value = el.value;
             } else if (el.name === '内容点击量') {
-                contentClickData.value = el.value
+                contentClickData.value = el.value;
             } else if (el.name === '内容曝光量') {
-                contentExposureData.value = el.value
+                contentExposureData.value = el.value;
             }
-            activeUsersData.value = el.value
-        })
+            activeUsersData.value = el.value;
+        });
     } catch (err) {
         // you can report use errorHandler or other
     } finally {
-        setLoading(false)
+        setLoading(false);
     }
-}
-fetchData()
+};
+fetchData();
 </script>
 
 <style scoped lang="less">

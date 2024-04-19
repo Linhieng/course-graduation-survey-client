@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import useChartOption from '@/hooks/chart-option'
+import useChartOption from '@/hooks/chart-option';
 
 const { chartOption } = useChartOption((isDark) => {
     return {
@@ -20,8 +20,8 @@ const { chartOption } = useChartOption((isDark) => {
             axisLabel: {
                 show: true,
                 formatter(value: number, idx: number) {
-                    if (idx === 0) return String(value)
-                    return `${Number(value) / 1000}k`
+                    if (idx === 0) return String(value);
+                    return `${Number(value) / 1000}k`;
                 },
             },
             splitLine: {
@@ -66,8 +66,8 @@ const { chartOption } = useChartOption((isDark) => {
                 },
             },
         ],
-    }
-})
+    };
+});
 </script>
 
 <style scoped lang="less"></style>

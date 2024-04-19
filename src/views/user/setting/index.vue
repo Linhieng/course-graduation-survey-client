@@ -25,16 +25,16 @@
 </template>
 
 <script lang="ts" setup>
-import UserPanel from './components/user-panel.vue'
-import BasicInformation from './components/basic-information.vue'
-import SecuritySettings from './components/security-settings.vue'
-import Certification from './components/certification.vue'
+import UserPanel from './components/user-panel.vue';
+import BasicInformation from './components/basic-information.vue';
+import SecuritySettings from './components/security-settings.vue';
+import Certification from './components/certification.vue';
 </script>
 
 <script lang="ts">
 export default {
     name: 'Setting',
-}
+};
 </script>
 
 <style scoped lang="less">

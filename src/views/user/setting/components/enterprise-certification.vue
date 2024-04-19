@@ -32,16 +32,16 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, computed } from 'vue'
-import { EnterpriseCertificationModel } from '@/api/user-center'
-import type { DescData } from '@arco-design/web-vue/es/descriptions/interface'
+import { PropType, computed } from 'vue';
+import { EnterpriseCertificationModel } from '@/api/user-center';
+import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
 const props = defineProps({
     enterpriseInfo: {
         type: Object as PropType<EnterpriseCertificationModel>,
         required: true,
     },
-})
+});
 const renderData = computed(() => {
     const {
         accountType,
@@ -53,7 +53,7 @@ const renderData = computed(() => {
         enterpriseName,
         enterpriseCertificateType,
         organizationCode,
-    } = props.enterpriseInfo
+    } = props.enterpriseInfo;
     return [
         {
             label: 'userSetting.certification.label.accountType',
@@ -91,8 +91,8 @@ const renderData = computed(() => {
             label: 'userSetting.certification.label.organizationCode',
             value: organizationCode,
         },
-    ] as DescData[]
-})
+    ] as DescData[];
+});
 </script>
 
 <style scoped lang="less">

@@ -17,10 +17,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import useLoading from '@/hooks/loading'
-import { queryDataChainGrowth, DataChainGrowth } from '@/api/visualization'
-import useChartOption from '@/hooks/chart-option'
+import { computed, ref } from 'vue';
+import useLoading from '@/hooks/loading';
+import { queryDataChainGrowth, DataChainGrowth } from '@/api/visualization';
+import useChartOption from '@/hooks/chart-option';
 
 const props = defineProps({
     title: {
@@ -35,12 +35,12 @@ const props = defineProps({
         type: String,
         default: '',
     },
-})
-const { loading, setLoading } = useLoading(true)
-const count = ref(0)
-const growth = ref(100)
-const isUp = computed(() => growth.value > 50)
-const chartData = ref<any>([])
+});
+const { loading, setLoading } = useLoading(true);
+const count = ref(0);
+const growth = ref(100);
+const isUp = computed(() => growth.value > 50);
+const chartData = ref<any>([]);
 const { chartOption } = useChartOption(() => {
     return {
         grid: {
@@ -80,14 +80,14 @@ const { chartOption } = useChartOption(() => {
                       }),
             },
         ],
-    }
-})
+    };
+});
 const fetchData = async (params: DataChainGrowth) => {
     try {
-        const { data } = await queryDataChainGrowth(params)
-        const { chartData: resChartData } = data
-        count.value = data.count
-        growth.value = data.growth
+        const { data } = await queryDataChainGrowth(params);
+        const { chartData: resChartData } = data;
+        count.value = data.count;
+        growth.value = data.growth;
         resChartData.data.value.forEach((el, idx) => {
             if (props.chartType === 'bar') {
                 chartData.value.push({
@@ -95,18 +95,18 @@ const fetchData = async (params: DataChainGrowth) => {
                     itemStyle: {
                         color: idx % 2 ? '#468DFF' : '#86DF6C',
                     },
-                })
+                });
             } else {
-                chartData.value.push(el)
+                chartData.value.push(el);
             }
-        })
+        });
     } catch (err) {
         // you can report use errorHandler or other
     } finally {
-        setLoading(false)
+        setLoading(false);
     }
-}
-fetchData({ quota: props.quota })
+};
+fetchData({ quota: props.quota });
 </script>
 
 <style scoped lang="less">

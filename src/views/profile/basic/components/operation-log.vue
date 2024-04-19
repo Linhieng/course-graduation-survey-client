@@ -33,23 +33,23 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { queryOperationLog, operationLogRes } from '@/api/profile'
-import useLoading from '@/hooks/loading'
+import { ref } from 'vue';
+import { queryOperationLog, operationLogRes } from '@/api/profile';
+import useLoading from '@/hooks/loading';
 
-const { loading, setLoading } = useLoading(true)
-const renderData = ref<operationLogRes>([])
+const { loading, setLoading } = useLoading(true);
+const renderData = ref<operationLogRes>([]);
 const fetchData = async () => {
     try {
-        const { data } = await queryOperationLog()
-        renderData.value = data
+        const { data } = await queryOperationLog();
+        renderData.value = data;
     } catch (err) {
         // you can report use errorHandler or other
     } finally {
-        setLoading(false)
+        setLoading(false);
     }
-}
-fetchData()
+};
+fetchData();
 </script>
 
 <style scoped lang="less">

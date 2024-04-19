@@ -26,17 +26,17 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, PropType } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { ProfileBasicRes } from '@/api/profile'
+import { computed, PropType } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { ProfileBasicRes } from '@/api/profile';
 
 type BlockList = {
-    title: string
+    title: string;
     data: {
-        label: string
-        value: string
-    }[]
-}[]
+        label: string;
+        value: string;
+    }[];
+}[];
 
 const props = defineProps({
     type: {
@@ -51,11 +51,11 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-})
-const { t } = useI18n()
+});
+const { t } = useI18n();
 const blockDataList = computed<BlockList>(() => {
-    const { renderData } = props
-    const result = []
+    const { renderData } = props;
+    const result = [];
     result.push({
         title: props.type === 'pre' ? t('basicProfile.title.preVideo') : t('basicProfile.title.video'),
         data: [
@@ -96,7 +96,7 @@ const blockDataList = computed<BlockList>(() => {
                 value: renderData?.video?.encoding.profile || '-',
             },
         ],
-    })
+    });
 
     result.push({
         title: props.type === 'pre' ? t('basicProfile.title.preAudio') : t('basicProfile.title.audio'),
@@ -122,10 +122,10 @@ const blockDataList = computed<BlockList>(() => {
                 value: renderData?.audio?.encoding.profile || '-',
             },
         ],
-    })
+    });
 
-    return result
-})
+    return result;
+});
 </script>
 
 <style scoped lang="less">

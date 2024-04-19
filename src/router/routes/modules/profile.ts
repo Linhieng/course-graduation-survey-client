@@ -1,5 +1,5 @@
-import { DEFAULT_LAYOUT } from '../base'
-import { AppRouteRecordRaw } from '../types'
+import { DEFAULT_LAYOUT } from '../base';
+import { AppRouteRecordRaw } from '../types';
 
 const PROFILE: AppRouteRecordRaw = {
     path: '/profile',
@@ -23,6 +23,6 @@ const PROFILE: AppRouteRecordRaw = {
             },
         },
     ],
-}
+};
 
-export default PROFILE
+export default PROFILE;

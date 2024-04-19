@@ -1,5 +1,5 @@
-import { DEFAULT_LAYOUT } from '../base'
-import { AppRouteRecordRaw } from '../types'
+import { DEFAULT_LAYOUT } from '../base';
+import { AppRouteRecordRaw } from '../types';
 
 const VISUALIZATION: AppRouteRecordRaw = {
     path: '/visualization',
@@ -33,6 +33,6 @@ const VISUALIZATION: AppRouteRecordRaw = {
             },
         },
     ],
-}
+};
 
-export default VISUALIZATION
+export default VISUALIZATION;

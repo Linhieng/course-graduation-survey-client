@@ -34,7 +34,7 @@ const links = [
         text: 'workplace.advanced',
         icon: 'icon-settings',
     },
-]
+];
 </script>
 
 <style lang="less" scoped>

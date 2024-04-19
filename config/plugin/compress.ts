@@ -3,11 +3,11 @@
  * gzip压缩
  * https://github.com/anncwb/vite-plugin-compression
  */
-import type { Plugin } from 'vite'
-import compressPlugin from 'vite-plugin-compression'
+import type { Plugin } from 'vite';
+import compressPlugin from 'vite-plugin-compression';
 
 export default function configCompressPlugin(compress: 'gzip' | 'brotli', deleteOriginFile = false): Plugin | Plugin[] {
-    const plugins: Plugin[] = []
+    const plugins: Plugin[] = [];
 
     if (compress === 'gzip') {
         plugins.push(
@@ -15,7 +15,7 @@ export default function configCompressPlugin(compress: 'gzip' | 'brotli', delete
                 ext: '.gz',
                 deleteOriginFile,
             }),
-        )
+        );
     }
 
     if (compress === 'brotli') {
@@ -25,7 +25,7 @@ export default function configCompressPlugin(compress: 'gzip' | 'brotli', delete
                 algorithm: 'brotliCompress',
                 deleteOriginFile,
             }),
-        )
+        );
     }
-    return plugins
+    return plugins;
 }

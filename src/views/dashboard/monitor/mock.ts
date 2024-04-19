@@ -1,9 +1,9 @@
-import Mock from 'mockjs'
+import Mock from 'mockjs';
 
 import setupMock, {
     successResponseWrap,
     // failResponseWrap,
-} from '@/utils/setup-mock'
+} from '@/utils/setup-mock';
 
 setupMock({
     setup() {
@@ -19,8 +19,8 @@ setupMock({
                         'isCollect|2': true,
                     },
                 ],
-            })
-            return successResponseWrap(data.data)
-        })
+            });
+            return successResponseWrap(data.data);
+        });
     },
-})
+});

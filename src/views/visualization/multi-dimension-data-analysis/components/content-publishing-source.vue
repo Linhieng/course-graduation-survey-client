@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts" setup>
-import useLoading from '@/hooks/loading'
-import useChartOption from '@/hooks/chart-option'
+import useLoading from '@/hooks/loading';
+import useChartOption from '@/hooks/chart-option';
 
 const { chartOption } = useChartOption((isDark) => {
     const graphicElementStyle = {
@@ -17,7 +17,7 @@ const { chartOption } = useChartOption((isDark) => {
         fontSize: 14,
         lineWidth: 10,
         fontWeight: 'bold',
-    }
+    };
     return {
         legend: {
             left: 'center',
@@ -219,9 +219,9 @@ const { chartOption } = useChartOption((isDark) => {
                 ],
             },
         ],
-    }
-})
-const { loading } = useLoading(false)
+    };
+});
+const { loading } = useLoading(false);
 </script>
 
 <style scoped lang="less"></style>

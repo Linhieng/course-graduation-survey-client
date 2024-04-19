@@ -15,7 +15,7 @@
 <script lang="ts">
 export default {
     name: '403',
-}
+};
 </script>
 
 <style scoped lang="less">

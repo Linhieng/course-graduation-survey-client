@@ -77,25 +77,25 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { FormInstance } from '@arco-design/web-vue/es/form'
-import { BaseInfoModel } from '@/api/form'
+import { ref } from 'vue';
+import { FormInstance } from '@arco-design/web-vue/es/form';
+import { BaseInfoModel } from '@/api/form';
 
-const emits = defineEmits(['changeStep'])
-const formRef = ref<FormInstance>()
+const emits = defineEmits(['changeStep']);
+const formRef = ref<FormInstance>();
 const formData = ref<BaseInfoModel>({
     activityName: '',
     channelType: '',
     promotionTime: [],
     promoteLink: 'https://arco.design',
-})
+});
 
 const onNextClick = async () => {
-    const res = await formRef.value?.validate()
+    const res = await formRef.value?.validate();
     if (!res) {
-        emits('changeStep', 'forward', { ...formData.value })
+        emits('changeStep', 'forward', { ...formData.value });
     }
-}
+};
 </script>
 
 <style scoped lang="less">

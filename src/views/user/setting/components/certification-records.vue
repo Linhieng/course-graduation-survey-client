@@ -46,17 +46,17 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue'
-import { CertificationRecord } from '@/api/user-center'
+import { PropType } from 'vue';
+import { CertificationRecord } from '@/api/user-center';
 
 defineProps({
     renderData: {
         type: Array as PropType<CertificationRecord>,
         default() {
-            return []
+            return [];
         },
     },
-})
+});
 </script>
 
 <style scoped lang="less">

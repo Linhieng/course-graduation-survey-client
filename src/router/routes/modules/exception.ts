@@ -1,5 +1,5 @@
-import { DEFAULT_LAYOUT } from '../base'
-import { AppRouteRecordRaw } from '../types'
+import { DEFAULT_LAYOUT } from '../base';
+import { AppRouteRecordRaw } from '../types';
 
 const EXCEPTION: AppRouteRecordRaw = {
     path: '/exception',
@@ -43,6 +43,6 @@ const EXCEPTION: AppRouteRecordRaw = {
             },
         },
     ],
-}
+};
 
-export default EXCEPTION
+export default EXCEPTION;

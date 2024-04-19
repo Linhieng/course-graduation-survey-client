@@ -1,6 +1,6 @@
-import Mock from 'mockjs'
-import setupMock, { successResponseWrap } from '@/utils/setup-mock'
-import { ServiceRecord } from '@/api/list'
+import Mock from 'mockjs';
+import setupMock, { successResponseWrap } from '@/utils/setup-mock';
+import { ServiceRecord } from '@/api/list';
 
 const qualityInspectionList: ServiceRecord[] = [
     {
@@ -63,7 +63,7 @@ const qualityInspectionList: ServiceRecord[] = [
             },
         ],
     },
-]
+];
 const theServiceList: ServiceRecord[] = [
     {
         id: 1,
@@ -99,7 +99,7 @@ const theServiceList: ServiceRecord[] = [
         enable: true,
         actionType: 'button',
     },
-]
+];
 const rulesPresetList: ServiceRecord[] = [
     {
         id: 1,
@@ -143,7 +143,7 @@ const rulesPresetList: ServiceRecord[] = [
         enable: false,
         actionType: 'switch',
     },
-]
+];
 
 setupMock({
     setup() {
@@ -154,8 +154,8 @@ setupMock({
                     ...qualityInspectionList[index % qualityInspectionList.length],
                     id: Mock.Random.guid(),
                 })),
-            )
-        })
+            );
+        });
 
         // the service
         Mock.mock(new RegExp('/api/list/the-service'), () => {
@@ -164,8 +164,8 @@ setupMock({
                     ...theServiceList[index % theServiceList.length],
                     id: Mock.Random.guid(),
                 })),
-            )
-        })
+            );
+        });
 
         // rules preset
         Mock.mock(new RegExp('/api/list/rules-preset'), () => {
@@ -174,7 +174,7 @@ setupMock({
                     ...rulesPresetList[index % rulesPresetList.length],
                     id: Mock.Random.guid(),
                 })),
-            )
-        })
+            );
+        });
     },
-})
+});

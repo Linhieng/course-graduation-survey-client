@@ -25,16 +25,16 @@
 </template>
 
 <script lang="ts" setup>
-import PublicOpinion from './components/public-opinion.vue'
-import ContentPeriodAnalysis from './components/content-period-analysis.vue'
-import ContentPublishRatio from './components/content-publish-ratio.vue'
-import PopularAuthor from './components/popular-author.vue'
+import PublicOpinion from './components/public-opinion.vue';
+import ContentPeriodAnalysis from './components/content-period-analysis.vue';
+import ContentPublishRatio from './components/content-publish-ratio.vue';
+import PopularAuthor from './components/popular-author.vue';
 </script>
 
 <script lang="ts">
 export default {
     name: 'DataAnalysis',
-}
+};
 </script>
 
 <style scoped lang="less">

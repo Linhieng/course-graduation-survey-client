@@ -47,18 +47,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import type { FileItem, RequestOption } from '@arco-design/web-vue/es/upload/interfaces'
-import { useUserStore } from '@/store'
-import { userUploadApi } from '@/api/user-center'
-import type { DescData } from '@arco-design/web-vue/es/descriptions/interface'
+import { ref } from 'vue';
+import type { FileItem, RequestOption } from '@arco-design/web-vue/es/upload/interfaces';
+import { useUserStore } from '@/store';
+import { userUploadApi } from '@/api/user-center';
+import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
-const userStore = useUserStore()
+const userStore = useUserStore();
 const file = {
     uid: '-2',
     name: 'avatar.png',
     url: userStore.avatar,
-}
+};
 const renderData = [
     {
         label: 'userSetting.label.name',
@@ -80,27 +80,27 @@ const renderData = [
         label: 'userSetting.label.registrationDate',
         value: userStore.registrationDate,
     },
-] as DescData[]
-const fileList = ref<FileItem[]>([file])
+] as DescData[];
+const fileList = ref<FileItem[]>([file]);
 const uploadChange = (fileItemList: FileItem[], fileItem: FileItem) => {
-    fileList.value = [fileItem]
-}
+    fileList.value = [fileItem];
+};
 const customRequest = (options: RequestOption) => {
     // docs: https://axios-http.com/docs/cancellation
-    const controller = new AbortController()
+    const controller = new AbortController();
 
-    ;(async function requestWrap() {
-        const { onProgress, onError, onSuccess, fileItem, name = 'file' } = options
-        onProgress(20)
-        const formData = new FormData()
-        formData.append(name as string, fileItem.file as Blob)
+    (async function requestWrap() {
+        const { onProgress, onError, onSuccess, fileItem, name = 'file' } = options;
+        onProgress(20);
+        const formData = new FormData();
+        formData.append(name as string, fileItem.file as Blob);
         const onUploadProgress = (event: ProgressEvent) => {
-            let percent
+            let percent;
             if (event.total > 0) {
-                percent = (event.loaded / event.total) * 100
+                percent = (event.loaded / event.total) * 100;
             }
-            onProgress(parseInt(String(percent), 10), event)
-        }
+            onProgress(parseInt(String(percent), 10), event);
+        };
 
         try {
             // https://github.com/axios/axios/issues/1630
@@ -109,18 +109,18 @@ const customRequest = (options: RequestOption) => {
             const res = await userUploadApi(formData, {
                 controller,
                 onUploadProgress,
-            })
-            onSuccess(res)
+            });
+            onSuccess(res);
         } catch (error) {
-            onError(error)
+            onError(error);
         }
-    })()
+    })();
     return {
         abort() {
-            controller.abort()
+            controller.abort();
         },
-    }
-}
+    };
+};
 </script>
 
 <style scoped lang="less">

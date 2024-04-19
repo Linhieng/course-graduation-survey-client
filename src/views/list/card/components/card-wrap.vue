@@ -67,8 +67,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { useToggle } from '@vueuse/core'
+import { ref } from 'vue';
+import { useToggle } from '@vueuse/core';
 
 const props = defineProps({
     loading: {
@@ -123,15 +123,15 @@ const props = defineProps({
         type: String,
         default: '',
     },
-})
-const [open, toggle] = useToggle(props.defaultValue)
+});
+const [open, toggle] = useToggle(props.defaultValue);
 const handleToggle = () => {
-    toggle()
-}
-const isExpires = ref(props.expires)
+    toggle();
+};
+const isExpires = ref(props.expires);
 const renew = () => {
-    isExpires.value = false
-}
+    isExpires.value = false;
+};
 </script>
 
 <style scoped lang="less">

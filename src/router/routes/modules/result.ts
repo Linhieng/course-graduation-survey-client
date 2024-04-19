@@ -1,5 +1,5 @@
-import { DEFAULT_LAYOUT } from '../base'
-import { AppRouteRecordRaw } from '../types'
+import { DEFAULT_LAYOUT } from '../base';
+import { AppRouteRecordRaw } from '../types';
 
 const RESULT: AppRouteRecordRaw = {
     path: '/result',
@@ -33,6 +33,6 @@ const RESULT: AppRouteRecordRaw = {
             },
         },
     ],
-}
+};
 
-export default RESULT
+export default RESULT;

@@ -39,7 +39,7 @@
 <script lang="ts">
 export default {
     name: 'Success',
-}
+};
 </script>
 
 <style scoped lang="less">

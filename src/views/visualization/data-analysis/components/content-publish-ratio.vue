@@ -13,11 +13,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { ToolTipFormatterParams } from '@/types/echarts'
-import useLoading from '@/hooks/loading'
-import { queryContentPublish, ContentPublishRecord } from '@/api/visualization'
-import useChartOption from '@/hooks/chart-option'
+import { ref } from 'vue';
+import { ToolTipFormatterParams } from '@/types/echarts';
+import useLoading from '@/hooks/loading';
+import { queryContentPublish, ContentPublishRecord } from '@/api/visualization';
+import useChartOption from '@/hooks/chart-option';
 
 const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
     return items
@@ -34,14 +34,14 @@ const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
     </span>
   </div>`,
         )
-        .join('')
-}
+        .join('');
+};
 
-const { loading, setLoading } = useLoading(true)
-const xAxis = ref<string[]>([])
-const textChartsData = ref<number[]>([])
-const imgChartsData = ref<number[]>([])
-const videoChartsData = ref<number[]>([])
+const { loading, setLoading } = useLoading(true);
+const xAxis = ref<string[]>([]);
+const textChartsData = ref<number[]>([]);
+const imgChartsData = ref<number[]>([]);
+const videoChartsData = ref<number[]>([]);
 const { chartOption } = useChartOption((isDark) => {
     return {
         grid: {
@@ -81,8 +81,8 @@ const { chartOption } = useChartOption((isDark) => {
             axisLabel: {
                 color: '#86909C',
                 formatter(value: number, idx: number) {
-                    if (idx === 0) return `${value}`
-                    return `${value / 1000}k`
+                    if (idx === 0) return `${value}`;
+                    return `${value / 1000}k`;
                 },
             },
             splitLine: {
@@ -95,11 +95,11 @@ const { chartOption } = useChartOption((isDark) => {
             show: true,
             trigger: 'axis',
             formatter(params) {
-                const [firstElement] = params as ToolTipFormatterParams[]
+                const [firstElement] = params as ToolTipFormatterParams[];
                 return `<div>
             <p class="tooltip-title">${firstElement.axisValueLabel}</p>
             ${tooltipItemsHtmlString(params as ToolTipFormatterParams[])}
-          </div>`
+          </div>`;
             },
             className: 'echarts-tooltip-diy',
         },
@@ -130,28 +130,28 @@ const { chartOption } = useChartOption((isDark) => {
                 },
             },
         ],
-    }
-})
+    };
+});
 const fetchData = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-        const { data: chartData } = await queryContentPublish()
-        xAxis.value = chartData[0].x
+        const { data: chartData } = await queryContentPublish();
+        xAxis.value = chartData[0].x;
         chartData.forEach((el: ContentPublishRecord) => {
             if (el.name === '纯文本') {
-                textChartsData.value = el.y
+                textChartsData.value = el.y;
             } else if (el.name === '图文类') {
-                imgChartsData.value = el.y
+                imgChartsData.value = el.y;
             }
-            videoChartsData.value = el.y
-        })
+            videoChartsData.value = el.y;
+        });
     } catch (err) {
         // you can report use errorHandler or other
     } finally {
-        setLoading(false)
+        setLoading(false);
     }
-}
-fetchData()
+};
+fetchData();
 </script>
 
 <style scoped lang="less"></style>

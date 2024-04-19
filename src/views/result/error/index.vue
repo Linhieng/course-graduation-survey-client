@@ -46,7 +46,7 @@
 <script lang="ts">
 export default {
     name: 'Error',
-}
+};
 </script>
 
 <style scoped lang="less">

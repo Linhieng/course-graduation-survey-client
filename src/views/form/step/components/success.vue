@@ -22,10 +22,10 @@
 </template>
 
 <script lang="ts" setup>
-const emits = defineEmits(['changeStep'])
+const emits = defineEmits(['changeStep']);
 const oneMore = () => {
-    emits('changeStep', 1)
-}
+    emits('changeStep', 1);
+};
 </script>
 
 <style scoped lang="less">

@@ -108,11 +108,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { FormInstance } from '@arco-design/web-vue/es/form'
-import { BasicInfoModel } from '@/api/user-center'
+import { ref } from 'vue';
+import { FormInstance } from '@arco-design/web-vue/es/form';
+import { BasicInfoModel } from '@/api/user-center';
 
-const formRef = ref<FormInstance>()
+const formRef = ref<FormInstance>();
 const formData = ref<BasicInfoModel>({
     email: '',
     nickname: '',
@@ -120,17 +120,17 @@ const formData = ref<BasicInfoModel>({
     area: '',
     address: '',
     profile: '',
-})
+});
 const validate = async () => {
-    const res = await formRef.value?.validate()
+    const res = await formRef.value?.validate();
     if (!res) {
         // do some thing
         // you also can use html-type to submit
     }
-}
+};
 const reset = async () => {
-    await formRef.value?.resetFields()
-}
+    await formRef.value?.resetFields();
+};
 </script>
 
 <style scoped lang="less">

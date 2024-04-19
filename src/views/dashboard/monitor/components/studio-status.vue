@@ -22,10 +22,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n()
+const { t } = useI18n();
 const dataStatus = computed(() => [
     {
         label: 'mainstream',
@@ -51,7 +51,7 @@ const dataStatus = computed(() => [
         label: t('monitor.studioStatus.frameRate'),
         value: '60',
     },
-])
+]);
 const dataPicture = computed(() => [
     {
         label: t('monitor.studioStatus.line'),
@@ -69,7 +69,7 @@ const dataPicture = computed(() => [
         label: t('monitor.studioStatus.pictureQuality'),
         value: '原画',
     },
-])
+]);
 </script>
 
 <style scoped lang="less">
