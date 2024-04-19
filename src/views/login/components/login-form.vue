@@ -70,6 +70,7 @@ import { useStorage } from '@vueuse/core';
 import { useUserStore } from '@/store';
 import useLoading from '@/hooks/loading';
 import type { LoginData } from '@/api/user';
+import { msgSuccess } from '@/utils/msg';
 
 const router = useRouter();
 const { t } = useI18n();
@@ -106,7 +107,7 @@ const handleSubmit = async ({
                     ...othersQuery,
                 },
             });
-            Message.success(t('login.form.login.success'));
+            msgSuccess('login.form.login.success');
             const { rememberPassword } = loginConfig.value;
             const { username, password } = values;
             // 实际生产环境需要进行加密存储。
