@@ -26,6 +26,28 @@ export function getUserInfo() {
     return post<UserState>('/api/user/info');
 }
 
+export function updateUserInfo(data: Partial<UserInfoCanModified>) {
+    return post('/api/user/update-info', data);
+}
+
 export function getMenuList() {
     return axios.post<RouteRecordNormalized[]>('/api/user/menu');
+}
+
+//
+//
+//
+export interface UserInfoCanModified {
+    name: string;
+    avatar: string;
+    email: string;
+    job: string;
+    job_name: string;
+    organization: string;
+    organization_name: string;
+    location: string;
+    location_name: string;
+    introduction: string;
+    personal_website: string;
+    phone: string;
 }
