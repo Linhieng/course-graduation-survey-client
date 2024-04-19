@@ -83,8 +83,8 @@ import { ValidatedError } from '@arco-design/web-vue/es/form/interface';
 import { useI18n } from 'vue-i18n';
 import { useUserStore } from '@/store';
 import useLoading from '@/hooks/loading';
-// import { signup } from '@/api/user'
-// import { msgSuccess } from '@/utils/msg'
+import { signup } from '@/api/user';
+import { msgSuccess } from '@/utils/msg';
 
 const router = useRouter();
 const { t } = useI18n();
@@ -106,8 +106,9 @@ const formData = reactive({
 });
 
 watch(
-    () => [formData.password, formData.password2],
+    () => [formData.password, formData.password2, formData.username],
     () => {
+        errorMessage.value = '';
         passwordValidateStatus.value = undefined;
         passwordHelp.value = '';
     },
@@ -129,17 +130,12 @@ const clickRegister = async ({
         }
 
         setLoading(true);
-        try {
-            // const res = await signup(values)
-            // if (!res.ok) {
-            //     errorMessage.value = t(res.msg)
-            // } else {
-            //     msgSuccess('signup.form.signup.success')
-            // }
-        } catch (err) {
-            errorMessage.value = (err as Error).message;
-        } finally {
-            setLoading(false);
+        const res = await signup(values);
+        setLoading(false);
+        if (!res.ok) {
+            errorMessage.value = t(res.msg);
+        } else {
+            msgSuccess('signup.form.signup.success');
         }
     }
 };

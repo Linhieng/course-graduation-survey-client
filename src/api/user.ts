@@ -14,6 +14,9 @@ export interface LoginRes {
 export function login(data: LoginData) {
     return post<LoginRes>('/api/user/login', data);
 }
+export function signup(data: LoginData) {
+    return post('/api/user/signup', data);
+}
 
 export function logout() {
     return axios.post<LoginRes>('/api/user/logout');
