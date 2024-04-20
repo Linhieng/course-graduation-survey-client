@@ -187,6 +187,7 @@ const drawerPosition = computed(() => {
             width: 60%;
             z-index: 20;
             opacity: 0.7;
+            margin-bottom: 30px;
         }
         .left {
             margin-left: 0;

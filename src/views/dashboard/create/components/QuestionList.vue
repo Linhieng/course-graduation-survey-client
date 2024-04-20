@@ -125,7 +125,8 @@ const addBtnOrder = computed(() => {
     flex-direction: column;
 
     .add-btn {
-        margin-bottom: 10px;
+        margin: auto;
+        margin-bottom: 20px;
     }
     .li {
         cursor: default;
