@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useAppStore } from '@/store';
-import bgImg from '@/assets/images/login1.png';
+import { useAppStore, useCreateStore } from '@/store';
+const createStore = useCreateStore();
 const appStore = useAppStore();
 const toggleFocusMode = () => {
     if (appStore.focusMode) {
@@ -46,7 +46,7 @@ const toggleFocusMode = () => {
         </div>
         <div class="main">
             <div class="workplace">
-                <img :src="bgImg" alt="" />
+                <img :src="createStore.skin.background_image" alt="" />
             </div>
         </div>
     </div>
