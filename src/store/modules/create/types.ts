@@ -7,10 +7,34 @@ export type QuestionType =
     | 'single_select'
     /** 多选题 */
     | 'multi_select'
-    /** 文件上传 */
-    | 'file'
-    /** 评分题*/
-    | 'score';
+    /** 图片单选题 */
+    | 'pic_single_select'
+    /** 图片多选题 */
+    | 'pic_multi_select'
+    /** 单文件上传 */
+    | 'single_file'
+    /** 多文件上传 */
+    | 'multi_file'
+    /** 评分题 */
+    | 'score'
+    /** 量表题 */
+    | 'NPS'
+    /** 矩阵单选 */
+    | 'matrix_single_select'
+    /** 矩阵多选 */
+    | 'matrix_multi_select'
+    /** 矩阵量表 */
+    | 'matrix_NPS'
+    /** 矩阵评分 */
+    | 'matrix_scope'
+    /** 自增文本 */
+    | 'auto_text'
+    /** 填充题 */
+    | 'input_text'
+    /** 自增表格 */
+    | 'auto_table'
+    /** 非填空的文本描述 */
+    | 'desc';
 export interface QuestionItem {
     id: string;
     type: QuestionType;

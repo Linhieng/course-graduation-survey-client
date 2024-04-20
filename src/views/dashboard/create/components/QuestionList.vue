@@ -33,6 +33,7 @@ function initSortable(el: HTMLElement) {
         },
         onEnd(evt) {
             // TODO:  evt.oldDraggableIndex 什么时候，可能会为 undefined ?
+            // @ts-ignore
             createStore.swapQuestionOrder(evt.oldDraggableIndex, evt.newDraggableIndex);
             dragging.value = false;
         },
@@ -51,7 +52,7 @@ function clearStatus() {
 function clickQuestion(evt: MouseEvent, question: QuestionItem) {
     curSelectedQuestion.value = question;
     const target = evt.currentTarget as HTMLElement;
-    console.log(target);
+
     if (preSelected.value !== null) {
         preSelected.value.classList.remove('selected');
     }
@@ -68,7 +69,7 @@ const addBtnOrder = computed(() => {
 <template>
     <ul ref="ul" class="ul" :class="{ dragging }">
         <li
-            v-for="question in createStore.questionList"
+            v-for="question in createStore.$state.survey.questionList"
             :key="question.id"
             class="li"
             :style="{
@@ -150,6 +151,17 @@ const addBtnOrder = computed(() => {
     }
     .li.chosen {
         opacity: 0.5;
+    }
+    .li {
+        animation: show 1s;
+    }
+    @keyframes show {
+        from {
+            box-shadow: 0 0 50px #000;
+        }
+        to {
+            box-shadow: none;
+        }
     }
 }
 .dragging {

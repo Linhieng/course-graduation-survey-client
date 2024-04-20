@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia';
-import { CreateState } from './types';
+import { CreateState, QuestionType } from './types';
 import bgImg from '@/assets/images/login1.png';
 import { v4 as idv4 } from 'uuid';
 import { toRaw } from 'vue';
+import { getAllQuestionTemplate, getNewQuestion, getNormalQuestion } from './utils';
 
 const useCreateStore = defineStore('create', {
     state: (): CreateState => ({
@@ -19,13 +20,8 @@ const useCreateStore = defineStore('create', {
         survey: {
             title: '问卷未命名标题',
             comment: '',
-            questionList: Array(8)
-                .fill(undefined)
-                .map((_, i) => ({
-                    id: idv4(),
-                    order: i,
-                    title: '标题' + (i + 1),
-                })),
+            // questionList: getAllQuestionTemplate(),
+            questionList: getNormalQuestion(),
         },
     }),
 
@@ -37,7 +33,15 @@ const useCreateStore = defineStore('create', {
     },
 
     actions: {
-        addQuestion(order: number, type: QuestionType) {},
+        /** 新增一个问题 */
+        addQuestion(order: number, type: QuestionType) {
+            console.log(toRaw(this.survey.questionList));
+            this.survey.questionList.splice(order + 1, 0, getNewQuestion(type));
+            this.survey.questionList.forEach((q, i) => {
+                q.order = i;
+            });
+            console.log(toRaw(this.survey.questionList));
+        },
 
         /** 交换两个问题的位置 */
         swapQuestionOrder(oldIndex: number, newIndex: number) {
