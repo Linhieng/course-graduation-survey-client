@@ -2,7 +2,7 @@
     <a-col class="banner">
         <a-col :span="24">
             <a-typography-title :heading="5" style="margin-top: 0">
-                {{ $t('🎉欢迎使用问卷系统，') }} 【{{ userInfo.name }}】
+                {{ $t('🎉欢迎使用问卷系统') }} 【{{ userInfo.name }}】
             </a-typography-title>
         </a-col>
         <a-divider class="panel-border" />

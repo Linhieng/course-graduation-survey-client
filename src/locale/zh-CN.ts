@@ -66,4 +66,5 @@ export default {
   ...localeUserInfo,
   ...localeUserSetting,
   /** simple end */
+  '问卷系统': '问卷系统',
 };
