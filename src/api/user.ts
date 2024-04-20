@@ -34,6 +34,10 @@ export function changePassword(data: { oldPassword: string; newPassword: string 
     return post('/api/user/modify-password', data);
 }
 
+export function getUserActionLog(startPage = 0, pageSize = 10) {
+    return post<UserActionLog[]>(`/api/user/action-log?startPage=${startPage}&pageSize=${pageSize}`);
+}
+
 export function getMenuList() {
     return axios.post<RouteRecordNormalized[]>('/api/user/menu');
 }
@@ -41,6 +45,18 @@ export function getMenuList() {
 //
 //
 //
+export interface UserActionLog {
+    id: number;
+    user_id: number;
+    info: string;
+    ip: string;
+    origin: string;
+    platform: string;
+    referer: string;
+    updated_at: string;
+    created_at: string;
+    user_agent: string;
+}
 export interface UserInfoCanModified {
     name: string;
     avatar: string;

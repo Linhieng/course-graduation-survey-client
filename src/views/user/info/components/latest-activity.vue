@@ -15,11 +15,23 @@
                         </a-col>
                     </a-row>
                 </a-skeleton>
-                <a-list-item-meta v-else :title="activity.title" :description="activity.description">
+                <a-list-item-meta v-else>
                     <template #avatar>
                         <a-avatar>
-                            <img :src="activity.avatar" />
+                            <img :src="useUserStore().userInfo.avatar" />
                         </a-avatar>
+                    </template>
+                    <template #title>
+                        <p>{{ $t('行为：') + activity.info }}</p>
+                    </template>
+                    <template #description>
+                        <a-descriptions
+                            :data="[
+                                { label: $t('IP地址'), value: activity.ip },
+                                { label: $t('时间'), value: new Date(activity.created_at).toLocaleString() },
+                            ]"
+                            bordered
+                        />
                     </template>
                 </a-list-item-meta>
             </a-list-item>
@@ -29,22 +41,25 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { queryLatestActivity, LatestActivity } from '@/api/user-center';
 import useLoading from '@/hooks/loading';
-
+import { UserActionLog, getUserActionLog } from '@/api/user';
+import { msgError } from '@/utils/msg';
+import { useUserStore } from '@/store';
 const { loading, setLoading } = useLoading(true);
-const activityList = ref<LatestActivity[]>(new Array(7).fill({}));
-const fetchData = async () => {
-    try {
-        const { data } = await queryLatestActivity();
-        activityList.value = data;
-    } catch (err) {
-        // you can report use errorHandler or other
-    } finally {
-        setLoading(false);
+const activityList = ref<UserActionLog[]>(new Array(7).fill({}));
+
+const getUserActionLately = async () => {
+    setLoading(true);
+
+    const res = await getUserActionLog(0, 7);
+    if (res.ok) {
+        activityList.value = res.data;
+    } else {
+        msgError(res.msg);
     }
+    setLoading(false);
 };
-fetchData();
+getUserActionLately();
 </script>
 
 <style scoped lang="less">
