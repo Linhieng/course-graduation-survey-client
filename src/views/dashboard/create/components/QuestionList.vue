@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import Sortable from 'sortablejs';
 import { onMounted, ref } from 'vue';
+import { useCreateStore } from '@/store';
+const createStore = useCreateStore();
 const ul = ref();
 
 onMounted(() => {
@@ -16,12 +18,9 @@ function initSortable(el: HTMLElement) {
 </script>
 <template>
     <ul ref="ul" class="ul">
-        <li class="li">1</li>
-        <li class="li">2</li>
-        <li class="li">3</li>
-        <li class="li">4</li>
-        <li class="li">5</li>
-        <li class="li">6</li>
+        <li v-for="question in createStore.questionList" :key="question.id">
+            {{ question.title }}
+        </li>
     </ul>
 </template>
 

@@ -189,10 +189,12 @@ const drawerPosition = computed(() => {
         .left {
             margin-left: 0;
             margin-right: auto;
+            padding-left: 100px;
         }
         .right {
             margin-left: auto;
             margin-right: 0;
+            padding-right: 100px;
         }
         .center {
             margin-left: auto;

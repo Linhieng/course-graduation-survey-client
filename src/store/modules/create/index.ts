@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { CreateState } from './types';
 import bgImg from '@/assets/images/login1.png';
+import { v4 as idv4 } from 'uuid';
 
 const useCreateStore = defineStore('create', {
     state: (): CreateState => ({
@@ -14,9 +15,24 @@ const useCreateStore = defineStore('create', {
             bg_width: undefined,
             bg_color: undefined,
         },
+        survey: {
+            title: '问卷未命名标题',
+            comment: '',
+            questionList: [
+                {
+                    id: idv4(),
+                    title: '',
+                },
+            ],
+        },
     }),
 
-    getters: {},
+    getters: {
+        /** 获取问题列表 */
+        questionList(state) {
+            return state.survey.questionList;
+        },
+    },
 
     actions: {
         // prettier-ignore

@@ -1,4 +1,13 @@
+interface QuestionItem {
+    id: string;
+    title: string;
+}
 export interface CreateState {
+    survey: {
+        title: string;
+        comment: string;
+        questionList: QuestionItem[];
+    };
     skin: {
         survey_width: string;
         survey_position: 'center' | 'left' | 'right';
