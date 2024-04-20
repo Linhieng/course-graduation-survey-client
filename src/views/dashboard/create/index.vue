@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { useAppStore, useCreateStore } from '@/store';
+import { ref } from 'vue';
+import EditSkin from './components/EditSkin.vue';
 const createStore = useCreateStore();
 const appStore = useAppStore();
+const visibleEditSkin = ref(false);
+
 const toggleFocusMode = () => {
     if (appStore.focusMode) {
         appStore.focusMode = false;
@@ -30,7 +34,7 @@ const toggleFocusMode = () => {
                 appStore.focusMode ? $t('取消聚焦模式') : $t('聚焦模式')
             }}</a-button>
             <a-space class="header-item" size="large">
-                <a-button shape="circle">
+                <a-button shape="circle" @click="visibleEditSkin = true">
                     <icon-font style="width: 20px; height: 20px" name="skin"></icon-font
                 ></a-button>
                 <a-button shape="circle">
@@ -49,6 +53,17 @@ const toggleFocusMode = () => {
                 <img :src="createStore.skin.background_image" alt="" />
             </div>
         </div>
+        <a-drawer
+            :width="340"
+            :visible="visibleEditSkin"
+            @ok="visibleEditSkin = false"
+            @cancel="visibleEditSkin = false"
+        >
+            <template #title>
+                <h3>{{ $t('自定义皮肤') }}</h3>
+            </template>
+            <div> <EditSkin /> </div>
+        </a-drawer>
     </div>
 </template>
 

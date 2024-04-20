@@ -13,7 +13,11 @@ const useCreateStore = defineStore('create', {
 
     getters: {},
 
-    actions: {},
+    actions: {
+        updateBgUrl(url: string) {
+            this.skin.background_image = url;
+        },
+    },
 });
 
 export default useCreateStore;
