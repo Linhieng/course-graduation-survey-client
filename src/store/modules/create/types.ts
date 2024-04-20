@@ -8,6 +8,7 @@ export interface CreateState {
         bg_object_fit: 'contain' | 'cover' | 'fill' | 'none';
         bg_width: undefined | string;
         bg_position: 
+            'reset'|
             'leftTop'   | 'centerTop'    | 'rightTop'|
             'leftCenter'| 'centerCenter' | 'rightCenter'|
             'leftBottom'| 'centerBottom' | 'rightBottom'

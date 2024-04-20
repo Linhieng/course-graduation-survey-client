@@ -140,6 +140,13 @@ const toggleFocusMode = () => {
             display: flex;
             overflow: hidden;
         }
+        .img-cover.reset {
+            display: block;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
         img {
             width: 100%;
             height: max-content;

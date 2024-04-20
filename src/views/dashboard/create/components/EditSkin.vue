@@ -38,6 +38,7 @@ const uploadSuccess = (fileItem: FileItem) => {
             </a-space>
             <a-space direction="vertical">
                 <span>{{ $t('图片位置') }}</span>
+                <el-button @click="useCreateStore().resetBgPosition()">{{ $t('重置') }}</el-button>
                 <a-radio-group v-model="useCreateStore().skin.bg_position" type="button">
                     <div class="grid-9">
                         <a-radio class="grid-9-item" value="leftTop">⬉</a-radio>

@@ -9,7 +9,7 @@ const useCreateStore = defineStore('create', {
             background_image: bgImg,
             background_image_position: 'right',
             bg_object_fit: 'cover',
-            bg_position: 'centerCenter',
+            bg_position: 'reset',
             bg_width: undefined,
             bg_color: undefined,
         },
@@ -26,6 +26,9 @@ const useCreateStore = defineStore('create', {
         },
         resetBgWidth() {
             this.skin.bg_width = undefined;
+        },
+        resetBgPosition() {
+            this.skin.bg_position = 'reset';
         },
         updateBgColor(val: string) {
             this.skin.bg_color = val;
