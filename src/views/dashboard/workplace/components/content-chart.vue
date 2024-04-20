@@ -8,9 +8,9 @@
             }"
             :title="$t('workplace.contentData')"
         >
-            <template #extra>
+            <!-- <template #extra>
                 <a-link>{{ $t('workplace.viewMore') }}</a-link>
-            </template>
+            </template> -->
             <Chart height="289px" :option="chartOption" />
         </a-card>
     </a-spin>
