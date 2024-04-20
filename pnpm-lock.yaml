@@ -79,7 +79,7 @@ devDependencies:
     specifier: ^0.2.0
     version: 0.2.0
   '@types/sortablejs':
-    specifier: ^1.15.0
+    specifier: ^1.15.1
     version: 1.15.1
   '@types/ua-parser-js':
     specifier: ^0.7.39
