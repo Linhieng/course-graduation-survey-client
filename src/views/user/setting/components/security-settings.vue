@@ -1,3 +1,10 @@
+<script lang="ts" setup>
+import ChangePassword from './change-password.vue';
+import { ref } from 'vue';
+
+const showHandleUpdatePasswordDialog = ref(false);
+</script>
+
 <template>
     <a-list :bordered="false">
         <a-list-item>
@@ -14,7 +21,7 @@
                         </a-typography-paragraph>
                     </div>
                     <div class="operation">
-                        <a-link>
+                        <a-link @click="showHandleUpdatePasswordDialog = true">
                             {{ $t('userSetting.SecuritySettings.button.update') }}
                         </a-link>
                     </div>
@@ -83,9 +90,14 @@
             </a-list-item-meta>
         </a-list-item>
     </a-list>
-</template>
 
-<script lang="ts" setup></script>
+    <a-modal v-model:visible="showHandleUpdatePasswordDialog" draggable>
+        <template #title> 修改密码 </template>
+        <div>
+            <change-password @over="showHandleUpdatePasswordDialog = false"></change-password>
+        </div>
+    </a-modal>
+</template>
 
 <style scoped lang="less">
 :deep(.arco-list-item) {

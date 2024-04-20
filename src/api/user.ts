@@ -30,6 +30,10 @@ export function updateUserInfo(data: Partial<UserInfoCanModified>) {
     return post('/api/user/update-info', data);
 }
 
+export function changePassword(data: { oldPassword: string; newPassword: string }) {
+    return post('/api/user/modify-password', data);
+}
+
 export function getMenuList() {
     return axios.post<RouteRecordNormalized[]>('/api/user/menu');
 }

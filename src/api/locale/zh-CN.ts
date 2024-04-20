@@ -27,4 +27,5 @@ export default {
     'api.error.not-authorized': '未获得授权',
     'api.error.default.unknown': '未知错误！请联系网站负责人。',
     'api.error.not-user-info': '找不到用户信息',
+    'api.error.password': '密码错误',
 }
