@@ -7,7 +7,7 @@ import { getMenuList } from '@/api/user';
 import { AppState } from './types';
 
 const useAppStore = defineStore('app', {
-    state: (): AppState => ({ ...defaultSettings }),
+    state: (): AppState => ({ ...defaultSettings, focusMode: false }),
 
     getters: {
         appCurrentSetting(state: AppState): AppState {

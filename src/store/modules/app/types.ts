@@ -1,6 +1,9 @@
 import type { RouteRecordNormalized } from 'vue-router';
 
 export interface AppState {
+    /** 创建问卷时的聚焦、专注模式 */
+    focusMode: boolean;
+
     theme: string;
     colorWeak: boolean;
     navbar: boolean;

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!appStore.navbar" class="fixed-settings" @click="setVisible">
+    <div v-if="!appStore.navbar && !appStore.focusMode" class="fixed-settings" @click="setVisible">
         <a-button type="primary">
             <template #icon>
                 <icon-settings />
