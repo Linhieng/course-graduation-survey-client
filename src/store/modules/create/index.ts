@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { CreateState } from './types';
 import bgImg from '@/assets/images/login1.png';
 import { v4 as idv4 } from 'uuid';
+import { toRaw } from 'vue';
 
 const useCreateStore = defineStore('create', {
     state: (): CreateState => ({
@@ -18,12 +19,13 @@ const useCreateStore = defineStore('create', {
         survey: {
             title: '问卷未命名标题',
             comment: '',
-            questionList: [
-                {
+            questionList: Array(8)
+                .fill(undefined)
+                .map((_, i) => ({
                     id: idv4(),
-                    title: '',
-                },
-            ],
+                    order: i,
+                    title: '标题' + (i + 1),
+                })),
         },
     }),
 
@@ -35,6 +37,21 @@ const useCreateStore = defineStore('create', {
     },
 
     actions: {
+        addQuestion(order: number, type: QuestionType) {},
+
+        /** 交换两个问题的位置 */
+        swapQuestionOrder(oldIndex: number, newIndex: number) {
+            const questionList = toRaw(this.survey.questionList);
+            [questionList[oldIndex], questionList[newIndex]] = [questionList[newIndex], questionList[oldIndex]];
+            questionList.forEach((q, i) => {
+                q.order = i;
+            });
+            this.survey.questionList = questionList;
+        },
+        //////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////
+
         // prettier-ignore
         updateBgUrl(url: string) { this.skin.background_image = url; },
         // prettier-ignore

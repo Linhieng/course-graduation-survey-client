@@ -1,5 +1,20 @@
-interface QuestionItem {
+export type QuestionType =
+    /** 单行文本 */
+    | 'single_text'
+    /** 多行文本 */
+    | 'multi_text'
+    /** 单选题 */
+    | 'single_select'
+    /** 多选题 */
+    | 'multi_select'
+    /** 文件上传 */
+    | 'file'
+    /** 评分题*/
+    | 'score';
+export interface QuestionItem {
     id: string;
+    type: QuestionType;
+    order: number;
     title: string;
 }
 export interface CreateState {
