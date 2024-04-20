@@ -6,6 +6,9 @@ import svgLoader from 'vite-svg-loader';
 import configArcoStyleImportPlugin from './plugin/arcoStyleImport';
 
 export default defineConfig({
+    server: {
+        host: '0.0.0.0',
+    },
     plugins: [vue(), vueJsx(), svgLoader({ svgoConfig: {} }), configArcoStyleImportPlugin()],
     resolve: {
         alias: [
