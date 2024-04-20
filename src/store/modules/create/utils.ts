@@ -50,6 +50,7 @@ export function getNewQuestion(type: QuestionType): QuestionItem {
         id: idv4(),
         order: -1,
         title: '',
+        required: true,
     };
 
     if (type === 'single_text') q.title = '单行文本';

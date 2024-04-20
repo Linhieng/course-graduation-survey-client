@@ -75,12 +75,26 @@ const addBtnOrder = computed(() => {
             :style="{
                 order: question.order,
             }"
+            :class="{
+                required: question.required,
+            }"
             @click="(evt) => clickQuestion(evt, question)"
         >
             <div class="move-icon">
                 <icon-font style="width: 26px; height: 26px" name="hand" />
             </div>
-            <a-space> </a-space>
+            <a-space class="li-top-util">
+                <a-space size="mini">
+                    <a-switch type="line" size="small" v-model="question.required" />
+                    <span>{{ question.required ? $t('必填') : $t('选填') }}</span>
+                </a-space>
+                <a-divider direction="vertical" :size="0"></a-divider>
+                <a-button type="primary" style="background-color: red" shape="circle" size="mini">
+                    <template #icon>
+                        <icon-font name="del" />
+                    </template>
+                </a-button>
+            </a-space>
 
             <span class="order">{{ question.order + 1 }}</span>
             <a-textarea class="question-title" v-model="question.title"></a-textarea>
@@ -101,6 +115,7 @@ const addBtnOrder = computed(() => {
 .ul {
     margin-top: 20px;
     list-style: none;
+    padding-left: 30px;
 
     display: flex;
     flex-direction: column;
@@ -126,6 +141,12 @@ const addBtnOrder = computed(() => {
             padding-left: 10px;
             visibility: hidden;
         }
+        .li-top-util {
+            position: absolute;
+            top: 4px;
+            right: 10px;
+            height: 30px;
+        }
         &:hover .move-icon {
             visibility: visible;
         }
@@ -144,6 +165,13 @@ const addBtnOrder = computed(() => {
             left: -2rem;
             font-size: 2rem;
         }
+        &.required .order::before {
+            content: '*';
+            color: red;
+            position: absolute;
+            top: 3px;
+            right: 1rem;
+        }
 
         .question-title :deep(textarea) {
             font-weight: bold;
@@ -157,7 +185,7 @@ const addBtnOrder = computed(() => {
     }
     @keyframes show {
         from {
-            box-shadow: 0 0 50px #000;
+            box-shadow: 0px 0px 34px 3px #5f6662;
         }
         to {
             box-shadow: none;
@@ -170,6 +198,9 @@ const addBtnOrder = computed(() => {
     }
     .move-icon {
         visibility: hidden !important;
+    }
+    .add-btn {
+        opacity: 0;
     }
 }
 </style>

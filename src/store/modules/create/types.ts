@@ -40,6 +40,7 @@ export interface QuestionItem {
     type: QuestionType;
     order: number;
     title: string;
+    required: boolean;
 }
 export interface CreateState {
     survey: {
