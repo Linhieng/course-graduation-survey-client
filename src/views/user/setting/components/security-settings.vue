@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import ChangePassword from './change-password.vue';
+import ChangePhone from './change-phone.vue';
 import { ref } from 'vue';
+import { useUserStore } from '@/store';
 
 const showHandleUpdatePasswordDialog = ref(false);
+const showHandleChangePhoneDialog = ref(false);
 </script>
 
 <template>
@@ -32,36 +35,21 @@ const showHandleUpdatePasswordDialog = ref(false);
             <a-list-item-meta>
                 <template #avatar>
                     <a-typography-paragraph>
-                        {{ $t('userSetting.SecuritySettings.form.label.securityQuestion') }}
-                    </a-typography-paragraph>
-                </template>
-                <template #description>
-                    <div class="content">
-                        <a-typography-paragraph class="tip">
-                            {{ $t('userSetting.SecuritySettings.placeholder.securityQuestion') }}
-                        </a-typography-paragraph>
-                    </div>
-                    <div class="operation">
-                        <a-link>
-                            {{ $t('userSetting.SecuritySettings.button.settings') }}
-                        </a-link>
-                    </div>
-                </template>
-            </a-list-item-meta>
-        </a-list-item>
-        <a-list-item>
-            <a-list-item-meta>
-                <template #avatar>
-                    <a-typography-paragraph>
                         {{ $t('userSetting.SecuritySettings.form.label.phone') }}
                     </a-typography-paragraph>
                 </template>
                 <template #description>
                     <div class="content">
-                        <a-typography-paragraph> 已绑定：150******50 </a-typography-paragraph>
+                        <a-typography-paragraph>
+                            {{
+                                useUserStore().userInfo.phone === ''
+                                    ? $t('未绑定手机')
+                                    : $t('已绑定：') + useUserStore().userInfo.phone
+                            }}
+                        </a-typography-paragraph>
                     </div>
                     <div class="operation">
-                        <a-link>
+                        <a-link @click="showHandleChangePhoneDialog = true">
                             {{ $t('userSetting.SecuritySettings.button.update') }}
                         </a-link>
                     </div>
@@ -92,9 +80,15 @@ const showHandleUpdatePasswordDialog = ref(false);
     </a-list>
 
     <a-modal v-model:visible="showHandleUpdatePasswordDialog" draggable>
-        <template #title> 修改密码 </template>
+        <template #title> {{ $t('修改密码') }} </template>
         <div>
             <change-password @over="showHandleUpdatePasswordDialog = false"></change-password>
+        </div>
+    </a-modal>
+    <a-modal v-model:visible="showHandleChangePhoneDialog" draggable>
+        <template #title> {{ $t('修改手机') }} </template>
+        <div>
+            <change-phone @over="showHandleChangePhoneDialog = false"></change-phone>
         </div>
     </a-modal>
 </template>
