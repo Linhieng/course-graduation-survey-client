@@ -26,17 +26,23 @@ const toggleFocusMode = () => {
         });
     }
 };
+
+const drawerPosition = computed(() => {
+    if (createStore.skin.survey_position === 'left') return 'right';
+    if (createStore.skin.survey_position === 'right') return 'left';
+    return 'left';
+});
 </script>
 
 <template>
     <div class="container" :class="{ focusMode: appStore.focusMode }">
         <div class="header">
-            <a-space>
+            <a-space style="margin-left: 20px">
                 <a-button class="left header-item" type="primary" @click="toggleFocusMode">{{
                     appStore.focusMode ? $t('取消聚焦模式') : $t('聚焦模式')
                 }}</a-button>
             </a-space>
-            <a-space class="header-item" size="large">
+            <a-space style="margin-right: 20px" class="header-item" size="large">
                 <a-tooltip :content="$t('皮肤')">
                     <a-button shape="circle" @click="visibleEditSkin = true">
                         <icon-font style="width: 20px; height: 20px" name="skin"></icon-font
@@ -83,6 +89,7 @@ const toggleFocusMode = () => {
             </div>
         </div>
         <a-drawer
+            :placement="drawerPosition"
             :width="340"
             :visible="visibleEditSkin"
             @ok="visibleEditSkin = false"
