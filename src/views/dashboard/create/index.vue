@@ -36,7 +36,7 @@ const drawerPosition = computed(() => {
 
 <template>
     <div class="container" :class="{ focusMode: appStore.focusMode }">
-        <div class="header">
+        <div class="header acrylic">
             <a-space style="margin-left: 20px">
                 <a-button class="left header-item" type="primary" @click="toggleFocusMode">{{
                     appStore.focusMode ? $t('取消聚焦模式') : $t('聚焦模式')
@@ -90,7 +90,7 @@ const drawerPosition = computed(() => {
             </div>
             <div class="b not-show-scroll">
                 <div
-                    class="workplace-box"
+                    class="workplace-box acrylic"
                     :style="{
                         width: createStore.skin.survey_width,
                     }"
@@ -138,24 +138,6 @@ const drawerPosition = computed(() => {
         display: flex;
         justify-content: space-between;
         margin-bottom: 10px;
-
-        // 实现亚克力效果、毛玻璃
-        background-color: #f6f8fc99;
-        overflow: hidden;
-        z-index: 10;
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-            filter: blur(20px);
-            z-index: 1;
-        }
         &-item {
             z-index: 2;
         }
@@ -202,7 +184,6 @@ const drawerPosition = computed(() => {
             // margin-top: 100px;
             width: 60%;
             z-index: 20;
-            background-color: skyblue;
             opacity: 0.7;
         }
         .left {
@@ -261,5 +242,25 @@ const drawerPosition = computed(() => {
 .rightBottom {
     align-items: end;
     justify-content: end;
+}
+
+.acrylic {
+    // 实现亚克力效果、毛玻璃
+    background-color: #f6f8fc99;
+    overflow: hidden;
+    z-index: 1;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        filter: blur(20px);
+        z-index: -1;
+    }
 }
 </style>
