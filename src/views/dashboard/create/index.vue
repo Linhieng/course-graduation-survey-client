@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAppStore, useCreateStore } from '@/store';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import EditSkin from './components/EditSkin.vue';
 const createStore = useCreateStore();
 const appStore = useAppStore();
@@ -50,7 +50,16 @@ const toggleFocusMode = () => {
         </div>
         <div class="main">
             <div class="workplace">
-                <img :src="createStore.skin.background_image" alt="" />
+                <div class="img-cover" :class="[createStore.skin.bg_position]">
+                    <img
+                        :src="createStore.skin.background_image"
+                        :style="{
+                            objectFit: createStore.skin.bg_object_fit,
+                            width: createStore.skin.bg_width,
+                            // backgroundColor: createStore.skin.bg_color,
+                        }"
+                    />
+                </div>
             </div>
         </div>
         <a-drawer
@@ -120,7 +129,7 @@ const toggleFocusMode = () => {
         &::-webkit-scrollbar {
             width: 0;
         }
-        img {
+        .img-cover {
             position: absolute;
             top: 0;
             left: 0;
@@ -128,8 +137,50 @@ const toggleFocusMode = () => {
             bottom: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            display: flex;
+            overflow: hidden;
+        }
+        img {
+            width: 100%;
+            height: max-content;
         }
     }
+}
+
+.leftTop {
+    align-items: top;
+    justify-content: left;
+}
+.leftCenter {
+    align-items: center;
+    justify-content: left;
+}
+.leftBottom {
+    align-items: end;
+    justify-content: left;
+}
+.centerTop {
+    align-items: top;
+    justify-content: center;
+}
+.centerCenter {
+    align-items: center;
+    justify-content: center;
+}
+.centerBottom {
+    align-items: end;
+    justify-content: center;
+}
+.rightTop {
+    align-items: top;
+    justify-content: end;
+}
+.rightCenter {
+    align-items: center;
+    justify-content: end;
+}
+.rightBottom {
+    align-items: end;
+    justify-content: end;
 }
 </style>
