@@ -5,6 +5,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useCreateStore } from '@/store';
 import { QuestionItem } from '@/store/modules/create/types';
 import AddQuestion from './AddQuestion.vue';
+import { questionTypeMappingText } from '@/store/modules/create/utils';
 const dragging = ref(false);
 const createStore = useCreateStore();
 const ul = ref();
@@ -80,10 +81,13 @@ const addBtnOrder = computed(() => {
             }"
             @click="(evt) => clickQuestion(evt, question)"
         >
-            <div class="move-icon">
+            <div class="move-icon hide-item">
                 <icon-font style="width: 26px; height: 26px" name="hand" />
             </div>
-            <a-space class="li-top-util">
+            <a-space class="li-top-title">
+                <p>{{ $t(questionTypeMappingText[question.type]) }}</p>
+            </a-space>
+            <a-space class="li-top-util hide-item">
                 <a-space size="mini">
                     <a-switch type="line" size="small" v-model="question.required" />
                     <span>{{ question.required ? $t('必填') : $t('选填') }}</span>
@@ -139,7 +143,9 @@ const addBtnOrder = computed(() => {
             left: 0;
             padding-top: 10px;
             padding-left: 10px;
-            visibility: hidden;
+        }
+        .li-top-title {
+            margin: 5px;
         }
         .li-top-util {
             position: absolute;
@@ -147,10 +153,15 @@ const addBtnOrder = computed(() => {
             right: 10px;
             height: 30px;
         }
-        &:hover .move-icon {
+
+        // 只在悬浮或者选中时显示的内容：
+        .hide-item {
+            visibility: hidden;
+        }
+        &:hover .hide-item {
             visibility: visible;
         }
-        &.selected .move-icon {
+        &.selected .hide-item {
             visibility: visible;
         }
 
@@ -195,6 +206,9 @@ const addBtnOrder = computed(() => {
 .dragging {
     .li {
         order: initial !important;
+    }
+    .hide-item {
+        visibility: hidden !important;
     }
     .move-icon {
         visibility: hidden !important;

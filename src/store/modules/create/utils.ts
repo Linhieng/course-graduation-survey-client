@@ -1,7 +1,7 @@
 import { QuestionItem, QuestionType } from './types';
 import { v4 as idv4 } from 'uuid';
 
-const allQuestion: {
+export const questionTypeMappingText: {
     [key in QuestionType]: string;
 } = {
     single_text: '单行文本',
@@ -25,7 +25,7 @@ const allQuestion: {
 };
 export function getAllQuestionTemplate(): QuestionItem[] {
     const qs: QuestionItem[] = [];
-    for (const t of Object.keys(allQuestion)) {
+    for (const t of Object.keys(questionTypeMappingText)) {
         // TODO 为什么这里会报错呢？
         // @ts-ignore
         qs.push(getNewQuestion(t));
@@ -49,28 +49,9 @@ export function getNewQuestion(type: QuestionType): QuestionItem {
         type,
         id: idv4(),
         order: -1,
-        title: '',
+        title: '未定义标题',
         required: true,
     };
-
-    if (type === 'single_text') q.title = '单行文本';
-    else if (type === 'multi_text') q.title = '多行文本';
-    else if (type === 'single_select') q.title = '单选题';
-    else if (type === 'multi_select') q.title = '多选题';
-    else if (type === 'pic_single_select') q.title = '图片单选题';
-    else if (type === 'pic_multi_select') q.title = '图片多选题';
-    else if (type === 'single_file') q.title = '单文件上传';
-    else if (type === 'multi_file') q.title = '多文件上传';
-    else if (type === 'score') q.title = '评分题';
-    else if (type === 'NPS') q.title = '量表题';
-    else if (type === 'matrix_single_select') q.title = '矩阵单选';
-    else if (type === 'matrix_multi_select') q.title = '矩阵多选';
-    else if (type === 'matrix_NPS') q.title = '矩阵量表';
-    else if (type === 'matrix_scope') q.title = '矩阵评分';
-    else if (type === 'auto_text') q.title = '自增文本';
-    else if (type === 'input_text') q.title = '填充题';
-    else if (type === 'auto_table') q.title = '自增表格';
-    else if (type === 'desc') q.title = '非填空的文本描述';
 
     return q;
 }
