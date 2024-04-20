@@ -19,27 +19,20 @@ const useCreateStore = defineStore('create', {
     getters: {},
 
     actions: {
-        updateBgUrl(url: string) {
-            this.skin.background_image = url;
-        },
-        updateBgWidth(val: string) {
-            this.skin.bg_width = val;
-        },
-        resetBgWidth() {
-            this.skin.bg_width = undefined;
-        },
-        resetBgPosition() {
-            this.skin.bg_position = 'reset';
-        },
-        updateBgColor(val: string) {
-            this.skin.bg_color = val;
-        },
-        resetBgColor() {
-            this.skin.bg_color = undefined;
-        },
-        updateSurveyWidth(val: string) {
-            this.skin.survey_width = val;
-        },
+        // prettier-ignore
+        updateBgUrl(url: string) { this.skin.background_image = url; },
+        // prettier-ignore
+        updateBgWidth(val: string) { this.skin.bg_width = val; },
+        // prettier-ignore
+        resetBgWidth() { this.skin.bg_width = undefined; },
+        // prettier-ignore
+        resetBgPosition() { this.skin.bg_position = 'reset'; },
+        // prettier-ignore
+        updateBgColor(val: string) { this.skin.bg_color = val; },
+        // prettier-ignore
+        resetBgColor() { this.skin.bg_color = undefined; },
+        // prettier-ignore
+        updateSurveyWidth(val: string) { this.skin.survey_width = val; },
     },
 });
 
