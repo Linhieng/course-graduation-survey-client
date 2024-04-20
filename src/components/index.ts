@@ -11,6 +11,8 @@ import {
 } from 'echarts/components';
 import Chart from './chart/index.vue';
 import Breadcrumb from './breadcrumb/index.vue';
+import IconFont from './icon-font/index.vue';
+import FlexCenter from './easy/flex-center.vue';
 
 // Manually introduce ECharts modules to reduce packing size
 
@@ -31,5 +33,7 @@ export default {
     install(Vue: App) {
         Vue.component('Chart', Chart);
         Vue.component('Breadcrumb', Breadcrumb);
+        Vue.component('IconFont', IconFont);
+        Vue.component('FlexCenter', FlexCenter);
     },
 };
