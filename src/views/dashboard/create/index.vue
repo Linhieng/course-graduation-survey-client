@@ -2,6 +2,7 @@
 import { useAppStore, useCreateStore } from '@/store';
 import { computed, ref } from 'vue';
 import EditSkin from './components/EditSkin.vue';
+import EditSurvey from './components/EditSurvey.vue';
 const createStore = useCreateStore();
 const appStore = useAppStore();
 const visibleEditSkin = ref(false);
@@ -30,9 +31,11 @@ const toggleFocusMode = () => {
 <template>
     <div class="container" :class="{ focusMode: appStore.focusMode }">
         <div class="header">
-            <a-button class="left header-item" type="primary" @click="toggleFocusMode">{{
-                appStore.focusMode ? $t('取消聚焦模式') : $t('聚焦模式')
-            }}</a-button>
+            <a-space>
+                <a-button class="left header-item" type="primary" @click="toggleFocusMode">{{
+                    appStore.focusMode ? $t('取消聚焦模式') : $t('聚焦模式')
+                }}</a-button>
+            </a-space>
             <a-space class="header-item" size="large">
                 <a-tooltip :content="$t('皮肤')">
                     <a-button shape="circle" @click="visibleEditSkin = true">
@@ -61,7 +64,7 @@ const toggleFocusMode = () => {
                 </a-button>
             </a-space>
         </div>
-        <div class="main">
+        <div class="create-container not-show-scroll">
             <div class="img-cover" :class="[createStore.skin.bg_position]">
                 <img
                     v-show="createStore.skin.background_image && createStore.skin.background_image !== ''"
@@ -72,6 +75,11 @@ const toggleFocusMode = () => {
                         // backgroundColor: createStore.skin.bg_color,
                     }"
                 />
+            </div>
+            <div class="b not-show-scroll">
+                <div class="workplace-box" :class="[useCreateStore().skin.survey_position]">
+                    <EditSurvey />
+                </div>
             </div>
         </div>
         <a-drawer
@@ -100,16 +108,17 @@ const toggleFocusMode = () => {
 
     position: relative;
 
+    --header-height: 60px;
     .header {
         position: absolute;
         top: 0;
         width: 100%;
+        height: var(--header-height);
         left: 0;
 
         display: flex;
         justify-content: space-between;
         margin-bottom: 10px;
-        padding: 10px;
 
         // 实现亚克力效果、毛玻璃
         background-color: #f6f8fc99;
@@ -118,6 +127,8 @@ const toggleFocusMode = () => {
         &::before {
             content: '';
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             background-repeat: no-repeat;
@@ -138,9 +149,6 @@ const toggleFocusMode = () => {
         right: 0;
         bottom: 0;
         overflow: auto; /* 垂直方向溢出时显示滚动条 */
-        &::-webkit-scrollbar {
-            width: 0;
-        }
         .img-cover {
             position: absolute;
             top: 0;
@@ -163,6 +171,39 @@ const toggleFocusMode = () => {
             width: 100%;
             height: max-content;
         }
+    }
+    .b {
+        position: absolute;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: auto;
+        .workplace-box {
+            // margin-top: 100px;
+            width: 60%;
+            z-index: 20;
+            background-color: skyblue;
+            opacity: 0.7;
+        }
+        .left {
+            margin-left: 0;
+            margin-right: auto;
+        }
+        .right {
+            margin-left: auto;
+            margin-right: 0;
+        }
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}
+
+.not-show-scroll {
+    &::-webkit-scrollbar {
+        width: 0;
     }
 }
 

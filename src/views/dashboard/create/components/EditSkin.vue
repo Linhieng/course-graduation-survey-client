@@ -73,6 +73,14 @@ const uploadSuccess = (fileItem: FileItem) => {
                 2.55.0
                 <a-color-picker @change="(val:any) => useCreateStore().updateBgColor(val)" />
             </a-space> -->
+            <a-space direction="vertical">
+                <span>{{ $t('问卷位置：') }}</span>
+                <a-radio-group type="button" v-model="useCreateStore().skin.survey_position">
+                    <a-radio value="left">left</a-radio>
+                    <a-radio value="center">center</a-radio>
+                    <a-radio value="right">right</a-radio>
+                </a-radio-group>
+            </a-space>
         </a-space>
     </div>
 </template>
