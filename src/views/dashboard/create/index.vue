@@ -30,7 +30,7 @@ const toggleFocusMode = () => {
 const drawerPosition = computed(() => {
     if (createStore.skin.survey_position === 'left') return 'right';
     if (createStore.skin.survey_position === 'right') return 'left';
-    return 'left';
+    return 'right';
 });
 </script>
 
@@ -83,7 +83,13 @@ const drawerPosition = computed(() => {
                 />
             </div>
             <div class="b not-show-scroll">
-                <div class="workplace-box" :class="[useCreateStore().skin.survey_position]">
+                <div
+                    class="workplace-box"
+                    :style="{
+                        width: createStore.skin.survey_width,
+                    }"
+                    :class="[createStore.skin.survey_position]"
+                >
                     <EditSurvey />
                 </div>
             </div>

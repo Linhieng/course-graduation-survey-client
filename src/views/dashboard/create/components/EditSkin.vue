@@ -17,6 +17,26 @@ const uploadSuccess = (fileItem: FileItem) => {
                 <a-divider direction="horizontal" margin="7px" />
             </template>
             <a-space direction="vertical">
+                <span>{{ $t('问卷位置：') }}</span>
+                <a-radio-group type="button" v-model="useCreateStore().skin.survey_position">
+                    <a-radio value="left">left</a-radio>
+                    <a-radio value="center">center</a-radio>
+                    <a-radio value="right">right</a-radio>
+                </a-radio-group>
+            </a-space>
+            <a-space direction="vertical">
+                <span>{{ $t('问卷宽度大小：') }}</span>
+                <a-slider
+                    :min="40"
+                    :max="100"
+                    :default-value="60"
+                    @change="(val:any) => useCreateStore().updateSurveyWidth(val + '%')"
+                    :style="{ width: '200px' }"
+                    :format-tooltip="(val:number) => `${Math.round(val)}%`"
+                />
+            </a-space>
+
+            <a-space direction="vertical">
                 <a-space>
                     <span>{{ $t('选择背景图片：') }}</span>
                     <a-upload
@@ -73,14 +93,6 @@ const uploadSuccess = (fileItem: FileItem) => {
                 2.55.0
                 <a-color-picker @change="(val:any) => useCreateStore().updateBgColor(val)" />
             </a-space> -->
-            <a-space direction="vertical">
-                <span>{{ $t('问卷位置：') }}</span>
-                <a-radio-group type="button" v-model="useCreateStore().skin.survey_position">
-                    <a-radio value="left">left</a-radio>
-                    <a-radio value="center">center</a-radio>
-                    <a-radio value="right">right</a-radio>
-                </a-radio-group>
-            </a-space>
         </a-space>
     </div>
 </template>

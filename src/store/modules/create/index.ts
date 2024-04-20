@@ -5,6 +5,7 @@ import bgImg from '@/assets/images/login1.png';
 const useCreateStore = defineStore('create', {
     state: (): CreateState => ({
         skin: {
+            survey_width: '60%',
             survey_position: 'left',
             background_image: bgImg,
             background_image_position: 'right',
@@ -32,6 +33,9 @@ const useCreateStore = defineStore('create', {
         },
         updateBgColor(val: string) {
             this.skin.bg_color = val;
+        },
+        updateSurveyWidth(val: string) {
+            this.skin.survey_width = val;
         },
     },
 });
