@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import ChangePassword from './change-password.vue';
 import ChangePhone from './change-phone.vue';
+import ChangeEmail from './change-email.vue';
 import { ref } from 'vue';
 import { useUserStore } from '@/store';
 
 const showHandleUpdatePasswordDialog = ref(false);
 const showHandleChangePhoneDialog = ref(false);
+const showHandleChangeEmailDialog = ref(false);
 </script>
 
 <template>
@@ -65,12 +67,19 @@ const showHandleChangePhoneDialog = ref(false);
                 </template>
                 <template #description>
                     <div class="content">
-                        <a-typography-paragraph class="tip">
-                            {{ $t('userSetting.SecuritySettings.placeholder.email') }}
-                        </a-typography-paragraph>
+                        <template v-if="useUserStore().userInfo.email?.trim() === ''">
+                            <a-typography-paragraph class="tip">
+                                {{ $t('你还没有设置邮箱') }}
+                            </a-typography-paragraph>
+                        </template>
+                        <template v-else>
+                            <a-typography-paragraph class="tip">
+                                {{ $t('当前安全邮箱为：') + useUserStore().userInfo.email }}
+                            </a-typography-paragraph>
+                        </template>
                     </div>
                     <div class="operation">
-                        <a-link>
+                        <a-link @click="showHandleChangeEmailDialog = true">
                             {{ $t('userSetting.SecuritySettings.button.update') }}
                         </a-link>
                     </div>
@@ -89,6 +98,12 @@ const showHandleChangePhoneDialog = ref(false);
         <template #title> {{ $t('修改手机') }} </template>
         <div>
             <change-phone @over="showHandleChangePhoneDialog = false"></change-phone>
+        </div>
+    </a-modal>
+    <a-modal v-model:visible="showHandleChangeEmailDialog" draggable>
+        <template #title> {{ $t('修改邮箱') }} </template>
+        <div>
+            <change-email @over="showHandleChangeEmailDialog = false"></change-email>
         </div>
     </a-modal>
 </template>
