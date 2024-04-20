@@ -22,14 +22,16 @@
                         </a-avatar>
                     </template>
                     <template #title>
-                        <p>{{ $t('行为：') + activity.info }}</p>
+                        <p>{{
+                            $t('行为：') +
+                            activity.info +
+                            $t('； 时间：') +
+                            new Date(activity.created_at).toLocaleString()
+                        }}</p>
                     </template>
                     <template #description>
                         <a-descriptions
-                            :data="[
-                                { label: $t('IP地址'), value: activity.ip },
-                                { label: $t('时间'), value: new Date(activity.created_at).toLocaleString() },
-                            ]"
+                            :data="[{ label: $t('IP地址'), value: activity.ip }, ...showUA(activity.user_agent)]"
                             bordered
                         />
                     </template>
@@ -45,6 +47,11 @@ import useLoading from '@/hooks/loading';
 import { UserActionLog, getUserActionLog } from '@/api/user';
 import { msgError } from '@/utils/msg';
 import { useUserStore } from '@/store';
+import { useI18n } from 'vue-i18n';
+import UAParser from 'ua-parser-js';
+import { DescData } from '@arco-design/web-vue';
+
+const { t } = useI18n();
 const { loading, setLoading } = useLoading(true);
 const activityList = ref<UserActionLog[]>(new Array(7).fill({}));
 
@@ -60,6 +67,35 @@ const getUserActionLately = async () => {
     setLoading(false);
 };
 getUserActionLately();
+
+function showUA(userAgent: string) {
+    const ua = new UAParser().setUA(userAgent);
+
+    const show: DescData[] = [];
+    const device = ua.getDevice().vendor;
+    const os = ua.getOS().name;
+    const browser = ua.getBrowser().name;
+    if (device) {
+        show.push({
+            label: t('设备'),
+            value: device,
+        });
+    }
+    if (os) {
+        show.push({
+            label: t('操作系统'),
+            value: os,
+        });
+    }
+    if (browser) {
+        show.push({
+            label: t('浏览器'),
+            value: browser,
+        });
+    }
+
+    return show;
+}
 </script>
 
 <style scoped lang="less">
