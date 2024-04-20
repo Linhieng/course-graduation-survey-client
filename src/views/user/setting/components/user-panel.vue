@@ -64,10 +64,10 @@ const renderData = [
         label: 'userSetting.label.name',
         value: userStore.name,
     },
-    {
-        label: 'userSetting.label.certification',
-        value: userStore.certification,
-    },
+    // {
+    //     label: 'userSetting.label.certification',
+    //     value: userStore.certification,
+    // },
     {
         label: 'userSetting.label.accountId',
         value: userStore.accountId,
@@ -78,7 +78,7 @@ const renderData = [
     },
     {
         label: 'userSetting.label.registrationDate',
-        value: userStore.registrationDate,
+        value: new Date(userStore.registrationDate || '').toLocaleString(),
     },
 ] as DescData[];
 const fileList = ref<FileItem[]>([file]);

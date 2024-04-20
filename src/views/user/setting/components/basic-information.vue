@@ -73,6 +73,7 @@ const validate = async () => {
         const res = await updateUserInfo(formData.value);
         if (res.ok) {
             msgSuccess('保存成功');
+            useUserStore().info();
         } else {
             msgError(res.msg);
         }
