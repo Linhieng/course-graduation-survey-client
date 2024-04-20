@@ -24,7 +24,7 @@ const toggleFocusMode = () => {
 </script>
 
 <template>
-    <div class="container">
+    <div class="container" :class="{ focusMode: appStore.focusMode }">
         <div class="header">
             <a-button class="left header-item" type="primary" @click="toggleFocusMode">{{
                 appStore.focusMode ? $t('取消聚焦模式') : $t('聚焦模式')
@@ -53,6 +53,9 @@ const toggleFocusMode = () => {
 </template>
 
 <style scoped lang="less">
+.container.focusMode {
+    height: 100vh;
+}
 .container {
     min-width: 100%;
     min-height: 100%;
@@ -72,16 +75,19 @@ const toggleFocusMode = () => {
         margin-bottom: 10px;
         padding: 10px;
 
-        // 亚克力背景
-        &::after {
+        // 实现亚克力效果、毛玻璃
+        background-color: #f6f8fc99;
+        overflow: hidden;
+        z-index: 10;
+        &::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            background-color: #f1f1f1;
-            filter: blur(6px);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            filter: blur(20px);
             z-index: 1;
         }
         &-item {
@@ -96,7 +102,15 @@ const toggleFocusMode = () => {
         right: 0;
         bottom: 0;
         overflow: auto; /* 垂直方向溢出时显示滚动条 */
+        &::-webkit-scrollbar {
+            width: 0;
+        }
         img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
