@@ -16,16 +16,19 @@ const uploadSuccess = (fileItem: FileItem) => {
             <template #split>
                 <a-divider direction="horizontal" margin="7px" />
             </template>
-            <a-space>
-                <span>{{ $t('选择背景图片：') }}</span>
-                <a-upload
-                    @success="uploadSuccess"
-                    :limit="1"
-                    :action="api_base_url + '/api/other/upload-public'"
-                    :headers="{
-                        Authorization: `Bearer ${getToken()}`,
-                    }"
-                />
+            <a-space direction="vertical">
+                <a-space>
+                    <span>{{ $t('选择背景图片：') }}</span>
+                    <a-upload
+                        @success="uploadSuccess"
+                        :limit="1"
+                        :action="api_base_url + '/api/other/upload-public'"
+                        :headers="{
+                            Authorization: `Bearer ${getToken()}`,
+                        }"
+                    />
+                </a-space>
+                <a-button type="dashed" @click="useCreateStore().updateBgUrl('')">取消背景图片</a-button>
             </a-space>
             <a-space direction="vertical">
                 <span>{{ $t('图片填充模式：') }}</span>
@@ -38,7 +41,7 @@ const uploadSuccess = (fileItem: FileItem) => {
             </a-space>
             <a-space direction="vertical">
                 <span>{{ $t('图片位置') }}</span>
-                <el-button @click="useCreateStore().resetBgPosition()">{{ $t('重置') }}</el-button>
+                <a-button @click="useCreateStore().resetBgPosition()">{{ $t('重置') }}</a-button>
                 <a-radio-group v-model="useCreateStore().skin.bg_position" type="button">
                     <div class="grid-9">
                         <a-radio class="grid-9-item" value="leftTop">⬉</a-radio>

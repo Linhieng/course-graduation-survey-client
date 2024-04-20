@@ -34,12 +34,25 @@ const toggleFocusMode = () => {
                 appStore.focusMode ? $t('取消聚焦模式') : $t('聚焦模式')
             }}</a-button>
             <a-space class="header-item" size="large">
-                <a-button shape="circle" @click="visibleEditSkin = true">
-                    <icon-font style="width: 20px; height: 20px" name="skin"></icon-font
-                ></a-button>
-                <a-button shape="circle">
-                    <icon-font style="width: 20px; height: 20px" name="settings"></icon-font>
-                </a-button>
+                <a-tooltip :content="$t('皮肤')">
+                    <a-button shape="circle" @click="visibleEditSkin = true">
+                        <icon-font style="width: 20px; height: 20px" name="skin"></icon-font
+                    ></a-button>
+                </a-tooltip>
+                <a-tooltip :content="$t('设置')">
+                    <a-button shape="circle">
+                        <icon-font style="width: 20px; height: 20px" name="settings"></icon-font>
+                    </a-button>
+                </a-tooltip>
+                <a-divider direction="vertical" />
+
+                <a-tooltip :content="$t('预览')">
+                    <a-button type="primary" shape="circle">
+                        <template #icon>
+                            <icon-font name="view"></icon-font>
+                        </template>
+                    </a-button>
+                </a-tooltip>
                 <a-button type="primary">
                     <template #icon>
                         <icon-font name="publish"></icon-font>
@@ -52,6 +65,7 @@ const toggleFocusMode = () => {
             <div class="workplace">
                 <div class="img-cover" :class="[createStore.skin.bg_position]">
                     <img
+                        v-show="createStore.skin.background_image && createStore.skin.background_image !== ''"
                         :src="createStore.skin.background_image"
                         :style="{
                             objectFit: createStore.skin.bg_object_fit,
