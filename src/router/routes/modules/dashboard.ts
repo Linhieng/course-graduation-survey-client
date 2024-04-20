@@ -22,6 +22,16 @@ const DASHBOARD: AppRouteRecordRaw = {
                 roles: ['*'],
             },
         },
+        {
+            path: 'create',
+            name: 'Create',
+            component: () => import('@/views/dashboard/create/index.vue'),
+            meta: {
+                locale: '新建问卷',
+                requiresAuth: true,
+                roles: ['*'],
+            },
+        },
         /** simple */
         {
             path: 'monitor',
