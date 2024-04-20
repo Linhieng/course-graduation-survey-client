@@ -58,7 +58,7 @@ const uploadSuccess = (fileItem: FileItem) => {
             </a-space>
             <a-space direction="vertical">
                 <span>{{ $t('背景图片大小') }}</span>
-                <el-button @click="useCreateStore().resetBgWidth()">{{ $t('重置') }}</el-button>
+                <a-button @click="useCreateStore().resetBgWidth()">{{ $t('重置') }}</a-button>
                 <a-slider
                     :min="30"
                     :max="100"
