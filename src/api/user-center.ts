@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { post } from './axios';
 
 export interface MyProjectRecord {
     id: number;
@@ -84,5 +85,5 @@ export function userUploadApi(
     },
 ) {
     // const controller = new AbortController();
-    return axios.post('/api/user/upload', data, config);
+    return post<{ url: string }>('/api/other/upload-public', data /* , config */);
 }

@@ -52,6 +52,8 @@ import type { FileItem, RequestOption } from '@arco-design/web-vue/es/upload/int
 import { useUserStore } from '@/store';
 import { userUploadApi } from '@/api/user-center';
 import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
+import { msgError } from '@/utils/msg';
+import NProgress from 'nprogress';
 
 const userStore = useUserStore();
 const file = {
@@ -83,6 +85,7 @@ const renderData = [
 ] as DescData[];
 const fileList = ref<FileItem[]>([file]);
 const uploadChange = (fileItemList: FileItem[], fileItem: FileItem) => {
+    // 这里获得的 fileItem 是本地的
     fileList.value = [fileItem];
 };
 const customRequest = (options: RequestOption) => {
@@ -102,18 +105,27 @@ const customRequest = (options: RequestOption) => {
             onProgress(parseInt(String(percent), 10), event);
         };
 
+        NProgress.start();
         try {
-            // https://github.com/axios/axios/issues/1630
-            // https://github.com/nuysoft/Mock/issues/127
+            // 报错 TypeError: request.upload.addEventListener is not a function
+            // 请见： https://github.com/axios/axios/issues/1630
+            //       https://github.com/nuysoft/Mock/issues/127
 
             const res = await userUploadApi(formData, {
                 controller,
                 onUploadProgress,
             });
-            onSuccess(res);
+            if (res.ok) {
+                onSuccess(res);
+                userStore.updateUserInfo({ avatar: res.data.url });
+            } else {
+                onError(res);
+                msgError(res.msg);
+            }
         } catch (error) {
             onError(error);
         }
+        NProgress.done();
     })();
     return {
         abort() {

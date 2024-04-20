@@ -1,9 +1,17 @@
 import { defineStore } from 'pinia';
-import { login as userLogin, logout as userLogout, getUserInfo, LoginData } from '@/api/user';
+import {
+    login as userLogin,
+    logout as userLogout,
+    getUserInfo,
+    LoginData,
+    updateUserInfo as apiUpdateUserInfo,
+    UserInfoCanModified,
+} from '@/api/user';
 import { setToken, clearToken } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
 import { UserState } from './types';
 import useAppStore from '../app';
+import { msgError, msgSuccess } from '@/utils/msg';
 
 const useUserStore = defineStore('user', {
     state: (): UserState => ({
@@ -32,6 +40,16 @@ const useUserStore = defineStore('user', {
     },
 
     actions: {
+        /** 更新用户信息 */
+        async updateUserInfo(data: Partial<UserInfoCanModified>) {
+            const res = await apiUpdateUserInfo(data);
+            if (res.ok) {
+                msgSuccess('更新成功');
+                this.info();
+            } else {
+                msgError(res.msg);
+            }
+        },
         switchRoles() {
             return new Promise((resolve) => {
                 this.role = this.role === 'user' ? 'admin' : 'user';
