@@ -62,18 +62,16 @@ const toggleFocusMode = () => {
             </a-space>
         </div>
         <div class="main">
-            <div class="workplace">
-                <div class="img-cover" :class="[createStore.skin.bg_position]">
-                    <img
-                        v-show="createStore.skin.background_image && createStore.skin.background_image !== ''"
-                        :src="createStore.skin.background_image"
-                        :style="{
-                            objectFit: createStore.skin.bg_object_fit,
-                            width: createStore.skin.bg_width,
-                            // backgroundColor: createStore.skin.bg_color,
-                        }"
-                    />
-                </div>
+            <div class="img-cover" :class="[createStore.skin.bg_position]">
+                <img
+                    v-show="createStore.skin.background_image && createStore.skin.background_image !== ''"
+                    :src="createStore.skin.background_image"
+                    :style="{
+                        objectFit: createStore.skin.bg_object_fit,
+                        width: createStore.skin.bg_width,
+                        // backgroundColor: createStore.skin.bg_color,
+                    }"
+                />
             </div>
         </div>
         <a-drawer
@@ -132,7 +130,7 @@ const toggleFocusMode = () => {
             z-index: 2;
         }
     }
-    .workplace {
+    .create-container {
         flex: 1 0 auto;
         position: absolute;
         top: 0;
