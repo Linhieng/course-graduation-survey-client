@@ -29,10 +29,19 @@ const toggleFocusMode = () => {
             <a-button class="left" type="primary" @click="toggleFocusMode">{{
                 appStore.focusMode ? $t('取消聚焦模式') : $t('聚焦模式')
             }}</a-button>
-            <a-space>
-                <a-button>皮肤</a-button>
-                <a-button>设置</a-button>
-                <a-button>发布</a-button>
+            <a-space size="large">
+                <a-button shape="circle">
+                    <icon-font style="width: 20px; height: 20px" name="skin"></icon-font
+                ></a-button>
+                <a-button shape="circle">
+                    <icon-font style="width: 20px; height: 20px" name="settings"></icon-font>
+                </a-button>
+                <a-button type="primary">
+                    <template #icon>
+                        <icon-font name="publish"></icon-font>
+                    </template>
+                    <template #default>{{ $t('发布') }}</template>
+                </a-button>
             </a-space>
         </div>
         <div class="main">
