@@ -88,11 +88,11 @@ const uploadSuccess = (fileItem: FileItem) => {
                     :format-tooltip="(val:number) => `${Math.round(val)}%`"
                 />
             </a-space>
-            <!-- <a-space direction="vertical">
+            <a-space direction="vertical">
                 <span>{{ $t('背景颜色') }}</span>
-                2.55.0
+                <a-button @click="useCreateStore().resetBgColor()">{{ $t('重置') }}</a-button>
                 <a-color-picker @change="(val:any) => useCreateStore().updateBgColor(val)" />
-            </a-space> -->
+            </a-space>
         </a-space>
     </div>
 </template>

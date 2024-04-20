@@ -34,6 +34,9 @@ const useCreateStore = defineStore('create', {
         updateBgColor(val: string) {
             this.skin.bg_color = val;
         },
+        resetBgColor() {
+            this.skin.bg_color = undefined;
+        },
         updateSurveyWidth(val: string) {
             this.skin.survey_width = val;
         },

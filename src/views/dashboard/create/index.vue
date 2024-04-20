@@ -71,7 +71,13 @@ const drawerPosition = computed(() => {
             </a-space>
         </div>
         <div class="create-container not-show-scroll">
-            <div class="img-cover" :class="[createStore.skin.bg_position]">
+            <div
+                class="img-cover"
+                :class="[createStore.skin.bg_position]"
+                :style="{
+                    backgroundColor: createStore.skin.bg_color,
+                }"
+            >
                 <img
                     v-show="createStore.skin.background_image && createStore.skin.background_image !== ''"
                     :src="createStore.skin.background_image"
