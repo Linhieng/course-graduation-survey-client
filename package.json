@@ -11,24 +11,7 @@
         "report": "cross-env REPORT=true npm run build",
         "preview": "npm run build && vite preview --host",
         "type:check": "vue-tsc --noEmit --skipLibCheck",
-        "lint-staged": "npx lint-staged",
-        "prepare": "husky install",
         "format": "prettier . --write"
-    },
-    "lint-staged": {
-        "*.{js,ts,jsx,tsx}": [
-            "prettier --write",
-            "eslint --fix"
-        ],
-        "*.vue": [
-            "stylelint --fix",
-            "prettier --write",
-            "eslint --fix"
-        ],
-        "*.{less,css}": [
-            "stylelint --fix",
-            "prettier --write"
-        ]
     },
     "dependencies": {
         "@arco-design/web-vue": "^2.44.7",
