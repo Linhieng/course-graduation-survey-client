@@ -3,10 +3,11 @@ const api_base_url = import.meta.env.VITE_API_BASE_URL;
 import { useCreateStore } from '@/store';
 import { getToken } from '@/utils/auth';
 import { FileItem } from '@arco-design/web-vue';
-
+import GradientBox from './gradient-box.vue';
+const createStore = useCreateStore();
 const uploadSuccess = (fileItem: FileItem) => {
     const url = fileItem.response?.data.url;
-    useCreateStore().updateBgUrl(url);
+    createStore.updateBgUrl(url);
 };
 </script>
 
@@ -48,7 +49,7 @@ const uploadSuccess = (fileItem: FileItem) => {
                         }"
                     />
                 </a-space>
-                <a-button type="dashed" @click="useCreateStore().updateBgUrl('')">取消背景图片</a-button>
+                <a-button type="dashed" @click="useCreateStore().resetBgUrl()">取消背景图片</a-button>
             </a-space>
             <a-space direction="vertical">
                 <span>{{ $t('图片填充模式：') }}</span>
@@ -92,6 +93,17 @@ const uploadSuccess = (fileItem: FileItem) => {
                 <span>{{ $t('背景颜色') }}</span>
                 <a-button @click="useCreateStore().resetBgColor()">{{ $t('重置') }}</a-button>
                 <a-color-picker @change="(val:any) => useCreateStore().updateBgColor(val)" />
+            </a-space>
+            <a-space direction="vertical">
+                <span>{{ $t('背景图片') }}</span>
+                <a-button @click="createStore.resetBgImg()">{{ $t('重置') }}</a-button>
+                <a-radio-group v-model="useCreateStore().skin.bg_img">
+                    <a-radio v-for="(bg, i) in createStore.skin.suggestBgImgList" :key="i" :value="bg">
+                        <template #radio>
+                            <gradient-box :bg="bg" />
+                        </template>
+                    </a-radio>
+                </a-radio-group>
             </a-space>
         </a-space>
     </div>

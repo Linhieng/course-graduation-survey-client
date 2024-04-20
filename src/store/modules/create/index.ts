@@ -10,12 +10,18 @@ const useCreateStore = defineStore('create', {
         skin: {
             survey_width: '60%',
             survey_position: 'left',
-            background_image: bgImg,
+            background_image: undefined,
             background_image_position: 'right',
             bg_object_fit: 'cover',
             bg_position: 'reset',
             bg_width: undefined,
             bg_color: undefined,
+            bg_img: 'repeating-linear-gradient(0deg, #48c6ef 0%,#6f86d6 100%)',
+            suggestBgImgList: [
+                'repeating-linear-gradient(0deg, #48c6ef 0%,#6f86d6 100%)',
+                'repeating-linear-gradient(45deg, #d299c2 0%,#fef9d7 100%)',
+                'repeating-linear-gradient(240deg, rgba(158, 180, 218, 0.91) 0%,#04befe 100%)',
+            ],
         },
         survey: {
             title: '问卷未命名标题',
@@ -59,6 +65,8 @@ const useCreateStore = defineStore('create', {
         // prettier-ignore
         updateBgUrl(url: string) { this.skin.background_image = url; },
         // prettier-ignore
+        resetBgUrl() { this.skin.background_image = undefined; },
+        // prettier-ignore
         updateBgWidth(val: string) { this.skin.bg_width = val; },
         // prettier-ignore
         resetBgWidth() { this.skin.bg_width = undefined; },
@@ -70,6 +78,10 @@ const useCreateStore = defineStore('create', {
         resetBgColor() { this.skin.bg_color = undefined; },
         // prettier-ignore
         updateSurveyWidth(val: string) { this.skin.survey_width = val; },
+        // prettier-ignore
+        updateBgImg(val:string) {this.skin.bg_img = val},
+        // prettier-ignore
+        resetBgImg() {this.skin.bg_img = undefined},
     },
 });
 

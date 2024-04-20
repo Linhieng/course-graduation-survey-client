@@ -76,10 +76,11 @@ const drawerPosition = computed(() => {
                 :class="[createStore.skin.bg_position]"
                 :style="{
                     backgroundColor: createStore.skin.bg_color,
+                    backgroundImage: createStore.skin.bg_img,
                 }"
             >
                 <img
-                    v-show="createStore.skin.background_image && createStore.skin.background_image !== ''"
+                    v-show="createStore.skin.background_image"
                     :src="createStore.skin.background_image"
                     :style="{
                         objectFit: createStore.skin.bg_object_fit,
@@ -104,6 +105,7 @@ const drawerPosition = computed(() => {
             :placement="drawerPosition"
             :width="340"
             :visible="visibleEditSkin"
+            :footer="false"
             @ok="visibleEditSkin = false"
             @cancel="visibleEditSkin = false"
         >
@@ -190,15 +192,19 @@ const drawerPosition = computed(() => {
             margin-left: 0;
             margin-right: auto;
             padding-left: 100px;
+            border-end-end-radius: 20px;
         }
         .right {
             margin-left: auto;
             margin-right: 0;
             padding-right: 100px;
+            border-end-start-radius: 20px;
         }
         .center {
             margin-left: auto;
             margin-right: auto;
+            border-end-end-radius: 20px;
+            border-end-start-radius: 20px;
         }
     }
 }

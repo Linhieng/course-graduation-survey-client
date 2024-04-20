@@ -51,7 +51,7 @@ export interface CreateState {
     skin: {
         survey_width: string;
         survey_position: 'center' | 'left' | 'right';
-        background_image: string;
+        background_image: undefined | string;
         background_image_position: 'left' | 'right' | 'top';
         bg_object_fit: 'contain' | 'cover' | 'fill' | 'none';
         bg_width: undefined | string;
@@ -64,5 +64,8 @@ export interface CreateState {
         ;
 
         bg_color: undefined | string;
+        // 渐变背景
+        bg_img: undefined | string;
+        suggestBgImgList: string[];
     };
 }
