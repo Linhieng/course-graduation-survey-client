@@ -3,9 +3,11 @@ import { useAppStore, useCreateStore } from '@/store';
 import { computed, ref } from 'vue';
 import EditSkin from './components/EditSkin.vue';
 import EditSurvey from './components/EditSurvey.vue';
+import EditConfig from './components/edit-config.vue';
 const createStore = useCreateStore();
 const appStore = useAppStore();
 const visibleEditSkin = ref(false);
+const visibleConfig = ref(false);
 
 const toggleFocusMode = () => {
     if (appStore.focusMode) {
@@ -49,7 +51,7 @@ const drawerPosition = computed(() => {
                     ></a-button>
                 </a-tooltip>
                 <a-tooltip :content="$t('设置')">
-                    <a-button shape="circle">
+                    <a-button shape="circle" @click="visibleConfig = true">
                         <icon-font style="width: 20px; height: 20px" name="settings"></icon-font>
                     </a-button>
                 </a-tooltip>
@@ -113,6 +115,19 @@ const drawerPosition = computed(() => {
                 <h3>{{ $t('自定义皮肤') }}</h3>
             </template>
             <div> <EditSkin /> </div>
+        </a-drawer>
+        <a-drawer
+            :placement="drawerPosition"
+            :width="340"
+            :visible="visibleConfig"
+            :footer="false"
+            @ok="visibleConfig = false"
+            @cancel="visibleConfig = false"
+        >
+            <template #title>
+                <h3>{{ $t('配置信息') }}</h3>
+            </template>
+            <div> <EditConfig /> </div>
         </a-drawer>
     </div>
 </template>

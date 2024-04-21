@@ -42,6 +42,7 @@ const useCreateStore = defineStore('create', {
     },
 
     actions: {
+        /** 删除一个问题 */
         delQuestion(order: number) {
             this.survey.questionList.splice(order, 1);
             this.survey.questionList.forEach((q, i) => {
@@ -65,6 +66,12 @@ const useCreateStore = defineStore('create', {
                 q.order = i;
             });
             this.survey.questionList = questionList;
+        },
+        //////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////
+        toggleConfirmBeforeDelete() {
+            this.config.confirmBeforeDel = !this.config.confirmBeforeDel;
         },
         //////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////
