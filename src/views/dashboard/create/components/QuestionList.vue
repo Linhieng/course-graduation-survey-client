@@ -6,6 +6,7 @@ import { useCreateStore } from '@/store';
 import { QuestionItem } from '@/store/modules/create/types';
 import AddQuestion from './AddQuestion.vue';
 import { questionTypeMappingText } from '@/store/modules/create/utils';
+import AssignQuestionEdit from './assign-question-edit.vue';
 const dragging = ref(false);
 const createStore = useCreateStore();
 const ul = ref();
@@ -70,7 +71,7 @@ const addBtnOrder = computed(() => {
 <template>
     <ul ref="ul" class="ul" :class="{ dragging }">
         <li
-            v-for="question in createStore.$state.survey.questionList"
+            v-for="(question, index) in createStore.$state.survey.questionList"
             :key="question.id"
             class="li"
             :style="{
@@ -101,7 +102,11 @@ const addBtnOrder = computed(() => {
             </a-space>
 
             <span class="order">{{ question.order + 1 }}</span>
-            <a-textarea class="question-title" v-model="question.title"></a-textarea>
+            <a-space direction="vertical" fill>
+                <a-textarea class="question-title" auto-size v-model="question.title"></a-textarea>
+                <assign-question-edit :question="question" :index="index" />
+            </a-space>
+            <a-space></a-space>
         </li>
         <div
             class="add-btn"
@@ -187,6 +192,7 @@ const addBtnOrder = computed(() => {
 
         .question-title :deep(textarea) {
             font-weight: bold;
+            font-size: 1.2rem;
         }
     }
     .li.chosen {

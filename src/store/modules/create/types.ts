@@ -41,6 +41,9 @@ export interface QuestionItem {
     order: number;
     title: string;
     required: boolean;
+
+    // 文本
+    desc?: string;
 }
 export interface CreateState {
     survey: {

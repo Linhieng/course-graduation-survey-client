@@ -53,5 +53,9 @@ export function getNewQuestion(type: QuestionType): QuestionItem {
         required: true,
     };
 
+    if (type === 'single_text') {
+        q.desc = '';
+    }
+
     return q;
 }
