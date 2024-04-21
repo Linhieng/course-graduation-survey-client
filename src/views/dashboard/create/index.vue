@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAppStore, useCreateStore } from '@/store';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import EditSkin from './components/EditSkin.vue';
 import EditSurvey from './components/EditSurvey.vue';
 import EditConfig from './components/edit-config.vue';
@@ -10,7 +10,7 @@ const createStore = useCreateStore();
 const appStore = useAppStore();
 const visibleEditSkin = ref(false);
 const visibleConfig = ref(false);
-
+let cacheTimer: number | undefined;
 const toggleFocusMode = () => {
     if (appStore.focusMode) {
         appStore.focusMode = false;
@@ -36,6 +36,19 @@ const drawerPosition = computed(() => {
     if (createStore.skin.survey_position === 'right') return 'left';
     return 'right';
 });
+
+watch(
+    () => createStore.config.autoCacheSurvey,
+    (newV, oldV) => {
+        if (newV) {
+            cacheTimer = setInterval(() => {
+                createStore.cacheSurvey();
+            }, 60_000);
+        } else {
+            clearInterval(cacheTimer);
+        }
+    },
+);
 </script>
 
 <template>
@@ -50,13 +63,7 @@ const drawerPosition = computed(() => {
                 <a-space>
                     <template v-if="createStore.local.latelyCacheTime">
                         <span>{{ $t('最近缓存') }}</span>
-                        <a-statistic
-                            format="HH:mm:ss"
-                            :value="createStore.local.latelyCacheTime"
-                            :value-from="0"
-                            animation
-                        >
-                        </a-statistic>
+                        <a-statistic format="HH:mm:ss" :value="createStore.local.latelyCacheTime"> </a-statistic>
                     </template>
                     <p v-else>{{ $t('未缓存') }}</p>
                 </a-space>
