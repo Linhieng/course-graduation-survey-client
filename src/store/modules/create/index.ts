@@ -4,7 +4,7 @@ import bgImg from '@/assets/images/login1.png';
 import { v4 as idv4 } from 'uuid';
 import { toRaw } from 'vue';
 import { getAllQuestionTemplate, getNewOption, getNewQuestion, getNormalQuestion } from './utils';
-import { msgError, msgSuccess, msgWarning } from '@/utils/msg';
+import { msgError, msgSuccess, msgWarning, noticeInfo } from '@/utils/msg';
 import { cacheSurvey as reqCacheSurvey } from '@/api/survey';
 import { publishSurvey as apiPublishSurvey } from '@/api/survey';
 import router from '@/router';
@@ -57,9 +57,18 @@ const useCreateStore = defineStore('create', {
 
     actions: {
         async publishSurvey() {
-            if (!this.survey.id) return;
             if (this.local.isPublishing) return;
             this.local.isPublishing = true;
+
+            if (!this.survey.id) {
+                noticeInfo('问卷不存在，正在创建中');
+                await this.cacheSurvey();
+            }
+            if (!this.survey.id) {
+                msgError('这是不应该出现的错误。问卷不存在，无法发布。');
+                return;
+            }
+
             const res = await apiPublishSurvey(this.survey.id);
             if (res.ok) {
                 msgSuccess('发布成功');
@@ -95,6 +104,7 @@ const useCreateStore = defineStore('create', {
             }
 
             this.local.isCaching = false;
+            return res.data.surveyId;
         },
 
         /** 添加一个选项（适用单选多选） */

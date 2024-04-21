@@ -13,6 +13,16 @@ const LIST: AppRouteRecordRaw = {
     },
     children: [
         {
+            path: 'my-publish',
+            name: 'my-publish-survey',
+            component: () => import('@/views/list/my-publish/index.vue'),
+            meta: {
+                locale: '已发布的问卷',
+                requiresAuth: true,
+                roles: ['*'],
+            },
+        },
+        {
             path: 'search-table', // The midline path complies with SEO specifications
             name: 'SearchTable',
             component: () => import('@/views/list/search-table/index.vue'),
