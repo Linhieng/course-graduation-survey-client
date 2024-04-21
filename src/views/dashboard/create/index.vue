@@ -47,6 +47,19 @@ const drawerPosition = computed(() => {
                 }}</a-button>
             </a-space>
             <a-space style="margin-right: 20px" class="header-item" size="large">
+                <a-space>
+                    <template v-if="createStore.local.latelyCacheTime">
+                        <span>{{ $t('最近缓存') }}</span>
+                        <a-statistic
+                            format="HH:mm:ss"
+                            :value="createStore.local.latelyCacheTime"
+                            :value-from="0"
+                            animation
+                        >
+                        </a-statistic>
+                    </template>
+                    <p v-else>{{ $t('未缓存') }}</p>
+                </a-space>
                 <a-tooltip :content="isFullscreen ? $t('退出全屏') : $t('全屏')">
                     <a-button class="left header-item" shape="circle" @click="toggleFullScreen">
                         <template #icon>
