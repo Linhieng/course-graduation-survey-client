@@ -6,6 +6,17 @@ const createStore = useCreateStore();
     <div class="container">
         <a-space direction="vertical" fill>
             <a-space wrap>
+                <p>{{ $t('是否定时缓存问卷到云端') }}</p>
+                <a-switch v-model="createStore.config.autoCacheSurvey" type="round">
+                    <template #checked>
+                        {{ $t('自动') }}
+                    </template>
+                    <template #unchecked>
+                        {{ $t('手动') }}
+                    </template>
+                </a-switch>
+            </a-space>
+            <a-space wrap>
                 <p>{{ $t('是否自动关闭添加问题面板？') }}</p>
                 <a-switch v-model="createStore.config.autoCloseAddPanel" type="round">
                     <template #checked>

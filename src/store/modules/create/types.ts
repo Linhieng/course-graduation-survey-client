@@ -55,18 +55,27 @@ export interface QuestionOption {
     text: string;
     url: string;
 }
+
+export interface Survey {
+    id: undefined | number;
+    title: string;
+    comment: string;
+    questionList: QuestionItem[];
+}
 export interface CreateState {
+    /** 仅用于前端相关工作 */
+    local: {
+        isCaching: boolean;
+        latelyCacheTime: undefined | Date;
+    };
     config: {
         confirmBeforeDel: boolean;
         canDelLastQuestion: boolean;
         canDelLastOption: boolean;
         autoCloseAddPanel: boolean;
+        autoCacheSurvey: boolean;
     };
-    survey: {
-        title: string;
-        comment: string;
-        questionList: QuestionItem[];
-    };
+    survey: Survey;
     skin: {
         survey_width: string;
         survey_position: 'center' | 'left' | 'right';

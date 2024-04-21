@@ -66,12 +66,19 @@ const drawerPosition = computed(() => {
                         <icon-font style="width: 20px; height: 20px" name="settings"></icon-font>
                     </a-button>
                 </a-tooltip>
-                <a-divider direction="vertical" />
-
                 <a-tooltip :content="$t('预览')">
                     <a-button type="primary" shape="circle">
                         <template #icon>
                             <icon-font name="view"></icon-font>
+                        </template>
+                    </a-button>
+                </a-tooltip>
+                <a-divider direction="vertical" />
+
+                <a-tooltip :content="$t('缓存问卷到云端')">
+                    <a-button type="primary" shape="circle" @click="createStore.cacheSurvey()">
+                        <template #icon>
+                            <icon-font name="push"></icon-font>
                         </template>
                     </a-button>
                 </a-tooltip>

@@ -4,7 +4,8 @@ import bgImg from '@/assets/images/login1.png';
 import { v4 as idv4 } from 'uuid';
 import { toRaw } from 'vue';
 import { getAllQuestionTemplate, getNewOption, getNewQuestion, getNormalQuestion } from './utils';
-import { msgWarning } from '@/utils/msg';
+import { msgError, msgSuccess, msgWarning } from '@/utils/msg';
+import { cacheSurvey as reqCacheSurvey } from '@/api/survey';
 
 const useCreateStore = defineStore('create', {
     state: (): CreateState => ({
@@ -13,6 +14,7 @@ const useCreateStore = defineStore('create', {
             canDelLastQuestion: false,
             canDelLastOption: false,
             autoCloseAddPanel: true,
+            autoCacheSurvey: false,
         },
         skin: {
             survey_width: '60%',
@@ -31,10 +33,15 @@ const useCreateStore = defineStore('create', {
             ],
         },
         survey: {
+            id: undefined,
             title: '问卷未命名标题',
             comment: '',
             // questionList: getAllQuestionTemplate(),
             questionList: getNormalQuestion(),
+        },
+        local: {
+            isCaching: false,
+            latelyCacheTime: undefined,
         },
     }),
 
@@ -46,6 +53,31 @@ const useCreateStore = defineStore('create', {
     },
 
     actions: {
+        /** 立刻缓存问卷 */
+        async cacheSurvey() {
+            if (this.local.isCaching) return;
+            this.local.isCaching = true;
+
+            const res = await reqCacheSurvey({
+                surveyId: this.survey.id,
+                title: this.survey.title,
+                comment: this.survey.comment,
+                structure_json: {
+                    version: '0.2.0',
+                    questionList: this.survey.questionList,
+                },
+            });
+            if (res.ok) {
+                msgSuccess('缓存成功');
+                this.survey.id = res.data.surveyId;
+                this.local.latelyCacheTime = new Date(res.data.time);
+            } else {
+                msgError(res.msg);
+            }
+
+            this.local.isCaching = false;
+        },
+
         /** 添加一个选项（适用单选多选） */
         addOption(questionIndex: number, optionIndex: number, type: QuestionType) {
             this.survey.questionList[questionIndex].options.splice(optionIndex + 1, 0, getNewOption(type));
