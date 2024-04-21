@@ -17,7 +17,14 @@ const createQuestion = (evt: MouseEvent) => {
 </script>
 
 <template>
-    <a-button class="btn" @click="visibleDrawer = true">{{ $t('在这里添加一个问题') }} + {{ order }}</a-button>
+    <a-button class="btn" @click="visibleDrawer = true">
+        <template #icon>
+            <icon-font name="add" />
+        </template>
+        <template #default>
+            {{ $t('在第 ') + (order + 1) + $t('个问题后面添加') }}
+        </template>
+    </a-button>
     <a-drawer
         :width="340"
         :visible="visibleDrawer"

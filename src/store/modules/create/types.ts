@@ -42,8 +42,18 @@ export interface QuestionItem {
     title: string;
     required: boolean;
 
-    // 文本
-    desc?: string;
+    // 下面内容全部弄成必填，更方便类型判断
+    /** 问题描述，除了“描述”，其他问题基本都会有这个属性 */
+    desc: string;
+    /** 通用选项，包括单选项、多选项、图片选项等等 */
+    options: Array<QuestionOption>;
+}
+/** 一个选项 */
+export interface QuestionOption {
+    id: string;
+    index: number;
+    text: string;
+    url: string;
 }
 export interface CreateState {
     config: {

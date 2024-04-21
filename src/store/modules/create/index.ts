@@ -3,7 +3,7 @@ import { CreateState, QuestionType } from './types';
 import bgImg from '@/assets/images/login1.png';
 import { v4 as idv4 } from 'uuid';
 import { toRaw } from 'vue';
-import { getAllQuestionTemplate, getNewQuestion, getNormalQuestion } from './utils';
+import { getAllQuestionTemplate, getNewOption, getNewQuestion, getNormalQuestion } from './utils';
 
 const useCreateStore = defineStore('create', {
     state: (): CreateState => ({
@@ -42,6 +42,23 @@ const useCreateStore = defineStore('create', {
     },
 
     actions: {
+        /** 添加一个选项（适用单选多选） */
+        addOption(questionIndex: number, optionIndex: number, type: QuestionType) {
+            this.survey.questionList[questionIndex].options.splice(optionIndex + 1, 0, getNewOption(type));
+            this.survey.questionList[questionIndex].options.forEach((option, i) => {
+                option.index = i;
+            });
+        },
+        /** 删除一个选项（适用单选多选） */
+        removeOption(questionIndex: number, optionIndex: number) {
+            if (this.survey.questionList[questionIndex].options.length > 0) {
+                this.survey.questionList[questionIndex].options.splice(optionIndex, 1);
+                this.survey.questionList[questionIndex].options.forEach((option, i) => {
+                    option.index = i;
+                });
+            }
+        },
+
         /** 删除一个问题 */
         delQuestion(order: number) {
             this.survey.questionList.splice(order, 1);

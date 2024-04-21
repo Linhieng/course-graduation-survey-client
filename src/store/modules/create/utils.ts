@@ -1,4 +1,4 @@
-import { QuestionItem, QuestionType } from './types';
+import { QuestionItem, QuestionOption, QuestionType } from './types';
 import { v4 as idv4 } from 'uuid';
 
 export const questionTypeMappingText: {
@@ -36,9 +36,9 @@ export function getAllQuestionTemplate(): QuestionItem[] {
 export function getNormalQuestion(): QuestionItem[] {
     const qs: QuestionItem[] = [];
     qs.push(getNewQuestion('single_text'));
-    // qs.push(getNewQuestion('multi_text'));
-    // qs.push(getNewQuestion('single_select'));
-    // qs.push(getNewQuestion('multi_select'));
+    qs.push(getNewQuestion('multi_text'));
+    qs.push(getNewQuestion('single_select'));
+    qs.push(getNewQuestion('multi_select'));
     qs.forEach((q, i) => (q.order = i));
     return qs;
 }
@@ -48,14 +48,29 @@ export function getNewQuestion(type: QuestionType): QuestionItem {
     const q: QuestionItem = {
         type,
         id: idv4(),
-        order: -1,
+        order: 0,
         title: '未定义标题',
         required: true,
+
+        desc: '',
+        options: [
+            {
+                id: idv4(),
+                text: '选项',
+                url: '',
+                index: 0,
+            },
+        ],
     };
 
-    if (type === 'single_text') {
-        q.desc = '';
-    }
-
     return q;
+}
+
+export function getNewOption(type: QuestionType): QuestionOption {
+    return {
+        id: idv4(),
+        text: '选项',
+        url: '',
+        index: -1,
+    };
 }
