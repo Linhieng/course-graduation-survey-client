@@ -43,6 +43,7 @@ watch(
     (arrivedBottom) => {
         if (arrivedBottom && draftData.value && renderData.value.length < draftData.value.length) {
             const curLen = renderData.value.length;
+            // TODO: 这里会阻塞页面
             renderData.value.push(...draftData.value.slice(curLen, curLen + 4));
         }
     },
