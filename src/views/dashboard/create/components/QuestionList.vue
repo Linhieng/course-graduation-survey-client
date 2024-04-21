@@ -94,7 +94,28 @@ const addBtnOrder = computed(() => {
                     <span>{{ question.required ? $t('必填') : $t('选填') }}</span>
                 </a-space>
                 <a-divider direction="vertical" :size="0"></a-divider>
-                <a-button type="primary" style="background-color: red" shape="circle" size="mini">
+
+                <a-popconfirm
+                    v-if="createStore.config.confirmBeforeDel"
+                    :content="$t('确认删除？')"
+                    :okText="$t('⚠️删除')"
+                    :cancelText="$t('取消')"
+                    @ok="createStore.delQuestion(question.order)"
+                >
+                    <a-button type="primary" style="background-color: red" shape="circle" size="mini">
+                        <template #icon>
+                            <icon-font name="del" />
+                        </template>
+                    </a-button>
+                </a-popconfirm>
+                <a-button
+                    v-else
+                    @click="createStore.delQuestion(question.order)"
+                    type="primary"
+                    style="background-color: red"
+                    shape="circle"
+                    size="mini"
+                >
                     <template #icon>
                         <icon-font name="del" />
                     </template>

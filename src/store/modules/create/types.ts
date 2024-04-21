@@ -46,6 +46,9 @@ export interface QuestionItem {
     desc?: string;
 }
 export interface CreateState {
+    config: {
+        confirmBeforeDel: boolean;
+    };
     survey: {
         title: string;
         comment: string;

@@ -7,6 +7,9 @@ import { getAllQuestionTemplate, getNewQuestion, getNormalQuestion } from './uti
 
 const useCreateStore = defineStore('create', {
     state: (): CreateState => ({
+        config: {
+            confirmBeforeDel: true,
+        },
         skin: {
             survey_width: '60%',
             survey_position: 'left',
@@ -39,9 +42,14 @@ const useCreateStore = defineStore('create', {
     },
 
     actions: {
+        delQuestion(order: number) {
+            this.survey.questionList.splice(order, 1);
+            this.survey.questionList.forEach((q, i) => {
+                q.order = i;
+            });
+        },
         /** 新增一个问题 */
         addQuestion(order: number, type: QuestionType) {
-            console.log(toRaw(this.survey.questionList));
             this.survey.questionList.splice(order + 1, 0, getNewQuestion(type));
             this.survey.questionList.forEach((q, i) => {
                 q.order = i;
