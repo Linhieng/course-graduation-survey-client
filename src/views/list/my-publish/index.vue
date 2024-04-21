@@ -2,6 +2,7 @@
 import { ref, onBeforeMount, watch } from 'vue';
 import { queryPublishSurvey, SchemaSurvey, stopSurvey } from '@/api/survey';
 import { useScroll } from '@vueuse/core';
+import { copyToClipboard } from '@/utils';
 const loading = ref(false);
 const btnLoading = ref(false);
 const btnCurId = ref();
@@ -48,6 +49,11 @@ watch(
         }
     },
 );
+
+const url_base = import.meta.env.VITE_SURVEY_URL;
+const copy = (id: number) => {
+    copyToClipboard(url_base + id);
+};
 </script>
 <template>
     <div class="container">
@@ -86,22 +92,27 @@ watch(
                                         </template>
                                         <template #description>
                                             <p>{{ $t('问卷说明：') + item.comment }}</p>
-                                            <a-descriptions
-                                                style="margin-top: 16px"
-                                                :data="[
-                                                    {
-                                                        label: $t('创建时间'),
-                                                        value: new Date(item.created_at).toLocaleString(),
-                                                    },
-                                                    {
-                                                        label: $t('最近更新'),
-                                                        value: new Date(item.updated_at).toLocaleString(),
-                                                    },
-                                                ]"
-                                                layout="inline-horizontal"
-                                                :column="1"
-                                            />
-                                            <br />
+                                            <a-space direction="vertical">
+                                                <span>{{
+                                                    $t('创建时间：') + new Date(item.created_at).toLocaleString()
+                                                }}</span>
+                                                <span>{{
+                                                    $t('最近更新：') + new Date(item.updated_at).toLocaleString()
+                                                }}</span>
+                                                <a-space size="large">
+                                                    <a-tooltip
+                                                        :content="$t('链接：') + url_base + item.id"
+                                                        position="bottom"
+                                                    >
+                                                        <a-button type="text" @click="copy(item.id)">
+                                                            复制链接
+                                                        </a-button>
+                                                    </a-tooltip>
+                                                    <a-link :href="url_base + item.id" target="_blank">{{
+                                                        $t('直接跳转')
+                                                    }}</a-link>
+                                                </a-space>
+                                            </a-space>
                                         </template>
                                     </a-card-meta>
                                 </a-space>
