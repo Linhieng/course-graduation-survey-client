@@ -144,7 +144,6 @@ onBeforeUnmount(() => {
     right: 0;
     bottom: 0;
     overflow: hidden;
-    background-color: var(--color-bg-2);
 }
 .no-scroll-box {
     position: absolute;
