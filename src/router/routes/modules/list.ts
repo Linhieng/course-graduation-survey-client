@@ -13,6 +13,26 @@ const LIST: AppRouteRecordRaw = {
     },
     children: [
         {
+            path: 'my-draft',
+            name: 'my-draft-survey',
+            component: () => import('@/views/list/my-draft/index.vue'),
+            meta: {
+                locale: '问卷草稿箱',
+                requiresAuth: true,
+                roles: ['*'],
+            },
+        },
+        {
+            path: 'my-stop',
+            name: 'my-stop-survey',
+            component: () => import('@/views/list/my-stop/index.vue'),
+            meta: {
+                locale: '已停止的问卷',
+                requiresAuth: true,
+                roles: ['*'],
+            },
+        },
+        {
             path: 'my-publish',
             name: 'my-publish-survey',
             component: () => import('@/views/list/my-publish/index.vue'),

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import SurveyPublish from './survey-publish.vue';
+import SurveyStop from './survey-stop.vue';
 </script>
 <template>
     <div class="container">
         <Breadcrumb :items="['我的问卷', '所有问卷']" />
         <div class="cover">
-            <SurveyPublish />
+            <survey-stop />
         </div>
     </div>
 </template>
