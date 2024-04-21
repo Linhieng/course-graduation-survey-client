@@ -89,7 +89,7 @@ const addBtnOrder = computed(() => {
                 <p>{{ $t(questionTypeMappingText[question.type]) }}</p>
             </a-space>
             <a-space class="li-top-util hide-item">
-                <a-space size="mini">
+                <a-space size="mini" v-if="question.type !== 'desc'">
                     <a-switch type="line" size="small" v-model="question.required" />
                     <span>{{ question.required ? $t('必填') : $t('选填') }}</span>
                 </a-space>
