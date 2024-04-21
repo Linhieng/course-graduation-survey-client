@@ -125,7 +125,7 @@ const drawerPosition = computed(() => {
             @cancel="visibleConfig = false"
         >
             <template #title>
-                <h3>{{ $t('配置信息') }}</h3>
+                <h3>{{ $t('配置') }}</h3>
             </template>
             <div> <EditConfig /> </div>
         </a-drawer>

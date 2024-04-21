@@ -58,6 +58,9 @@ export interface QuestionOption {
 export interface CreateState {
     config: {
         confirmBeforeDel: boolean;
+        canDelLastQuestion: boolean;
+        canDelLastOption: boolean;
+        autoCloseAddPanel: boolean;
     };
     survey: {
         title: string;

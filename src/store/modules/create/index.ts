@@ -4,11 +4,15 @@ import bgImg from '@/assets/images/login1.png';
 import { v4 as idv4 } from 'uuid';
 import { toRaw } from 'vue';
 import { getAllQuestionTemplate, getNewOption, getNewQuestion, getNormalQuestion } from './utils';
+import { msgWarning } from '@/utils/msg';
 
 const useCreateStore = defineStore('create', {
     state: (): CreateState => ({
         config: {
             confirmBeforeDel: true,
+            canDelLastQuestion: false,
+            canDelLastOption: false,
+            autoCloseAddPanel: true,
         },
         skin: {
             survey_width: '60%',
@@ -51,6 +55,10 @@ const useCreateStore = defineStore('create', {
         },
         /** 删除一个选项（适用单选多选） */
         removeOption(questionIndex: number, optionIndex: number) {
+            if (this.survey.questionList[questionIndex].options.length < 2 && !this.config.canDelLastOption) {
+                msgWarning('不允许删除最后一个选项！');
+                return;
+            }
             if (this.survey.questionList[questionIndex].options.length > 0) {
                 this.survey.questionList[questionIndex].options.splice(optionIndex, 1);
                 this.survey.questionList[questionIndex].options.forEach((option, i) => {
@@ -61,10 +69,16 @@ const useCreateStore = defineStore('create', {
 
         /** 删除一个问题 */
         delQuestion(order: number) {
-            this.survey.questionList.splice(order, 1);
-            this.survey.questionList.forEach((q, i) => {
-                q.order = i;
-            });
+            if (this.survey.questionList.length < 2 && !this.config.canDelLastQuestion) {
+                msgWarning('不允许删除最后一个问题！');
+                return;
+            }
+            if (this.survey.questionList.length > 0) {
+                this.survey.questionList.splice(order, 1);
+                this.survey.questionList.forEach((q, i) => {
+                    q.order = i;
+                });
+            }
         },
         /** 新增一个问题 */
         addQuestion(order: number, type: QuestionType) {

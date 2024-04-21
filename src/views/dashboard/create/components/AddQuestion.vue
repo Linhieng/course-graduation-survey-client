@@ -12,7 +12,9 @@ const visibleDrawer = ref(false);
 const createQuestion = (evt: MouseEvent) => {
     const target = evt.target as HTMLElement;
     createStore.addQuestion(props.order, target.dataset.type as QuestionType);
-    visibleDrawer.value = false;
+    if (createStore.config.autoCloseAddPanel) {
+        visibleDrawer.value = false;
+    }
 };
 </script>
 
