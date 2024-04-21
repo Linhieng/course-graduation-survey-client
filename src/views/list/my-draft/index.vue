@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onBeforeMount, onMounted, onBeforeUnmount, watch } from 'vue';
-import { queryDraftSurvey, SchemaSurvey, publishSurvey, delSurvey } from '@/api/survey';
+import { queryDraftSurvey, SchemaSurvey, delSurvey } from '@/api/survey';
 import { useScroll } from '@vueuse/core';
 const loading = ref(false);
 const btnDelLading = ref(false);
