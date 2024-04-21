@@ -4,6 +4,8 @@ import { computed, ref } from 'vue';
 import EditSkin from './components/EditSkin.vue';
 import EditSurvey from './components/EditSurvey.vue';
 import EditConfig from './components/edit-config.vue';
+import { useFullscreen } from '@vueuse/core';
+const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
 const createStore = useCreateStore();
 const appStore = useAppStore();
 const visibleEditSkin = ref(false);
@@ -45,6 +47,15 @@ const drawerPosition = computed(() => {
                 }}</a-button>
             </a-space>
             <a-space style="margin-right: 20px" class="header-item" size="large">
+                <a-tooltip :content="isFullscreen ? $t('退出全屏') : $t('全屏')">
+                    <a-button class="left header-item" shape="circle" @click="toggleFullScreen">
+                        <template #icon>
+                            <icon-fullscreen-exit v-if="isFullscreen" />
+                            <icon-fullscreen v-else />
+                        </template>
+                    </a-button>
+                </a-tooltip>
+
                 <a-tooltip :content="$t('皮肤')">
                     <a-button shape="circle" @click="visibleEditSkin = true">
                         <icon-font style="width: 20px; height: 20px" name="skin"></icon-font
