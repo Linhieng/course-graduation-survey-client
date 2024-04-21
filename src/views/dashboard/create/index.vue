@@ -49,6 +49,11 @@ watch(
         }
     },
 );
+
+/** 发布问卷 */
+const handlePublish = () => {
+    createStore.publishSurvey();
+};
 </script>
 
 <template>
@@ -102,7 +107,7 @@ watch(
                         </template>
                     </a-button>
                 </a-tooltip>
-                <a-button type="primary">
+                <a-button type="primary" @click="handlePublish" :loading="createStore.local.isPublishing">
                     <template #icon>
                         <icon-font name="publish"></icon-font>
                     </template>

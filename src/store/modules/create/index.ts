@@ -6,6 +6,8 @@ import { toRaw } from 'vue';
 import { getAllQuestionTemplate, getNewOption, getNewQuestion, getNormalQuestion } from './utils';
 import { msgError, msgSuccess, msgWarning } from '@/utils/msg';
 import { cacheSurvey as reqCacheSurvey } from '@/api/survey';
+import { publishSurvey as apiPublishSurvey } from '@/api/survey';
+import router from '@/router';
 
 const useCreateStore = defineStore('create', {
     state: (): CreateState => ({
@@ -41,6 +43,7 @@ const useCreateStore = defineStore('create', {
         },
         local: {
             isCaching: false,
+            isPublishing: false,
             latelyCacheTime: undefined,
         },
     }),
@@ -53,6 +56,22 @@ const useCreateStore = defineStore('create', {
     },
 
     actions: {
+        async publishSurvey() {
+            if (!this.survey.id) return;
+            if (this.local.isPublishing) return;
+            this.local.isPublishing = true;
+            const res = await apiPublishSurvey(this.survey.id);
+            if (res.ok) {
+                msgSuccess('发布成功');
+                router.push({
+                    name: 'my-publish-survey',
+                });
+            } else {
+                msgError(res.msg);
+            }
+            this.local.isPublishing = false;
+        },
+
         /** 立刻缓存问卷 */
         async cacheSurvey() {
             if (this.local.isCaching) return;

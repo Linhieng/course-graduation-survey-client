@@ -67,6 +67,7 @@ export interface CreateState {
     local: {
         isCaching: boolean;
         latelyCacheTime: undefined | Date;
+        isPublishing: boolean;
     };
     config: {
         confirmBeforeDel: boolean;
