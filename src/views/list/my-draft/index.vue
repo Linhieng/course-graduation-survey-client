@@ -48,19 +48,6 @@ watch(
         }
     },
 );
-
-onMounted(() => {
-    const el = document.querySelector('main');
-    if (el) {
-        el.style.position = 'relative';
-    }
-});
-onBeforeUnmount(() => {
-    const el = document.querySelector('main');
-    if (el) {
-        el.style.position = '';
-    }
-});
 </script>
 <template>
     <div class="container">

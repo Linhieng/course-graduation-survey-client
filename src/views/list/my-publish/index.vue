@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onBeforeMount, onMounted, onBeforeUnmount, watch } from 'vue';
+import { ref, onBeforeMount, watch } from 'vue';
 import { queryPublishSurvey, SchemaSurvey, stopSurvey } from '@/api/survey';
 import { useScroll } from '@vueuse/core';
 const loading = ref(false);
@@ -48,19 +48,6 @@ watch(
         }
     },
 );
-
-onMounted(() => {
-    const el = document.querySelector('main');
-    if (el) {
-        el.style.position = 'relative';
-    }
-});
-onBeforeUnmount(() => {
-    const el = document.querySelector('main');
-    if (el) {
-        el.style.position = '';
-    }
-});
 </script>
 <template>
     <div class="container">
