@@ -1,9 +1,5 @@
-// export function publishSurvey(data: ) {
-
 import { QuestionItem } from '@/store/modules/create/types';
 import { post } from './axios';
-
-// }
 
 export function cacheSurvey(data: ApiCacheSurveyData) {
     return post<{
