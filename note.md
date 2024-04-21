@@ -1,5 +1,15 @@
 # 笔记
 
+## 天坑
+
+技术不达标之前，永远不要动那些依赖！
+打包遇到的问题：
+- 类型报错，这个简单，直接 @ts-ignore
+- less 变量找不到，在 issue 中找到[解决方案](https://github.com/arco-design/arco-design-vue/issues/3038#issuecomment-2014537494)，直接手动添加全局变量。
+- `[vite:reporter] chunk.moduleIds is not iterable`。 同样在 issue 中找到[解决方案](https://github.com/vitejs/vite/issues/15277#issuecomment-1855326703)，也就是将 vite 从 4.5 变为 4.3.
+
+## 其他
+
 组件不能有多个根元素，因为这样无法有动画，从而导致渲染不出路由的内容。
 ```
 [Vue warn]: Component inside <Transition> renders non-element root node that cannot be animated. 
