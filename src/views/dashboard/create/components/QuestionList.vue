@@ -51,7 +51,7 @@ function clearStatus() {
     dragging.value = false;
 }
 
-function clickQuestion(evt: MouseEvent, question: QuestionItem) {
+function focusQuestion(evt: Event, question: QuestionItem) {
     curSelectedQuestion.value = question;
     const target = evt.currentTarget as HTMLElement;
 
@@ -80,7 +80,8 @@ const addBtnOrder = computed(() => {
             :class="{
                 required: question.required,
             }"
-            @click="(evt) => clickQuestion(evt, question)"
+            @click="(evt) => focusQuestion(evt, question)"
+            @focusin="(evt) => focusQuestion(evt, question)"
         >
             <div class="move-icon hide-item">
                 <icon-font style="width: 26px; height: 26px" name="hand" />
