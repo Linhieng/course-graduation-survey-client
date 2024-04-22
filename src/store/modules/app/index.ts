@@ -5,9 +5,17 @@ import type { RouteRecordNormalized } from 'vue-router';
 import defaultSettings from '@/config/settings.json';
 import { getMenuList } from '@/api/user';
 import { AppState } from './types';
+import { useLocalStorage } from '@vueuse/core';
 
+// 为什么使用 localStorage 就会导致递归报错？这是什么原因？
+// const lastRouter = JSON.parse(localStorage.getItem('lastRouter')) || [];
 const useAppStore = defineStore('app', {
-    state: (): AppState => ({ ...defaultSettings, focusMode: false }),
+    state: (): AppState => ({
+        ...defaultSettings,
+        focusMode: false,
+        // lastRouter: ,
+        lastRouter: [],
+    }),
 
     getters: {
         appCurrentSetting(state: AppState): AppState {
@@ -22,6 +30,29 @@ const useAppStore = defineStore('app', {
     },
 
     actions: {
+        /** 更新最近访问的路由 */
+        updateLastRouter(name: string, text: string, icon: any) {
+            if (name === 'Workplace') return;
+            const had = this.$state.lastRouter.some((v, i, arr) => {
+                if (v.name === name) {
+                    arr[i].count++;
+                    return true;
+                }
+                return false;
+            });
+            if (!had) {
+                this.$state.lastRouter.sort((a, b) => b.count - a.count);
+                this.$state.lastRouter.splice(4);
+                this.$state.lastRouter.push({
+                    name,
+                    count: 0,
+                    text,
+                    icon,
+                });
+            }
+            localStorage.setItem('lastRouter', JSON.stringify(this.$state.lastRouter));
+        },
+
         // Update app settings
         updateSettings(partial: Partial<AppState>) {
             // @ts-ignore-next-line
