@@ -3,6 +3,8 @@ import icon3 from '@/assets/images/i1.png';
 import icon2 from '@/assets/images/i2.png';
 import icon1 from '@/assets/images/i3.png';
 import icon4 from '@/assets/images/i4.png';
+import { useStatStore } from '@/store';
+useStatStore().getStatCount();
 </script>
 
 <template>
@@ -13,9 +15,8 @@ import icon4 from '@/assets/images/i4.png';
                     <img alt="avatar" :src="icon3" />
                 </a-avatar>
                 <a-statistic
-                    :title="$t('问卷数量')"
-                    :value="373.5"
-                    :precision="1"
+                    :title="$t('问卷总数量')"
+                    :value="useStatStore().state.statCount.count_all_survey"
                     :value-from="0"
                     animation
                     show-group-separator
@@ -31,7 +32,13 @@ import icon4 from '@/assets/images/i4.png';
                 <a-avatar :size="54" class="col-avatar">
                     <img alt="avatar" :src="icon2" />
                 </a-avatar>
-                <a-statistic :title="$t('收集中')" :value="368" :value-from="0" animation show-group-separator>
+                <a-statistic
+                    :title="$t('收集中')"
+                    :value="useStatStore().state.statCount.count_publish_survey"
+                    :value-from="0"
+                    animation
+                    show-group-separator
+                >
                     <template #suffix>
                         <span class="unit">{{ $t('份') }}</span>
                     </template>
@@ -43,7 +50,13 @@ import icon4 from '@/assets/images/i4.png';
                 <a-avatar :size="54" class="col-avatar">
                     <img alt="avatar" :src="icon1" />
                 </a-avatar>
-                <a-statistic :title="$t('新增回答')" :value="8874" :value-from="0" animation show-group-separator>
+                <a-statistic
+                    :title="$t('已停止')"
+                    :value="useStatStore().state.statCount.count_stop_survey"
+                    :value-from="0"
+                    animation
+                    show-group-separator
+                >
                     <template #suffix>
                         <span class="unit">{{ $t('份') }}</span>
                     </template>
@@ -60,13 +73,14 @@ import icon4 from '@/assets/images/i4.png';
                     <img alt="avatar" :src="icon4" />
                 </a-avatar>
                 <a-statistic
-                    :title="$t('workplace.newFromYesterday')"
-                    :value="2.8"
-                    :precision="1"
+                    :title="$t('总回答')"
+                    :value="useStatStore().state.statCount.count_all_answer"
                     :value-from="0"
                     animation
                 >
-                    <template #suffix> % <icon-caret-up class="up-icon" /> </template>
+                    <template #suffix>
+                        <span class="unit">{{ $t('份') }}</span>
+                    </template>
                 </a-statistic>
             </a-space>
         </a-grid-item>
