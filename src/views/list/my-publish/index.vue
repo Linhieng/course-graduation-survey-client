@@ -91,7 +91,24 @@ const copy = (id: number) => {
                                             </a-typography-text>
                                         </template>
                                         <template #description>
-                                            <p>{{ $t('问卷说明：') + item.comment }}</p>
+                                            <a-typography-paragraph
+                                                :ellipsis="{
+                                                    rows: 2,
+                                                    showTooltip: {
+                                                        type: 'popover',
+                                                        props: {
+                                                            style: {
+                                                                maxHeight: `300px`,
+                                                            },
+                                                        },
+                                                    },
+                                                }"
+                                            >
+                                                <template #expand-node="{ expanded }">
+                                                    {{ expanded ? '' : '关闭' }}
+                                                </template>
+                                                {{ $t('问卷说明：') + item.comment }}
+                                            </a-typography-paragraph>
                                             <a-space direction="vertical">
                                                 <span>{{
                                                     $t('创建时间：') + new Date(item.created_at).toLocaleString()
@@ -99,19 +116,11 @@ const copy = (id: number) => {
                                                 <span>{{
                                                     $t('最近更新：') + new Date(item.updated_at).toLocaleString()
                                                 }}</span>
-                                                <a-space size="large">
-                                                    <a-tooltip
-                                                        :content="$t('链接：') + url_base + item.id"
-                                                        position="bottom"
-                                                    >
-                                                        <a-button type="text" @click="copy(item.id)">
-                                                            复制链接
-                                                        </a-button>
-                                                    </a-tooltip>
-                                                    <a-link :href="url_base + item.id" target="_blank">{{
-                                                        $t('直接跳转')
-                                                    }}</a-link>
-                                                </a-space>
+                                                <a-typography-paragraph copyable>
+                                                    <a-link :href="url_base + item.id" target="_blank">
+                                                        {{ url_base + item.id }}
+                                                    </a-link>
+                                                </a-typography-paragraph>
                                             </a-space>
                                         </template>
                                     </a-card-meta>
