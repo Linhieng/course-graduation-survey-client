@@ -6,7 +6,7 @@ import { toRaw } from 'vue';
 import { getAllQuestionTemplate, getNewOption, getNewQuestion, getNormalQuestion } from './utils';
 import { msgError, msgSuccess, msgWarning, noticeInfo } from '@/utils/msg';
 import { cacheSurvey as reqCacheSurvey } from '@/api/survey';
-import { publishSurvey as apiPublishSurvey } from '@/api/survey';
+import { updateAndPublishSurvey } from '@/api/survey';
 import router from '@/router';
 
 const useCreateStore = defineStore('create', {
@@ -56,20 +56,22 @@ const useCreateStore = defineStore('create', {
     },
 
     actions: {
+        /** 发布问卷 */
         async publishSurvey() {
+            // 如果正在缓存，这里不能发布
+            // 但目前先不处理，因为实现后可能出现死锁问题。
             if (this.local.isPublishing) return;
             this.local.isPublishing = true;
 
-            if (!this.survey.id) {
-                noticeInfo('问卷不存在，正在创建中');
-                await this.cacheSurvey();
-            }
-            if (!this.survey.id) {
-                msgError('这是不应该出现的错误。问卷不存在，无法发布。');
-                return;
-            }
-
-            const res = await apiPublishSurvey(this.survey.id);
+            const res = await updateAndPublishSurvey({
+                surveyId: this.survey.id,
+                title: this.survey.title,
+                comment: this.survey.comment,
+                structure_json: {
+                    version: '0.2.0',
+                    questionList: this.survey.questionList,
+                },
+            });
             if (res.ok) {
                 msgSuccess('发布成功');
                 router.push({

@@ -7,6 +7,12 @@ export function cacheSurvey(data: ApiCacheSurveyData) {
         time: Date;
     }>('/api/survey/cache', data);
 }
+export function updateAndPublishSurvey(data: ApiCacheSurveyData) {
+    return post<{
+        surveyId: number;
+        time: Date;
+    }>('/api/survey/update-publish', data);
+}
 
 // prettier-ignore
 export function publishSurvey(surveyId: number) { return post(`/api/survey/publish/${surveyId}`) }
