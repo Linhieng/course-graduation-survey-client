@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia';
 import { reactive, ref } from 'vue';
-import { StatCount, StatStore } from './types';
-import { getStatCount as apiGetStatCount } from '@/api/stat';
-import { msgError } from '@/utils/msg';
-import { useMyRequest } from '@/api/hook';
+import { StatStore } from './types';
+import { getStatCount as apiGetStatCount, getGroupByDay as apiGetGroupByDay } from '@/api/stat';
 
 const useStatStore = defineStore('stat', () => {
     const state = reactive<StatStore>({
+        loading: {
+            fetchGroupByDay: false,
+        },
         isFetching: false,
         statCount: {
             count_all_visit: 99999,
@@ -19,28 +20,42 @@ const useStatStore = defineStore('stat', () => {
             today_count_create_survey: 99999,
             today_count_publish_survey: 99999,
         },
+        statGroupByDay: {
+            xAxis: [],
+            data: [
+                { name: '创建问卷', key: 'create_survey', count: 0, value: [] },
+                { name: '发布问卷', key: 'publish_survey', count: 0, value: [] },
+                { name: '问卷草稿', key: 'draft_survey', count: 0, value: [] },
+                { name: '停止收集', key: 'stop_survey', count: 0, value: [] },
+                { name: '删除问卷', key: 'del_survey', count: 0, value: [] },
+            ],
+        },
     });
-
-    let timer = setInterval(() => {
-        for (const key in state.statCount) {
-            state.statCount[key] = Math.random() * 10000;
-        }
-    }, 1800);
 
     async function getStatCount() {
         if (state.isFetching) return;
         state.isFetching = true;
         const res = await apiGetStatCount();
-        clearInterval(timer);
         if (res.ok) {
             state.statCount = res.data;
         }
         state.isFetching = false;
     }
 
+    async function fetchGroupByDay() {
+        if (state.loading.fetchGroupByDay) return;
+        state.loading.fetchGroupByDay = true;
+        const res = await apiGetGroupByDay();
+        if (res.ok) {
+            state.statGroupByDay = res.data;
+        }
+        state.loading.fetchGroupByDay = false;
+    }
+
     return {
         state,
         getStatCount,
+        fetchGroupByDay,
     };
 });
 export default useStatStore;

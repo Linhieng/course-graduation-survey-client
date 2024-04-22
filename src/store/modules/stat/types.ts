@@ -1,8 +1,23 @@
 export interface StatStore {
+    loading: {
+        fetchGroupByDay: boolean;
+    };
     isFetching: boolean;
     statCount: StatCount;
+    statGroupByDay: StatGroupByDay;
 }
 
+/** 对应接口 /api/stat/group-by-day */
+export interface StatGroupByDay {
+    xAxis: string[];
+    data: [
+        { name: '创建问卷'; key: 'create_survey'; count: number; value: number[] },
+        { name: '发布问卷'; key: 'publish_survey'; count: number; value: number[] },
+        { name: '问卷草稿'; key: 'draft_survey'; count: number; value: number[] },
+        { name: '停止收集'; key: 'stop_survey'; count: number; value: number[] },
+        { name: '删除问卷'; key: 'del_survey'; count: number; value: number[] },
+    ];
+}
 /** 对应接口 '/api/stat/count-stat' */
 export interface StatCount {
     /** 总访问量 */

@@ -15,6 +15,7 @@ import useLoading from '@/hooks/loading';
 import { ToolTipFormatterParams } from '@/types/echarts';
 import useChartOption from '@/hooks/chart-option';
 import CountNum from './count-num.vue';
+import { useStatStore } from '@/store';
 
 const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
     return items
@@ -79,14 +80,13 @@ const { chartOption } = useChartOption((dark) => {
         xAxis: {
             type: 'category',
             offset: 2,
-            data: xAxis.value,
+            data: useStatStore().state.statGroupByDay.xAxis,
             boundaryGap: false,
             axisLabel: {
                 color: '#4E5969',
-                formatter(value: number, idx: number) {
-                    if (idx === 0) return '';
-                    if (idx === xAxis.value.length - 1) return '';
-                    return `${value}`;
+                formatter(date_str: string, idx: number) {
+                    const d = new Date(date_str);
+                    return `${d.getMonth() + 1}-${d.getDate()}`;
                 },
             },
             axisLine: {
@@ -135,58 +135,21 @@ const { chartOption } = useChartOption((dark) => {
             className: 'echarts-tooltip-diy',
         },
         graphic: {
-            elements: [
-                {
-                    type: 'text',
-                    left: '2.6%',
-                    bottom: '18',
-                    style: {
-                        text: '12.10',
-                        textAlign: 'center',
-                        fill: '#4E5969',
-                        fontSize: 12,
-                    },
-                },
-                {
-                    type: 'text',
-                    right: '0',
-                    bottom: '18',
-                    style: {
-                        text: '12.17',
-                        textAlign: 'center',
-                        fill: '#4E5969',
-                        fontSize: 12,
-                    },
-                },
-            ],
+            elements: [],
         },
         series: [
-            generateSeries('内容生产量', '#722ED1', '#F5E8FF', contentProductionData.value),
-            generateSeries('内容点击量', '#F77234', '#FFE4BA', contentClickData.value),
-            generateSeries('内容曝光量', '#33D1C9', '#E8FFFB', contentExposureData.value),
-            generateSeries('活跃用户数', '#3469FF', '#E8F3FF', activeUsersData.value),
-            generateSeries('活跃用户数', '#3469FF', '#E8F3FF', activeUsersData.value),
-            generateSeries('活跃用户数', '#3469FF', '#E8F3FF', activeUsersData.value),
+            generateSeries('创建问卷的数量', '#F77234', '#FFE4BA', useStatStore().state.statGroupByDay.data[0].value),
+            generateSeries('发布问卷的数量', '#33D1C9', '#E8FFFB', useStatStore().state.statGroupByDay.data[1].value),
+            generateSeries('问卷草稿的数量', '#3469FF', '#E8F3FF', useStatStore().state.statGroupByDay.data[2].value),
+            generateSeries('停止收集的数量', '#3469FF', '#E8F3FF', useStatStore().state.statGroupByDay.data[3].value),
+            generateSeries('删除问卷的数量', '#3469FF', '#E8F3FF', useStatStore().state.statGroupByDay.data[4].value),
         ],
     };
 });
 const fetchData = async () => {
     setLoading(true);
     try {
-        const { data } = await queryDataOverview();
-        xAxis.value = data.xAxis;
-        data.data.forEach((el) => {
-            if (el.name === '内容生产量') {
-                contentProductionData.value = el.value;
-            } else if (el.name === '内容点击量') {
-                contentClickData.value = el.value;
-            } else if (el.name === '内容曝光量') {
-                contentExposureData.value = el.value;
-            }
-            activeUsersData.value = el.value;
-        });
-    } catch (err) {
-        // you can report use errorHandler or other
+        await useStatStore().fetchGroupByDay();
     } finally {
         setLoading(false);
     }
