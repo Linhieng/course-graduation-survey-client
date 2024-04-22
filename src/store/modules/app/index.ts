@@ -7,14 +7,14 @@ import { getMenuList } from '@/api/user';
 import { AppState } from './types';
 import { useLocalStorage } from '@vueuse/core';
 
-// 为什么使用 localStorage 就会导致递归报错？这是什么原因？
+// 为什么使用 localStorage 就会导致递归报错？这是什么原因？写在 state 里面就没事了
 // const lastRouter = JSON.parse(localStorage.getItem('lastRouter')) || [];
 const useAppStore = defineStore('app', {
     state: (): AppState => ({
         ...defaultSettings,
         focusMode: false,
-        // lastRouter: ,
-        lastRouter: [],
+        // 这里如果使用 useLocalStore，会死递归报错
+        lastRouter: JSON.parse(localStorage.getItem('lastRouter') || '[]'),
     }),
 
     getters: {
