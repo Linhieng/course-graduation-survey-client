@@ -123,7 +123,7 @@ const { chartOption } = useChartOption((dark) => {
                 const [firstElement] = params as ToolTipFormatterParams[];
                 return `
                 <div>
-                    <p class="tooltip-title">${firstElement.axisValueLabel}</p>
+                    <p class="tooltip-title">${new Date(firstElement.axisValueLabel).toLocaleDateString()}</p>
                     ${tooltipItemsHtmlString(params as ToolTipFormatterParams[])}
                 </div>`;
             },

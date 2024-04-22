@@ -17,11 +17,10 @@
 import { ref } from 'vue';
 import { graphic } from 'echarts';
 import useLoading from '@/hooks/loading';
-import { queryContentData, ContentDataRecord } from '@/api/dashboard';
+import { ContentDataRecord } from '@/api/dashboard';
 import useChartOption from '@/hooks/chart-option';
 import { ToolTipFormatterParams } from '@/types/echarts';
 import { AnyObject } from '@/types/global';
-import { getAnswerVisitGroupByDay } from '@/api/stat';
 import { useStatStore } from '@/store';
 
 function graphicFactory(side: AnyObject) {
@@ -181,6 +180,7 @@ const fetchData = async () => {
         chartData.forEach((el: ContentDataRecord, idx: number) => {
             xAxis.value.push(el.x);
             chartsData.value.push(el.y);
+            // 首尾两个 y 在这里指定
             if (idx === 0) {
                 const d = new Date(el.x);
                 graphicElements.value[0].style.text = d.toLocaleDateString();
