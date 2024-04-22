@@ -1,12 +1,18 @@
 export interface StatStore {
     loading: {
         fetchGroupByDay: boolean;
+        fetchAnswerVisitGroupByDay: boolean;
     };
     isFetching: boolean;
     statCount: StatCount;
     statGroupByDay: StatGroupByDay;
+    statAnswerVisitGroupByDay: StatAnswerVisitGroupByDay;
 }
 
+/** 对应接口 /api/stat/visit-survey-group-by-day/:surveyId */
+export interface StatAnswerVisitGroupByDay {
+    chartData: Array<{ x: string; y: number }>;
+}
 /** 对应接口 /api/stat/group-by-day */
 export interface StatGroupByDay {
     xAxis: string[];

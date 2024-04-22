@@ -1,12 +1,17 @@
 import { defineStore } from 'pinia';
 import { reactive, ref } from 'vue';
 import { StatStore } from './types';
-import { getStatCount as apiGetStatCount, getGroupByDay as apiGetGroupByDay } from '@/api/stat';
+import {
+    getStatCount as apiGetStatCount,
+    getGroupByDay as apiGetGroupByDay,
+    getAnswerVisitGroupByDay,
+} from '@/api/stat';
 
 const useStatStore = defineStore('stat', () => {
     const state = reactive<StatStore>({
         loading: {
             fetchGroupByDay: false,
+            fetchAnswerVisitGroupByDay: false,
         },
         isFetching: false,
         statCount: {
@@ -30,6 +35,9 @@ const useStatStore = defineStore('stat', () => {
                 { name: '删除问卷', key: 'del_survey', count: 0, value: [] },
             ],
         },
+        statAnswerVisitGroupByDay: {
+            chartData: [],
+        },
     });
 
     async function getStatCount() {
@@ -52,10 +60,21 @@ const useStatStore = defineStore('stat', () => {
         state.loading.fetchGroupByDay = false;
     }
 
+    async function fetchAnswerVisitGroupByDay() {
+        if (state.loading.fetchAnswerVisitGroupByDay) return;
+        state.loading.fetchAnswerVisitGroupByDay = true;
+        const res = await getAnswerVisitGroupByDay();
+        if (res.ok) {
+            state.statAnswerVisitGroupByDay = res.data;
+        }
+        state.loading.fetchAnswerVisitGroupByDay = false;
+    }
+
     return {
         state,
         getStatCount,
         fetchGroupByDay,
+        fetchAnswerVisitGroupByDay,
     };
 });
 export default useStatStore;

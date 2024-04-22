@@ -6,11 +6,8 @@
             :body-style="{
                 paddingTop: '20px',
             }"
-            :title="$t('workplace.contentData')"
+            :title="$t('回答数据')"
         >
-            <!-- <template #extra>
-                <a-link>{{ $t('workplace.viewMore') }}</a-link>
-            </template> -->
             <Chart height="289px" :option="chartOption" />
         </a-card>
     </a-spin>
@@ -24,6 +21,8 @@ import { queryContentData, ContentDataRecord } from '@/api/dashboard';
 import useChartOption from '@/hooks/chart-option';
 import { ToolTipFormatterParams } from '@/types/echarts';
 import { AnyObject } from '@/types/global';
+import { getAnswerVisitGroupByDay } from '@/api/stat';
+import { useStatStore } from '@/store';
 
 function graphicFactory(side: AnyObject) {
     return {
@@ -45,8 +44,8 @@ const graphicElements = ref([graphicFactory({ left: '2.6%' }), graphicFactory({ 
 const { chartOption } = useChartOption(() => {
     return {
         grid: {
-            left: '2.6%',
-            right: '0',
+            left: '30',
+            right: '20',
             top: '10',
             bottom: '30',
         },
@@ -60,7 +59,8 @@ const { chartOption } = useChartOption(() => {
                 formatter(value: number, idx: number) {
                     if (idx === 0) return '';
                     if (idx === xAxis.value.length - 1) return '';
-                    return `${value}`;
+                    const d = new Date(value);
+                    return d.toLocaleDateString();
                 },
             },
             axisLine: {
@@ -111,12 +111,14 @@ const { chartOption } = useChartOption(() => {
             trigger: 'axis',
             formatter(params) {
                 const [firstElement] = params as ToolTipFormatterParams[];
-                return `<div>
-            <p class="tooltip-title">${firstElement.axisValueLabel}</p>
-            <div class="content-panel"><span>总内容量</span><span class="tooltip-value">${(
-                Number(firstElement.value) * 10000
-            ).toLocaleString()}</span></div>
-          </div>`;
+                return `
+                    <div>
+                        <p class="tooltip-title">${new Date(firstElement.axisValueLabel).toLocaleDateString()}</p>
+                        <div class="content-panel">
+                            <span>访问数量</span>
+                            <span class="tooltip-value">${Number(firstElement.value).toLocaleString()}</span>
+                        </div>
+                    </div>`;
             },
             className: 'echarts-tooltip-diy',
         },
@@ -174,19 +176,20 @@ const { chartOption } = useChartOption(() => {
 const fetchData = async () => {
     setLoading(true);
     try {
-        const { data: chartData } = await queryContentData();
+        await useStatStore().fetchAnswerVisitGroupByDay();
+        const chartData = useStatStore().state.statAnswerVisitGroupByDay.chartData;
         chartData.forEach((el: ContentDataRecord, idx: number) => {
             xAxis.value.push(el.x);
             chartsData.value.push(el.y);
             if (idx === 0) {
-                graphicElements.value[0].style.text = el.x;
+                const d = new Date(el.x);
+                graphicElements.value[0].style.text = d.toLocaleDateString();
             }
             if (idx === chartData.length - 1) {
-                graphicElements.value[1].style.text = el.x;
+                const d = new Date(el.x);
+                graphicElements.value[1].style.text = d.toLocaleDateString();
             }
         });
-    } catch (err) {
-        // you can report use errorHandler or other
     } finally {
         setLoading(false);
     }
