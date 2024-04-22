@@ -18,12 +18,14 @@ import { useStatStore } from '@/store';
 const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
     return items
         .map(
-            (el) => `<div class="content-panel">
-        <p>
-          <span style="background-color: ${el.color}" class="tooltip-item-icon"></span><span>${el.seriesName}</span>
-        </p>
-        <span class="tooltip-value">${el.value.toLocaleString()}</span>
-      </div>`,
+            (el) => `
+            <div class="content-panel">
+                <p>
+                    <span style="background-color: ${el.color}" class="tooltip-item-icon"></span>
+                    <span>${el.seriesName}</span>
+                </p>
+                <span class="tooltip-value">${el.value.toLocaleString()}</span>
+            </div>`,
         )
         .reverse()
         .join('');
@@ -65,10 +67,10 @@ const { loading, setLoading } = useLoading(true);
 const { chartOption } = useChartOption((dark) => {
     return {
         grid: {
-            left: '2.6%',
-            right: '4',
-            top: '40',
-            bottom: '40',
+            left: '30',
+            right: '30',
+            top: '30',
+            bottom: '30',
         },
         xAxis: {
             type: 'category',
@@ -106,8 +108,7 @@ const { chartOption } = useChartOption((dark) => {
             },
             axisLabel: {
                 formatter(value: number, idx: number) {
-                    if (idx === 0) return String(value);
-                    return `${value / 1000}k`;
+                    return idx;
                 },
             },
             splitLine: {
@@ -120,10 +121,11 @@ const { chartOption } = useChartOption((dark) => {
             trigger: 'axis',
             formatter(params) {
                 const [firstElement] = params as ToolTipFormatterParams[];
-                return `<div>
-            <p class="tooltip-title">${firstElement.axisValueLabel}</p>
-            ${tooltipItemsHtmlString(params as ToolTipFormatterParams[])}
-          </div>`;
+                return `
+                <div>
+                    <p class="tooltip-title">${firstElement.axisValueLabel}</p>
+                    ${tooltipItemsHtmlString(params as ToolTipFormatterParams[])}
+                </div>`;
             },
             className: 'echarts-tooltip-diy',
         },
