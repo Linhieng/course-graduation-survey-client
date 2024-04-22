@@ -8,9 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
 import { LineSeriesOption } from 'echarts';
-import { queryDataOverview } from '@/api/visualization';
 import useLoading from '@/hooks/loading';
 import { ToolTipFormatterParams } from '@/types/echarts';
 import useChartOption from '@/hooks/chart-option';
@@ -64,11 +62,6 @@ const generateSeries = (name: string, lineColor: string, itemBorderColor: string
 };
 const { loading, setLoading } = useLoading(true);
 
-const xAxis = ref<string[]>([]);
-const contentProductionData = ref<number[]>([]);
-const contentClickData = ref<number[]>([]);
-const contentExposureData = ref<number[]>([]);
-const activeUsersData = ref<number[]>([]);
 const { chartOption } = useChartOption((dark) => {
     return {
         grid: {
