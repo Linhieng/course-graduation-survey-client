@@ -3,7 +3,7 @@ import { useCollectStore } from '@/store';
 import { CollectAnswer } from '@/store/modules/collect/types';
 import { reactive } from 'vue';
 import OneAnswer from './one-answer.vue';
-import { TableColumnData } from '@arco-design/web-vue';
+import { TableColumnData, TableData } from '@arco-design/web-vue';
 const collectStore = useCollectStore();
 
 const props = defineProps<{
@@ -15,13 +15,11 @@ collectStore.fetchAnswerCollectBySurveyId(props.surveyId);
 const is_valid_filterable = {
     filters: [
         // 这里的 value 得是字符串，不然组件会报类型错误
-        { text: '有效', value: '1' },
-        { text: '无效', value: '0' },
+        { text: '有效', value: '有效' },
+        { text: '无效', value: '无效' },
     ],
     // value 是一个数组，元素是用户选中的内容 filters 中的 value
-    // filter: (value: string[], row: CollectAnswer) => value[0] === '1',
-    // @ts-ignore 这里不能有类型，不然组件同样会报类型错误
-    filter: (value, row) => value[0] === '1',
+    filter: (value: string[], row: TableData) => (row as CollectAnswer).is_valid_text === value[0],
 };
 const columns: TableColumnData[] = [
     {
