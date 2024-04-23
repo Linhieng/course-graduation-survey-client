@@ -53,8 +53,8 @@ export interface CollectAnswer {
     answer_structure_json: {
         data: AnswerItem[];
     };
-    created_at: string;
-    updated_at: string;
+    created_at: Date;
+    updated_at: Date;
 }
 /** 这个类型和和发布问卷中的一致 */
 export interface AnswerItem {

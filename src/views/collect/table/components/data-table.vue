@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { useCollectStore } from '@/store';
 import { CollectAnswer } from '@/store/modules/collect/types';
+import { reactive } from 'vue';
+import OneAnswer from './one-answer.vue';
+import { TableColumnData } from '@arco-design/web-vue';
 const collectStore = useCollectStore();
 
 const props = defineProps<{
@@ -9,18 +12,28 @@ const props = defineProps<{
 
 collectStore.fetchAnswerCollectBySurveyId(props.surveyId);
 
-const columns = [
+const columns: TableColumnData[] = [
     {
         title: '回答用户',
         dataIndex: 'user_name',
+        width: 100,
     },
     {
         title: '填写花费时间',
         dataIndex: 'spend_time_text',
+        width: 150,
+        sortable: {
+            sortDirections: ['ascend', 'descend'],
+            sorter: (a: CollectAnswer, b: CollectAnswer, { direction }) => {
+                if (direction === 'ascend') return a.spend_time - b.spend_time;
+                return b.spend_time - a.spend_time;
+            },
+        },
     },
     {
         title: '是否有效',
         dataIndex: 'is_valid_text',
+        width: 110,
         filterable: {
             filters: [
                 // 这里的 value 得是字符串，不然组件会报类型错误
@@ -36,11 +49,20 @@ const columns = [
     {
         title: 'IP 来源',
         dataIndex: 'ip_from',
+        width: 150,
     },
     {
         title: '提交时间',
         dataIndex: 'created_date',
-        // Sortable
+        width: 200,
+        sortable: {
+            sortDirections: ['ascend', 'descend'],
+            // 没有效果……
+            sorter: (a: CollectAnswer, b: CollectAnswer, { direction }) => {
+                if (direction === 'ascend') return a.created_at.getTime() - b.created_at.getTime();
+                return b.created_at.getTime() - a.created_at.getTime();
+            },
+        },
     },
     {
         title: '浏览器',
@@ -52,10 +74,9 @@ const columns = [
                 { text: '火狐', value: '2' },
                 { text: '其他', value: '3' },
             ],
-            // @ts-ignore 这里不能有类型，不然组件同样会报类型错误
-            filter: (values, row) => {
-                return (values as string[]).some((v) => {
-                    return (row as CollectAnswer).user_browser_flag === v;
+            filter: (values, row: CollectAnswer) => {
+                return values.some((v) => {
+                    return row.user_browser_flag === v;
                 });
             },
             multiple: true,
@@ -69,7 +90,12 @@ const columns = [
         title: '使用设备',
         dataIndex: 'user_device',
     },
-];
+] as TableColumnData[];
+
+const expandable = reactive({
+    title: '展开',
+    width: 80,
+});
 </script>
 
 <template>
@@ -83,8 +109,16 @@ const columns = [
             :data="collectStore.state.cur.answerList"
             :loading="collectStore.state.loading.fetchAnswerCollectBySurveyId"
             :stripe="true"
-            :filter-icon-align-left="true"
-        />
+            filter-icon-align-left
+            table-layout-fixed
+            column-resizable
+            :expandable="expandable"
+            row-key="id"
+        >
+            <template #expand-row="{ record }">
+                <OneAnswer :answer-list="record.answer_structure_json.data" />
+            </template>
+        </a-table>
     </div>
 </template>
 

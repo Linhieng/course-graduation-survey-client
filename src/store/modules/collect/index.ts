@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 import { CollectStore } from './types';
 import UAParser from 'ua-parser-js';
+import { getTimeDesc } from './util';
 
 const useCollectStore = defineStore('collect', () => {
     const state = reactive<CollectStore>({
@@ -57,9 +58,10 @@ const useCollectStore = defineStore('collect', () => {
 
                 item.user_os = ua.getOS().name || '未知';
                 item.user_device = ua.getDevice().vendor || '未知';
-                item.created_date = new Date(item.created_at).toLocaleString();
+                item.created_at = new Date(item.created_at);
+                item.created_date = item.created_at.toLocaleString();
                 item.is_valid_text = item.is_valid === 1 ? '有效' : '无效';
-                item.spend_time_text = item.spend_time < 1 ? '未记录' : `大约${~~(item.spend_time / 60)}分钟`;
+                item.spend_time_text = item.spend_time < 1 ? '未记录' : getTimeDesc(item.spend_time);
             });
 
             state.cur.title = res.data.title;
