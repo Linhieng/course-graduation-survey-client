@@ -137,8 +137,7 @@
                                             <a-checkbox
                                                 v-model="item.checked"
                                                 @change="handleChange($event, item as TableColumnData, index)"
-                                            >
-                                            </a-checkbox>
+                                            ></a-checkbox>
                                         </div>
                                         <div class="title">
                                             {{ item.title === '#' ? '序列号' : item.title }}
@@ -156,8 +155,6 @@
                 :pagination="pagination"
                 :columns="(cloneColumns as TableColumnData[])"
                 :data="renderData"
-                :bordered="false"
-                :size="size"
                 @page-change="onPageChange"
             >
                 <template #index="{ rowIndex }">

@@ -1,8 +1,23 @@
 import { QuestionItem, QuestionOption, QuestionType } from '../create/types';
 
+export interface CollectSurveyItem {
+    id: number;
+    title: string;
+    comment: string;
+    is_valid: boolean;
+    created_at: Date;
+    updated_at: Date;
+    /** 收集到的回答量 */
+    collect_answer: number;
+    /** 收集到的访问量 */
+    collect_visited: number;
+}
+
 export interface CollectStore {
+    survey_list: Array<CollectSurveyItem>;
     loading: {
         fetchAnswerCollectBySurveyId: boolean;
+        fetchSurveyListByPage: boolean;
     };
     cur: {
         title: string;
@@ -64,3 +79,5 @@ export interface AnswerItem {
     text: string;
     option_text: Array<QuestionOption>;
 }
+
+/**  */

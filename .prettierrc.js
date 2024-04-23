@@ -5,5 +5,5 @@ module.exports = {
     singleQuote: true,
     quoteProps: 'consistent',
     trailingComma: 'all',
-    htmlWhitespaceSensitivity: 'strict',
+    htmlWhitespaceSensitivity: 'ignore',
 };

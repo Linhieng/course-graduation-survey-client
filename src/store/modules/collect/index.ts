@@ -1,14 +1,16 @@
-import { getAnswerCollectBySurveyId } from '@/api/collect';
+import { getAnswerCollectBySurveyId, searchSurveyListByPage } from '@/api/collect';
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 import { CollectStore } from './types';
 import UAParser from 'ua-parser-js';
 import { getTimeDesc } from './util';
+import { SearchParams } from '@/views/collect/entry/index.vue';
 
 const useCollectStore = defineStore('collect', () => {
     const state = reactive<CollectStore>({
         loading: {
             fetchAnswerCollectBySurveyId: false,
+            fetchSurveyListByPage: false,
         },
         // local: {
 
@@ -26,6 +28,7 @@ const useCollectStore = defineStore('collect', () => {
                 list: [],
             },
         },
+        survey_list: [],
     });
 
     /** 获取问卷的答案答案统计 */
@@ -74,10 +77,33 @@ const useCollectStore = defineStore('collect', () => {
 
     async function fetchAnswerCollectByPage(pageStart: number, pageSize: number, surveyId?: number) {}
 
+    async function fetchSurveyListByPage({
+        current,
+        pageSize,
+        searchParams,
+    }: {
+        current: number;
+        pageSize: number;
+        searchParams: SearchParams;
+    }) {
+        if (state.loading.fetchSurveyListByPage) return;
+        state.loading.fetchSurveyListByPage = true;
+        const res = await searchSurveyListByPage(current, pageSize, searchParams);
+        if (res.ok) {
+            console.log(res.data.survey_list);
+            res.data.survey_list.forEach((item) => {
+                item.is_valid = (item.is_valid as any) === '1';
+            });
+            state.survey_list = res.data.survey_list;
+        }
+        state.loading.fetchSurveyListByPage = false;
+    }
+
     return {
         state,
         fetchAnswerCollectBySurveyId,
         fetchAnswerCollectByPage,
+        fetchSurveyListByPage,
     };
 });
 export default useCollectStore;
