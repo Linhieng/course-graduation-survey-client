@@ -38,6 +38,7 @@ export type QuestionType =
 export interface QuestionItem {
     id: string;
     type: QuestionType;
+    /** 虽然是 order，但这里是从 0 开始，这算是遗留问题吧？ */
     order: number;
     title: string;
     required: boolean;
