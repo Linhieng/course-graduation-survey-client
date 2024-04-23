@@ -119,7 +119,7 @@ const clickRegister = async ({
     values,
 }: {
     errors: Record<string, ValidatedError> | undefined;
-    values: FormData;
+    values: Record<string, any>;
 }) => {
     if (loading.value) return;
     if (!errors) {
@@ -130,7 +130,7 @@ const clickRegister = async ({
         }
 
         setLoading(true);
-        const res = await signup(values);
+        const res = await signup(values as FormData);
         setLoading(false);
         if (!res.ok) {
             errorMessage.value = t(res.msg);

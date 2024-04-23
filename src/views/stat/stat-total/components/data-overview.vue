@@ -64,6 +64,7 @@ const generateSeries = (name: string, lineColor: string, itemBorderColor: string
 };
 const { loading, setLoading } = useLoading(true);
 
+// @ts-ignore
 const { chartOption } = useChartOption((dark) => {
     return {
         grid: {

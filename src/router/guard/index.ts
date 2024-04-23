@@ -8,6 +8,7 @@ function setupPageGuard(router: Router) {
     router.beforeEach(async (to) => {
         // emit route change
         setRouteEmitter(to);
+        // @ts-ignore
         useAppStore().updateLastRouter(to.name, to.meta.locale, to.meta.icon);
     });
 }
