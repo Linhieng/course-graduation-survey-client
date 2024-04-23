@@ -8,6 +8,11 @@
 - less 变量找不到，在 issue 中找到[解决方案](https://github.com/arco-design/arco-design-vue/issues/3038#issuecomment-2014537494)，直接手动添加全局变量。
 - `[vite:reporter] chunk.moduleIds is not iterable`。 同样在 issue 中找到[解决方案](https://github.com/vitejs/vite/issues/15277#issuecomment-1855326703)，也就是将 vite 从 4.5 变为 4.3.
 
+打包成功了，但打包后的项目完全是跑不了的，有啥用？index 中连 script 都没有。而且打包时，停留在 rendering chunks (70)... 
+那里停留了特别长的时间！得一分多钟。
+
+是我哪里弄错了？
+
 ## 其他
 
 组件不能有多个根元素，因为这样无法有动画，从而导致渲染不出路由的内容。
