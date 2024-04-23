@@ -12,6 +12,17 @@ const props = defineProps<{
 
 collectStore.fetchAnswerCollectBySurveyId(props.surveyId);
 
+const is_valid_filterable = {
+    filters: [
+        // 这里的 value 得是字符串，不然组件会报类型错误
+        { text: '有效', value: '1' },
+        { text: '无效', value: '0' },
+    ],
+    // value 是一个数组，元素是用户选中的内容 filters 中的 value
+    // filter: (value: string[], row: CollectAnswer) => value[0] === '1',
+    // @ts-ignore 这里不能有类型，不然组件同样会报类型错误
+    filter: (value, row) => value[0] === '1',
+};
 const columns: TableColumnData[] = [
     {
         title: '回答用户',
@@ -30,22 +41,12 @@ const columns: TableColumnData[] = [
             },
         },
     },
-    {
-        title: '是否有效',
-        dataIndex: 'is_valid_text',
-        width: 110,
-        filterable: {
-            filters: [
-                // 这里的 value 得是字符串，不然组件会报类型错误
-                { text: '有效', value: '1' },
-                { text: '无效', value: '0' },
-            ],
-            // value 是一个数组，元素是用户选中的内容 filters 中的 value
-            // filter: (value: string[], row: CollectAnswer) => value[0] === '1',
-            // @ts-ignore 这里不能有类型，不然组件同样会报类型错误
-            filter: (value, row) => value[0] === '1',
-        },
-    },
+    // {
+    //     title: '是否有效',
+    //     dataIndex: 'is_valid_text',
+    //     width: 110,
+    //     filterable: is_valid_filterable,
+    // },
     {
         title: 'IP 来源',
         dataIndex: 'ip_from',
@@ -67,7 +68,7 @@ const columns: TableColumnData[] = [
     {
         title: '浏览器',
         dataIndex: 'user_browser',
-        width: 100,
+        width: 110,
         filterable: {
             filters: [
                 { text: '微软 Edge', value: '0' },
@@ -121,6 +122,36 @@ const expandable = reactive({
         >
             <template #expand-row="{ record }">
                 <OneAnswer :answer-list="record.answer_structure_json.data" />
+            </template>
+            <!-- 使用了 columns 后，前面的 :columns="columns" 就无效了 -->
+            <template #columns>
+                <a-table-column
+                    v-for="item in columns"
+                    :title="typeof item.title === 'string' ? item.title : ''"
+                    :data-index="item.dataIndex"
+                    :sortable="item.sortable ? item.sortable : undefined"
+                    :width="item.width"
+                    :filterable="item.filterable ? item.filterable : undefined"
+                >
+                    <!-- 这里报错 -->
+                    <!-- <template v-if="item.title === '是否有效'">
+                            <template #cell="{ record }">
+                                <a-tag v-if="record.is_valid === 1" color="green">有效</a-tag>
+                                <a-tag v-else color="red">无效</a-tag>
+                            </template>
+                    </template> -->
+                </a-table-column>
+                <a-table-column
+                    title="是否有效"
+                    data-index="is_valid_text"
+                    :width="110"
+                    :filterable="is_valid_filterable"
+                >
+                    <template #cell="{ record }">
+                        <a-tag v-if="record.is_valid === 1" color="green">有效</a-tag>
+                        <a-tag v-else color="red">无效</a-tag>
+                    </template>
+                </a-table-column>
             </template>
         </a-table>
     </div>
