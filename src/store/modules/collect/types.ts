@@ -1,4 +1,4 @@
-import { QuestionOption, QuestionType } from '../create/types';
+import { QuestionItem, QuestionOption, QuestionType } from '../create/types';
 
 export interface CollectStore {
     loading: {
@@ -8,6 +8,7 @@ export interface CollectStore {
         title: string;
         desc: string;
         surveyId?: number;
+        questionList: QuestionItem[];
         answerList: CollectAnswer[];
         pageAnswerList: Page<CollectAnswer>;
     };
@@ -19,6 +20,13 @@ export interface Page<T> {
     list: T[];
 }
 export interface CollectAnswer {
+    /** 用于表格过滤判断，使用字符串是因为类型报错。
+     * - '0' 微软 Edge
+     * - '1' 谷歌
+     * - '2' 火狐
+     * - '3' 其他
+     */
+    user_browser_flag: '0' | '1' | '2' | '3';
     spend_time_text: string;
     is_valid_text: string;
     /** 这是本地添加的 */

@@ -17,6 +17,7 @@ const useCollectStore = defineStore('collect', () => {
             desc: '',
             surveyId: undefined,
             answerList: [],
+            questionList: [],
             pageAnswerList: {
                 total: 0,
                 pageStart: 1,
@@ -29,7 +30,7 @@ const useCollectStore = defineStore('collect', () => {
     /** 获取问卷的答案答案统计 */
     async function fetchAnswerCollectBySurveyId(surveyId?: number) {
         if (state.loading.fetchAnswerCollectBySurveyId) return;
-        if (surveyId) {
+        if (!isNaN(Number(surveyId))) {
             state.cur.surveyId = surveyId;
         }
         if (!state.cur.surveyId) return;
@@ -44,9 +45,14 @@ const useCollectStore = defineStore('collect', () => {
                 if (ua.getBrowser().name) {
                     // @ts-ignore
                     item.user_browser = ua.getBrowser().name;
+                    if (ua.getBrowser().name === 'Edge') item.user_browser_flag = '0';
+                    else if (ua.getBrowser().name === 'Chrome') item.user_browser_flag = '1';
+                    else if (ua.getBrowser().name === 'Firefox') item.user_browser_flag = '2';
+
                     item.user_browser += ua.getBrowser().version?.split('.').slice(0, 1);
                 } else {
                     item.user_browser = '未知';
+                    item.user_browser_flag = '3';
                 }
 
                 item.user_os = ua.getOS().name || '未知';
