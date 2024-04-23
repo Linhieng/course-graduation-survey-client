@@ -67,6 +67,7 @@ const columns: TableColumnData[] = [
     {
         title: '浏览器',
         dataIndex: 'user_browser',
+        width: 100,
         filterable: {
             filters: [
                 { text: '微软 Edge', value: '0' },
@@ -85,10 +86,12 @@ const columns: TableColumnData[] = [
     {
         title: '操作系统',
         dataIndex: 'user_os',
+        width: 100,
     },
     {
         title: '使用设备',
         dataIndex: 'user_device',
+        width: 100,
     },
 ] as TableColumnData[];
 
@@ -113,6 +116,7 @@ const expandable = reactive({
             table-layout-fixed
             column-resizable
             :expandable="expandable"
+            :bordered="{ cell: true }"
             row-key="id"
         >
             <template #expand-row="{ record }">
