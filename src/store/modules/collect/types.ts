@@ -7,10 +7,33 @@ export interface CollectStore {
     cur: {
         surveyId?: number;
         answerList: CollectAnswer[];
+        pageAnswerList: Page<CollectAnswer>;
     };
 }
-
+export interface Page<T> {
+    total: number;
+    pageStart: number;
+    pageSize: number;
+    list: T[];
+}
 export interface CollectAnswer {
+    spend_time_text: string;
+    is_valid_text: string;
+    /** 这是本地添加的 */
+    created_date: string;
+    /** 这是根据 user_agent 计算的 */
+    user_browser: string;
+    /** 这是根据 user_agent 计算的 */
+    user_os: string;
+    /** 这是根据 user_agent 计算的 */
+    user_device: string;
+    /** 这是服务器添加的 */
+    user_agent: string;
+    /** 这是服务器添加的 */
+    user_name: string;
+    //
+    // -------
+    //
     id: number;
     survey_id: number;
     answer_user_id: number;
