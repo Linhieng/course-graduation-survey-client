@@ -5,7 +5,7 @@ import { useAppStore } from '@/store';
 <template>
     <a-card
         class="general-card"
-        :title="$t('workplace.recently.visited')"
+        :title="$t('最近访问')"
         :header-style="{ paddingBottom: '0' }"
         :body-style="{ paddingTop: '26px' }"
     >

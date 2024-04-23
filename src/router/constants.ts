@@ -12,7 +12,8 @@ export const REDIRECT_ROUTE_NAME = 'Redirect';
 export const DEFAULT_ROUTE_NAME = 'Workplace';
 
 export const DEFAULT_ROUTE = {
-    title: 'menu.dashboard.workplace',
+    // 这个显示在标签页中，不是侧边栏中
+    title: '主面板',
     name: DEFAULT_ROUTE_NAME,
     fullPath: '/dashboard/workplace',
 };

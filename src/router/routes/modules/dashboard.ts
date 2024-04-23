@@ -17,7 +17,7 @@ const DASHBOARD: AppRouteRecordRaw = {
             name: 'Workplace',
             component: () => import('@/views/dashboard/workplace/index.vue'),
             meta: {
-                locale: 'menu.dashboard.workplace',
+                locale: '主面板',
                 requiresAuth: true,
                 roles: ['*'],
             },
