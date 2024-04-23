@@ -22,6 +22,7 @@ app.use(ArcoVueIcon);
 app.use(router);
 app.use(store);
 app.use(i18n);
+app.config.globalProperties.$t = (v) => v;
 app.use(globalComponents);
 app.use(directive);
 
