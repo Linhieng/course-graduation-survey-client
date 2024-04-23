@@ -33,6 +33,7 @@ const useAppStore = defineStore('app', {
         /** 更新最近访问的路由 */
         updateLastRouter(name: string, text: string, icon: any) {
             if (name === 'Workplace') return;
+            if (name === 'login') return;
             const had = this.$state.lastRouter.some((v, i, arr) => {
                 if (v.name === name) {
                     arr[i].count++;

@@ -14,7 +14,8 @@ export interface AppRouteRecordRaw {
     component: Component | string;
     children?: AppRouteRecordRaw[];
     alias?: string | string[];
-    props?: Record<string, any>;
+    // 这里为啥是这个呀？明明也可以是 boolean
+    props?: Record<string, any> | boolean;
     beforeEnter?: NavigationGuard | NavigationGuard[];
     fullPath?: string;
 }

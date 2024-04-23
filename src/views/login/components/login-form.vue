@@ -103,7 +103,6 @@ const handleSubmit = async ({
 
         if (ok) {
             const { redirect, ...othersQuery } = router.currentRoute.value.query;
-            debugger;
             router.push({
                 name: (redirect as string) || 'Workplace',
                 query: {
