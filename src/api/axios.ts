@@ -1,6 +1,8 @@
+import router from '@/router';
 import { getToken } from '@/utils/auth';
 import { msgError } from '@/utils/msg';
-import axios, { AxiosInstance, type AxiosRequestConfig } from 'axios';
+import axios from 'axios';
+import type { AxiosError, AxiosRequestConfig, AxiosInstance } from 'axios';
 
 export interface HttpResponse<T = any> {
     // 后端还没有添加属性，这是在拦截器中添加的。
@@ -114,7 +116,7 @@ export function interceptResponse(axios: AxiosInstance) {
             msgError(res.msg);
             return res;
         },
-        (error) => {
+        (error: AxiosError) => {
             // 这里是非 2xx 状态码
 
             let res: HttpResponse = {
@@ -128,9 +130,22 @@ export function interceptResponse(axios: AxiosInstance) {
             // TODO: error instance of AxiosError
             if (error) {
                 if (error.response) {
+                    const response = error.response;
                     // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
                     // 后台保证返回一个 HttpResponse 对象
-                    res = error.response.data;
+                    res = response.data;
+
+                    // 遇到无效的 token 时，需要重新登录！
+                    if (response.status === 403 && response.data.msg === 'api.error.token-invalid') {
+                        const currentRoute = router.currentRoute.value;
+                        router.push({
+                            name: 'login',
+                            query: {
+                                ...router.currentRoute.value.query,
+                                redirect: currentRoute.name as string,
+                            },
+                        });
+                    }
                 } else if (error.request) {
                     // 请求已经成功发起，但没有收到响应
                     res.msg = 'api.error.not-response';
