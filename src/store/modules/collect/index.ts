@@ -13,6 +13,8 @@ const useCollectStore = defineStore('collect', () => {
 
         // },
         cur: {
+            title: '',
+            desc: '',
             surveyId: undefined,
             answerList: [],
             pageAnswerList: {
@@ -53,7 +55,9 @@ const useCollectStore = defineStore('collect', () => {
                 item.is_valid_text = item.is_valid === 1 ? '有效' : '无效';
                 item.spend_time_text = item.spend_time < 1 ? '未记录' : `大约${~~(item.spend_time / 60)}分钟`;
             });
-            console.log(res.data.answerList);
+
+            state.cur.title = res.data.title;
+            state.cur.desc = res.data.desc;
             state.cur.answerList = res.data.answerList;
         }
 

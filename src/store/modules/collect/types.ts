@@ -5,6 +5,8 @@ export interface CollectStore {
         fetchAnswerCollectBySurveyId: boolean;
     };
     cur: {
+        title: string;
+        desc: string;
         surveyId?: number;
         answerList: CollectAnswer[];
         pageAnswerList: Page<CollectAnswer>;
