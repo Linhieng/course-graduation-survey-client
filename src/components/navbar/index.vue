@@ -67,12 +67,14 @@
                         </a-badge>
                     </div>
                 </a-tooltip>
+                <!-- 这里页面上对不齐，所以不显示弹出框箭头图标 -->
                 <a-popover
                     trigger="click"
                     :arrow-style="{ display: 'none' }"
                     :content-style="{ padding: 0, minWidth: '400px', maxWidth: '600px' }"
                     content-class="message-popover"
                 >
+                    <!-- 删除后弹出框不显示，暂时不清楚为什么为在他身上分配事件 -->
                     <div ref="refBtn" class="ref-btn"></div>
                     <template #content>
                         <message-box />

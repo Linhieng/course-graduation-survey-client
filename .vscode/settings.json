@@ -24,5 +24,8 @@
         "src/**/index.ts": "/${dirname}.${extname}",
         "src/**/index.vue": "/${dirname}.${extname}",
         "src/**/types.ts": "/${dirname}-types.${extname}"
-    }
+    },
+    "cSpell.words": [
+        "doption"
+    ]
 }
