@@ -15,7 +15,7 @@ const gotoCollectVisual = (surveyId: number) => {
 export interface SearchParams {
     survey_name: string;
     survey_desc: string;
-    survey_status: string;
+    survey_status: 'all' | 'stop' | 'publish';
     survey_create_range: (string | number | Date)[];
 }
 
@@ -27,7 +27,12 @@ const initialSearchForm: SearchParams = {
 };
 const searchForm = ref<SearchParams>(initialSearchForm);
 function resetSearchForm() {
-    searchForm.value = initialSearchForm;
+    console.log('?');
+    // searchForm.value = initialSearchForm;
+    searchForm.value.survey_create_range = ['', ''];
+    searchForm.value.survey_name = '';
+    searchForm.value.survey_desc = '';
+    searchForm.value.survey_status = 'all';
 }
 
 const onPageChange = (current: number) => {
@@ -182,6 +187,11 @@ const onPageChange = (current: number) => {
                             </a-space>
                         </template>
                     </a-table-column>
+                </template>
+                <template #pagination-right>
+                    <a-space style="margin-left: 30px">
+                        {{ $t('总数：') + collectStore.state.search_survey.pagination.total }}
+                    </a-space>
                 </template>
             </a-table>
         </a-card>
