@@ -1,6 +1,7 @@
 <template>
     <a-layout class="layout" :class="{ mobile: appStore.hideMenu }">
         <div v-if="navbar" class="layout-navbar">
+            <!-- 最顶部的部件，包含 logo、搜索、语言切换、全屏、头像等等 -->
             <NavBar />
         </div>
         <a-layout>

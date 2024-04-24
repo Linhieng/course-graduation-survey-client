@@ -3,16 +3,16 @@
         <a-tabs v-model:activeKey="messageType" type="rounded" destroy-on-hide>
             <a-tab-pane v-for="item in tabList" :key="item.key">
                 <template #title>
-                    <span> {{ item.title }}{{ formatUnreadLength(item.key) }} </span>
+                    <span>{{ item.title }}{{ formatUnreadLength(item.key) }}</span>
                 </template>
                 <a-result v-if="!renderList.length" status="404">
-                    <template #subtitle> {{ $t('messageBox.noContent') }} </template>
+                    <template #subtitle>{{ $t('没有未读消息') }}</template>
                 </a-result>
                 <List :render-list="renderList" :unread-count="unreadCount" @item-click="handleItemClick" />
             </a-tab-pane>
             <template #extra>
                 <a-button type="text" @click="emptyList">
-                    {{ $t('messageBox.tab.button') }}
+                    {{ $t('全部已读') }}
                 </a-button>
             </template>
         </a-tabs>
@@ -45,16 +45,16 @@ toRefs(messageData);
 const tabList: TabItem[] = [
     {
         key: 'message',
-        title: t('messageBox.tab.title.message'),
+        title: t('消息'),
     },
-    {
-        key: 'notice',
-        title: t('messageBox.tab.title.notice'),
-    },
-    {
-        key: 'todo',
-        title: t('messageBox.tab.title.todo'),
-    },
+    // {
+    //     key: 'notice',
+    //     title: t('messageBox.tab.title.notice'),
+    // },
+    // {
+    //     key: 'todo',
+    //     title: t('messageBox.tab.title.todo'),
+    // },
 ];
 async function fetchSourceData() {
     setLoading(true);

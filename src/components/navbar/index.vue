@@ -14,11 +14,12 @@
             </a-space>
         </div>
         <div class="center-side">
+            <!-- 控制侧边栏可以是否放在顶部 -->
             <Menu v-if="topMenu" />
         </div>
         <ul class="right-side">
             <li>
-                <a-tooltip :content="$t('settings.search')">
+                <a-tooltip :content="$t('搜索')">
                     <a-button class="nav-btn" type="outline" :shape="'circle'">
                         <template #icon>
                             <icon-search />
@@ -27,7 +28,7 @@
                 </a-tooltip>
             </li>
             <li>
-                <a-tooltip :content="$t('settings.language')">
+                <a-tooltip :content="$t('切换语言')">
                     <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setDropDownVisible">
                         <template #icon>
                             <icon-language />
@@ -47,11 +48,7 @@
                 </a-dropdown>
             </li>
             <li>
-                <a-tooltip
-                    :content="
-                        theme === 'light' ? $t('settings.navbar.theme.toDark') : $t('settings.navbar.theme.toLight')
-                    "
-                >
+                <a-tooltip :content="theme === 'light' ? $t('切换到暗色') : $t('切换到亮色')">
                     <a-button class="nav-btn" type="outline" :shape="'circle'" @click="handleToggleTheme">
                         <template #icon>
                             <icon-moon-fill v-if="theme === 'dark'" />
@@ -61,7 +58,7 @@
                 </a-tooltip>
             </li>
             <li>
-                <a-tooltip :content="$t('settings.navbar.alerts')">
+                <a-tooltip :content="$t('消息盒')">
                     <div class="message-box-trigger">
                         <a-badge :count="9" dot>
                             <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setPopoverVisible">
@@ -73,7 +70,7 @@
                 <a-popover
                     trigger="click"
                     :arrow-style="{ display: 'none' }"
-                    :content-style="{ padding: 0, minWidth: '400px' }"
+                    :content-style="{ padding: 0, minWidth: '400px', maxWidth: '600px' }"
                     content-class="message-popover"
                 >
                     <div ref="refBtn" class="ref-btn"></div>
@@ -83,9 +80,7 @@
                 </a-popover>
             </li>
             <li>
-                <a-tooltip
-                    :content="isFullscreen ? $t('settings.navbar.screen.toExit') : $t('settings.navbar.screen.toFull')"
-                >
+                <a-tooltip :content="isFullscreen ? $t('退出全屏') : $t('进入全屏')">
                     <a-button class="nav-btn" type="outline" :shape="'circle'" @click="toggleFullScreen">
                         <template #icon>
                             <icon-fullscreen-exit v-if="isFullscreen" />
@@ -95,7 +90,7 @@
                 </a-tooltip>
             </li>
             <li>
-                <a-tooltip :content="$t('settings.title')">
+                <a-tooltip :content="$t('布局设置')">
                     <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setVisible">
                         <template #icon>
                             <icon-settings />
@@ -113,7 +108,7 @@
                             <a-space @click="switchRoles">
                                 <icon-tag />
                                 <span>
-                                    {{ $t('messageBox.switchRoles') }}
+                                    {{ $t('切换角色') }}
                                 </span>
                             </a-space>
                         </a-doption>
@@ -121,7 +116,7 @@
                             <a-space @click="$router.push({ name: 'Info' })">
                                 <icon-user />
                                 <span>
-                                    {{ $t('messageBox.userCenter') }}
+                                    {{ $t('用户信息') }}
                                 </span>
                             </a-space>
                         </a-doption>
@@ -129,7 +124,7 @@
                             <a-space @click="$router.push({ name: 'Setting' })">
                                 <icon-settings />
                                 <span>
-                                    {{ $t('messageBox.userSettings') }}
+                                    {{ $t('用户设置') }}
                                 </span>
                             </a-space>
                         </a-doption>
@@ -137,7 +132,7 @@
                             <a-space @click="handleLogout">
                                 <icon-export />
                                 <span>
-                                    {{ $t('messageBox.logout') }}
+                                    {{ $t('退出登录') }}
                                 </span>
                             </a-space>
                         </a-doption>
