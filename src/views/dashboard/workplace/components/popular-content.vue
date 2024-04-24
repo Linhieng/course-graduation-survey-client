@@ -1,32 +1,45 @@
 <template>
-    <a-spin :loading="loading" style="width: 100%">
+    <a-spin :loading="loading" dot style="width: 100%">
         <a-card
             class="general-card"
             :header-style="{ paddingBottom: '0' }"
             :body-style="{ padding: '17px 20px 21px 20px' }"
         >
             <template #title>
-                {{ $t('workplace.popularContent') }}
+                {{ $t('知名问卷') }}
             </template>
             <template #extra>
-                <a-link>{{ $t('workplace.viewMore') }}</a-link>
+                <a-button text @click="() => fetchData(undefined, true)">{{ $t('立即刷新') }}</a-button>
             </template>
             <a-space direction="vertical" :size="10" fill>
-                <a-radio-group v-model:model-value="type" type="button" @change="typeChange as any">
-                    <a-radio value="text">
-                        {{ $t('workplace.popularContent.text') }}
+                <a-radio-group v-model="contentType" type="button" @change="(v) => typeChange(v as any)">
+                    <a-radio value="allRank">
+                        {{ $t('所有问卷') }}
                     </a-radio>
-                    <a-radio value="image">
-                        {{ $t('workplace.popularContent.image') }}
+                    <a-radio value="publishRank">
+                        {{ $t('发布中') }}
                     </a-radio>
-                    <a-radio value="video">
-                        {{ $t('workplace.popularContent.video') }}
+                    <a-radio value="stopRank">
+                        {{ $t('已停止') }}
                     </a-radio>
                 </a-radio-group>
-                <a-table :data="renderList" :pagination="false" :bordered="false" :scroll="{ x: '100%', y: '264px' }">
+                <a-table :data="renderList" :pagination="false" :bordered="false" table-layout-fixed>
                     <template #columns>
-                        <a-table-column title="排名" data-index="key"></a-table-column>
-                        <a-table-column title="内容标题" data-index="title">
+                        <a-table-column :width="60" title="排名" data-index="rank">
+                            <template #cell="{ record }">
+                                <a-tag :color="rank2color[record.rank]">{{ record.rank }}</a-tag>
+                            </template>
+                        </a-table-column>
+                        <a-table-column :width="60" title="回答量" data-index="count_answer">
+                            <template #cell="{ record }">
+                                <a-statistic
+                                    animation
+                                    :value="record.count_answer"
+                                    :value-style="{ fontSize: '1.2rem' }"
+                                />
+                            </template>
+                        </a-table-column>
+                        <a-table-column :width="100" title="问卷标题" data-index="title">
                             <template #cell="{ record }">
                                 <a-typography-paragraph
                                     :ellipsis="{
@@ -37,22 +50,9 @@
                                 </a-typography-paragraph>
                             </template>
                         </a-table-column>
-                        <a-table-column title="点击量" data-index="clickNumber"> </a-table-column>
-                        <a-table-column
-                            title="日涨幅"
-                            data-index="increases"
-                            :sortable="{
-                                sortDirections: ['ascend', 'descend'],
-                            }"
-                        >
+                        <a-table-column :width="100" title="操作">
                             <template #cell="{ record }">
-                                <div class="increases-cell">
-                                    <span>{{ record.increases }}%</span>
-                                    <icon-caret-up
-                                        v-if="record.increases !== 0"
-                                        style="color: #f53f3f; font-size: 8px"
-                                    />
-                                </div>
+                                <a-button type="primary" @click="gotoViewSurveyStat(record.id)">点击查看</a-button>
                             </template>
                         </a-table-column>
                     </template>
@@ -65,27 +65,62 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import useLoading from '@/hooks/loading';
-import { queryPopularList } from '@/api/dashboard';
-import type { TableData } from '@arco-design/web-vue/es/table/interface';
-
-const type = ref('text');
+import { useRouter } from 'vue-router';
+import { getPopularStatSurveyAnswerRank } from '@/api/stat';
+const router = useRouter();
+type ContentType = 'allRank' | 'publishRank' | 'stopRank';
+export interface RankItem {
+    rank: number;
+    count_answer: number;
+    title: string;
+}
+const contentType = ref<ContentType>('allRank');
 const { loading, setLoading } = useLoading();
-const renderList = ref<TableData[]>();
-const fetchData = async (contentType: string) => {
-    try {
-        setLoading(true);
-        const { data } = await queryPopularList({ type: contentType });
-        renderList.value = data;
-    } catch (err) {
-        // you can report use errorHandler or other
-    } finally {
-        setLoading(false);
-    }
+const renderList = ref<RankItem[]>();
+
+const rank2color: Record<number, string> = {
+    '1': 'red',
+    '2': 'green',
+    '3': 'blue',
+    '4': 'gray',
+    '5': 'gray',
 };
-const typeChange = (contentType: string) => {
+
+/** 缓存已经获得到的内容，切换时直接获取 */
+const fetchList = ref<{
+    allRank: RankItem[];
+    publishRank: RankItem[];
+    stopRank: RankItem[];
+}>();
+
+const fetchData = async (contentType: ContentType = 'allRank', flush = false) => {
+    if (!flush && fetchList.value) {
+        renderList.value = fetchList.value[contentType];
+        return;
+    }
+
+    setLoading(true);
+    const res = await getPopularStatSurveyAnswerRank();
+    if (res.ok) {
+        fetchList.value = res.data;
+        renderList.value = res.data[contentType];
+    }
+
+    setLoading(false);
+};
+const typeChange = (contentType: ContentType) => {
     fetchData(contentType);
 };
-fetchData('text');
+fetchData('allRank');
+
+function gotoViewSurveyStat(surveyId: number) {
+    router.push({
+        name: 'collect-table',
+        params: {
+            surveyId,
+        },
+    });
+}
 </script>
 
 <style scoped lang="less">

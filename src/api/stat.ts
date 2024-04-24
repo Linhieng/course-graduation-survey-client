@@ -1,5 +1,6 @@
 import { StatAnswerVisitGroupByDay, StatCount, StatGroupByDay } from '@/store/modules/stat/types';
 import { get } from './axios';
+import { RankItem } from '@/views/dashboard/workplace/components/popular-content.vue';
 
 export function getStatCount() {
     return get<StatCount>('/api/stat/count-stat');
@@ -21,4 +22,12 @@ export function getSurveyClassifyBase() {
         deleted_count: number;
         total_count: number;
     }>('/api/stat/survey-classify-easy');
+}
+
+export function getPopularStatSurveyAnswerRank() {
+    return get<{
+        allRank: RankItem[];
+        publishRank: RankItem[];
+        stopRank: RankItem[];
+    }>('/api/stat/popular-survey-count-answer');
 }
