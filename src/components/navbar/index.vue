@@ -60,7 +60,7 @@
             <li>
                 <a-tooltip :content="$t('消息盒')">
                     <div class="message-box-trigger">
-                        <a-badge :count="9" dot>
+                        <a-badge dot :count="messageStore.state.message.unread.length">
                             <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setPopoverVisible">
                                 <icon-notification />
                             </a-button>
@@ -71,7 +71,7 @@
                 <a-popover
                     trigger="click"
                     :arrow-style="{ display: 'none' }"
-                    :content-style="{ padding: 0, minWidth: '400px', maxWidth: '600px' }"
+                    :content-style="{ padding: 0, maxWidth: '600px' }"
                     content-class="message-popover"
                 >
                     <!-- 删除后弹出框不显示，暂时不清楚为什么为在他身上分配事件 -->
@@ -155,6 +155,8 @@ import useLocale from '@/hooks/locale';
 import useUser from '@/hooks/user';
 import Menu from '@/components/menu/index.vue';
 import MessageBox from '../message-box/index.vue';
+import { useMessageStore } from '@/store';
+const messageStore = useMessageStore();
 
 const appStore = useAppStore();
 const userStore = useUserStore();

@@ -1,116 +1,96 @@
+<script setup lang="ts">
+import { useMessageStore } from '@/store';
+const messageStore = useMessageStore();
+
+const flushMessage = () => {
+    messageStore.state.loading.showFetchUserMessage = true;
+    messageStore.fetchUserMessage();
+};
+</script>
+
 <template>
-    <a-spin style="display: block" :loading="loading">
-        <a-tabs v-model:activeKey="messageType" type="rounded" destroy-on-hide>
-            <a-tab-pane v-for="item in tabList" :key="item.key">
-                <template #title>
-                    <span>{{ item.title }}{{ formatUnreadLength(item.key) }}</span>
-                </template>
-                <a-result v-if="!renderList.length" status="404">
+    <a-spin style="display: block" :loading="messageStore.state.loading.showFetchUserMessage">
+        <div direction="vertical" fill class="box">
+            <div class="message-box">
+                <header>
+                    <a-badge :offset="[20, 6]" :count="useMessageStore().state.message.unread.length">
+                        <b style="font-size: 1.3rem">{{ $t('通知') }}</b>
+                    </a-badge>
+                    <a-button type="text" @click="flushMessage">
+                        {{ $t('立刻刷新') }}
+                    </a-button>
+                </header>
+                <a-result
+                    style="padding: 0px; margin: auto"
+                    v-if="!messageStore.state.message.unread.length"
+                    status="404"
+                >
                     <template #subtitle>{{ $t('没有未读消息') }}</template>
                 </a-result>
-                <List :render-list="renderList" :unread-count="unreadCount" @item-click="handleItemClick" />
-            </a-tab-pane>
-            <template #extra>
-                <a-button type="text" @click="emptyList">
-                    {{ $t('全部已读') }}
-                </a-button>
-            </template>
-        </a-tabs>
+                <a-space direction="vertical" fill size="medium" style="padding-top: 20px">
+                    <template #split>
+                        <a-divider :margin="0" style="width: 100%" />
+                    </template>
+                    <a-space v-for="item in messageStore.state.message.unread">
+                        <a-tag style="cursor: pointer" color="red">未读</a-tag>
+                        <a-tooltip :content="new Date(item.created_at).toLocaleString()" position="bottom">
+                            <span>{{ new Date(item.created_at).toLocaleDateString() }}</span>
+                        </a-tooltip>
+                        <span>{{ '问卷' + item.survey_id + ': ' + item.content }}</span>
+                        <a-divider direction="vertical"></a-divider>
+                        <a-button
+                            :loading="messageStore.isLoading(item.id).value"
+                            @click="messageStore.setRead(item.id)"
+                            text
+                        >
+                            已读
+                        </a-button>
+                    </a-space>
+                </a-space>
+            </div>
+            <a-button
+                class="btn"
+                :loading="messageStore.state.loading.setAllRead"
+                :disabled="!messageStore.state.message.unread.length"
+                @click="messageStore.setAllRead"
+            >
+                全部已读
+            </a-button>
+        </div>
     </a-spin>
 </template>
 
-<script lang="ts" setup>
-import { ref, reactive, toRefs, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
-import { queryMessageList, setMessageStatus, MessageRecord, MessageListType } from '@/api/message';
-import useLoading from '@/hooks/loading';
-import List from './list.vue';
-
-interface TabItem {
-    key: string;
-    title: string;
-    avatar?: string;
-}
-const { loading, setLoading } = useLoading(true);
-const messageType = ref('message');
-const { t } = useI18n();
-const messageData = reactive<{
-    renderList: MessageRecord[];
-    messageList: MessageRecord[];
-}>({
-    renderList: [],
-    messageList: [],
-});
-toRefs(messageData);
-const tabList: TabItem[] = [
-    {
-        key: 'message',
-        title: t('消息'),
-    },
-    // {
-    //     key: 'notice',
-    //     title: t('messageBox.tab.title.notice'),
-    // },
-    // {
-    //     key: 'todo',
-    //     title: t('messageBox.tab.title.todo'),
-    // },
-];
-async function fetchSourceData() {
-    setLoading(true);
-    try {
-        const { data } = await queryMessageList();
-        messageData.messageList = data;
-    } catch (err) {
-        // you can report use errorHandler or other
-    } finally {
-        setLoading(false);
-    }
-}
-async function readMessage(data: MessageListType) {
-    const ids = data.map((item) => item.id);
-    await setMessageStatus({ ids });
-    fetchSourceData();
-}
-const renderList = computed(() => {
-    return messageData.messageList.filter((item) => messageType.value === item.type);
-});
-const unreadCount = computed(() => {
-    return renderList.value.filter((item) => !item.status).length;
-});
-const getUnreadList = (type: string) => {
-    const list = messageData.messageList.filter((item) => item.type === type && !item.status);
-    return list;
-};
-const formatUnreadLength = (type: string) => {
-    const list = getUnreadList(type);
-    return list.length ? `(${list.length})` : ``;
-};
-const handleItemClick = (items: MessageListType) => {
-    if (renderList.value.length) readMessage([...items]);
-};
-const emptyList = () => {
-    messageData.messageList = [];
-};
-fetchSourceData();
-</script>
-
 <style scoped lang="less">
-:deep(.arco-popover-popup-content) {
-    padding: 0;
-}
+.box {
+    width: 500px;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    padding: 60px 20px;
 
-:deep(.arco-list-item-meta) {
-    align-items: flex-start;
-}
-:deep(.arco-tabs-nav) {
-    padding: 14px 0 12px 16px;
-    border-bottom: 1px solid var(--color-neutral-3);
-}
-:deep(.arco-tabs-content) {
-    padding-top: 0;
-    .arco-result-subtitle {
-        color: rgb(var(--gray-6));
+    .message-box {
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            position: absolute;
+            top: 10px;
+            left: 24px;
+            right: 24px;
+            background-color: var(--color-bg-2);
+        }
+    }
+
+    .btn {
+        position: absolute;
+        bottom: 14px;
+        left: 30px;
+        right: 30px;
+        height: 30px;
     }
 }
 </style>

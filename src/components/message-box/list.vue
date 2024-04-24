@@ -36,8 +36,9 @@
                                 :ellipsis="{
                                     rows: 1,
                                 }"
-                                >{{ item.content }}</a-typography-paragraph
                             >
+                                {{ item.content }}
+                            </a-typography-paragraph>
                             <a-typography-text v-if="item.type === 'message'" class="time-text">
                                 {{ item.time }}
                             </a-typography-text>
@@ -47,13 +48,13 @@
             </div>
         </a-list-item>
         <template #footer>
-            <a-space fill :size="0" :class="{ 'add-border-top': renderList.length < showMax }">
+            <a-space fill style="padding: 0 20px" :class="{ 'add-border-top': renderList.length < showMax }">
                 <div class="footer-wrap">
-                    <a-link @click="allRead">{{ $t('messageBox.allRead') }}</a-link>
+                    <a-link @click="allRead">{{ $t('全部已读') }}</a-link>
                 </div>
-                <div class="footer-wrap">
+                <!-- <div class="footer-wrap">
                     <a-link>{{ $t('messageBox.viewMore') }}</a-link>
-                </div>
+                </div> -->
             </a-space>
         </template>
         <div

@@ -5,8 +5,9 @@ import useTabBarStore from './modules/tab-bar';
 import useCreateStore from './modules/create';
 import useStatStore from './modules/stat';
 import useCollectStore from './modules/collect';
+import useMessageStore from './modules/message';
 
 const pinia = createPinia();
 
-export { useAppStore, useUserStore, useTabBarStore, useCreateStore, useStatStore, useCollectStore };
+export { useAppStore, useUserStore, useTabBarStore, useCreateStore, useStatStore, useCollectStore, useMessageStore };
 export default pinia;

@@ -1,4 +1,27 @@
 import axios from 'axios';
+import { get, post } from './axios';
+import { UserMessageItem } from '@/store/modules/message/types';
+
+export function getMessageUnread() {
+    return get<{
+        unread: UserMessageItem[];
+        read: UserMessageItem[];
+        all: UserMessageItem[];
+    }>('/api/message/unread');
+}
+export function setMessageRead(ids: number[]) {
+    return post('/api/message/set-read', {
+        ids,
+    });
+}
+//
+//
+//
+//
+//
+//
+//
+//
 
 export interface MessageRecord {
     id: number;
