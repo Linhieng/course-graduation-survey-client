@@ -1,5 +1,6 @@
 import i18n from '@/locale';
 import { Message, Notification } from '@arco-design/web-vue';
+import { NotificationPosition } from '@arco-design/web-vue/es/notification/interface';
 
 const { t } = i18n.global;
 
@@ -65,39 +66,44 @@ export const msgLoading = (message: string, position: 'top' | 'bottom' = 'top') 
  *      - 不会短时间内多次重复出现的通知
  */
 
-export const notice = (message: string) => {
+export const notice = (message: string, position?: NotificationPosition) => {
     Notification.info({
         id: message,
         content: t(message),
         showIcon: false,
         closable: true,
+        position,
     });
 };
-export const noticeSuccess = (message: string) => {
+export const noticeSuccess = (message: string, position?: NotificationPosition) => {
     Notification.success({
         id: message,
         content: t(message),
         closable: true,
+        position,
     });
 };
-export const noticeWarning = (message: string) => {
+export const noticeWarning = (message: string, position?: NotificationPosition) => {
     Notification.warning({
         id: message,
         content: t(message),
         closable: true,
+        position,
     });
 };
-export const noticeInfo = (message: string) => {
+export const noticeInfo = (message: string, position?: NotificationPosition) => {
     Notification.info({
         id: message,
         content: t(message),
         closable: true,
+        position,
     });
 };
-export const noticeError = (message: string) => {
+export const noticeError = (message: string, position?: NotificationPosition) => {
     Notification.error({
         id: message,
         content: t(message),
         closable: true,
+        position,
     });
 };
