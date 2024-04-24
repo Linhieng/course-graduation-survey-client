@@ -87,6 +87,18 @@ const useCollectStore = defineStore('collect', () => {
     /** 分页获取问卷列表 */
     async function fetchSurveyListByPage({ current, searchParams }: { current: number; searchParams: SearchParams }) {
         if (state.loading.fetchSurveyListByPage) return;
+        if (
+            searchParams.survey_create_range &&
+            searchParams.survey_create_range[0] !== '' &&
+            searchParams.survey_create_range[1] !== ''
+        ) {
+            searchParams.survey_create_range = [
+                // 后台期待接收一个时间戳
+                new Date(searchParams.survey_create_range[0]).getTime(),
+                new Date(searchParams.survey_create_range[1]).getTime(),
+            ];
+        }
+
         state.loading.fetchSurveyListByPage = true;
         const res = await searchSurveyListByPage(current, state.search_survey.pagination.pageSize, searchParams);
         if (res.ok) {

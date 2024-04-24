@@ -16,30 +16,23 @@ export interface SearchParams {
     survey_name: string;
     survey_desc: string;
     survey_status: string;
-    survey_create_range: [number, number];
+    survey_create_range: (string | number | Date)[];
 }
 
 const initialSearchForm: SearchParams = {
     survey_name: '',
     survey_desc: '',
     survey_status: 'all',
-    survey_create_range: [new Date(Date.now()).setDate(1), Date.now()],
+    survey_create_range: ['', ''],
 };
 const searchForm = ref<SearchParams>(initialSearchForm);
 function resetSearchForm() {
     searchForm.value = initialSearchForm;
 }
 
-const basePagination: Pagination = {
-    current: 1,
-    pageSize: 2,
-    total: undefined,
-};
-const pagination = reactive({
-    ...basePagination,
-});
 const onPageChange = (current: number) => {
-    collectStore.fetchSurveyListByPage({ ...basePagination, current, searchParams: searchForm.value });
+    console.log(current);
+    collectStore.fetchSurveyListByPage({ current, searchParams: searchForm.value });
 };
 </script>
 

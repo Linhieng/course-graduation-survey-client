@@ -17,6 +17,7 @@ export interface CollectStore {
     search_survey: {
         pagination: {
             total: number;
+            /** 前端这里显示的是页数，从 1 开始，但后端 sql 应该是从 0 开始！ */
             current: number;
             pageSize: number;
         };
