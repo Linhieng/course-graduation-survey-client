@@ -14,7 +14,14 @@ export interface CollectSurveyItem {
 }
 
 export interface CollectStore {
-    survey_list: Array<CollectSurveyItem>;
+    search_survey: {
+        pagination: {
+            total: number;
+            current: number;
+            pageSize: number;
+        };
+        survey_list: Array<CollectSurveyItem>;
+    };
     loading: {
         fetchAnswerCollectBySurveyId: boolean;
         fetchSurveyListByPage: boolean;

@@ -5,8 +5,11 @@ import { useCollectStore } from '@/store';
 import { Pagination } from '@/types/global';
 const collectStore = useCollectStore();
 const router = useRouter();
-const gotoCollectTable = () => {
-    router.push({ name: 'collect-table', params: { surveyId: 172 } });
+const gotoCollectTable = (surveyId: number) => {
+    router.push({ name: 'collect-table', params: { surveyId } });
+};
+const gotoCollectVisual = (surveyId: number) => {
+    // router.push({ name: 'collect-visual', params: { surveyId } });
 };
 
 export interface SearchParams {
@@ -30,6 +33,7 @@ function resetSearchForm() {
 const basePagination: Pagination = {
     current: 1,
     pageSize: 2,
+    total: undefined,
 };
 const pagination = reactive({
     ...basePagination,
@@ -111,44 +115,78 @@ const onPageChange = (current: number) => {
             <a-table
                 row-key="id"
                 :loading="collectStore.state.loading.fetchSurveyListByPage"
-                :data="collectStore.state.survey_list"
+                :data="collectStore.state.search_survey.survey_list"
+                :pagination="collectStore.state.search_survey.pagination"
+                @page-change="onPageChange"
             >
                 <template #columns>
-                    <a-table-column title="id" data-index="id"></a-table-column>
-                    <a-table-column title="title" data-index="title"></a-table-column>
-                    <a-table-column title="comment" data-index="comment"></a-table-column>
-                    <a-table-column title="状态" data-index="is_valid">
+                    <a-table-column :width="70" title="id" data-index="id"></a-table-column>
+                    <a-table-column :width="150" title="title" data-index="title"></a-table-column>
+                    <a-table-column :width="200" title="comment" data-index="comment">
+                        <template #cell="{ record }">
+                            <a-typography-paragraph :ellipsis="{ rows: 2 }">
+                                {{ record.comment }}
+                            </a-typography-paragraph>
+                        </template>
+                    </a-table-column>
+                    <a-table-column :width="100" title="状态" data-index="is_valid">
                         <template #cell="{ record }">
                             <a-tag v-if="record.is_valid" color="green">{{ $t('正在发布') }}</a-tag>
                             <a-tag v-else color="red">{{ $t('已停止') }}</a-tag>
                         </template>
                     </a-table-column>
-                    <a-table-column title="created_at" data-index="created_at">
+                    <a-table-column :width="140" title="创建时间" data-index="created_at">
                         <template #cell="{ record }">
-                            <a-statistic :value="record.created_at" animation format="YYYY-MM-DD"></a-statistic>
+                            <a-statistic
+                                :value-style="{ 'font-size': '1rem' }"
+                                :value="new Date(record.created_at)"
+                                animation
+                                format="YYYY-MM-DD"
+                            ></a-statistic>
                         </template>
                     </a-table-column>
-                    <a-table-column title="updated_at" data-index="updated_at">
+                    <a-table-column :width="140" title="更新时间" data-index="updated_at">
                         <template #cell="{ record }">
-                            <a-statistic :value="record.updated_at" animation format="YYYY-MM-DD"></a-statistic>
+                            <a-statistic
+                                :value-style="{ 'font-size': '1rem' }"
+                                :value="new Date(record.updated_at)"
+                                animation
+                                format="YYYY-MM-DD"
+                            ></a-statistic>
                         </template>
                     </a-table-column>
-                    <a-table-column title="回答数量" data-index="collect_answer">
+                    <a-table-column :width="100" title="回答数量" data-index="collect_answer">
                         <template #cell="{ record }">
-                            <a-statistic :value="record.collect_answer" animation>
+                            <a-statistic
+                                :value="record.collect_answer"
+                                animation
+                                :value-style="{ 'font-size': '1rem' }"
+                            >
                                 <template #suffix>
                                     {{ $t('份') }}
                                 </template>
                             </a-statistic>
                         </template>
                     </a-table-column>
-                    <a-table-column title="访问次数" data-index="collect_visited">
+                    <a-table-column :width="100" title="访问次数" data-index="collect_visited">
                         <template #cell="{ record }">
-                            <a-statistic :value="record.collect_visited" animation>
+                            <a-statistic
+                                :value="record.collect_visited"
+                                animation
+                                :value-style="{ 'font-size': '1rem' }"
+                            >
                                 <template #suffix>
                                     {{ $t('次') }}
                                 </template>
                             </a-statistic>
+                        </template>
+                    </a-table-column>
+                    <a-table-column :width="100" title="操作">
+                        <template #cell="{ record }">
+                            <a-space direction="vertical" fill>
+                                <a-button type="primary" @click="gotoCollectTable(record.id)">查看数据</a-button>
+                                <a-button @click="gotoCollectVisual(record.id)">可视化分析</a-button>
+                            </a-space>
                         </template>
                     </a-table-column>
                 </template>

@@ -28,7 +28,14 @@ const useCollectStore = defineStore('collect', () => {
                 list: [],
             },
         },
-        survey_list: [],
+        search_survey: {
+            pagination: {
+                total: 0,
+                current: 1,
+                pageSize: 5,
+            },
+            survey_list: [],
+        },
     });
 
     /** 获取问卷的答案答案统计 */
@@ -77,24 +84,20 @@ const useCollectStore = defineStore('collect', () => {
 
     async function fetchAnswerCollectByPage(pageStart: number, pageSize: number, surveyId?: number) {}
 
-    async function fetchSurveyListByPage({
-        current,
-        pageSize,
-        searchParams,
-    }: {
-        current: number;
-        pageSize: number;
-        searchParams: SearchParams;
-    }) {
+    /** 分页获取问卷列表 */
+    async function fetchSurveyListByPage({ current, searchParams }: { current: number; searchParams: SearchParams }) {
         if (state.loading.fetchSurveyListByPage) return;
         state.loading.fetchSurveyListByPage = true;
-        const res = await searchSurveyListByPage(current, pageSize, searchParams);
+        const res = await searchSurveyListByPage(current, state.search_survey.pagination.pageSize, searchParams);
         if (res.ok) {
             console.log(res.data.survey_list);
             res.data.survey_list.forEach((item) => {
-                item.is_valid = (item.is_valid as any) === '1';
+                item.is_valid = (item.is_valid as any as number) === 1;
             });
-            state.survey_list = res.data.survey_list;
+            state.search_survey.pagination.total = res.data.total;
+            state.search_survey.pagination.pageSize = res.data.pageSize;
+            state.search_survey.pagination.current = res.data.pageStart;
+            state.search_survey.survey_list = res.data.survey_list;
         }
         state.loading.fetchSurveyListByPage = false;
     }

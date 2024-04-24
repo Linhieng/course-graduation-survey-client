@@ -12,6 +12,9 @@ export function getAnswerCollectBySurveyId(surveyId: number) {
 
 export function searchSurveyListByPage(pageStart: number, pageSize: number, searchParams: SearchParams) {
     return get<{
+        total: number;
+        pageStart: number;
+        pageSize: number;
         survey_list: CollectSurveyItem[];
     }>('/api/collect/page/survey_list', {
         params: {
