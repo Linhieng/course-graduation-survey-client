@@ -12,3 +12,13 @@ export function getAnswerVisitGroupByDay() {
         params: { day: 8 },
     });
 }
+
+export function getSurveyClassifyBase() {
+    return get<{
+        draft_count: number;
+        invalid_count: number;
+        valid_count: number;
+        deleted_count: number;
+        total_count: number;
+    }>('/api/stat/survey-classify-easy');
+}

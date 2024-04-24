@@ -8,7 +8,7 @@
             }"
         >
             <template #title>
-                {{ $t('workplace.categoriesPercent') }}
+                {{ $t('问卷统计') }}
             </template>
             <Chart height="310px" :option="chartOption" />
         </a-card>
@@ -18,6 +18,16 @@
 <script lang="ts" setup>
 import useLoading from '@/hooks/loading';
 import useChartOption from '@/hooks/chart-option';
+import { ref } from 'vue';
+import { getSurveyClassifyBase } from '@/api/stat';
+
+const surveyCountBase = ref({
+    draft_count: 0,
+    invalid_count: 0,
+    valid_count: 0,
+    deleted_count: 0,
+    total_count: 0,
+});
 
 const { loading } = useLoading();
 const { chartOption } = useChartOption((isDark) => {
@@ -26,7 +36,7 @@ const { chartOption } = useChartOption((isDark) => {
     return {
         legend: {
             left: 'center',
-            data: ['纯文本', '图文类', '视频类'],
+            data: ['问卷草稿', '已发布', '已停止', '已删除'],
             bottom: 0,
             icon: 'circle',
             itemWidth: 8,
@@ -48,7 +58,7 @@ const { chartOption } = useChartOption((isDark) => {
                     left: 'center',
                     top: '40%',
                     style: {
-                        text: '内容量',
+                        text: '总数量',
                         textAlign: 'center',
                         fill: isDark ? '#ffffffb3' : '#4E5969',
                         fontSize: 14,
@@ -59,7 +69,7 @@ const { chartOption } = useChartOption((isDark) => {
                     left: 'center',
                     top: '50%',
                     style: {
-                        text: '928,531',
+                        text: surveyCountBase.value.total_count,
                         textAlign: 'center',
                         fill: isDark ? '#ffffffb3' : '#1D2129',
                         fontSize: 16,
@@ -84,24 +94,31 @@ const { chartOption } = useChartOption((isDark) => {
                 },
                 data: [
                     {
-                        value: [148564],
-                        name: '纯文本',
+                        value: [surveyCountBase.value.draft_count],
+                        name: '问卷草稿',
                         itemStyle: {
-                            color: isDark ? '#3D72F6' : '#249EFF',
+                            color: isDark ? '#3B8D4E' : '#C5E9BD',
                         },
                     },
                     {
-                        value: [334271],
-                        name: '图文类',
+                        value: [surveyCountBase.value.valid_count],
+                        name: '已发布',
                         itemStyle: {
-                            color: isDark ? '#A079DC' : '#313CA9',
+                            color: isDark ? '#A079DC' : '#3D72F6',
                         },
                     },
                     {
-                        value: [445694],
-                        name: '视频类',
+                        value: [surveyCountBase.value.invalid_count],
+                        name: '已停止',
                         itemStyle: {
-                            color: isDark ? '#6CAAF5' : '#21CCFF',
+                            color: isDark ? '#666666' : '#A0A0A0',
+                        },
+                    },
+                    {
+                        value: [surveyCountBase.value.deleted_count],
+                        name: '已删除',
+                        itemStyle: {
+                            color: isDark ? '#4D4D4D' : '#707070',
                         },
                     },
                 ],
@@ -109,6 +126,17 @@ const { chartOption } = useChartOption((isDark) => {
         ],
     };
 });
+
+fetchSurveyClassifyBase();
+async function fetchSurveyClassifyBase() {
+    if (loading.value) return;
+    loading.value = true;
+    const res = await getSurveyClassifyBase();
+    if (res.ok) {
+        surveyCountBase.value = res.data;
+    }
+    loading.value = false;
+}
 </script>
 
 <style scoped lang="less"></style>
