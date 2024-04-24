@@ -36,7 +36,7 @@ const { chartOption } = useChartOption((isDark) => {
     return {
         legend: {
             left: 'center',
-            data: ['问卷草稿', '已发布', '已停止', '已删除'],
+            data: ['问卷草稿', '发布中', '已停止', '已删除'],
             bottom: 0,
             icon: 'circle',
             itemWidth: 8,
@@ -102,7 +102,7 @@ const { chartOption } = useChartOption((isDark) => {
                     },
                     {
                         value: [surveyCountBase.value.valid_count],
-                        name: '已发布',
+                        name: '发布中',
                         itemStyle: {
                             color: isDark ? '#A079DC' : '#3D72F6',
                         },
