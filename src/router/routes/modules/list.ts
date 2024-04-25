@@ -6,7 +6,7 @@ const LIST: AppRouteRecordRaw = {
     name: 'list',
     component: DEFAULT_LAYOUT,
     meta: {
-        locale: '问卷统计',
+        locale: '我的问卷',
         requiresAuth: true,
         icon: 'icon-list',
         order: 2,

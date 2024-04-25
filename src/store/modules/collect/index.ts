@@ -5,12 +5,15 @@ import { CollectStore } from './types';
 import UAParser from 'ua-parser-js';
 import { getTimeDesc } from './util';
 import { SearchParams } from '@/views/collect/entry/index.vue';
+import { msgError } from '@/utils/msg';
+import { getSurveyById } from '@/api/survey';
 
 const useCollectStore = defineStore('collect', () => {
     const state = reactive<CollectStore>({
         loading: {
             fetchAnswerCollectBySurveyId: false,
             fetchSurveyListByPage: false,
+            fetchSurveyById: false,
         },
         // local: {
 
@@ -26,6 +29,12 @@ const useCollectStore = defineStore('collect', () => {
                 pageStart: 1,
                 pageSize: 10,
                 list: [],
+            },
+            survey: {
+                id: undefined,
+                title: '',
+                comment: '',
+                questionList: [],
             },
         },
         search_survey: {
@@ -45,6 +54,7 @@ const useCollectStore = defineStore('collect', () => {
             state.cur.surveyId = surveyId;
         }
         if (!state.cur.surveyId) return;
+        fetchSurveyById();
 
         state.loading.fetchAnswerCollectBySurveyId = true;
 
@@ -65,8 +75,19 @@ const useCollectStore = defineStore('collect', () => {
                     item.user_browser = '未知';
                     item.user_browser_flag = '3';
                 }
+                if (ua.getOS().name) {
+                    // @ts-ignore
+                    item.user_os = ua.getOS().name;
+                    if (ua.getOS().name === 'Windows') item.user_os_flag = '0';
+                    else if (ua.getOS().name === 'Android') item.user_os_flag = '1';
+                    else if (ua.getOS().name === 'iOS' || ua.getOS().name === 'Mac OS') item.user_os_flag = '2';
+                    else if (ua.getOS().name === 'Linux') item.user_os_flag = '3';
+                } else {
+                    item.user_os = '未知';
+                    item.user_os_flag = '4';
+                }
 
-                item.user_os = ua.getOS().name || '未知';
+                // item.user_os = ua.getOS().name || '未知';
                 item.user_device = ua.getDevice().vendor || '未知';
                 item.created_at = new Date(item.created_at);
                 item.created_date = item.created_at.toLocaleString();
@@ -83,6 +104,27 @@ const useCollectStore = defineStore('collect', () => {
     }
 
     async function fetchAnswerCollectByPage(pageStart: number, pageSize: number, surveyId?: number) {}
+
+    async function fetchSurveyById(surveyId?: number) {
+        const id = surveyId || state.cur.surveyId;
+        if (!id) {
+            msgError('未找到问卷 id');
+            return;
+        }
+
+        if (state.loading.fetchSurveyById) return;
+        state.loading.fetchSurveyById = true;
+
+        const res = await getSurveyById(id);
+        if (res.ok) {
+            state.cur.survey.id = res.data.id;
+            state.cur.survey.title = res.data.title;
+            state.cur.survey.comment = res.data.comment;
+            state.cur.survey.questionList = res.data.structure_json.questionList;
+        }
+
+        state.loading.fetchSurveyById = false;
+    }
 
     /** 分页获取问卷列表 */
     async function fetchSurveyListByPage({ current, searchParams }: { current: number; searchParams: SearchParams }) {
@@ -118,6 +160,7 @@ const useCollectStore = defineStore('collect', () => {
         state,
         fetchAnswerCollectBySurveyId,
         fetchAnswerCollectByPage,
+        fetchSurveyById,
         fetchSurveyListByPage,
     };
 });

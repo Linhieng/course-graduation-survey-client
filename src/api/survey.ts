@@ -1,6 +1,17 @@
 import { QuestionItem } from '@/store/modules/create/types';
 import { get, post } from './axios';
 
+export function getSurveyById(surveyId: number) {
+    return get<{
+        id: number;
+        title: string;
+        comment: string;
+        structure_json: {
+            version: '0.2.0';
+            questionList: QuestionItem[];
+        };
+    }>(`/api/survey/get/${surveyId}`);
+}
 export function cacheSurvey(data: ApiCacheSurveyData) {
     return post<{
         surveyId: number;

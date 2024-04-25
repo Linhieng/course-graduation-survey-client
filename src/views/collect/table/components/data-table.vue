@@ -104,7 +104,7 @@ const expandable = reactive({
     <div class="table-box">
         <a-space direction="vertical" fill>
             <a-button type="primary" @click="collectStore.fetchAnswerCollectBySurveyId">点击刷新数据</a-button>
-            <h2>收集到的数据：</h2>
+            <h2>收集到的数据总数：{{ collectStore.state.cur.answerList.length }}</h2>
         </a-space>
         <a-table
             :columns="columns"
@@ -119,7 +119,10 @@ const expandable = reactive({
             row-key="id"
         >
             <template #expand-row="{ record }">
-                <OneAnswer :answer-list="record.answer_structure_json.data" />
+                <OneAnswer
+                    :answer-list="record.answer_structure_json.data"
+                    :question-list="collectStore.state.cur.survey.questionList"
+                />
             </template>
             <!-- 使用了 columns 后，前面的 :columns="columns" 就无效了 -->
             <template #columns>

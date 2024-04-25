@@ -1,4 +1,4 @@
-import { QuestionItem, QuestionOption, QuestionType } from '../create/types';
+import { QuestionItem, QuestionOption, QuestionType, Survey } from '../create/types';
 
 export interface CollectSurveyItem {
     id: number;
@@ -26,6 +26,7 @@ export interface CollectStore {
     loading: {
         fetchAnswerCollectBySurveyId: boolean;
         fetchSurveyListByPage: boolean;
+        fetchSurveyById: boolean;
     };
     cur: {
         title: string;
@@ -34,6 +35,7 @@ export interface CollectStore {
         questionList: QuestionItem[];
         answerList: CollectAnswer[];
         pageAnswerList: Page<CollectAnswer>;
+        survey: Survey;
     };
 }
 export interface Page<T> {
@@ -58,6 +60,15 @@ export interface CollectAnswer {
     user_browser: string;
     /** 这是根据 user_agent 计算的 */
     user_os: string;
+    /**
+     * 用户系统标识。
+     * '0': Windows
+     * '1': Android
+     * '2': 苹果
+     * '3': linux
+     * '4': 其他
+     */
+    user_os_flag: '0' | '1' | '2' | '3' | '4';
     /** 这是根据 user_agent 计算的 */
     user_device: string;
     /** 这是服务器添加的 */
