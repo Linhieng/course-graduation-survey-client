@@ -102,10 +102,6 @@ const expandable = reactive({
 
 <template>
     <div class="table-box">
-        <a-space direction="vertical" fill>
-            <a-button type="primary" @click="collectStore.fetchAnswerCollectBySurveyId">点击刷新数据</a-button>
-            <h2>收集到的数据总数：{{ collectStore.state.cur.answerList.length }}</h2>
-        </a-space>
         <a-table
             :columns="columns"
             :data="collectStore.state.cur.answerList"

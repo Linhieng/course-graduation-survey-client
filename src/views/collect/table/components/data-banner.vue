@@ -11,12 +11,17 @@ const collectStore = useCollectStore();
         {{ $t('问卷描述：') + collectStore.state.cur.desc }}
     </p>
     <div class="btn-group">
-        <a-button @click="collectStore.exportAnswerList">导出数据</a-button>
+        <a-button class="btn" type="primary" @click="collectStore.fetchAnswerCollectBySurveyId">点击刷新数据</a-button>
+        <a-button class="btn" @click="collectStore.exportAnswerList">导出数据</a-button>
     </div>
+    <h2>收集到的数据总数：{{ collectStore.state.cur.answerList.length }}</h2>
 </template>
 <style scoped lang="less">
 .btn-group {
     display: flex;
     justify-content: end;
+    .btn {
+        margin-left: 10px;
+    }
 }
 </style>
