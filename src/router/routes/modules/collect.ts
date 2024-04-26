@@ -9,7 +9,7 @@ const COLLECT: AppRouteRecordRaw = {
         locale: '问卷收集',
         requiresAuth: true,
         icon: 'icon-bar-chart',
-        order: 1,
+        order: 3,
     },
     children: [
         {
@@ -18,6 +18,16 @@ const COLLECT: AppRouteRecordRaw = {
             component: () => import('@/views/collect/entry/index.vue'),
             meta: {
                 locale: '答案统计',
+                requiresAuth: true,
+                roles: ['*'],
+            },
+        },
+        {
+            path: 'total',
+            name: 'collect-stat',
+            component: () => import('@/views/collect/collect-stat/index.vue'),
+            meta: {
+                locale: '数据总览',
                 requiresAuth: true,
                 roles: ['*'],
             },

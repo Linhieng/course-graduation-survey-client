@@ -31,7 +31,7 @@
 <script lang="ts" setup>
 const links = [
     { name: 'Create', text: '创建问卷', icon: 'icon-file' },
-    { name: 'stat-total', text: '问卷数据', icon: 'icon-file' },
+    { name: 'collect-stat', text: '数据总览', icon: 'icon-file' },
     { name: 'my-draft-survey', text: '问卷草稿箱', icon: 'icon-storage' },
     { name: 'my-publish-survey', text: '已发布的问卷', icon: 'icon-file' },
     { name: 'my-stop-survey', text: '已停止的问卷', icon: 'icon-fire' },
