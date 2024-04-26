@@ -2,7 +2,9 @@
 import { ref, onBeforeMount, watch } from 'vue';
 import { queryPublishSurvey, SchemaSurvey, stopSurvey } from '@/api/survey';
 import { useScroll } from '@vueuse/core';
-import { copyToClipboard } from '@/utils';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
 const loading = ref(false);
 const btnLoading = ref(false);
 const btnCurId = ref();
@@ -26,8 +28,14 @@ async function fetchData() {
     loading.value = false;
 }
 const gotoEdit = (id: number) => {
-    // useRouter().push({})
+    router.push({
+        name: 'collect-table',
+        params: {
+            surveyId: id,
+        },
+    });
 };
+
 const stop = async (id: number) => {
     if (btnLoading.value) return;
     btnLoading.value = true;
@@ -51,9 +59,6 @@ watch(
 );
 
 const url_base = import.meta.env.VITE_SURVEY_URL;
-const copy = (id: number) => {
-    copyToClipboard(url_base + id);
-};
 </script>
 <template>
     <div class="container">
@@ -110,12 +115,12 @@ const copy = (id: number) => {
                                                 {{ $t('问卷说明：') + item.comment }}
                                             </a-typography-paragraph>
                                             <a-space direction="vertical">
-                                                <span>{{
-                                                    $t('创建时间：') + new Date(item.created_at).toLocaleString()
-                                                }}</span>
-                                                <span>{{
-                                                    $t('最近更新：') + new Date(item.updated_at).toLocaleString()
-                                                }}</span>
+                                                <span>
+                                                    {{ $t('创建时间：') + new Date(item.created_at).toLocaleString() }}
+                                                </span>
+                                                <span>
+                                                    {{ $t('最近更新：') + new Date(item.updated_at).toLocaleString() }}
+                                                </span>
                                                 <a-typography-paragraph copyable>
                                                     <a-link :href="url_base + item.id" target="_blank">
                                                         {{ url_base + item.id }}

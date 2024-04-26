@@ -2,6 +2,8 @@
 import { ref, onBeforeMount, onMounted, onBeforeUnmount, watch } from 'vue';
 import { queryStopSurvey, SchemaSurvey, publishSurvey } from '@/api/survey';
 import { useScroll } from '@vueuse/core';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const loading = ref(false);
 const btnLoading = ref(false);
 const btnCurId = ref();
@@ -25,7 +27,12 @@ async function fetchData() {
     loading.value = false;
 }
 const gotoEdit = (id: number) => {
-    // useRouter().push({})
+    router.push({
+        name: 'collect-table',
+        params: {
+            surveyId: id,
+        },
+    });
 };
 const publish = async (id: number) => {
     if (btnLoading.value) return;
