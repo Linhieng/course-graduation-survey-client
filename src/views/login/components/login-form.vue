@@ -48,7 +48,7 @@
         </a-form>
     </div>
     <a-modal v-model:visible="registerVisible" draggable ok-text="已注册" cancel-text="取消">
-        <template #title> 注册账户 </template>
+        <template #title>注册账户</template>
         <div>
             <signup-form></signup-form>
         </div>
@@ -103,6 +103,9 @@ const handleSubmit = async ({
             // 除非修正状态栏的值。但用户可不懂这些。
             if (redirect === 'collect-table') {
                 redirect = 'collect-entry';
+            } else if (redirect === 'login') {
+                // 解决登录后依旧停留在登录界面的问题
+                redirect = 'Workplace';
             }
             router.push({
                 name: (redirect as string) || 'Workplace',
