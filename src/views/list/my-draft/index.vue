@@ -43,7 +43,7 @@ watch(
     (arrivedBottom) => {
         if (arrivedBottom && draftData.value && renderData.value.length < draftData.value.length) {
             const curLen = renderData.value.length;
-            // TODO: 这里会阻塞页面
+            // TODO: 这里会阻塞页面。升级 vite 后好像又不会了，现在很顺利，一点都不卡……
             renderData.value.push(...draftData.value.slice(curLen, curLen + 4));
         }
     },
