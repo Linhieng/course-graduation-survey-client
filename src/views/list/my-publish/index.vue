@@ -133,7 +133,10 @@ const url_base = import.meta.env.VITE_SURVEY_URL;
                                 <template #actions>
                                     <a-space>
                                         <a-button :loading="btnCurId === item.id && btnLoading" @click="stop(item.id)">
-                                            {{ $t('停止发布') }}
+                                            <a-space size="mini">
+                                                <icon-font :size="24" name="stop"></icon-font>
+                                                {{ $t('停止发布') }}
+                                            </a-space>
                                         </a-button>
                                         <a-button type="primary" @click="gotoEdit(item.id)">
                                             {{ $t('查看数据') }}

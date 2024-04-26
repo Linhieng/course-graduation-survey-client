@@ -118,7 +118,10 @@ watch(
                                             :loading="btnCurId === item.id && btnLoading"
                                             @click="publish(item.id)"
                                         >
-                                            {{ $t('继续发布') }}
+                                            <a-space size="mini">
+                                                <icon-font :size="24" name="continue"></icon-font>
+                                                {{ $t('继续发布') }}
+                                            </a-space>
                                         </a-button>
                                         <a-button type="primary" @click="gotoEdit(item.id)">
                                             {{ $t('查看数据') }}
