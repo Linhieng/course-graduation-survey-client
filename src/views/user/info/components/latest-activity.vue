@@ -17,9 +17,7 @@
                 </a-skeleton>
                 <a-list-item-meta v-else>
                     <template #avatar>
-                        <a-avatar>
-                            <img :src="useUserStore().userInfo.avatar" />
-                        </a-avatar>
+                        <a-avatar :imageUrl="useUserStore().userInfo.avatar" object-fit="cover"></a-avatar>
                     </template>
                     <template #title>
                         <p>

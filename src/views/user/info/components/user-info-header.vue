@@ -1,11 +1,10 @@
 <template>
     <div class="header" :style="{ '--bg-url': `url(${bg})` }">
         <a-space :size="12" direction="vertical" align="center">
-            <a-avatar :size="64" @click="gotoSettings">
+            <a-avatar :size="64" @click="gotoSettings" :imageUrl="userInfo.avatar" object-fit="cover">
                 <template #trigger-icon>
                     <icon-camera />
                 </template>
-                <img :src="userInfo.avatar" />
             </a-avatar>
             <a-typography-title :heading="6" style="margin: 0; text-shadow: 0 0 4px white">
                 {{ userInfo.name }}

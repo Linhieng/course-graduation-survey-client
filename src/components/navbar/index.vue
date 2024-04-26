@@ -102,9 +102,12 @@
             </li>
             <li>
                 <a-dropdown trigger="click">
-                    <a-avatar :size="32" :style="{ marginRight: '8px', cursor: 'pointer' }">
-                        <img alt="avatar" :src="avatar" />
-                    </a-avatar>
+                    <a-avatar
+                        :imageUrl="avatar"
+                        object-fit="cover"
+                        :size="32"
+                        :style="{ marginRight: '8px', cursor: 'pointer' }"
+                    ></a-avatar>
                     <template #content>
                         <!-- <a-doption>
                             <a-space @click="switchRoles">

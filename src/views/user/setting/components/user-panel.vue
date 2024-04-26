@@ -10,11 +10,11 @@
                 @change="uploadChange"
             >
                 <template #upload-button>
-                    <a-avatar :size="100" class="info-avatar">
+                    <a-avatar :size="100" class="info-avatar" :imageUrl="fileList[0].url" object-fit="cover">
                         <template #trigger-icon>
                             <icon-camera />
                         </template>
-                        <img v-if="fileList.length" :src="fileList[0].url" />
+                        <!-- <img v-if="fileList.length" :src="fileList[0].url" /> -->
                     </a-avatar>
                 </template>
             </a-upload>
