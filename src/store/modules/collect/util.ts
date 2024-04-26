@@ -1,8 +1,19 @@
 /**
  * 生成文件并下载
+ * @param buffer
+ * @param filename
+ * @param bom window 系统中，需要添加 bom 前缀，不然会乱码。
  */
-export function downloadFile(buffer: BlobPart, filename: string) {
-    const blob = new Blob([buffer]);
+export function downloadFile(buffer: BlobPart, filename: string, bom: boolean) {
+    let blob;
+    // 如果 `bom` 为真，向内容前添加 '\ufeff'
+    if (bom) {
+        blob = new Blob([new TextEncoder().encode('\ufeff'), buffer]);
+    } else {
+        blob = new Blob([buffer]);
+    }
+
+    // const blob = new Blob([buffer]);
     const a = document.createElement('a');
     a.download = filename;
     a.href = URL.createObjectURL(blob);

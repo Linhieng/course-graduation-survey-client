@@ -158,7 +158,7 @@ const useCollectStore = defineStore('collect', () => {
     }
 
     /** 导出问卷收集到的答案 */
-    async function exportAnswerList() {
+    async function exportAnswerList(excelFileType: 'xlsx' | 'csv' = 'xlsx') {
         if (!state.cur.surveyId) return;
         if (state.loading.fetchSurveyById) return;
 
@@ -191,9 +191,8 @@ const useCollectStore = defineStore('collect', () => {
                 }
             });
         });
-
-        const buffer = await workbook.xlsx.writeBuffer();
-        downloadFile(buffer, state.cur.title + '.xlsx');
+        const buffer = await workbook[excelFileType].writeBuffer();
+        downloadFile(buffer, state.cur.title + '.' + excelFileType, excelFileType === 'csv');
     }
 
     return {
