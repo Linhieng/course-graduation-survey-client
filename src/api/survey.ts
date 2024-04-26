@@ -6,18 +6,28 @@ export function getSurveyMyTemplate(pageStart?: number, pageSize?: number) {
         count: number;
         pageStart: number;
         pageSize: number;
-        surveyTemplate: Survey[];
+        surveyTemplate: Array<
+            Survey & {
+                creator_id: number;
+            }
+        >;
     }>('/api/survey/my-template', {
         params: { pageStart, pageSize },
     });
 }
-export function getSurveyAllTemplate() {
+export function getSurveyAllTemplate(pageStart?: number, pageSize?: number) {
     return get<{
         count: number;
         pageStart: number;
         pageSize: number;
-        surveyTemplate: Survey[];
-    }>('/api/survey/all-template');
+        surveyTemplate: Array<
+            Survey & {
+                creator_id: number;
+            }
+        >;
+    }>('/api/survey/all-template', {
+        params: { pageStart, pageSize },
+    });
 }
 
 export function getSurveyById(surveyId: number) {

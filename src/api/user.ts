@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { RouteRecordNormalized } from 'vue-router';
 import { UserState } from '@/store/modules/user/types';
-import { post } from './axios';
+import { get, post } from './axios';
 
 export interface LoginData {
     username: string;
@@ -36,6 +36,10 @@ export function changePassword(data: { oldPassword: string; newPassword: string 
 
 export function getUserActionLog(startPage = 0, pageSize = 10) {
     return post<UserActionLog[]>(`/api/user/action-log?startPage=${startPage}&pageSize=${pageSize}`);
+}
+
+export function getUserAvatar(userId: number) {
+    return get<{ avatar: string }>(`/api/user/get-avatar/${userId}`);
 }
 
 export function getMenuList() {
