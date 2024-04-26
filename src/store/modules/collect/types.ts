@@ -32,6 +32,7 @@ export interface CollectStore {
         title: string;
         desc: string;
         surveyId?: number;
+        /** 这个是不是没用到？ */
         questionList: QuestionItem[];
         answerList: CollectAnswer[];
         pageAnswerList: Page<CollectAnswer>;

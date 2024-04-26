@@ -10,4 +10,13 @@ const collectStore = useCollectStore();
     <p>
         {{ $t('问卷描述：') + collectStore.state.cur.desc }}
     </p>
+    <div class="btn-group">
+        <a-button @click="collectStore.exportAnswerList">导出数据</a-button>
+    </div>
 </template>
+<style scoped lang="less">
+.btn-group {
+    display: flex;
+    justify-content: end;
+}
+</style>

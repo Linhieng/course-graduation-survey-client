@@ -3,10 +3,11 @@ import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 import { CollectStore } from './types';
 import UAParser from 'ua-parser-js';
-import { getTimeDesc } from './util';
+import { downloadFile, getTimeDesc } from './util';
 import { SearchParams } from '@/views/collect/entry/index.vue';
 import { msgError } from '@/utils/msg';
 import { getSurveyById } from '@/api/survey';
+import ExcelJS from 'exceljs';
 
 const useCollectStore = defineStore('collect', () => {
     const state = reactive<CollectStore>({
@@ -156,12 +157,52 @@ const useCollectStore = defineStore('collect', () => {
         state.loading.fetchSurveyListByPage = false;
     }
 
+    /** 导出问卷收集到的答案 */
+    async function exportAnswerList() {
+        if (!state.cur.surveyId) return;
+        if (state.loading.fetchSurveyById) return;
+
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('问卷收集到的答案');
+
+        // 浏览器中使用时，addRow 不生效，得用 getCell 的方式添加。
+        // 写入表头
+        const presetCol = 3; // 预留三个列
+        worksheet.getCell(1, 1).value = 'IP 来源';
+        worksheet.getCell(1, 2).value = '提交时间';
+        worksheet.getCell(1, 3).value = '是否有效';
+        state.cur.survey.questionList.forEach((item, i) => {
+            worksheet.getCell(1, presetCol + i + 1).value = item.order + 1 + item.title;
+        });
+        // 写入具体内容。
+        state.cur.answerList.forEach((item, i) => {
+            const row = i + 2;
+
+            worksheet.getCell(row, 1).value = item.ip_from;
+            worksheet.getCell(row, 2).value = item.created_date;
+            worksheet.getCell(row, 3).value = item.is_valid_text;
+            item.answer_structure_json.data.forEach((ans, i) => {
+                if (ans.type === 'single_text' || ans.type === 'multi_text')
+                    worksheet.getCell(row, presetCol + i + 1).value = ans.text;
+                if (ans.type === 'single_select' || ans.type === 'multi_select') {
+                    worksheet.getCell(row, presetCol + i + 1).value = ans.option_text
+                        .map(({ text }) => text)
+                        .join('; ');
+                }
+            });
+        });
+
+        const buffer = await workbook.xlsx.writeBuffer();
+        downloadFile(buffer, state.cur.title + '.xlsx');
+    }
+
     return {
         state,
         fetchAnswerCollectBySurveyId,
         fetchAnswerCollectByPage,
         fetchSurveyById,
         fetchSurveyListByPage,
+        exportAnswerList,
     };
 });
 export default useCollectStore;
