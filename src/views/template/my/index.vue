@@ -1,8 +1,13 @@
+<script setup lang="ts">
+import SurveyList from './components/survey-list.vue';
+</script>
+
 <template>
     <div class="container">
         <Breadcrumb :items="['模版市场', '我的模版']" />
         <div class="wrapper">
             <h1>{{ $t('我的模版') }}</h1>
+            <SurveyList />
         </div>
     </div>
 </template>

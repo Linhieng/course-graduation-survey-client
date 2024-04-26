@@ -1,13 +1,15 @@
 import { QuestionItem, Survey } from '@/store/modules/create/types';
 import { get, post } from './axios';
 
-export function getSurveyMyTemplate() {
+export function getSurveyMyTemplate(pageStart?: number, pageSize?: number) {
     return get<{
         count: number;
         pageStart: number;
         pageSize: number;
         surveyTemplate: Survey[];
-    }>('/api/survey/my-template');
+    }>('/api/survey/my-template', {
+        params: { pageStart, pageSize },
+    });
 }
 export function getSurveyAllTemplate() {
     return get<{

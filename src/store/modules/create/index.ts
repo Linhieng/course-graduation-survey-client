@@ -57,6 +57,19 @@ const useCreateStore = defineStore('create', {
     },
 
     actions: {
+        /** 从模版商场中中获取一份问卷模版，这里会自动联网获取 */
+        async importFromTemplate(surveyId: number) {
+            const res = await getSurveyById(surveyId);
+            if (res.ok) {
+                this.importSurvey({
+                    id: surveyId,
+                    title: res.data.title,
+                    comment: res.data.comment,
+                    surveyType: /* res.data.type || */ 0,
+                    questionList: res.data.structure_json.questionList,
+                });
+            }
+        },
         /** 从草稿箱中获取一份问卷模版，这里会自动联网获取 */
         async importFromDraft(surveyId: number) {
             const res = await getSurveyById(surveyId);
