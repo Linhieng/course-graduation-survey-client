@@ -37,7 +37,8 @@ const DASHBOARD: AppRouteRecordRaw = {
             name: 'Create',
             component: () => import('@/views/dashboard/create/index.vue'),
             meta: {
-                locale: '新建问卷',
+                hideInMenu: true,
+                locale: '编辑问卷',
                 requiresAuth: true,
                 roles: ['*'],
             },
