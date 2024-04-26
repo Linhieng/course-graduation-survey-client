@@ -52,9 +52,9 @@ watch(
 <template>
     <div class="container">
         <div class="no-scroll-box">
-            <Breadcrumb :items="['我的问卷', '所有问卷']" />
+            <Breadcrumb :items="['我的问卷', '问卷草稿箱']" />
             <a-typography-title class="block-title" :heading="6">
-                {{ $t('已停止的问卷') }}
+                {{ $t('问卷草稿箱') }}
             </a-typography-title>
             <div class="list-wrap" ref="scrollEl">
                 <a-row class="list-row" :gutter="24">
