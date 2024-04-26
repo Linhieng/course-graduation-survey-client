@@ -55,6 +55,14 @@ async function gotoUseSurvey(id: number) {
             <div class="item" v-for="item in surveyList">
                 <a-spin :loading="fetching" dot>
                     <div class="card" :style="{ '--bg-url': `url(${bg2})` }">
+                        <div class="pin">
+                            <a-tag color="green">
+                                <a-space size="mini">
+                                    <icon-font name="public" />
+                                    {{ $t('共享模版') }}
+                                </a-space>
+                            </a-tag>
+                        </div>
                         <a-space direction="vertical" fill class="item-content acrylic">
                             <a-space>
                                 <a-image
@@ -116,6 +124,13 @@ async function gotoUseSurvey(id: number) {
         .flex-center {
             display: flex;
             justify-content: center;
+        }
+
+        position: relative;
+        .pin {
+            position: absolute;
+            top: 0;
+            left: 0;
         }
     }
 }
