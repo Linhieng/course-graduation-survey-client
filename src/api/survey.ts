@@ -1,5 +1,22 @@
-import { QuestionItem } from '@/store/modules/create/types';
+import { QuestionItem, Survey } from '@/store/modules/create/types';
 import { get, post } from './axios';
+
+export function getSurveyMyTemplate() {
+    return get<{
+        count: number;
+        pageStart: number;
+        pageSize: number;
+        surveyTemplate: Survey[];
+    }>('/api/survey/my-template');
+}
+export function getSurveyAllTemplate() {
+    return get<{
+        count: number;
+        pageStart: number;
+        pageSize: number;
+        surveyTemplate: Survey[];
+    }>('/api/survey/all-template');
+}
 
 export function getSurveyById(surveyId: number) {
     return get<{
