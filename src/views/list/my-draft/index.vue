@@ -2,6 +2,11 @@
 import { ref, onBeforeMount, onMounted, onBeforeUnmount, watch } from 'vue';
 import { queryDraftSurvey, SchemaSurvey, delSurvey } from '@/api/survey';
 import { useScroll } from '@vueuse/core';
+import { useRouter } from 'vue-router';
+import { useCreateStore } from '@/store';
+const createStore = useCreateStore();
+const router = useRouter();
+
 const loading = ref(false);
 const btnDelLading = ref(false);
 const btnCurId = ref();
@@ -24,8 +29,17 @@ async function fetchData() {
     }
     loading.value = false;
 }
-const gotoEdit = (id: number) => {
-    // useRouter().push({})
+const editLoading = ref(false);
+const editId = ref();
+const gotoEdit = async (id: number) => {
+    if (editLoading.value) return;
+    editId.value = id;
+    editLoading.value = true;
+    await createStore.importFromDraft(id);
+    editLoading.value = false;
+    router.push({
+        name: 'Create',
+    });
 };
 const del = async (id: number) => {
     if (btnDelLading.value) return;
@@ -110,7 +124,12 @@ watch(
                                         <a-button :loading="btnCurId === item.id && btnDelLading" @click="del(item.id)">
                                             {{ $t('删除草稿') }}
                                         </a-button>
-                                        <a-button type="primary" @click="gotoEdit(item.id)">
+                                        <a-button
+                                            type="primary"
+                                            :loading="editLoading && editId === item.id"
+                                            @click="gotoEdit(item.id)"
+                                            :disabled="editLoading"
+                                        >
                                             {{ $t('编辑问卷') }}
                                         </a-button>
                                     </a-space>

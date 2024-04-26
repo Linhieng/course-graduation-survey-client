@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
-import { CreateState, QuestionType } from './types';
+import { CreateState, QuestionType, Survey } from './types';
 import bgImg from '@/assets/images/login1.png';
 import { v4 as idv4 } from 'uuid';
 import { toRaw } from 'vue';
 import { getAllQuestionTemplate, getNewOption, getNewQuestion, getNormalQuestion } from './utils';
 import { msgError, msgSuccess, msgWarning, noticeInfo } from '@/utils/msg';
-import { cacheSurvey as reqCacheSurvey } from '@/api/survey';
+import { getSurveyById, cacheSurvey as reqCacheSurvey } from '@/api/survey';
 import { updateAndPublishSurvey } from '@/api/survey';
 import router from '@/router';
 
@@ -57,6 +57,33 @@ const useCreateStore = defineStore('create', {
     },
 
     actions: {
+        /** 从草稿箱中获取一份问卷模版，这里会自动联网获取 */
+        async importFromDraft(surveyId: number) {
+            const res = await getSurveyById(surveyId);
+            if (res.ok) {
+                this.importSurvey({
+                    id: surveyId,
+                    title: res.data.title,
+                    comment: res.data.comment,
+                    surveyType: /* res.data.type || */ 0,
+                    questionList: res.data.structure_json.questionList,
+                });
+            }
+        },
+        /** 导入问卷，可能来自本地，可能来自模版，也可能来自草稿箱，总之，他需要提供一个 survey */
+        async importSurvey(survey: Survey) {
+            this.survey.id = survey.id;
+            this.survey.title = survey.title;
+            this.survey.comment = survey.comment;
+            this.survey.surveyType = survey.surveyType;
+            this.survey.questionList = survey.questionList;
+        },
+        //
+        //
+        //
+        //
+        //
+
         /** 发布问卷 */
         async publishSurvey() {
             // 如果正在缓存，这里不能发布
