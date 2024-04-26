@@ -1,6 +1,18 @@
 import { QuestionItem, Survey } from '@/store/modules/create/types';
 import { get, post } from './axios';
 
+export function setSurveyToTemplate(surveyId: number) {
+    return post(`/api/survey/template/set-share/${surveyId}`);
+}
+export function setSurveyTemplateShare(surveyId: number) {
+    return post(`/api/survey/template/set-share/${surveyId}`);
+}
+export function setSurveyTemplateUnshare(surveyId: number) {
+    return post(`/api/survey/template/set-unshare/${surveyId}`);
+}
+export function toggleSurveyTemplateShare(surveyId: number) {
+    return post(`/api/survey/template/toggle-share/${surveyId}`);
+}
 export function getSurveyMyTemplate(pageStart?: number, pageSize?: number) {
     return get<{
         count: number;

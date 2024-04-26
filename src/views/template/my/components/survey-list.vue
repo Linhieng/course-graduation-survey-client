@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getSurveyMyTemplate } from '@/api/survey';
+import { getSurveyMyTemplate, toggleSurveyTemplateShare } from '@/api/survey';
 import { ref } from 'vue';
 import useLoading from '@/hooks/loading';
 import { useRouter } from 'vue-router';
@@ -14,6 +14,7 @@ const { loading: fetching, setLoading: setFetching } = useLoading();
 const surveyList = ref<Survey[]>(Array(8).fill([]) as any);
 const gotoId = ref();
 const gotoLoading = ref(false);
+const toggleLoading = ref<Set<number>>(new Set());
 
 fetchMySurveyTemplate();
 async function fetchMySurveyTemplate() {
@@ -34,6 +35,23 @@ async function gotoUseSurvey(id: number) {
     gotoLoading.value = false;
     router.push({ name: 'Create' });
 }
+
+const toggleShare = async (surveyId: number) => {
+    if (toggleLoading.value.has(surveyId)) return;
+    toggleLoading.value.add(surveyId);
+    await toggleSurveyTemplateShare(surveyId);
+    surveyList.value.forEach((item) => {
+        if (item.id === surveyId) {
+            item.is_template = item.is_template === 1 ? 2 : 1;
+        }
+    });
+    const res = await getSurveyMyTemplate(1, 8);
+    if (res.ok) {
+        surveyList.value = res.data.surveyTemplate;
+    }
+
+    toggleLoading.value.delete(surveyId);
+};
 </script>
 
 <template>
@@ -43,6 +61,11 @@ async function gotoUseSurvey(id: number) {
             <div class="item" v-for="item in surveyList">
                 <a-spin :loading="fetching" dot>
                     <div class="card" :style="{ '--bg-url': `url(${bg2})` }">
+                        <div class="pin">
+                            <a-tag :color="item.is_template === 1 ? 'red' : 'green'">
+                                {{ item.is_template === 1 ? $t('这是私有模版') : $t('这是共享模版') }}
+                            </a-tag>
+                        </div>
                         <a-space direction="vertical" fill class="item-content acrylic">
                             <a-space>
                                 <a-avatar
@@ -60,6 +83,15 @@ async function gotoUseSurvey(id: number) {
                                     @click="() => gotoUseSurvey(item.id as number)"
                                 >
                                     使用该模版
+                                </a-button>
+                                <a-button
+                                    :loading="toggleLoading.has(item.id as number)"
+                                    @click="() => toggleShare(item.id as number)"
+                                >
+                                    <template #icon>
+                                        <icon-font :name="item.is_template === 1 ? 'show' : 'hide'" />
+                                    </template>
+                                    {{ item.is_template === 1 ? $t('公开模版') : $t('设为私有') }}
                                 </a-button>
                             </div>
                         </a-space>
@@ -102,6 +134,13 @@ async function gotoUseSurvey(id: number) {
         .flex-center {
             display: flex;
             justify-content: center;
+        }
+
+        position: relative;
+        .pin {
+            position: absolute;
+            top: 0;
+            left: 0;
         }
     }
 }
