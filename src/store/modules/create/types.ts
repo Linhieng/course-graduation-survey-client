@@ -61,6 +61,8 @@ export interface Survey {
     id: undefined | number;
     title: string;
     comment: string;
+    /** 问卷类型，0 表示常规。1 表示调研，2 表示心理问卷 */
+    surveyType: 0 | 1 | 2;
     questionList: QuestionItem[];
 }
 export interface CreateState {

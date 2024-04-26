@@ -40,6 +40,7 @@ const useCreateStore = defineStore('create', {
             comment: '',
             // questionList: getAllQuestionTemplate(),
             questionList: getNormalQuestion(),
+            surveyType: 0,
         },
         local: {
             isCaching: false,
