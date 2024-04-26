@@ -9,7 +9,7 @@ const STAT: AppRouteRecordRaw = {
         locale: '统计数据',
         requiresAuth: true,
         icon: 'icon-bar-chart',
-        order: 4,
+        order: 7,
     },
     children: [
         {

@@ -23,16 +23,6 @@ const LIST: AppRouteRecordRaw = {
             },
         },
         {
-            path: 'my-stop',
-            name: 'my-stop-survey',
-            component: () => import('@/views/list/my-stop/index.vue'),
-            meta: {
-                locale: '已停止的问卷',
-                requiresAuth: true,
-                roles: ['*'],
-            },
-        },
-        {
             path: 'my-publish',
             name: 'my-publish-survey',
             component: () => import('@/views/list/my-publish/index.vue'),
@@ -43,10 +33,21 @@ const LIST: AppRouteRecordRaw = {
             },
         },
         {
+            path: 'my-stop',
+            name: 'my-stop-survey',
+            component: () => import('@/views/list/my-stop/index.vue'),
+            meta: {
+                locale: '已停止的问卷',
+                requiresAuth: true,
+                roles: ['*'],
+            },
+        },
+        {
             path: 'search-table', // The midline path complies with SEO specifications
             name: 'SearchTable',
             component: () => import('@/views/list/search-table/index.vue'),
             meta: {
+                hideInMenu: true,
                 locale: 'menu.list.searchTable',
                 requiresAuth: true,
                 roles: ['*'],
@@ -57,6 +58,7 @@ const LIST: AppRouteRecordRaw = {
             name: 'Card',
             component: () => import('@/views/list/card/index.vue'),
             meta: {
+                hideInMenu: true,
                 locale: 'menu.list.cardList',
                 requiresAuth: true,
                 roles: ['*'],
