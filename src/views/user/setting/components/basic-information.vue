@@ -6,29 +6,29 @@
         :label-col-props="{ span: 8 }"
         :wrapper-col-props="{ span: 16 }"
     >
-        <a-form-item field="name" :rules="[{ required: true, message: '不能为空' }]" label="name">
+        <a-form-item field="name" :rules="[{ required: true, message: '不能为空' }]" label="姓名">
             <a-input v-model="formData.name" />
         </a-form-item>
-        <a-form-item field="email" label="email"> <a-input v-model="formData.email" /> </a-form-item>
-        <a-form-item field="job" label="job"> <a-input v-model="formData.job" /> </a-form-item>
-        <a-form-item field="organization" label="organization">
+        <a-form-item field="email" label="邮箱"><a-input v-model="formData.email" /></a-form-item>
+        <a-form-item field="job" label="职业"><a-input v-model="formData.job" /></a-form-item>
+        <a-form-item field="organization" label="组织">
             <a-input v-model="formData.organization" />
         </a-form-item>
-        <a-form-item field="location" label="location"> <a-input v-model="formData.location" /> </a-form-item>
-        <a-form-item field="introduction" label="introduction">
+        <a-form-item field="location" label="地址"><a-input v-model="formData.location" /></a-form-item>
+        <a-form-item field="introduction" label="介绍">
             <a-input v-model="formData.introduction" />
         </a-form-item>
-        <a-form-item field="personal_website" label="personal_website">
+        <a-form-item field="personal_website" label="个人网站">
             <a-input v-model="formData.personal_website" />
         </a-form-item>
-        <a-form-item field="phone" label="phone"> <a-input v-model="formData.phone" /> </a-form-item>
+        <a-form-item field="phone" label="手机号"><a-input v-model="formData.phone" /></a-form-item>
         <a-form-item>
             <a-space>
                 <a-button type="primary" @click="validate" :loading="loading">
-                    {{ $t('userSetting.save') }}
+                    {{ $t('保存') }}
                 </a-button>
                 <a-button type="secondary" @click="reset">
-                    {{ $t('userSetting.reset') }}
+                    {{ $t('重置') }}
                 </a-button>
             </a-space>
         </a-form-item>

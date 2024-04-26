@@ -1,8 +1,8 @@
 <template>
     <a-card class="general-card" :title="$t('操作日志')">
-        <template #extra>
-            <a-link>{{ $t('userInfo.viewAll') }}</a-link>
-        </template>
+        <!-- <template #extra>
+            <a-link>{{ $t('查看全部') }}</a-link>
+        </template> -->
         <a-list :bordered="false">
             <a-list-item v-for="activity in activityList" :key="activity.id" action-layout="horizontal">
                 <a-skeleton v-if="loading" :loading="loading" :animation="true" class="skeleton-item">
@@ -22,12 +22,14 @@
                         </a-avatar>
                     </template>
                     <template #title>
-                        <p>{{
-                            $t('行为：') +
-                            activity.info +
-                            $t('； 时间：') +
-                            new Date(activity.created_at).toLocaleString()
-                        }}</p>
+                        <p>
+                            {{
+                                $t('行为：') +
+                                activity.info +
+                                $t('； 时间：') +
+                                new Date(activity.created_at).toLocaleString()
+                            }}
+                        </p>
                     </template>
                     <template #description>
                         <a-descriptions

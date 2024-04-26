@@ -1,13 +1,13 @@
 <template>
     <div class="container">
-        <Breadcrumb :items="['menu.user', 'menu.user.info']" />
+        <Breadcrumb :items="['个人中心', '用户信息']" />
         <UserInfoHeader />
         <div class="content">
             <div class="content-left">
                 <a-grid :cols="24" :col-gap="16" :row-gap="16">
-                    <a-grid-item :span="24">
+                    <!-- <a-grid-item :span="24">
                         <MyProject />
-                    </a-grid-item>
+                    </a-grid-item> -->
                     <a-grid-item :span="24">
                         <LatestActivity />
                     </a-grid-item>
@@ -15,9 +15,9 @@
             </div>
             <div class="content-right">
                 <a-grid :cols="24" :row-gap="16">
-                    <a-grid-item :span="24">
+                    <!-- <a-grid-item :span="24">
                         <MyTeam />
-                    </a-grid-item>
+                    </a-grid-item> -->
                     <a-grid-item class="panel" :span="24">
                         <LatestNotification />
                     </a-grid-item>

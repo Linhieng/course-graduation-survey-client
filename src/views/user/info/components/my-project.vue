@@ -1,8 +1,8 @@
 <template>
-    <a-card class="general-card" :title="$t('userInfo.title.myProject')">
-        <template #extra>
+    <a-card class="general-card" :title="$t('我的问卷')">
+        <!-- <template #extra>
             <a-link>{{ $t('userInfo.showMore') }}</a-link>
-        </template>
+        </template> -->
         <a-row :gutter="16">
             <a-col
                 v-for="(project, index) in projectList"
@@ -31,7 +31,7 @@
                                     <img alt="avatar" :src="contributor.avatar" />
                                 </a-avatar>
                             </a-avatar-group>
-                            <a-typography-text type="secondary"> 等{{ project.peopleNumber }}人 </a-typography-text>
+                            <a-typography-text type="secondary">等{{ project.peopleNumber }}人</a-typography-text>
                         </a-space>
                     </a-space>
                 </a-card>

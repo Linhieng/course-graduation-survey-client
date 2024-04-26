@@ -16,18 +16,18 @@ const showHandleChangeEmailDialog = ref(false);
             <a-list-item-meta>
                 <template #avatar>
                     <a-typography-paragraph>
-                        {{ $t('userSetting.SecuritySettings.form.label.password') }}
+                        {{ $t('登录密码') }}
                     </a-typography-paragraph>
                 </template>
                 <template #description>
                     <div class="content">
-                        <a-typography-paragraph>
-                            {{ $t('userSetting.SecuritySettings.placeholder.password') }}
+                        <a-typography-paragraph class="tip">
+                            {{ $t('已设置。推荐密码至少包含 6 位字符，且同时包含数字和大小写字母。') }}
                         </a-typography-paragraph>
                     </div>
                     <div class="operation">
                         <a-link @click="showHandleUpdatePasswordDialog = true">
-                            {{ $t('userSetting.SecuritySettings.button.update') }}
+                            {{ $t('修改密码') }}
                         </a-link>
                     </div>
                 </template>
@@ -37,12 +37,12 @@ const showHandleChangeEmailDialog = ref(false);
             <a-list-item-meta>
                 <template #avatar>
                     <a-typography-paragraph>
-                        {{ $t('userSetting.SecuritySettings.form.label.phone') }}
+                        {{ $t('用户手机') }}
                     </a-typography-paragraph>
                 </template>
                 <template #description>
                     <div class="content">
-                        <a-typography-paragraph>
+                        <a-typography-paragraph class="tip">
                             {{
                                 useUserStore().userInfo.phone === ''
                                     ? $t('未绑定手机')
@@ -52,7 +52,7 @@ const showHandleChangeEmailDialog = ref(false);
                     </div>
                     <div class="operation">
                         <a-link @click="showHandleChangePhoneDialog = true">
-                            {{ $t('userSetting.SecuritySettings.button.update') }}
+                            {{ $t('修改手机号') }}
                         </a-link>
                     </div>
                 </template>
@@ -62,7 +62,7 @@ const showHandleChangeEmailDialog = ref(false);
             <a-list-item-meta>
                 <template #avatar>
                     <a-typography-paragraph>
-                        {{ $t('userSetting.SecuritySettings.form.label.email') }}
+                        {{ $t('用户邮箱') }}
                     </a-typography-paragraph>
                 </template>
                 <template #description>
@@ -80,7 +80,7 @@ const showHandleChangeEmailDialog = ref(false);
                     </div>
                     <div class="operation">
                         <a-link @click="showHandleChangeEmailDialog = true">
-                            {{ $t('userSetting.SecuritySettings.button.update') }}
+                            {{ $t('修改邮箱') }}
                         </a-link>
                     </div>
                 </template>
@@ -89,19 +89,19 @@ const showHandleChangeEmailDialog = ref(false);
     </a-list>
 
     <a-modal v-model:visible="showHandleUpdatePasswordDialog" draggable>
-        <template #title> {{ $t('修改密码') }} </template>
+        <template #title>{{ $t('修改密码') }}</template>
         <div>
             <change-password @over="showHandleUpdatePasswordDialog = false"></change-password>
         </div>
     </a-modal>
     <a-modal v-model:visible="showHandleChangePhoneDialog" draggable>
-        <template #title> {{ $t('修改手机') }} </template>
+        <template #title>{{ $t('修改手机') }}</template>
         <div>
             <change-phone @over="showHandleChangePhoneDialog = false"></change-phone>
         </div>
     </a-modal>
     <a-modal v-model:visible="showHandleChangeEmailDialog" draggable>
-        <template #title> {{ $t('修改邮箱') }} </template>
+        <template #title>{{ $t('修改邮箱') }}</template>
         <div>
             <change-email @over="showHandleChangeEmailDialog = false"></change-email>
         </div>

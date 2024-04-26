@@ -1,11 +1,11 @@
 <template>
-    <a-card class="general-card" :title="$t('userInfo.title.latestNotification')">
+    <a-card class="general-card" :title="$t('最近通知')">
         <a-skeleton v-if="loading" :animation="true">
             <a-skeleton-line :rows="3" />
         </a-skeleton>
         <a-result v-else status="404">
             <template #subtitle>
-                {{ $t('userInfo.nodata') }}
+                {{ $t('没有信息') }}
             </template>
         </a-result>
     </a-card>

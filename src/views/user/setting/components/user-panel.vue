@@ -63,7 +63,7 @@ const file = {
 };
 const renderData = [
     {
-        label: 'userSetting.label.name',
+        label: '用户姓名',
         value: userStore.name,
     },
     // {
@@ -71,15 +71,15 @@ const renderData = [
     //     value: userStore.certification,
     // },
     {
-        label: 'userSetting.label.accountId',
+        label: '用户 ID',
         value: userStore.accountId,
     },
     {
-        label: 'userSetting.label.phone',
+        label: '用户手机',
         value: userStore.phone,
     },
     {
-        label: 'userSetting.label.registrationDate',
+        label: '注册时间',
         value: new Date(userStore.registrationDate || '').toLocaleString(),
     },
 ] as DescData[];
