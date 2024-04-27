@@ -14,6 +14,7 @@ const { loading: fetching, setLoading: setFetching } = useLoading();
 const surveyList = ref<Survey[]>(Array(8).fill([]) as any);
 const gotoId = ref();
 const gotoLoading = ref(false);
+const isGotoEdit = ref(false);
 const toggleLoading = ref<Set<number>>(new Set());
 
 //
@@ -62,6 +63,7 @@ async function fetchMySurveyTemplate() {
 
 async function gotoUseSurvey(id: number) {
     if (gotoLoading.value) return;
+    isGotoEdit.value = false;
     gotoId.value = id;
     gotoLoading.value = true;
     await createStore.importFromTemplate(id);
@@ -78,12 +80,18 @@ const toggleShare = async (surveyId: number) => {
             item.is_template = item.is_template === 1 ? 2 : 1;
         }
     });
-    const res = await getSurveyMyTemplate(1, 8);
-    if (res.ok) {
-        surveyList.value = res.data.surveyTemplate;
-    }
 
     toggleLoading.value.delete(surveyId);
+};
+
+const gotoEditSurvey = async (id: number) => {
+    if (gotoLoading.value) return;
+    isGotoEdit.value = true;
+    gotoId.value = id;
+    gotoLoading.value = true;
+    await createStore.editSurveyTemplate(id);
+    gotoLoading.value = false;
+    router.push({ name: 'Create' });
 };
 </script>
 
@@ -96,9 +104,23 @@ const toggleShare = async (surveyId: number) => {
                 <a-spin :loading="fetching" dot>
                     <div class="card" :style="{ '--bg-url': `url(${bg2})` }">
                         <div class="pin">
-                            <a-tag :color="item.is_template === 1 ? 'red' : 'green'">
-                                {{ item.is_template === 1 ? $t('这是私有模版') : $t('这是共享模版') }}
-                            </a-tag>
+                            <a-space>
+                                <a-tag :color="item.is_template === 1 ? 'red' : 'green'">
+                                    {{ item.is_template === 1 ? $t('这是私有模版') : $t('这是共享模版') }}
+                                </a-tag>
+                                <a-tooltip :content="item.is_template === 1 ? $t('公开模版') : $t('设为私有')">
+                                    <a-button
+                                        :loading="toggleLoading.has(item.id as number)"
+                                        @click="() => toggleShare(item.id as number)"
+                                        size="mini"
+                                        shape="circle"
+                                    >
+                                        <template #icon>
+                                            <icon-font :name="item.is_template === 1 ? 'hide' : 'show'" />
+                                        </template>
+                                    </a-button>
+                                </a-tooltip>
+                            </a-space>
                         </div>
                         <a-space direction="vertical" fill class="item-content acrylic">
                             <a-space>
@@ -111,7 +133,7 @@ const toggleShare = async (surveyId: number) => {
                             </a-space>
                             <div class="flex-center">
                                 <a-button
-                                    :loading="gotoLoading && gotoId === item.id"
+                                    :loading="gotoLoading && !isGotoEdit && gotoId === item.id"
                                     :disabled="gotoLoading"
                                     type="primary"
                                     @click="() => gotoUseSurvey(item.id as number)"
@@ -119,13 +141,10 @@ const toggleShare = async (surveyId: number) => {
                                     使用该模版
                                 </a-button>
                                 <a-button
-                                    :loading="toggleLoading.has(item.id as number)"
-                                    @click="() => toggleShare(item.id as number)"
+                                    :loading="gotoLoading && isGotoEdit && gotoId === item.id"
+                                    @click="() => gotoEditSurvey(item.id as number)"
                                 >
-                                    <template #icon>
-                                        <icon-font :name="item.is_template === 1 ? 'show' : 'hide'" />
-                                    </template>
-                                    {{ item.is_template === 1 ? $t('公开模版') : $t('设为私有') }}
+                                    编辑模版
                                 </a-button>
                             </div>
                         </a-space>

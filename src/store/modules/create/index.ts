@@ -87,13 +87,29 @@ const useCreateStore = defineStore('create', {
                 });
             }
         },
+        /** 编辑问卷模版 */
+        async editSurveyTemplate(surveyId: number) {
+            const res = await getSurveyById(surveyId);
+            if (res.ok) {
+                this.importSurvey({
+                    id: surveyId,
+                    title: res.data.title,
+                    comment: res.data.comment,
+                    survey_type: res.data.survey_type,
+                    is_template: res.data.is_template,
+                    questionList: res.data.structure_json.questionList,
+                });
+            }
+        },
         /** 导入问卷，可能来自本地，可能来自模版，也可能来自草稿箱，总之，他需要提供一个 survey */
         async importSurvey(survey: Survey) {
-            this.survey.id = survey.id;
-            this.survey.title = survey.title;
-            this.survey.comment = survey.comment;
-            this.survey.survey_type = survey.survey_type;
-            this.survey.questionList = survey.questionList;
+            // 不用这样一个属性一个属性地修改，这样当你缺失了每个属性时，你完全不知道！
+            // this.survey.id = survey.id;
+            // this.survey.title = survey.title;
+            // this.survey.comment = survey.comment;
+            // this.survey.survey_type = survey.survey_type;
+            // this.survey.questionList = survey.questionList;
+            this.survey = survey;
         },
         //
         //
