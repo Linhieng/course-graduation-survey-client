@@ -4,7 +4,8 @@
             <div class="panel">
                 <Banner />
                 <DataPanel />
-                <ContentChart />
+                <!-- <ContentChart /> -->
+                <DataOverview />
             </div>
             <a-grid :cols="24" :col-gap="16" :row-gap="16" style="margin-top: 16px">
                 <a-grid-item :span="{ xs: 24, sm: 24, md: 24, lg: 12, xl: 12, xxl: 12 }">
@@ -17,6 +18,9 @@
         </div>
         <div class="right-side">
             <a-grid :cols="24" :row-gap="16">
+                <a-grid-item class="panel" :span="24">
+                    <UserActions />
+                </a-grid-item>
                 <a-grid-item :span="24">
                     <div class="panel moduler-wrap">
                         <QuickOperation />
@@ -48,6 +52,8 @@ import QuickOperation from './components/quick-operation.vue';
 import Announcement from './components/announcement.vue';
 import Carousel from './components/carousel.vue';
 import Docs from './components/docs.vue';
+import DataOverview from './components/data-overview.vue';
+import UserActions from './components/user-actions.vue';
 </script>
 
 <script lang="ts">
