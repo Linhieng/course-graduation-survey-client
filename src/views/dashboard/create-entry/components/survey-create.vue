@@ -98,6 +98,67 @@ const createSurvey = () => {
                     </a-radio>
                 </a-radio-group>
             </a-form-item>
+            <a-form-item field="is_template" tooltip="问卷模版，减少重复性工作" label="是否是问卷模版">
+                <a-radio-group disabled v-model="createStore.$state.survey.is_template">
+                    <a-radio :value="0">
+                        <template #radio="{ checked }">
+                            <a-space
+                                align="start"
+                                class="custom-radio-card"
+                                :class="{ 'custom-radio-card-checked': checked }"
+                            >
+                                <div className="custom-radio-card-mask">
+                                    <div className="custom-radio-card-mask-dot" />
+                                </div>
+                                <div>
+                                    <div className="custom-radio-card-title">非问卷模版</div>
+                                    <a-typography-text type="secondary">
+                                        不将此问卷设置为问卷模版。也就是常规的问卷
+                                    </a-typography-text>
+                                </div>
+                            </a-space>
+                        </template>
+                    </a-radio>
+                    <a-radio :value="1">
+                        <template #radio="{ checked }">
+                            <a-space
+                                align="start"
+                                class="custom-radio-card"
+                                :class="{ 'custom-radio-card-checked': checked }"
+                            >
+                                <div className="custom-radio-card-mask">
+                                    <div className="custom-radio-card-mask-dot" />
+                                </div>
+                                <div>
+                                    <div className="custom-radio-card-title">私有问卷模版</div>
+                                    <a-typography-text type="secondary">
+                                        创建一份问卷模版，但不公开发布，只有自己可见。
+                                    </a-typography-text>
+                                </div>
+                            </a-space>
+                        </template>
+                    </a-radio>
+                    <a-radio :value="2">
+                        <template #radio="{ checked }">
+                            <a-space
+                                align="start"
+                                class="custom-radio-card"
+                                :class="{ 'custom-radio-card-checked': checked }"
+                            >
+                                <div className="custom-radio-card-mask">
+                                    <div className="custom-radio-card-mask-dot" />
+                                </div>
+                                <div>
+                                    <div className="custom-radio-card-title">公开问卷模版</div>
+                                    <a-typography-text type="secondary">
+                                        创建一份问卷模版，同时公开到公共市场中，所有人可见。
+                                    </a-typography-text>
+                                </div>
+                            </a-space>
+                        </template>
+                    </a-radio>
+                </a-radio-group>
+            </a-form-item>
             <a-space size="large" class="btn-group">
                 <a-button @click="emit('back')">{{ $t('返回修改') }}</a-button>
                 <a-button type="primary" @click="createSurvey">{{ $t('确认创建问卷') }}</a-button>

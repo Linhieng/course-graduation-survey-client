@@ -38,6 +38,7 @@ const useCreateStore = defineStore('create', {
             id: undefined,
             title: '问卷未命名标题',
             comment: '',
+            is_template: 0,
             // questionList: getAllQuestionTemplate(),
             questionList: getNormalQuestion(),
             surveyType: 0,
