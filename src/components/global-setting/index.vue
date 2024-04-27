@@ -10,6 +10,8 @@
         :width="300"
         unmount-on-close
         :visible="visible"
+        hide-cancel
+        :footer="false"
         :cancel-text="$t('settings.close')"
         :ok-text="$t('settings.copySettings')"
         @ok="copySettings"
