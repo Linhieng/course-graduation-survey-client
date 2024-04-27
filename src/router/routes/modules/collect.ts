@@ -23,10 +23,21 @@ const COLLECT: AppRouteRecordRaw = {
             },
         },
         {
+            path: 'visual',
+            name: 'collect-visual',
+            component: () => import('@/views/collect/visual/index.vue'),
+            meta: {
+                locale: '可视化分析',
+                requiresAuth: true,
+                roles: ['*'],
+            },
+        },
+        {
             path: 'total',
             name: 'collect-stat',
             component: () => import('@/views/collect/collect-stat/index.vue'),
             meta: {
+                hideInMenu: true,
                 locale: '数据总览',
                 requiresAuth: true,
                 roles: ['*'],
