@@ -120,7 +120,7 @@ const useCreateStore = defineStore('create', {
         //
 
         /** 发布问卷 */
-        async publishSurvey() {
+        async publishSurvey(successCb: Function) {
             // 如果正在缓存，这里不能发布
             // 但目前先不处理，因为实现后可能出现死锁问题。
             if (this.local.isPublishing) return;
@@ -139,6 +139,7 @@ const useCreateStore = defineStore('create', {
             });
             if (res.ok) {
                 msgSuccess('发布成功');
+                successCb && successCb();
                 router.push({
                     name: 'my-publish-survey',
                 });

@@ -52,7 +52,9 @@ watch(
 
 /** 发布问卷 */
 const handlePublish = () => {
-    createStore.publishSurvey();
+    createStore.publishSurvey(() => {
+        if (appStore.focusMode) toggleFocusMode();
+    });
 };
 </script>
 
