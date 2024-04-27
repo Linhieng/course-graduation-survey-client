@@ -35,6 +35,8 @@ const useCollectStore = defineStore('collect', () => {
                 id: undefined,
                 title: '',
                 comment: '',
+                is_template: 0,
+                survey_type: 0,
                 questionList: [],
             },
         },
