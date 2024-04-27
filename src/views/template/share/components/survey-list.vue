@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getSurveyAllTemplate, getSurveyMyTemplate } from '@/api/survey';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import useLoading from '@/hooks/loading';
 import { useRouter } from 'vue-router';
 import { useCreateStore, useUserStore } from '@/store';
@@ -13,6 +13,11 @@ const useStore = useUserStore();
 
 const { loading: fetching, setLoading: setFetching } = useLoading();
 const surveyList = ref<Survey[]>(Array(8).fill([]) as any);
+const page = reactive({
+    total: 0,
+    cur: 1,
+    size: 8,
+});
 const gotoId = ref();
 const gotoLoading = ref(false);
 const avatarArr = ref<{ [key: number]: string }>({});
@@ -21,9 +26,12 @@ fetchMySurveyTemplate();
 async function fetchMySurveyTemplate() {
     if (fetching.value) return;
     setFetching(true);
-    const res = await getSurveyAllTemplate(1, 8);
+    const res = await getSurveyAllTemplate(page.cur, page.size);
     if (res.ok) {
         surveyList.value = res.data.surveyTemplate;
+        page.total = res.data.count;
+        page.cur = res.data.pageStart;
+        page.size = res.data.pageSize;
         const set = new Set<number>();
         res.data.surveyTemplate.forEach((item) => {
             set.add(item.creator_id as number);
@@ -46,11 +54,24 @@ async function gotoUseSurvey(id: number) {
     gotoLoading.value = false;
     router.push({ name: 'Create' });
 }
+
+async function changePageSize(pageSize: number) {
+    if (pageSize === page.size) return;
+    page.cur = 1;
+    page.size = pageSize;
+    changePage(page.cur);
+}
+async function changePage(current: number) {
+    if (fetching.value) return;
+    page.cur = current;
+    fetchMySurveyTemplate();
+}
 </script>
 
 <template>
     <div class="container">
-        <a-button @click="() => fetchMySurveyTemplate()">刷新</a-button>
+        <a-button @click="() => fetchMySurveyTemplate()" :loading="fetching">刷新</a-button>
+        <a-empty style="height: 300px" v-if="surveyList.length < 1"></a-empty>
         <div class="item-box">
             <div class="item" v-for="item in surveyList">
                 <a-spin :loading="fetching" dot>
@@ -70,7 +91,6 @@ async function gotoUseSurvey(id: number) {
                                     height="40"
                                     style="border-radius: 50%"
                                     :src="avatarArr[item.creator_id as number]"
-                                    show-loader
                                 />
                                 <p>{{ item.title }}</p>
                             </a-space>
@@ -88,6 +108,18 @@ async function gotoUseSurvey(id: number) {
                     </div>
                 </a-spin>
             </div>
+        </div>
+        <div class="pagination-box">
+            <a-pagination
+                :total="page.total"
+                :default-page-size="page.size"
+                show-total
+                show-jumper
+                show-page-size
+                :page-size-options="[4, 8]"
+                @page-size-change="changePageSize"
+                @change="changePage"
+            />
         </div>
     </div>
 </template>
@@ -136,5 +168,11 @@ async function gotoUseSurvey(id: number) {
 }
 .acrylic {
     backdrop-filter: blur(20px);
+}
+
+.pagination-box {
+    padding-right: 30px;
+    display: flex;
+    flex-direction: row-reverse;
 }
 </style>
