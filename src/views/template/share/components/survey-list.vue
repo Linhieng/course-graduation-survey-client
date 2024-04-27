@@ -84,6 +84,9 @@ async function changePage(current: number) {
                                 </a-space>
                             </a-tag>
                         </div>
+                        <div class="pin-right">
+                            <a-tag>{{ item.id }}</a-tag>
+                        </div>
                         <a-space direction="vertical" fill class="item-content acrylic">
                             <a-space>
                                 <a-image
@@ -163,6 +166,11 @@ async function changePage(current: number) {
             position: absolute;
             top: 0;
             left: 0;
+        }
+        .pin-right {
+            position: absolute;
+            top: 0;
+            right: 0;
         }
     }
 }
