@@ -60,15 +60,15 @@ const handlePublish = () => {
     <div class="container" :class="{ focusMode: appStore.focusMode }">
         <div class="header acrylic">
             <a-space style="margin-left: 20px">
-                <a-button class="left header-item" type="primary" @click="toggleFocusMode">{{
-                    appStore.focusMode ? $t('取消聚焦模式') : $t('聚焦模式')
-                }}</a-button>
+                <a-button class="left header-item" type="primary" @click="toggleFocusMode">
+                    {{ appStore.focusMode ? $t('取消聚焦模式') : $t('聚焦模式') }}
+                </a-button>
             </a-space>
             <a-space style="margin-right: 20px" class="header-item" size="large">
                 <a-space>
                     <template v-if="createStore.local.latelyCacheTime">
                         <span>{{ $t('最近缓存') }}</span>
-                        <a-statistic format="HH:mm:ss" :value="createStore.local.latelyCacheTime"> </a-statistic>
+                        <a-statistic format="HH:mm:ss" :value="createStore.local.latelyCacheTime"></a-statistic>
                     </template>
                     <p v-else>{{ $t('未缓存') }}</p>
                 </a-space>
@@ -83,36 +83,51 @@ const handlePublish = () => {
 
                 <a-tooltip :content="$t('皮肤')">
                     <a-button shape="circle" @click="visibleEditSkin = true">
-                        <icon-font style="width: 20px; height: 20px" name="skin"></icon-font
-                    ></a-button>
+                        <icon-font style="width: 20px; height: 20px" name="skin"></icon-font>
+                    </a-button>
                 </a-tooltip>
                 <a-tooltip :content="$t('设置')">
                     <a-button shape="circle" @click="visibleConfig = true">
                         <icon-font style="width: 20px; height: 20px" name="settings"></icon-font>
                     </a-button>
                 </a-tooltip>
-                <a-tooltip :content="$t('预览')">
+                <!-- <a-tooltip :content="$t('预览')">
                     <a-button type="primary" shape="circle">
                         <template #icon>
                             <icon-font name="view"></icon-font>
                         </template>
                     </a-button>
-                </a-tooltip>
+                </a-tooltip> -->
                 <a-divider direction="vertical" />
 
-                <a-tooltip :content="$t('缓存问卷到云端')">
-                    <a-button type="primary" shape="circle" @click="createStore.cacheSurvey()">
+                <a-tooltip :content="$t('更新问卷')">
+                    <a-button
+                        :loading="createStore.local.isCaching"
+                        type="primary"
+                        shape="circle"
+                        @click="createStore.cacheSurvey()"
+                    >
                         <template #icon>
                             <icon-font name="push"></icon-font>
                         </template>
                     </a-button>
                 </a-tooltip>
-                <a-button type="primary" @click="handlePublish" :loading="createStore.local.isPublishing">
-                    <template #icon>
-                        <icon-font name="publish"></icon-font>
-                    </template>
-                    <template #default>{{ $t('发布') }}</template>
-                </a-button>
+                <a-tooltip
+                    position="bottom"
+                    :content="createStore.survey.is_template !== 0 ? '模版问卷不能发布' : '发布问卷后将不能修改'"
+                >
+                    <a-button
+                        :disabled="createStore.survey.is_template !== 0"
+                        type="primary"
+                        @click="handlePublish"
+                        :loading="createStore.local.isPublishing"
+                    >
+                        <template #icon>
+                            <icon-font name="publish"></icon-font>
+                        </template>
+                        <template #default>{{ $t('发布') }}</template>
+                    </a-button>
+                </a-tooltip>
             </a-space>
         </div>
         <div class="create-container not-show-scroll">
@@ -157,7 +172,7 @@ const handlePublish = () => {
             <template #title>
                 <h3>{{ $t('自定义皮肤') }}</h3>
             </template>
-            <div> <EditSkin /> </div>
+            <div><EditSkin /></div>
         </a-drawer>
         <a-drawer
             :placement="drawerPosition"
@@ -170,7 +185,7 @@ const handlePublish = () => {
             <template #title>
                 <h3>{{ $t('配置') }}</h3>
             </template>
-            <div> <EditConfig /> </div>
+            <div><EditConfig /></div>
         </a-drawer>
     </div>
 </template>
