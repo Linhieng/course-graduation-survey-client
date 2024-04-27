@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getSurveyMyTemplate, toggleSurveyTemplateShare } from '@/api/survey';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import useLoading from '@/hooks/loading';
 import { useRouter } from 'vue-router';
 import { useCreateStore, useUserStore } from '@/store';
@@ -16,13 +16,46 @@ const gotoId = ref();
 const gotoLoading = ref(false);
 const toggleLoading = ref<Set<number>>(new Set());
 
+//
+//
+//
+//
+//
+//
+// 分页
+const page = reactive({
+    total: 0,
+    cur: 1,
+    size: 8,
+});
+/** 切换单页数据量 */
+async function changePageSize(pageSize: number) {
+    if (pageSize === page.size) return;
+    page.cur = 1;
+    page.size = pageSize;
+    changePage(page.cur);
+}
+/** 点击页码 */
+async function changePage(current: number) {
+    if (fetching.value) return;
+    page.cur = current;
+    await fetchMySurveyTemplate();
+}
+//
+//
+//
+//
+
 fetchMySurveyTemplate();
 async function fetchMySurveyTemplate() {
     if (fetching.value) return;
     setFetching(true);
-    const res = await getSurveyMyTemplate(1, 8);
+    const res = await getSurveyMyTemplate(page.cur, page.size);
     if (res.ok) {
         surveyList.value = res.data.surveyTemplate;
+        page.cur = res.data.pageStart;
+        page.total = res.data.count;
+        page.size = res.data.pageSize;
     }
     setFetching(false);
 }
@@ -56,7 +89,8 @@ const toggleShare = async (surveyId: number) => {
 
 <template>
     <div class="container">
-        <a-button @click="() => fetchMySurveyTemplate()">刷新</a-button>
+        <a-button :loading="fetching" @click="() => fetchMySurveyTemplate()">刷新</a-button>
+        <a-empty style="height: 300px" v-if="surveyList.length < 1"></a-empty>
         <div class="item-box">
             <div class="item" v-for="item in surveyList">
                 <a-spin :loading="fetching" dot>
@@ -98,6 +132,18 @@ const toggleShare = async (surveyId: number) => {
                     </div>
                 </a-spin>
             </div>
+        </div>
+        <div class="pagination-box">
+            <a-pagination
+                :total="page.total"
+                :default-page-size="page.size"
+                show-total
+                show-jumper
+                show-page-size
+                :page-size-options="[4, 8]"
+                @page-size-change="changePageSize"
+                @change="changePage"
+            />
         </div>
     </div>
 </template>
