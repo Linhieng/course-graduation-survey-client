@@ -15,7 +15,7 @@
                 :validate-trigger="['change', 'blur']"
                 hide-label
             >
-                <a-input v-model="formData.username" :placeholder="$t('signup.form.userName.placeholder')">
+                <a-input v-model="formData.username" :placeholder="$t('请输入用户名')">
                     <template #prefix>
                         <icon-user />
                     </template>
@@ -35,11 +35,7 @@
                 :help="passwordHelp"
                 feedback
             >
-                <a-input-password
-                    v-model="formData.password"
-                    :placeholder="$t('signup.form.password.placeholder')"
-                    allow-clear
-                >
+                <a-input-password v-model="formData.password" :placeholder="$t('请输入密码')" allow-clear>
                     <template #prefix>
                         <icon-lock />
                     </template>
@@ -59,18 +55,14 @@
                 :help="passwordHelp"
                 feedback
             >
-                <a-input-password
-                    v-model="formData.password2"
-                    :placeholder="$t('signup.form.password.placeholder2')"
-                    allow-clear
-                >
+                <a-input-password v-model="formData.password2" :placeholder="$t('请再次输入密码')" allow-clear>
                     <template #prefix>
                         <icon-lock />
                     </template>
                 </a-input-password>
             </a-form-item>
             <a-space :size="16" direction="vertical">
-                <a-button type="primary" html-type="submit" long :loading="loading"> 点击注册 </a-button>
+                <a-button type="primary" html-type="submit" long :loading="loading">点击注册</a-button>
             </a-space>
         </a-form>
     </div>
