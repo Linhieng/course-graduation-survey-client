@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import { computed, reactive } from 'vue';
 import { MessageStore } from './types';
 import { noticeInfo } from '@/utils/msg';
+import { getToken } from '@/utils/auth';
 
 const useMessageStore = defineStore('message', () => {
     const state = reactive<MessageStore>({
@@ -20,7 +21,8 @@ const useMessageStore = defineStore('message', () => {
     });
 
     setInterval(() => {
-        fetchUserMessage();
+        const token = getToken();
+        if (token) fetchUserMessage();
     }, 10000);
     async function fetchUserMessage() {
         if (state.loading.fetchUserMessage) return;

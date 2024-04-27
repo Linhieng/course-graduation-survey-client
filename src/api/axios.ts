@@ -1,6 +1,8 @@
 import router from '@/router';
-import { getToken } from '@/utils/auth';
+import { useAppStore } from '@/store';
+import { clearToken, getToken } from '@/utils/auth';
 import { msgError } from '@/utils/msg';
+import { removeRouteListener } from '@/utils/route-listener';
 import axios from 'axios';
 import type { AxiosError, AxiosRequestConfig, AxiosInstance } from 'axios';
 
@@ -138,6 +140,12 @@ export function interceptResponse(axios: AxiosInstance) {
                     // 遇到无效的 token 时，需要重新登录！
                     if (response.status === 403 && response.data.msg === 'api.error.token-invalid') {
                         const currentRoute = router.currentRoute.value;
+
+                        // 需要先清除 token
+                        const appStore = useAppStore();
+                        clearToken();
+                        removeRouteListener();
+                        appStore.clearServerMenu();
                         router.push({
                             name: 'login',
                             query: {
