@@ -36,11 +36,11 @@ const useCreateStore = defineStore('create', {
         },
         survey: {
             id: undefined,
-            title: '问卷未命名标题',
+            title: '未命名的问卷',
             comment: '',
             is_template: 0,
             // questionList: getAllQuestionTemplate(),
-            questionList: getNormalQuestion(),
+            questionList: [],
             survey_type: 0,
         },
         local: {
@@ -63,6 +63,8 @@ const useCreateStore = defineStore('create', {
             const res = await getShareSurveyTemplate(surveyId);
             if (res.ok) {
                 this.importSurvey({
+                    // 从模版创建时，问卷 id 设置为 undefined
+                    // 然后通过立刻缓存的方式，自动创建一份新的问卷。
                     id: undefined,
                     title: res.data.title,
                     comment: res.data.comment,
