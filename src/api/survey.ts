@@ -1,6 +1,25 @@
 import { QuestionItem, Survey } from '@/store/modules/create/types';
 import { get, post } from './axios';
 
+/** 获取自己的问卷模版，或者他人公开的问卷模版 */
+export function getShareSurveyTemplate(surveyId: number) {
+    return post<{
+        /** 此 id 应该赋值为 undefined */
+        id: number;
+        creator_id: number;
+        is_template: 0 | 1 | 2;
+        title: string;
+        comment: string;
+        sort_order: number;
+        is_draft: number;
+        is_valid: number;
+        is_deleted: number;
+        survey_type: 0 | 1 | 2;
+        created_at: string;
+        updated_at: string;
+        structure_json: StructureJson;
+    }>(`/api/survey/get-share-template/${surveyId}`);
+}
 export function setSurveyToTemplate(surveyId: number) {
     return post(`/api/survey/template/set-share/${surveyId}`);
 }
@@ -115,6 +134,7 @@ export interface ApiCacheSurveyData {
     comment: string;
     structure_json: StructureJson;
 }
+/** 问题的 json 结果。存储在数据库 questionnaire_detail 中 */
 export interface StructureJson {
     version: '0.2.0';
     questionList: QuestionItem[];

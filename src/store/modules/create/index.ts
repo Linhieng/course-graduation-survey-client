@@ -5,7 +5,7 @@ import { v4 as idv4 } from 'uuid';
 import { toRaw } from 'vue';
 import { getAllQuestionTemplate, getNewOption, getNewQuestion, getNormalQuestion } from './utils';
 import { msgError, msgSuccess, msgWarning, noticeInfo } from '@/utils/msg';
-import { getSurveyById, cacheSurvey as reqCacheSurvey } from '@/api/survey';
+import { getShareSurveyTemplate, getSurveyById, cacheSurvey as reqCacheSurvey } from '@/api/survey';
 import { updateAndPublishSurvey } from '@/api/survey';
 import router from '@/router';
 
@@ -59,15 +59,16 @@ const useCreateStore = defineStore('create', {
     actions: {
         /** 从模版商场中中获取一份问卷模版，这里会自动联网获取 */
         async importFromTemplate(surveyId: number) {
-            const res = await getSurveyById(surveyId);
+            const res = await getShareSurveyTemplate(surveyId);
             if (res.ok) {
                 this.importSurvey({
-                    id: surveyId,
+                    id: undefined,
                     title: res.data.title,
                     comment: res.data.comment,
-                    surveyType: /* res.data.type || */ 0,
-                    questionList: res.data.structure_json.questionList,
+                    surveyType: res.data.survey_type,
+                    questionList: res.data.structure_json.questionList || [],
                 });
+                this.cacheSurvey();
             }
         },
         /** 从草稿箱中获取一份问卷模版，这里会自动联网获取 */
