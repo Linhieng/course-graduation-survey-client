@@ -64,9 +64,9 @@ export interface Survey {
     /** 这是后台服务器保存的。 */
     creator_id?: number;
     /** 后台保存的，表示问卷是否是模版。0 表示非模版，1 表示个人模版，2 表示公开模版 */
-    is_template?: number;
+    is_template: 0 | 1 | 2;
     /** 问卷类型，0 表示常规。1 表示调研，2 表示心理问卷 */
-    surveyType: 0 | 1 | 2;
+    survey_type: 0 | 1 | 2;
     questionList: QuestionItem[];
 }
 export interface CreateState {

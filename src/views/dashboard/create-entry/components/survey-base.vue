@@ -42,7 +42,7 @@ const handleSubmit = () => {
                 ></a-textarea>
             </a-form-item>
             <a-form-item field="type" tooltip="对问卷进行分类，方便统计" label="输入问卷类型">
-                <a-radio-group v-model="createStore.$state.survey.surveyType">
+                <a-radio-group v-model="createStore.$state.survey.survey_type">
                     <a-radio :value="0">
                         <template #radio="{ checked }">
                             <a-space

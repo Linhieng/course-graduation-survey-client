@@ -41,7 +41,7 @@ const useCreateStore = defineStore('create', {
             is_template: 0,
             // questionList: getAllQuestionTemplate(),
             questionList: getNormalQuestion(),
-            surveyType: 0,
+            survey_type: 0,
         },
         local: {
             isCaching: false,
@@ -66,7 +66,8 @@ const useCreateStore = defineStore('create', {
                     id: undefined,
                     title: res.data.title,
                     comment: res.data.comment,
-                    surveyType: res.data.survey_type,
+                    survey_type: res.data.survey_type,
+                    is_template: res.data.is_template,
                     questionList: res.data.structure_json.questionList || [],
                 });
                 this.cacheSurvey();
@@ -80,7 +81,8 @@ const useCreateStore = defineStore('create', {
                     id: surveyId,
                     title: res.data.title,
                     comment: res.data.comment,
-                    surveyType: /* res.data.type || */ 0,
+                    survey_type: res.data.survey_type,
+                    is_template: res.data.is_template,
                     questionList: res.data.structure_json.questionList,
                 });
             }
@@ -90,7 +92,7 @@ const useCreateStore = defineStore('create', {
             this.survey.id = survey.id;
             this.survey.title = survey.title;
             this.survey.comment = survey.comment;
-            this.survey.surveyType = survey.surveyType;
+            this.survey.survey_type = survey.survey_type;
             this.survey.questionList = survey.questionList;
         },
         //
@@ -110,6 +112,8 @@ const useCreateStore = defineStore('create', {
                 surveyId: this.survey.id,
                 title: this.survey.title,
                 comment: this.survey.comment,
+                is_template: this.survey.is_template,
+                survey_type: this.survey.survey_type,
                 structure_json: {
                     version: '0.2.0',
                     questionList: this.survey.questionList,
@@ -135,6 +139,8 @@ const useCreateStore = defineStore('create', {
                 surveyId: this.survey.id,
                 title: this.survey.title,
                 comment: this.survey.comment,
+                survey_type: this.survey.survey_type,
+                is_template: this.survey.is_template,
                 structure_json: {
                     version: '0.2.0',
                     questionList: this.survey.questionList,

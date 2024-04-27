@@ -66,6 +66,8 @@ export function getSurveyById(surveyId: number) {
         id: number;
         title: string;
         comment: string;
+        survey_type: 0 | 1 | 2;
+        is_template: 0 | 1 | 2;
         structure_json: {
             version: '0.2.0';
             questionList: QuestionItem[];
@@ -133,6 +135,8 @@ export interface ApiCacheSurveyData {
     title: string;
     comment: string;
     structure_json: StructureJson;
+    survey_type: 0 | 1 | 2;
+    is_template: 0 | 1 | 2;
 }
 /** 问题的 json 结果。存储在数据库 questionnaire_detail 中 */
 export interface StructureJson {
