@@ -22,7 +22,7 @@ const { chartOption } = useChartOption((isDark) => {
                 show: true,
                 formatter(value: number, idx: number) {
                     if (idx === 0) return String(value);
-                    return `${Number(value) / 1000}k`;
+                    return value;
                 },
             },
             splitLine: {
