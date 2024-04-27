@@ -10,6 +10,11 @@ function formatModules(_modules: any, result: RouteRecordNormalized[]) {
         const defaultModule = _modules[key].default;
         if (!defaultModule) return;
         const moduleList = Array.isArray(defaultModule) ? [...defaultModule] : [defaultModule];
+
+        if (moduleList[0].name === 'exception') return;
+        if (moduleList[0].name === 'faq') return;
+        if (moduleList[0].name === 'arcoWebsite') return;
+
         result.push(...moduleList);
     });
     return result;

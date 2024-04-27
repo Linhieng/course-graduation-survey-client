@@ -18,7 +18,7 @@
             <Menu v-if="topMenu" />
         </div>
         <ul class="right-side">
-            <li>
+            <!-- <li>
                 <a-tooltip :content="$t('搜索')">
                     <a-button class="nav-btn" type="outline" :shape="'circle'">
                         <template #icon>
@@ -26,7 +26,7 @@
                         </template>
                     </a-button>
                 </a-tooltip>
-            </li>
+            </li> -->
             <li>
                 <a-tooltip :content="$t('切换语言')">
                     <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setDropDownVisible">
@@ -95,7 +95,8 @@
                 <a-tooltip :content="$t('布局设置')">
                     <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setVisible">
                         <template #icon>
-                            <icon-settings />
+                            <!-- <icon-settings /> -->
+                            <icon-font name="skin" />
                         </template>
                     </a-button>
                 </a-tooltip>

@@ -15,10 +15,10 @@
         @ok="copySettings"
         @cancel="cancel"
     >
-        <template #title> {{ $t('settings.title') }} </template>
-        <Block :options="contentOpts" :title="$t('settings.content')" />
-        <Block :options="othersOpts" :title="$t('settings.otherSettings')" />
-        <a-alert>{{ $t('settings.alertContent') }}</a-alert>
+        <template #title>{{ $t('界面设置') }}</template>
+        <Block :options="contentOpts" :title="$t('可配置的内容：')" />
+        <!-- <Block :options="othersOpts" :title="$t('settings.otherSettings')" /> -->
+        <!-- <a-alert>{{ $t('settings.alertContent') }}</a-alert> -->
     </a-drawer>
 </template>
 
@@ -37,26 +37,26 @@ const { t } = useI18n();
 const { copy } = useClipboard();
 const visible = computed(() => appStore.globalSettings);
 const contentOpts = computed(() => [
-    { name: 'settings.navbar', key: 'navbar', defaultVal: appStore.navbar },
+    { name: '是否显示顶部栏', key: 'navbar', defaultVal: appStore.navbar },
     {
-        name: 'settings.menu',
+        name: '是否显示侧边栏',
         key: 'menu',
         defaultVal: appStore.menu,
     },
     {
-        name: 'settings.topMenu',
+        name: '侧边栏移到顶部',
         key: 'topMenu',
         defaultVal: appStore.topMenu,
     },
-    { name: 'settings.footer', key: 'footer', defaultVal: appStore.footer },
-    { name: 'settings.tabBar', key: 'tabBar', defaultVal: appStore.tabBar },
+    { name: '是否显示底部', key: 'footer', defaultVal: appStore.footer },
+    { name: '是否显示标签页', key: 'tabBar', defaultVal: appStore.tabBar },
+    // {
+    //     name: 'settings.menuFromServer',
+    //     key: 'menuFromServer',
+    //     defaultVal: appStore.menuFromServer,
+    // },
     {
-        name: 'settings.menuFromServer',
-        key: 'menuFromServer',
-        defaultVal: appStore.menuFromServer,
-    },
-    {
-        name: 'settings.menuWidth',
+        name: '侧边栏宽度',
         key: 'menuWidth',
         defaultVal: appStore.menuWidth,
         type: 'number',

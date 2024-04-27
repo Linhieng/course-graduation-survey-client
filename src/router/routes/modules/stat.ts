@@ -10,6 +10,7 @@ const STAT: AppRouteRecordRaw = {
         requiresAuth: true,
         icon: 'icon-bar-chart',
         order: 7,
+        roles: ['admin'],
     },
     children: [
         {
