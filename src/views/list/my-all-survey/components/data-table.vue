@@ -61,11 +61,11 @@ const changeOneSurvey = async () => {};
             <a-table-column :width="110" title="创建时间" data-index="created_at"> <template #cell="{record}">{{ new Date(record.created_at).toLocaleString() }}</template> </a-table-column>
             <!-- prettier-ignore -->
             <a-table-column :width="110" title="更新时间" data-index="updated_at"> <template #cell="{record}">{{ new Date(record.updated_at).toLocaleString() }}</template> </a-table-column>
-            <a-table-column :width="70" title="操作">
+            <!-- <a-table-column :width="70" title="操作">
                 <template #cell>
                     <a-button>修改</a-button>
                 </template>
-            </a-table-column>
+            </a-table-column> -->
         </template>
     </a-table>
     <a-modal v-model:visible="optionPaneVisual" @ok="changeOneSurvey" @cancel="() => (optionPaneVisual = false)">
