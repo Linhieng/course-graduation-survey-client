@@ -13,6 +13,16 @@ const LIST: AppRouteRecordRaw = {
     },
     children: [
         {
+            path: 'my-all-survey',
+            name: 'my-all-survey',
+            component: () => import('@/views/list/my-all-survey/index.vue'),
+            meta: {
+                locale: '所有问卷',
+                requiresAuth: true,
+                roles: ['*'],
+            },
+        },
+        {
             path: 'my-draft',
             name: 'my-draft-survey',
             component: () => import('@/views/list/my-draft/index.vue'),
