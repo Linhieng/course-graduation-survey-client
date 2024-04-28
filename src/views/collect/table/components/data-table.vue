@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { useCollectStore } from '@/store';
 import { CollectAnswer } from '@/store/modules/collect/types';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import OneAnswer from './one-answer.vue';
 import { TableColumnData, TableData } from '@arco-design/web-vue';
+import { changeAnswerValid } from '@/api/answer';
 const collectStore = useCollectStore();
 
 const props = defineProps<{
@@ -98,6 +99,29 @@ const expandable = reactive({
     title: '展开',
     width: 80,
 });
+
+//
+//
+//
+//
+const optionPaneVisual = ref(false);
+const curChangeData = ref<Partial<CollectAnswer>>({
+    id: undefined,
+    is_valid: 1,
+});
+const openChangeOneAnswer = (record: CollectAnswer) => {
+    curChangeData.value.is_valid = record.is_valid;
+    curChangeData.value.id = record.id;
+    optionPaneVisual.value = true;
+};
+const changeOneAnswer = async () => {
+    const status = curChangeData.value.is_valid as 0 | 1;
+    const id = curChangeData.value.id as number;
+    const res = await changeAnswerValid({ ids: [id], status });
+    if (res.ok) {
+        collectStore.fetchAnswerCollectBySurveyId();
+    }
+};
 </script>
 
 <template>
@@ -149,9 +173,25 @@ const expandable = reactive({
                         <a-tag v-else color="red">无效</a-tag>
                     </template>
                 </a-table-column>
+                <a-table-column title="操作" :width="100">
+                    <template #cell="{ record }">
+                        <a-button @click="() => openChangeOneAnswer(record)">修改</a-button>
+                    </template>
+                </a-table-column>
             </template>
         </a-table>
     </div>
+    <a-modal v-model:visible="optionPaneVisual" @ok="changeOneAnswer" @cancel="() => (optionPaneVisual = false)">
+        <template #title>修改问题</template>
+        <div>
+            <a-form-item tooltip="请选择答案的有效性" label="设置答案的有效性">
+                <a-radio-group v-model="curChangeData.is_valid">
+                    <a-radio :value="0">无效</a-radio>
+                    <a-radio :value="1">有效</a-radio>
+                </a-radio-group>
+            </a-form-item>
+        </div>
+    </a-modal>
 </template>
 
 <style scoped lang="less"></style>
