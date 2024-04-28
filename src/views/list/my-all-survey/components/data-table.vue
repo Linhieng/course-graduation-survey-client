@@ -7,6 +7,11 @@ const surveyListStore = useSurveyListStore();
 const optionPaneVisual = ref(false);
 
 const changeOneSurvey = async () => {};
+
+const onPageChange = (current: number) => {
+    surveyListStore.state.searchPage.pageStart = current;
+    surveyListStore.searchSurveyList();
+};
 </script>
 
 <template>
@@ -23,6 +28,8 @@ const changeOneSurvey = async () => {};
         stripe
         table-layout-fixed
         :bordered="{ cell: true }"
+        @page-change="onPageChange"
+        :loading="surveyListStore.state.loading.searching"
     >
         <template #columns>
             <a-table-column :width="40" title="id" data-index="id"></a-table-column>

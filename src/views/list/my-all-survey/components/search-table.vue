@@ -29,6 +29,7 @@ function resetCondition() {
 }
 
 function search() {
+    surveyListStore.state.searchPage.pageStart = 1;
     surveyListStore.searchSurveyList(condition.value);
 }
 </script>
@@ -72,10 +73,10 @@ function search() {
         </div>
         <div class="row">
             <a-form-item class="flex-grow" :label="$t('创建时间')">
-                <a-range-picker v-model="condition.created_range" />
+                <a-range-picker value-format="timestamp" v-model="condition.created_range" />
             </a-form-item>
             <a-form-item class="flex-grow" :label="$t('更新时间')">
-                <a-range-picker v-model="condition.updated_range" />
+                <a-range-picker value-format="timestamp" v-model="condition.updated_range" />
             </a-form-item>
         </div>
         <div class="row">

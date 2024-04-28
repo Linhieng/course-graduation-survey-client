@@ -22,12 +22,15 @@ const useSurveyListStore = defineStore('survey-list', () => {
         },
         searchPage: {
             pageStart: 1,
-            pageSize: 10,
+            pageSize: 5,
         },
     });
 
     /** 根据条件搜索问卷，可以支持分页搜索 */
-    async function searchSurveyList(data: SearchSurveyByPageBody) {
+    let pre_data: SearchSurveyByPageBody = {};
+    async function searchSurveyList(data?: SearchSurveyByPageBody) {
+        if (data === undefined) data = pre_data;
+        pre_data = data;
         if (state.loading.searching) return;
         state.loading.searching = true;
         const pageStart = state.searchPage.pageStart;
