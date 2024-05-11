@@ -69,7 +69,8 @@ const useCreateStore = defineStore('create', {
                     title: res.data.title,
                     comment: res.data.comment,
                     survey_type: res.data.survey_type,
-                    is_template: res.data.is_template,
+                    // 根据模版创建问卷时，新的问卷肯定不能是模版问卷！
+                    is_template: 0,
                     questionList: res.data.structure_json.questionList || [],
                 });
                 this.cacheSurvey();
