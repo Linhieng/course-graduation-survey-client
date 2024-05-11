@@ -119,8 +119,8 @@ const onPageChange = (current: number) => {
             >
                 <template #columns>
                     <a-table-column :width="70" title="id" data-index="id"></a-table-column>
-                    <a-table-column :width="150" title="title" data-index="title"></a-table-column>
-                    <a-table-column :width="200" title="comment" data-index="comment">
+                    <a-table-column :width="150" title="标题" data-index="title"></a-table-column>
+                    <a-table-column :width="200" title="描述" data-index="comment">
                         <template #cell="{ record }">
                             <a-typography-paragraph :ellipsis="{ rows: 2 }">
                                 {{ record.comment }}
@@ -183,7 +183,7 @@ const onPageChange = (current: number) => {
                         <template #cell="{ record }">
                             <a-space direction="vertical" fill>
                                 <a-button type="primary" @click="gotoCollectTable(record.id)">查看数据</a-button>
-                                <a-button @click="gotoCollectVisual(record.id)">可视化分析</a-button>
+                                <!-- <a-button @click="gotoCollectVisual(record.id)">可视化分析</a-button> -->
                             </a-space>
                         </template>
                     </a-table-column>
