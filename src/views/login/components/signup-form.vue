@@ -9,7 +9,7 @@
                 :rules="[
                     {
                         required: true,
-                        message: $t('signup.form.userName.errMsg'),
+                        message: $t('用户名不能为空'),
                     },
                 ]"
                 :validate-trigger="['change', 'blur']"
@@ -26,7 +26,7 @@
                 :rules="[
                     {
                         required: true,
-                        message: $t('signup.form.password.errMsg'),
+                        message: $t('密码不能为空'),
                     },
                 ]"
                 :validate-trigger="['change', 'blur']"
@@ -46,7 +46,7 @@
                 :rules="[
                     {
                         required: true,
-                        message: $t('signup.form.password.errMsg'),
+                        message: $t('密码不能为空'),
                     },
                 ]"
                 :validate-trigger="['change', 'blur']"
@@ -127,7 +127,7 @@ const clickRegister = async ({
         if (!res.ok) {
             errorMessage.value = t(res.msg);
         } else {
-            msgSuccess('signup.form.signup.success');
+            msgSuccess('注册成功');
         }
     }
 };
