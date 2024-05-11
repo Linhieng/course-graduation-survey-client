@@ -27,6 +27,7 @@ const COLLECT: AppRouteRecordRaw = {
             name: 'collect-visual',
             component: () => import('@/views/collect/visual/index.vue'),
             meta: {
+                hideInMenu: true,
                 locale: '可视化分析',
                 requiresAuth: true,
                 roles: ['*'],
