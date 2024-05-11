@@ -19,7 +19,7 @@ const emit = defineEmits<{
             >
                 {{ $t('从草稿箱中选择问卷') }}
             </a-button>
-            <a-button>{{ $t('从模版市场中选择问卷') }}</a-button>
+            <a-button @click="() => router.push({ name: 'template-my' })">{{ $t('从模版市场中选择问卷') }}</a-button>
         </a-space>
         <p>{{ $t('制作一份全新问卷：') }}</p>
         <a-space style="padding-left: 30px">
