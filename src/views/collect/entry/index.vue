@@ -101,7 +101,7 @@ const onPageChange = (current: number) => {
             <a-row :gutter="8">
                 <a-col flex="1"></a-col>
                 <a-col flex="100px">
-                    <a-button type="primary" style="width: 100%">
+                    <a-button type="primary" style="width: 100%" @click="onPageChange(1)">
                         <template #icon>
                             <icon-refresh />
                         </template>
