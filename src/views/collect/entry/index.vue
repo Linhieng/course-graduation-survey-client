@@ -118,8 +118,8 @@ const onPageChange = (current: number) => {
                 @page-change="onPageChange"
             >
                 <template #columns>
-                    <a-table-column :width="70" title="id" data-index="id"></a-table-column>
-                    <a-table-column :width="150" title="标题" data-index="title"></a-table-column>
+                    <a-table-column :width="50" title="id" data-index="id" align="center"></a-table-column>
+                    <a-table-column :width="200" title="标题" data-index="title"></a-table-column>
                     <a-table-column :width="200" title="描述" data-index="comment">
                         <template #cell="{ record }">
                             <a-typography-paragraph :ellipsis="{ rows: 2 }">
@@ -133,17 +133,17 @@ const onPageChange = (current: number) => {
                             <a-tag v-else color="red">{{ $t('已停止') }}</a-tag>
                         </template>
                     </a-table-column>
-                    <a-table-column :width="140" title="创建时间" data-index="created_at">
+                    <a-table-column :width="200" title="创建时间" data-index="created_at">
                         <template #cell="{ record }">
                             <a-statistic
                                 :value-style="{ 'font-size': '1rem' }"
                                 :value="new Date(record.created_at)"
                                 animation
-                                format="YYYY-MM-DD"
+                                format="YYYY-MM-DD HH:mm:ss"
                             ></a-statistic>
                         </template>
                     </a-table-column>
-                    <a-table-column :width="140" title="更新时间" data-index="updated_at">
+                    <!-- <a-table-column :width="140" title="更新时间" data-index="updated_at">
                         <template #cell="{ record }">
                             <a-statistic
                                 :value-style="{ 'font-size': '1rem' }"
@@ -152,7 +152,7 @@ const onPageChange = (current: number) => {
                                 format="YYYY-MM-DD"
                             ></a-statistic>
                         </template>
-                    </a-table-column>
+                    </a-table-column> -->
                     <a-table-column :width="100" title="回答数量" data-index="collect_answer">
                         <template #cell="{ record }">
                             <a-statistic

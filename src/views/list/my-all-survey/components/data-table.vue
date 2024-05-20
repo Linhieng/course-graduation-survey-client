@@ -32,37 +32,37 @@ const onPageChange = (current: number) => {
         :loading="surveyListStore.state.loading.searching"
     >
         <template #columns>
-            <a-table-column :width="40" title="id" data-index="id"></a-table-column>
-            <a-table-column :width="100" title="标题" data-index="title" ellipsis></a-table-column>
-            <a-table-column :width="100" title="描述" data-index="comment" ellipsis>
-                <template #cell="{ record }">
+            <a-table-column :width="40" title="id" data-index="id" align="center"></a-table-column>
+            <a-table-column :width="130" title="标题" data-index="title" ellipsis tooltip></a-table-column>
+            <a-table-column :width="70" title="描述" data-index="comment" ellipsis tooltip>
+                <!-- <template #cell="{ record }">
                     <a-tooltip :content="record.comment">
                         {{ record.comment }}
                     </a-tooltip>
-                </template>
+                </template> -->
             </a-table-column>
-            <a-table-column :width="100" title="状态">
+            <a-table-column :width="70" title="状态" align="center">
                 <template #cell="{ record }">
                     <a-tag :color="stateToColor[record.status]">{{ $t(record.status) }}</a-tag>
                 </template>
             </a-table-column>
-            <a-table-column :width="100" title="模版类型">
+            <a-table-column :width="70" title="模版类型" align="center">
                 <template #cell="{ record }">
                     <a-tag v-if="record.is_template === 0">{{ $t('非模版') }}</a-tag>
                     <a-tag v-else-if="record.is_template === 1" color="red">{{ $t('私有模版') }}</a-tag>
                     <a-tag v-else-if="record.is_template === 2" color="green">{{ $t('公开模版') }}</a-tag>
                 </template>
             </a-table-column>
-            <a-table-column :width="90" title="问卷类型" data-index="survey_type">
+            <a-table-column :width="70" title="问卷类型" data-index="survey_type" align="center">
                 <template #cell="{ record }">
                     <a-tag>{{ surveyType_string[record.survey_type] }}</a-tag>
                 </template>
             </a-table-column>
-            <a-table-column :width="60" title="问卷访问量" data-index="collect_visited"></a-table-column>
-            <a-table-column :width="60" title="收集到的回答数量" data-index="collect_answer">
-                <template #cell="{ record }">
-                    <a-statistic animation :value="record.collect_answer" />
-                </template>
+            <a-table-column :width="50" title="访问量" data-index="collect_visited" align="center"></a-table-column>
+            <a-table-column :width="60" title="回答数量" data-index="collect_answer" align="center">
+                <!-- <template #cell="{ record }">
+                    <a-statistic style="font-size: 1rem" animation :value="record.collect_answer" />
+                </template> -->
             </a-table-column>
             <!-- prettier-ignore -->
             <a-table-column :width="110" title="创建时间" data-index="created_at"> <template #cell="{record}">{{ new Date(record.created_at).toLocaleString() }}</template> </a-table-column>
