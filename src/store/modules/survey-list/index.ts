@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import { reactive } from 'vue';
 import { SurveyListStore } from './types';
-import { SearchSurveyByPageBody, searchSurveyByPage } from '@/api/survey';
+import { SearchSurveyByPageBody, searchSurveyByPage, updateOneSurvey as apiUpdateOneSurvey } from '@/api/survey';
+import { msgSuccess } from '@/utils/msg';
 
 const useSurveyListStore = defineStore('survey-list', () => {
     const state = reactive<SurveyListStore>({
@@ -9,6 +10,7 @@ const useSurveyListStore = defineStore('survey-list', () => {
             searching: false,
         },
         updateData: {
+            surveyId: undefined,
             title: '',
             comment: '',
             status: 1,
@@ -53,9 +55,22 @@ const useSurveyListStore = defineStore('survey-list', () => {
         state.loading.searching = false;
     }
 
+    async function updateOneSurvey() {
+        if (!state.updateData.surveyId) return;
+        const res = await apiUpdateOneSurvey({
+            surveyId: state.updateData.surveyId,
+            title: state.updateData.title,
+            comment: state.updateData.comment,
+        });
+        if (res.ok) {
+            msgSuccess('更新成功');
+        }
+    }
+
     return {
         state,
         searchSurveyList,
+        updateOneSurvey,
     };
 });
 

@@ -40,6 +40,10 @@ export interface SearchSurveyByPageBody {
 //
 //
 
+export function updateOneSurvey(data: { surveyId: number; title: string; comment: string }) {
+    return post(`/api/survey/update-one/${data.surveyId}`, data);
+}
+
 /** 获取自己的问卷模版，或者他人公开的问卷模版 */
 export function getShareSurveyTemplate(surveyId: number) {
     return post<{

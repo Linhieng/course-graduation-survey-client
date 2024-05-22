@@ -3,6 +3,7 @@ export interface SurveyListStore {
         searching: boolean;
     };
     updateData: {
+        surveyId?: number;
         title: string;
         comment: string;
         status: number;

@@ -6,11 +6,22 @@ const surveyListStore = useSurveyListStore();
 
 const optionPaneVisual = ref(false);
 
-const changeOneSurvey = async () => {};
+const changeOneSurvey = async () => {
+    await surveyListStore.updateOneSurvey();
+    surveyListStore.searchSurveyList();
+    return true;
+};
 
 const onPageChange = (current: number) => {
     surveyListStore.state.searchPage.pageStart = current;
     surveyListStore.searchSurveyList();
+};
+
+const editSurvey = (survey: { id: number; title: string; comment: string }) => {
+    optionPaneVisual.value = true;
+    surveyListStore.state.updateData.surveyId = survey.id;
+    surveyListStore.state.updateData.title = survey.title;
+    surveyListStore.state.updateData.comment = survey.comment;
 };
 </script>
 
@@ -34,13 +45,7 @@ const onPageChange = (current: number) => {
         <template #columns>
             <a-table-column :width="40" title="id" data-index="id" align="center"></a-table-column>
             <a-table-column :width="130" title="标题" data-index="title" ellipsis tooltip></a-table-column>
-            <a-table-column :width="70" title="描述" data-index="comment" ellipsis tooltip>
-                <!-- <template #cell="{ record }">
-                    <a-tooltip :content="record.comment">
-                        {{ record.comment }}
-                    </a-tooltip>
-                </template> -->
-            </a-table-column>
+            <a-table-column :width="70" title="描述" data-index="comment" ellipsis tooltip></a-table-column>
             <a-table-column :width="70" title="状态" align="center">
                 <template #cell="{ record }">
                     <a-tag :color="stateToColor[record.status]">{{ $t(record.status) }}</a-tag>
@@ -65,24 +70,28 @@ const onPageChange = (current: number) => {
                 </template> -->
             </a-table-column>
             <!-- prettier-ignore -->
-            <a-table-column :width="110" title="创建时间" data-index="created_at"> <template #cell="{record}">{{ new Date(record.created_at).toLocaleString() }}</template> </a-table-column>
+            <a-table-column :width="70" title="创建时间" data-index="created_at"> <template #cell="{record}">{{ new Date(record.created_at).toLocaleDateString() }}</template> </a-table-column>
             <!-- prettier-ignore -->
-            <a-table-column :width="110" title="更新时间" data-index="updated_at"> <template #cell="{record}">{{ new Date(record.updated_at).toLocaleString() }}</template> </a-table-column>
-            <!-- <a-table-column :width="70" title="操作">
-                <template #cell>
-                    <a-button>修改</a-button>
+            <a-table-column :width="70" title="更新时间" data-index="updated_at"> <template #cell="{record}">{{ new Date(record.updated_at).toLocaleDateString() }}</template> </a-table-column>
+            <a-table-column :width="60" title="操作" align="center">
+                <template #cell="{ record }">
+                    <a-button @click="editSurvey(record)">修改</a-button>
                 </template>
-            </a-table-column> -->
+            </a-table-column>
         </template>
     </a-table>
-    <a-modal v-model:visible="optionPaneVisual" @ok="changeOneSurvey" @cancel="() => (optionPaneVisual = false)">
+    <a-modal
+        v-model:visible="optionPaneVisual"
+        @cancel="() => (optionPaneVisual = false)"
+        :on-before-ok="changeOneSurvey"
+    >
         <template #title>修改问题</template>
         <div>
             <a-form-item :label="$t('问卷标题')">
                 <a-textarea auto-size v-model="surveyListStore.state.updateData.title"></a-textarea>
             </a-form-item>
             <a-form-item :label="$t('问卷描述')">
-                <a-textarea auto-size v-model="surveyListStore.state.updateData.title"></a-textarea>
+                <a-textarea auto-size v-model="surveyListStore.state.updateData.comment"></a-textarea>
             </a-form-item>
         </div>
     </a-modal>
