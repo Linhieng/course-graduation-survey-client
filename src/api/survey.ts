@@ -174,7 +174,7 @@ export interface SchemaSurvey {
 
 /** 缓存问卷，问卷不存在时自动创建 */
 export interface ApiCacheSurveyData {
-    /** 这里在每个时间点后和后台的属性值对不上了，导致了 bug 的出现。 */
+    /** 这里在某个时间点后和后台的属性值对不上了，导致了 bug 的出现。 */
     surveyId?: number;
     title: string;
     comment: string;
