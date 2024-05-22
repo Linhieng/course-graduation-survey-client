@@ -3,6 +3,7 @@ import NotFound from '@/views/not-found/index.vue';
 import DataTable from './components/data-table.vue';
 import DataBanner from './components/data-banner.vue';
 import DataVisual from './components/data-visual.vue';
+import DataStat from './components/data-stat.vue';
 defineProps<{
     surveyId: string | number;
 }>();
@@ -25,6 +26,7 @@ defineProps<{
                 <DataTable :surveyId="Number(surveyId)" />
             </div>
             <DataVisual />
+            <DataStat :surveyId="Number(surveyId)" />
         </template>
     </div>
 </template>

@@ -1,13 +1,22 @@
 import { SearchParams } from '@/views/collect/entry/index.vue';
 import { get } from './axios';
 import { CollectAnswer, CollectSurveyItem } from '@/store/modules/collect/types';
+import { QuestionItem } from '@/store/modules/create/types';
 
 export function getAnswerCollectBySurveyId(surveyId: number) {
-    return get<{
-        title: string;
-        desc: string;
-        answerList: CollectAnswer[];
-    }>(`/api/collect/${surveyId}`);
+    return get<AnswerCollect>(`/api/collect/${surveyId}`);
+}
+
+export interface AnswerCollect {
+    title: string;
+    desc: string;
+    surveyData: {
+        questionnaire_id: number;
+        structure_json: {
+            questionList: Array<QuestionItem>;
+        };
+    };
+    answerList: CollectAnswer[];
 }
 
 /**
