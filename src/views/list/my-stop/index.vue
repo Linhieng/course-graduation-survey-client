@@ -65,6 +65,9 @@ watch(
             </a-typography-title>
             <div class="list-wrap" ref="scrollEl">
                 <a-row class="list-row" :gutter="24">
+                    <template v-if="renderData.length < 1">
+                        <a-empty />
+                    </template>
                     <a-col
                         v-for="item in renderData"
                         :key="item.id"
