@@ -93,10 +93,10 @@ function generateEchartOption() {
             </a-space>
             <a-space>
                 <template v-if="q.type === 'single_text'">
-                    <ESingleText />
+                    <ESingleText :echartData="echartOptionDataList[i]" />
                 </template>
                 <template v-else-if="q.type === 'multi_text'">
-                    <ESingleText />
+                    <ESingleText :echartData="echartOptionDataList[i]" />
                 </template>
                 <template v-else-if="q.type === 'single_select'">
                     <ESingleSelect :echartData="echartOptionDataList[i]" />
