@@ -34,6 +34,8 @@ const useAppStore = defineStore('app', {
         updateLastRouter(name: string, text: string, icon: any) {
             if (name === 'Workplace') return;
             if (name === 'login') return;
+            if (name === 'collect-table') return;
+            if (name === 'Create') return;
             const had = this.$state.lastRouter.some((v, i, arr) => {
                 if (v.name === name) {
                     arr[i].count++;

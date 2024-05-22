@@ -106,6 +106,8 @@ const handleSubmit = async ({
             } else if (redirect === 'login') {
                 // 解决登录后依旧停留在登录界面的问题
                 redirect = 'Workplace';
+            } else if (redirect === 'Create') {
+                redirect = 'Workplace';
             }
             router.push({
                 name: (redirect as string) || 'Workplace',
