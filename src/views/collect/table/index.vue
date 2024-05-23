@@ -4,6 +4,7 @@ import DataTable from './components/data-table.vue';
 import DataBanner from './components/data-banner.vue';
 import DataVisual from './components/data-visual.vue';
 import DataStat from './components/data-stat.vue';
+import AiStat from './components/ai-stat.vue';
 defineProps<{
     surveyId: string | number;
 }>();
@@ -27,6 +28,7 @@ defineProps<{
             </div>
             <DataVisual />
             <DataStat :surveyId="Number(surveyId)" />
+            <AiStat class="ai-box" />
         </template>
     </div>
 </template>
