@@ -134,9 +134,9 @@ const { chartOption } = useChartOption((dark) => {
         series: [
             generateSeries('创建问卷的数量', '#F77234', '#FFE4BA', useStatStore().state.statGroupByDay.data[0].value),
             generateSeries('发布问卷的数量', '#33D1C9', '#E8FFFB', useStatStore().state.statGroupByDay.data[1].value),
-            generateSeries('问卷草稿的数量', '#3469FF', '#E8F3FF', useStatStore().state.statGroupByDay.data[2].value),
-            generateSeries('停止收集的数量', '#3469FF', '#E8F3FF', useStatStore().state.statGroupByDay.data[3].value),
-            generateSeries('删除问卷的数量', '#3469FF', '#E8F3FF', useStatStore().state.statGroupByDay.data[4].value),
+            generateSeries('问卷草稿的数量', '#37bdff', '#37bdff', useStatStore().state.statGroupByDay.data[2].value),
+            generateSeries('停止收集的数量', '#df78fe', '#df78fe', useStatStore().state.statGroupByDay.data[3].value),
+            generateSeries('删除问卷的数量', '#3469FF', '#3469FF', useStatStore().state.statGroupByDay.data[4].value),
         ],
     };
 });
