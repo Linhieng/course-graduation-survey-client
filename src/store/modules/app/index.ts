@@ -6,6 +6,7 @@ import defaultSettings from '@/config/settings.json';
 import { getMenuList } from '@/api/user';
 import { AppState } from './types';
 import { useLocalStorage } from '@vueuse/core';
+import useUserStore from '../user';
 
 // 为什么使用 localStorage 就会导致递归报错？这是什么原因？写在 state 里面就没事了
 // const lastRouter = JSON.parse(localStorage.getItem('lastRouter')) || [];
@@ -54,6 +55,14 @@ const useAppStore = defineStore('app', {
                 });
             }
             localStorage.setItem('lastRouter', JSON.stringify(this.$state.lastRouter));
+
+            const userId = useUserStore().accountId;
+            if (userId) {
+                const rawAllLastRouter = localStorage.getItem('all-last-router');
+                const allLastRouter = JSON.parse(rawAllLastRouter || '{}');
+                allLastRouter[userId] = this.$state.lastRouter;
+                localStorage.setItem('all-last-router', JSON.stringify(allLastRouter));
+            }
         },
 
         // Update app settings

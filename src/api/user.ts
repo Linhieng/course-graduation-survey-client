@@ -9,6 +9,7 @@ export interface LoginData {
 }
 
 export interface LoginRes {
+    userId: number;
     token: string;
 }
 export function login(data: LoginData) {

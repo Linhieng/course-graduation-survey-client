@@ -82,6 +82,13 @@ const useUserStore = defineStore('user', {
             const res = await userLogin(loginForm);
             if (res.ok) {
                 setToken(res.data.token);
+                /** 每个用户，都有对应的最近访问入口记录 */
+                const rawAllLastRouter = localStorage.getItem('all-last-router');
+                const allLastRouter = JSON.parse(rawAllLastRouter || '{}');
+                const userId = res.data.userId;
+                const lastRouter = allLastRouter[userId] || [];
+                localStorage.setItem('lastRouter', JSON.stringify(lastRouter || '[]'));
+                useAppStore().lastRouter = lastRouter;
                 return true;
             } else {
                 clearToken();
