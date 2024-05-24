@@ -5,13 +5,11 @@
             点击开始聊天
         </a-button>
         <div v-if="showData.socketStatus === '已连接'">
-            <a-textarea auto-size v-model="sendData.message" placeholder="请输入"></a-textarea>
-            <a-button type="primary" @click="sendMessage">发送</a-button>
+            <AiChatBox :showData="showData" />
             <p :class="{ hide: !answerLoading }">思考中...</p>
-            <div class="answer-box">
-                <p v-for="answerItem of showData.answerList">
-                    {{ answerItem }}
-                </p>
+            <div class="input-box">
+                <a-textarea auto-size v-model="sendData.message" placeholder="请输入"></a-textarea>
+                <a-button class="input-btn" type="primary" @click="sendMessage">发送</a-button>
             </div>
         </div>
     </div>
@@ -20,8 +18,13 @@
 <script setup lang="ts">
 import io from 'socket.io-client';
 import { reactive, ref } from 'vue';
+import markdownit from 'markdown-it';
+import AiChatBox from './ai-chat-box.vue';
+const md = markdownit();
+
 const showData = reactive({
     socketStatus: '未连接',
+    /** 对话列表 */
     answerList: [''],
 });
 const sendData = reactive({
@@ -48,6 +51,7 @@ const connectSocket = () => {
         if (data !== 'done') {
             showData.answerList[0] += data.content;
         } else {
+            showData.answerList[0] = md.render(showData.answerList[0]);
             showData.answerList.unshift('');
         }
     });
@@ -69,11 +73,9 @@ const sendMessage = () => {
     right: 20px;
     background: var(--color-bg-2);
     padding: 20px;
-}
-.answer-box {
-    max-width: 300px;
-    max-height: 300px;
-    overflow: auto;
+
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 
 .active {
@@ -82,5 +84,13 @@ const sendMessage = () => {
 }
 .hide {
     visibility: hidden;
+}
+
+.input-box {
+    display: flex;
+    .input-btn {
+        align-self: end;
+        margin-left: 4px;
+    }
 }
 </style>
