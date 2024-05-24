@@ -10,6 +10,10 @@ defineProps<{
 </script>
 
 <template>
+    <div v-if="aiStore.state.chatHistoryList.stat.length > 2" class="reset-box">
+        <a-button @click="aiStore.resetStat">重置聊天历史</a-button>
+    </div>
+
     <div class="ai-chat-box">
         <template v-for="(answerItem, i) of aiStore.state.chatHistoryList.stat">
             <div class="answer-item">
@@ -26,7 +30,9 @@ defineProps<{
                         aiStore.state.chatHistoryList.stat.length <= 2
                     "
                 >
-                    <a-button @click="aiStore.analyzeAnswer">分析收集到的答案</a-button>
+                    <a-button :loading="aiStore.state.answerLoading" @click="aiStore.analyzeAnswer">
+                        分析收集到的答案
+                    </a-button>
                 </div>
             </div>
         </template>
@@ -43,5 +49,10 @@ defineProps<{
     .answer-item {
         margin-bottom: 20px;
     }
+}
+
+.reset-box {
+    display: flex;
+    flex-direction: row-reverse;
 }
 </style>

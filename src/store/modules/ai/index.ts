@@ -104,9 +104,9 @@ const useAiStore = defineStore('ai', () => {
     /** 分析答案数据 */
     function analyzeAnswer() {
         if (!state.socket) return;
+        state.answerLoading = true;
         const answerStat = state.question_answer_data.answerStat;
         const questionStat = state.question_answer_data.questionStat;
-        console.log(answerStat, questionStat);
 
         /** 计算各个值分别有多少个 */
         const statInfo = answerStat.map((item, i) => {
@@ -137,11 +137,25 @@ const useAiStore = defineStore('ai', () => {
         );
     }
 
+    function resetStat() {
+        state.chatHistoryList.stat = [
+            {
+                role: 'assistant',
+                content: '',
+            },
+            {
+                role: 'assistant',
+                content: '<p>你好，我是问卷系统的 AI 助手，能够帮助你分析问卷的统计答案。</p>',
+            },
+        ];
+    }
+
     return {
         state,
         connectSocket,
         appendMessage,
         analyzeAnswer,
+        resetStat,
     };
 });
 
