@@ -1,16 +1,24 @@
 <template>
     <div class="ai-box">
-        <h1>AI 助手</h1>
-        <a-button v-if="showData.socketStatus === '未连接'" :loading="connecting" @click="connectSocket">
-            点击开始聊天
-        </a-button>
-        <div v-if="showData.socketStatus === '已连接'">
-            <AiChatBox :showData="showData" />
-            <p :class="{ hide: !answerLoading }">思考中...</p>
-            <div class="input-box">
-                <a-textarea auto-size v-model="sendData.message" placeholder="请输入"></a-textarea>
-                <a-button class="input-btn" type="primary" @click="sendMessage">发送</a-button>
+        <div class="chat-box" v-show="visible">
+            <a-button v-if="showData.socketStatus === '未连接'" :loading="connecting" @click="connectSocket">
+                激活 AI 助手
+            </a-button>
+            <div v-if="showData.socketStatus === '已连接'">
+                <AiChatBox :showData="showData" />
+                <p :class="{ hide: !answerLoading }">思考中...</p>
+                <div class="input-box">
+                    <a-textarea auto-size v-model="sendData.message" placeholder="请输入"></a-textarea>
+                    <a-button class="input-btn" type="primary" @click="sendMessage">发送</a-button>
+                </div>
             </div>
+        </div>
+        <div class="chat-icon">
+            <a-button type="primary" shape="round" @click="() => (visible = !visible)">
+                <template #icon>
+                    <icon-font name="bot" />
+                </template>
+            </a-button>
         </div>
     </div>
 </template>
@@ -22,14 +30,28 @@ import markdownit from 'markdown-it';
 import AiChatBox from './ai-chat-box.vue';
 const md = markdownit();
 
-const showData = reactive({
+export interface ShowData {
+    socketStatus: '未连接' | '已连接';
+    answerList: Array<{
+        role: 'assistant' | 'user';
+        content: string;
+    }>;
+}
+
+const showData = reactive<ShowData>({
     socketStatus: '未连接',
     /** 对话列表 */
-    answerList: [''],
+    answerList: [
+        {
+            role: 'assistant',
+            content: '你好，我是问卷系统的 AI 助手，能够帮助你分析问卷的统计答案。',
+        },
+    ],
 });
 const sendData = reactive({
     message: '',
 });
+const visible = ref(false);
 const answerLoading = ref(false);
 const connecting = ref(false);
 const socketRef = ref();
@@ -49,10 +71,10 @@ const connectSocket = () => {
     socket.on('response', (data: 'done' | { content: string; role: 'assistant' }) => {
         answerLoading.value = false;
         if (data !== 'done') {
-            showData.answerList[0] += data.content;
+            showData.answerList[0].content += data.content;
         } else {
-            showData.answerList[0] = md.render(showData.answerList[0]);
-            showData.answerList.unshift('');
+            showData.answerList[0].content = md.render(showData.answerList[0].content);
+            showData.answerList.unshift({ role: 'assistant', content: '' });
         }
     });
 };
@@ -69,13 +91,23 @@ const sendMessage = () => {
 <style scoped lang="less">
 .ai-box {
     position: fixed;
-    bottom: 10px;
-    right: 20px;
-    background: var(--color-bg-2);
-    padding: 20px;
+    bottom: 0px;
+    right: 0px;
+    padding: 10px;
 
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    .chat-box {
+        background: var(--color-bg-2);
+        box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        margin-bottom: 40px;
+        width: 300px;
+        padding: 20px;
+    }
+    .chat-icon {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
 }
 
 .active {

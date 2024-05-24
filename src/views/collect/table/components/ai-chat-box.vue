@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { ShowData } from './ai-stat.vue';
+
 defineProps<{
-    showData: any;
+    showData: ShowData;
 }>();
 </script>
 
@@ -8,13 +10,13 @@ defineProps<{
     <div class="ai-chat-box">
         <template v-for="answerItem of showData.answerList">
             <div class="answer-item">
-                <a-space v-if="answerItem.trim() !== ''">
+                <a-space v-if="answerItem.content.trim() !== ''">
                     <a-avatar :style="{ backgroundColor: '#3370ff' }" :size="32">
                         <icon-font name="bot" />
                     </a-avatar>
                     <span>AI 助手</span>
                 </a-space>
-                <div v-html="answerItem"></div>
+                <div v-html="answerItem.content"></div>
             </div>
         </template>
     </div>
