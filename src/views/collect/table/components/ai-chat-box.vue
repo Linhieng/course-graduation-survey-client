@@ -35,8 +35,6 @@ defineProps<{
 
 <style scoped lang="less">
 .ai-chat-box {
-    max-width: 300px;
-    max-height: 300px;
     overflow: auto;
 
     display: flex;

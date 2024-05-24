@@ -105,7 +105,9 @@ const sendMessage = () => {
         box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
         margin-bottom: 40px;
-        width: 300px;
+        width: 500px;
+        height: 300px;
+        overflow: auto;
         padding: 20px;
     }
     .chat-icon {
