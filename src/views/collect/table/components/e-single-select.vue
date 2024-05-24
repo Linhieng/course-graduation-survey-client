@@ -1,70 +1,117 @@
 <script setup lang="ts">
 import { EChartsOption, EChartsType } from 'echarts';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 
 const props = defineProps<{
     echartData: Array<{ value: number; name: string }>;
 }>();
 
 const echartEl = ref();
-const echartObj = ref<EChartsType | undefined>();
+const echartBarEl = ref();
+const echartObj = reactive<{
+    pie: EChartsType | undefined;
+    bar: EChartsType | undefined;
+}>({
+    pie: undefined,
+    bar: undefined,
+});
+const echartType = ref<'pie' | 'bar'>('pie');
 
 onMounted(() => {
     render();
 });
 onBeforeUnmount(() => {
-    echartObj.value?.dispose();
+    echartObj.pie?.dispose();
+    echartObj.bar?.dispose();
 });
 async function render() {
     const echart = await import('echarts');
     const myChart = echart.init(echartEl.value);
-    echartObj.value = myChart;
+    const barChart = echart.init(echartBarEl.value);
+    echartObj.pie = myChart;
+    echartObj.bar = barChart;
     const option: EChartsOption = {
         tooltip: {
             trigger: 'item',
         },
         legend: {
-            left: 'right',
-            top: 'middle',
             orient: 'vertical',
+            left: 'right',
         },
         series: [
             {
                 name: 'Access From',
                 type: 'pie',
-                radius: ['40%', '70%'],
-                avoidLabelOverlap: false,
-                // 需要 echart 5.5
-                // padAngle: 10,
+                radius: [20, 100],
                 itemStyle: {
-                    borderRadius: 10,
+                    borderRadius: 4,
                 },
-                label: {
-                    show: false,
-                    position: 'center',
-                },
+                roseType: 'area',
+                data: props.echartData,
                 emphasis: {
-                    label: {
-                        show: true,
-                        fontSize: 40,
-                        fontWeight: 'bold',
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)',
                     },
                 },
-                labelLine: {
-                    show: false,
+            },
+        ],
+    };
+
+    const optionBar: EChartsOption = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999',
                 },
-                data: props.echartData,
+            },
+        },
+        toolbox: {
+            feature: {
+                magicType: { show: true, type: ['line', 'bar'] },
+                restore: { show: true },
+                saveAsImage: { show: true },
+            },
+        },
+        xAxis: {
+            type: 'category',
+            data: props.echartData.map((item) => item.name),
+            axisPointer: {
+                type: 'shadow',
+            },
+        },
+        yAxis: {
+            type: 'value',
+        },
+        series: [
+            {
+                type: 'bar',
+                data: props.echartData.map((item) => item.value),
+                tooltip: {
+                    valueFormatter: function (value) {
+                        return value + ' 个';
+                    },
+                },
             },
         ],
     };
 
     option && myChart.setOption(option);
+    optionBar && barChart.setOption(optionBar);
 }
 </script>
 
 <template>
     <!-- <a-button @click="echartObj?.resize()">刷新</a-button> -->
-    <div class="echart-box" ref="echartEl"></div>
+    <a-radio-group type="button" v-model="echartType">
+        <a-radio value="pie">饼图</a-radio>
+        <a-radio value="bar">柱状图</a-radio>
+    </a-radio-group>
+    <div v-show="echartType === 'pie'" class="echart-box" ref="echartEl"></div>
+    <div v-show="echartType === 'bar'" class="echart-box" ref="echartBarEl"></div>
 </template>
 
 <style>
