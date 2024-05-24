@@ -4,6 +4,7 @@ import { QuestionItem } from '@/store/modules/create/types';
 import { ref } from 'vue';
 import AnswerStat from './answer-stat.vue';
 import { CollectAnswer } from '@/store/modules/collect/types';
+import { useAiStore } from '@/store';
 
 const props = defineProps({
     surveyId: {
@@ -12,6 +13,7 @@ const props = defineProps({
     },
 });
 
+const aiStore = useAiStore();
 const loading = ref(false);
 const getOk = ref(false);
 
@@ -27,6 +29,9 @@ const stat = async () => {
     if (res.ok) {
         getOk.value = true;
         generateData(res.data);
+        aiStore.state.showIcon = true;
+        aiStore.state.questionList = res.data.surveyData.structure_json.questionList;
+        aiStore.state.answerList = res.data.answerList;
     }
     loading.value = false;
 };

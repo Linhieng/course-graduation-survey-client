@@ -1,5 +1,5 @@
 <template>
-    <div class="ai-box">
+    <div class="ai-box" v-show="aiStore.state.showIcon">
         <div class="chat-box" v-show="visible">
             <a-button v-if="showData.socketStatus === '未连接'" :loading="connecting" @click="connectSocket">
                 激活 AI 助手
@@ -8,8 +8,8 @@
                 <AiChatBox :showData="showData" />
                 <p :class="{ hide: !answerLoading }">思考中...</p>
                 <div class="input-box">
-                    <a-textarea auto-size v-model="sendData.message" placeholder="请输入"></a-textarea>
-                    <a-button class="input-btn" type="primary" @click="sendMessage">发送</a-button>
+                    <!-- <a-textarea auto-size v-model="sendData.message" placeholder="请输入"></a-textarea>
+                    <a-button class="input-btn" type="primary" @click="sendMessage">发送</a-button> -->
                 </div>
             </div>
         </div>
@@ -28,7 +28,10 @@ import io from 'socket.io-client';
 import { reactive, ref } from 'vue';
 import markdownit from 'markdown-it';
 import AiChatBox from './ai-chat-box.vue';
+import { useAiStore } from '@/store';
 const md = markdownit();
+
+const aiStore = useAiStore();
 
 export interface ShowData {
     socketStatus: '未连接' | '已连接';
@@ -57,6 +60,8 @@ const connecting = ref(false);
 const socketRef = ref();
 
 const connectSocket = () => {
+    aiStore.connectSocket();
+
     connecting.value = true;
     const socket = io('http://localhost:3002');
     socketRef.value = socket;
