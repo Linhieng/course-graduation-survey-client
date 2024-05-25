@@ -16,7 +16,7 @@ defineProps<{
                 <a-tag :color="questionTypeMappingColor[q.type]">{{ questionTypeMappingText[q.type] }}</a-tag>
                 <h2 style="margin: 0">{{ q.title }}</h2>
             </a-space>
-            <a-space>
+            <a-space v-if="q.type !== 'desc'">
                 <p style="margin-left: 2rem">用户回答：</p>
                 <template v-if="q.type === 'single_text' || q.type === 'multi_text'">
                     <p>{{ answerList[i].text }}</p>
