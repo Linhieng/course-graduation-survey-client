@@ -10,7 +10,7 @@ const createStore = useCreateStore();
 const appStore = useAppStore();
 const visibleEditSkin = ref(false);
 const visibleConfig = ref(false);
-let cacheTimer: number | undefined;
+let cacheTimer: NodeJS.Timer | undefined;
 const toggleFocusMode = () => {
     if (appStore.focusMode) {
         appStore.focusMode = false;

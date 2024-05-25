@@ -27,6 +27,7 @@ const handleSubmit = () => {
                 <a-textarea
                     style="width: 100%"
                     placeholder="输入问卷的标题"
+                    :auto-size="{ minRows: 3 }"
                     v-model="createStore.$state.survey.title"
                 ></a-textarea>
             </a-form-item>
@@ -38,6 +39,7 @@ const handleSubmit = () => {
                 <a-textarea
                     style="width: 100%"
                     placeholder="输入问卷的描述信息"
+                    :auto-size="{ minRows: 3 }"
                     v-model="createStore.$state.survey.comment"
                 ></a-textarea>
             </a-form-item>
