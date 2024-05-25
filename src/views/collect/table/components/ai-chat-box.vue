@@ -16,8 +16,8 @@ defineProps<{
 
     <div class="ai-chat-box">
         <template v-for="(answerItem, i) of aiStore.state.chatHistoryList.stat">
-            <div class="answer-item">
-                <a-space v-if="answerItem.content.trim() !== ''">
+            <div class="answer-item" v-if="answerItem.content.trim() !== ''">
+                <a-space>
                     <a-avatar :style="{ backgroundColor: '#3370ff' }" :size="32">
                         <icon-font name="bot" />
                     </a-avatar>
@@ -54,5 +54,16 @@ defineProps<{
 .reset-box {
     display: flex;
     flex-direction: row-reverse;
+}
+</style>
+<style lang="less">
+.ai-chat-box {
+    p,
+    li {
+        line-height: 1.4rem;
+    }
+    li {
+        margin: 4px;
+    }
 }
 </style>

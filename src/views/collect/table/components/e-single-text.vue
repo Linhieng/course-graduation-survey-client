@@ -4,6 +4,7 @@ import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
 // @ts-ignore
 import { Segment, useDefault } from 'segmentit';
 
+const showType = ref<'cloud' | 'raw'>('cloud');
 const segmentit = useDefault(new Segment());
 
 const props = defineProps<{
@@ -95,11 +96,17 @@ async function render() {
 }
 </script>
 <template>
-    <!-- <div class="wrap">
-        <a-tag style="margin: 10px" size="large" v-for="val of echartData">{{ val }}</a-tag>
-    </div> -->
-    <div class="echart-box">
-        <div class="echart-el" ref="echartEl"></div>
+    <div>
+        <a-radio-group class="margin-t margin-b" type="button" v-model="showType">
+            <a-radio value="cloud">词云</a-radio>
+            <a-radio value="raw">所有数据</a-radio>
+        </a-radio-group>
+        <div class="wrap" v-show="showType === 'raw'">
+            <a-tag style="margin: 10px" size="large" v-for="val of echartData">{{ val }}</a-tag>
+        </div>
+        <div class="echart-box" v-show="showType === 'cloud'">
+            <div class="echart-el" ref="echartEl"></div>
+        </div>
     </div>
 </template>
 
@@ -108,7 +115,14 @@ async function render() {
     width: 100%;
     background-color: #fff;
 }
+.margin-t {
+    margin-top: 10px;
+}
+.margin-b {
+    margin-bottom: 10px;
+}
 .echart-box {
+    padding-left: 200px;
     .echart-el {
         width: 300px;
         height: 300px;
