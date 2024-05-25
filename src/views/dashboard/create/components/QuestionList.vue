@@ -5,7 +5,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useCreateStore } from '@/store';
 import { QuestionItem } from '@/store/modules/create/types';
 import AddQuestion from './AddQuestion.vue';
-import { questionTypeMappingText } from '@/store/modules/create/utils';
+import { questionTypeMappingText, questionTypeMappingColor } from '@/store/modules/create/utils';
 import AssignQuestionEdit from './assign-question-edit.vue';
 const dragging = ref(false);
 const createStore = useCreateStore();
@@ -99,7 +99,9 @@ const addBtnOrder = computed(() => {
                 <icon-font style="width: 26px; height: 26px" name="hand" />
             </div>
             <a-space class="li-top-title">
-                <p>{{ $t(questionTypeMappingText[question.type]) }}</p>
+                <a-tag :color="questionTypeMappingColor[question.type]">
+                    {{ questionTypeMappingText[question.type] }}
+                </a-tag>
             </a-space>
             <a-space class="li-top-util hide-item">
                 <a-space size="mini" v-if="question.type !== 'desc'">

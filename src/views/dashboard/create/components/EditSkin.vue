@@ -47,9 +47,16 @@ const uploadSuccess = (fileItem: FileItem) => {
                         :headers="{
                             Authorization: `Bearer ${getToken()}`,
                         }"
+                        :show-remove-button="false"
                     />
                 </a-space>
-                <a-button type="dashed" @click="useCreateStore().resetBgUrl()">取消背景图片</a-button>
+                <a-button
+                    v-if="createStore.$state.skin.background_image"
+                    type="dashed"
+                    @click="useCreateStore().resetBgUrl()"
+                >
+                    取消背景图片
+                </a-button>
             </a-space>
             <a-space direction="vertical">
                 <span>{{ $t('图片填充模式：') }}</span>
