@@ -89,12 +89,11 @@ async function changePage(current: number) {
                         </div>
                         <a-space direction="vertical" fill class="item-content acrylic">
                             <a-space>
-                                <a-image
-                                    width="40"
-                                    height="40"
-                                    style="border-radius: 50%"
-                                    :src="avatarArr[item.creator_id as number]"
-                                />
+                                <a-avatar
+                                    :image-url="avatarArr[item.creator_id as number]"
+                                    object-fit="cover"
+                                    style="width: 30px; height: 30px"
+                                ></a-avatar>
                                 <p>{{ item.title }}</p>
                             </a-space>
                             <div class="flex-center">
