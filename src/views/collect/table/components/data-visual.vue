@@ -51,9 +51,9 @@ const { chartOption: chartOption1 } = useChartOption((isDark) => {
     // It's not used here
     return {
         legend: {
-            left: 'center',
+            orient: 'vertical',
+            left: 'right',
             data: ['Edge', '谷歌', '火狐', '其他'],
-            bottom: 0,
             icon: 'circle',
             itemWidth: 8,
             textStyle: {
@@ -85,7 +85,7 @@ const { chartOption: chartOption1 } = useChartOption((isDark) => {
         series: [
             {
                 type: 'pie',
-                radius: ['50%', '70%'],
+                radius: ['50%', '80%'],
                 center: ['50%', '50%'],
                 label: {
                     formatter: '{d}%',
@@ -135,9 +135,9 @@ const { chartOption: chartOption2 } = useChartOption((isDark) => {
     // It's not used here
     return {
         legend: {
-            left: 'center',
+            orient: 'vertical',
+            left: 'right',
             data: ['Windows', 'Android', '苹果', 'linux', '其他'],
-            bottom: 0,
             icon: 'circle',
             itemWidth: 8,
             textStyle: {
@@ -169,7 +169,7 @@ const { chartOption: chartOption2 } = useChartOption((isDark) => {
         series: [
             {
                 type: 'pie',
-                radius: ['50%', '70%'],
+                radius: ['50%', '80%'],
                 center: ['50%', '50%'],
                 label: {
                     formatter: '{d}%',
@@ -226,9 +226,9 @@ const { chartOption: chartOption3 } = useChartOption((isDark) => {
     // It's not used here
     return {
         legend: {
-            left: 'center',
+            orient: 'vertical',
+            left: 'right',
             data: ['有效', '无效'],
-            bottom: 0,
             icon: 'circle',
             itemWidth: 8,
             textStyle: {
@@ -260,7 +260,7 @@ const { chartOption: chartOption3 } = useChartOption((isDark) => {
         series: [
             {
                 type: 'pie',
-                radius: ['50%', '70%'],
+                radius: ['50%', '80%'],
                 center: ['50%', '50%'],
                 label: {
                     formatter: '{d}%',
