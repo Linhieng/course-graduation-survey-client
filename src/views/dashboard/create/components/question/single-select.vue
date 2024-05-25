@@ -1,11 +1,35 @@
 <script setup lang="ts">
 import { QuestionItem } from '@/store/modules/create/types';
 import { useCreateStore } from '@/store';
+import { ref } from 'vue';
+import { uniqueId } from 'lodash';
 const createStore = useCreateStore();
-defineProps<{
+const props = defineProps<{
     question: QuestionItem;
     questionIndex: number;
 }>();
+
+const batchOptionsStr = ref('');
+const visible = ref(false);
+
+const handleOk = () => {
+    const options = batchOptionsStr.value.split(/\r?\n/).map((text, index) => {
+        return {
+            id: uniqueId(),
+            text,
+            url: '',
+            index,
+        };
+    });
+    createStore.survey.questionList[props.questionIndex].options = options;
+};
+
+const updateBatchOptionsStr = () => {
+    batchOptionsStr.value = createStore.survey.questionList[props.questionIndex].options
+        .map((item) => item.text)
+        .join('\n');
+    visible.value = true;
+};
 </script>
 
 <template>
@@ -64,6 +88,13 @@ defineProps<{
                 </a-space>
             </div>
         </template>
+        <div class="flex-right">
+            <a-button @click="updateBatchOptionsStr">批量编辑</a-button>
+
+            <a-modal v-model:visible="visible" @ok="handleOk" hide-title width="300px">
+                <a-textarea auto-size v-model="batchOptionsStr"></a-textarea>
+            </a-modal>
+        </div>
     </a-space>
 </template>
 
@@ -107,5 +138,10 @@ defineProps<{
     &:hover .hide {
         visibility: visible;
     }
+}
+
+.flex-right {
+    display: flex;
+    flex-direction: row-reverse;
 }
 </style>
