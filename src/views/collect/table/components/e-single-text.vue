@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { EChartsType } from 'echarts';
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue';
+// @ts-ignore
+import { Segment, useDefault } from 'segmentit';
+
+const segmentit = useDefault(new Segment());
 
 const props = defineProps<{
     echartData: string[];
@@ -26,9 +30,12 @@ async function render() {
     const myChart = echart.init(echartEl.value);
     echartObj.wordCloud = myChart;
 
+    const result = segmentit.doSegment(props.echartData.join(' ')).map((item: { w: string }) => {
+        const res = item.w.replace(/[`（），。？！；：、“”‘’【】[~!@#$%^&*()-=+{\]}\\|;:'",.<>\/?]/g, ' ');
+        return res;
+    }) as string[];
     const counts = new Map() as Map<string, number>;
-    props.echartData.forEach((item) => {
-        if (!isNaN(Number(item))) item += '.';
+    result.forEach((item) => {
         counts.set(item, (counts.get(item) || 0) + 1);
     });
 
@@ -41,7 +48,6 @@ async function render() {
         },
         { value: 1 },
     );
-    console.log(keywords);
 
     var option = {
         series: [
@@ -56,24 +62,28 @@ async function render() {
                 width: '100%',
                 height: '100%',
                 textStyle: {
-                    normal: {
-                        color: function () {
-                            return (
-                                'rgb(' +
-                                [
-                                    Math.round(Math.random() * 160),
-                                    Math.round(Math.random() * 160),
-                                    Math.round(Math.random() * 160),
-                                ].join(',') +
-                                ')'
-                            );
-                        },
-                        fontFamily: 'sans-serif',
-                        fontWeight: 'normal',
+                    fontFamily: 'sans-serif',
+                    fontWeight: 'bold',
+                    // Color can be a callback function or a color string
+                    color: function () {
+                        // Random color
+                        return (
+                            'rgb(' +
+                            [
+                                Math.round(Math.random() * 160),
+                                Math.round(Math.random() * 160),
+                                Math.round(Math.random() * 160),
+                            ].join(',') +
+                            ')'
+                        );
                     },
-                    emphasis: {
-                        shadowBlur: 10,
-                        shadowColor: '#333',
+                },
+                emphasis: {
+                    focus: 'self',
+
+                    textStyle: {
+                        textShadowBlur: 3,
+                        textShadowColor: '#333',
                     },
                 },
                 data: keywords,

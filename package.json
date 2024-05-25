@@ -28,6 +28,7 @@
         "nprogress": "^0.2.0",
         "pinia": "^2.0.23",
         "query-string": "^8.0.3",
+        "segmentit": "^2.0.3",
         "socket.io-client": "^4.7.5",
         "sortablejs": "^1.15.0",
         "ua-parser-js": "^1.0.37",
