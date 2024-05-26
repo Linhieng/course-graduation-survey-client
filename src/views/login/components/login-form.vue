@@ -1,8 +1,8 @@
 <template>
     <div class="login-form-wrapper">
-        <div class="login-form-title">{{ $t('欢迎使用问卷系统') }}</div>
-        <div class="login-form-sub-title">{{ $t('请先登录') }}</div>
-        <div class="login-form-error-msg">{{ errorMessage }}</div>
+        <div class="max-content login-form-title">{{ $t('欢迎使用问卷系统') }}</div>
+        <div class="max-content login-form-sub-title">{{ $t('请先登录') }}</div>
+        <div class="max-content login-form-error-msg">{{ errorMessage }}</div>
         <a-form ref="loginForm" :model="userInfo" class="login-form" layout="vertical" @submit="handleSubmit">
             <a-form-item
                 field="username"
@@ -33,9 +33,9 @@
                     <a-checkbox
                         checked="rememberPassword"
                         :model-value="loginConfig.rememberPassword"
-                        @change="setRememberPassword as any"
+                        @change="setRememberPassword"
                     >
-                        {{ $t('记住账号和密码') }}
+                        <span style="display: inline-block; width: max-content">{{ $t('记住账号和密码') }}</span>
                     </a-checkbox>
                 </div>
                 <a-button type="primary" html-type="submit" long :loading="loading">
@@ -128,7 +128,7 @@ const handleSubmit = async ({
         }
     }
 };
-const setRememberPassword = (value: boolean) => {
+const setRememberPassword: any = (value: boolean) => {
     loginConfig.value.rememberPassword = value;
 };
 
@@ -169,5 +169,9 @@ const registerVisible = ref(false);
     &-register-btn {
         color: var(--color-text-3) !important;
     }
+}
+
+.max-content {
+    width: max-content;
 }
 </style>

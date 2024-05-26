@@ -40,8 +40,8 @@ const carouselItem = computed(() => [
         image: imgLogin3,
     },
     {
-        slogan: t('login.banner.slogan3'),
-        subSlogan: t('login.banner.subSlogan3'),
+        slogan: t('login.banner.slogan4'),
+        subSlogan: t('login.banner.subSlogan4'),
         image: imgLogin4,
     },
 ]);
@@ -78,7 +78,8 @@ const carouselItem = computed(() => [
     }
 
     &-sub-title {
-        margin-top: 8px;
+        margin: 8px 3rem;
+        text-align: center;
         color: var(--color-text-3);
         font-size: 14px;
         line-height: 22px;

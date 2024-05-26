@@ -1,15 +1,26 @@
 <template>
     <div class="container">
         <div class="content">
+            <header class="header">
+                <div class="header-text">{{ $t('问卷系统') }}</div>
+                <div class="toggle-language">
+                    <a-radio-group
+                        :default-value="currentLocale"
+                        @change="(v) => changeLocale(v as 'zh-CN' | 'en-US')"
+                        type="button"
+                        size="mini"
+                    >
+                        <a-radio value="zh-CN">中文</a-radio>
+                        <a-radio value="en-US">English</a-radio>
+                    </a-radio-group>
+                </div>
+            </header>
             <div class="content-inner">
                 <LoginForm />
             </div>
             <div class="footer">
                 <Footer />
             </div>
-        </div>
-        <div class="logo">
-            <div class="logo-text">{{ $t('问卷系统') }}</div>
         </div>
         <LoginBanner />
     </div>
@@ -19,6 +30,9 @@
 import Footer from '@/components/footer/index.vue';
 import LoginBanner from './components/banner.vue';
 import LoginForm from './components/login-form.vue';
+import useLocale from '@/hooks/locale';
+
+const { changeLocale, currentLocale } = useLocale();
 </script>
 
 <style lang="scss" scoped>
@@ -49,19 +63,19 @@ import LoginForm from './components/login-form.vue';
     }
 }
 
-.logo {
-    position: fixed;
-    top: 24px;
-    left: 22px;
-    z-index: 1;
-    display: inline-flex;
+.header {
+    position: absolute;
+    top: 12px;
+
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 0 24px;
 
     &-text {
-        margin-right: 4px;
-        margin-left: 4px;
         color: black;
-
         font-size: 20px;
     }
 }

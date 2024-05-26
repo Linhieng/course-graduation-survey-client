@@ -15,6 +15,16 @@ export default {
     '点击注册': 'Click to register',
     '欢迎注册问卷系统账号': 'Welcome to register the questionnaire system account',
     '请填写下面信息': 'Please fill in the information below',
+  
+    
+    'login.banner.slogan1': 'Easy to use',
+    'login.banner.subSlogan1': 'Simple interface, one-click questionnaire generation, so that even first-time users can quickly learn to design.',
+    'login.banner.slogan2': 'Internationalization support',
+    'login.banner.subSlogan2': 'Global multi-language seamless switching, to meet cross-regional research needs, accessible global data collection.',
+    'login.banner.slogan3': 'Data analysis',
+    'login.banner.subSlogan3': 'Real-time visual charts and in-depth statistical analysis give you quick insight into the value and trends behind your data.',
+    'login.banner.slogan4': 'Page beauty',
+    'login.banner.subSlogan4': 'Refined and responsive survey design ensures a quality experience for respondents while improving survey completion rates.',
     
   'login.form.title': 'Login to Arco Design Pro',
   'login.form.userName.errMsg': 'Username cannot be empty',
@@ -27,12 +37,4 @@ export default {
   'login.form.forgetPassword': 'Forgot password',
   'login.form.login': 'login',
   'login.form.register': 'register account',
-  'login.banner.slogan1': 'Out-of-the-box high-quality template',
-  'login.banner.subSlogan1':
-    'Rich page templates, covering most typical business scenarios',
-  'login.banner.slogan2': 'Built-in solutions to common problems',
-  'login.banner.subSlogan2':
-    'Internationalization, routing configuration, state management everything',
-  'login.banner.slogan3': 'Access visualization enhancement tool AUX',
-  'login.banner.subSlogan3': 'Realize flexible block development',
 };
