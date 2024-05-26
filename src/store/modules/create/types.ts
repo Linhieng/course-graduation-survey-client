@@ -48,6 +48,19 @@ export interface QuestionItem {
     desc: string;
     /** 通用选项，包括单选项、多选项、图片选项等等 */
     options: Array<QuestionOption>;
+    /** 矩阵类型问题的子标题数组 */
+    titles: Array<QuestionTitlesItem>;
+}
+/** 类型为矩阵问题中的单项问题标题 */
+export interface QuestionTitlesItem {
+    /**
+     * index 真的有必要吗？ id 能否使用 index 代替 ?。但类型肯定要使用对象，方便后续扩展
+     * 添加 index 有什么好处？我能想到的是，当我只有这个对象时，我能够知道这个标题是第几个。
+     * 但实际项目时，似乎 item 总是作为数组中的一个元素使用的，这个时候 index 没有什么价值
+     * 具体情况还有待商榷。
+     */
+    id: string;
+    text: string;
 }
 /** 一个选项 */
 export interface QuestionOption {

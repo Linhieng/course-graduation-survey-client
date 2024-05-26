@@ -8,6 +8,7 @@ import { msgError, msgSuccess, msgWarning, noticeInfo } from '@/utils/msg';
 import { getShareSurveyTemplate, getSurveyById, cacheSurvey as reqCacheSurvey } from '@/api/survey';
 import { updateAndPublishSurvey } from '@/api/survey';
 import router from '@/router';
+import { uniqueId } from 'lodash';
 
 const useCreateStore = defineStore('create', {
     state: (): CreateState => ({
@@ -197,6 +198,21 @@ const useCreateStore = defineStore('create', {
                     option.index = i;
                 });
             }
+        },
+        /** 矩阵问题类型中，添加一个标题 */
+        addTitleItem(questionIndex: number, titleIndex: number, type: QuestionType) {
+            this.survey.questionList[questionIndex].titles.splice(titleIndex + 1, 0, {
+                id: uniqueId(),
+                text: '未定义标题',
+            });
+        },
+        /** 矩阵问题类型中，删除一个标题 */
+        removeTitleItem(questionIndex: number, titleIndex: number) {
+            if (this.survey.questionList[questionIndex].titles.length < 2) {
+                msgWarning('至少需要一个标题');
+                return;
+            }
+            this.survey.questionList[questionIndex].titles.splice(titleIndex, 1);
         },
 
         /** 删除一个问题 */

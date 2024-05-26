@@ -1,6 +1,8 @@
+import { uniqueId } from 'lodash';
 import { QuestionItem, QuestionOption, QuestionType } from './types';
 import { v4 as idv4 } from 'uuid';
 
+/** TODO: 这里只设置了 tag 的背景色，没有字体颜色，某些颜色可能导致看不清 */
 export const questionTypeMappingColor: {
     [key in QuestionType]: string;
 } = {
@@ -15,8 +17,8 @@ export const questionTypeMappingColor: {
     score: '#AB47BC', // 紫罗兰 - 浅紫罗兰
     NPS: '#CDDC39', // 黄绿色 - 柠檬冰茶
     matrix_single_select: '#8BC34A', // 绿色 - 深浅绿
-    matrix_multi_select: '#FFEB3B', // 黄色 - 淡黄色
-    matrix_NPS: '#FF9800', // 橙色 - 深橙
+    matrix_NPS: '#FFEB3B', // 黄色 - 淡黄色
+    matrix_multi_select: '#FF9800', // 橙色 - 深橙
     matrix_scope: '#795548', // 棕色 - 石板灰
     auto_text: '#9E9E9E', // 灰色 - 中度灰色
     input_text: '#607D8B', // 靛蓝灰 - 深靛蓝灰
@@ -83,6 +85,7 @@ export function getNewQuestion(type: QuestionType): QuestionItem {
                 index: 0,
             },
         ],
+        titles: [{ id: uniqueId(), text: '未定义问题标题' }],
     };
 
     return q;
