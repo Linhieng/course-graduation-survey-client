@@ -15,7 +15,8 @@
             </a-space>
         </div>
         <div class="center-side">
-            <Menu v-if="topMenu" />
+            <!-- LAYOUT: 当开启 topMenu 时，菜单会显示在顶部的中间 -->
+            <Menu v-show="topMenu" />
         </div>
         <ul class="right-side">
             <li>

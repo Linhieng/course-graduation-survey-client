@@ -1,6 +1,7 @@
 <template>
     <router-view v-slot="{ Component, route }">
         <transition name="fade" mode="out-in" appear>
+            <!-- LAYOUT: 控制是否缓存页面数据，也就是 state 不会清空。 -->
             <component :is="Component" v-if="route.meta.ignoreCache" :key="route.fullPath" />
             <keep-alive v-else :include="cacheList">
                 <component :is="Component" :key="route.fullPath" />

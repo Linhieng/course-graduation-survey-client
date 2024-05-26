@@ -2,12 +2,27 @@ import { defineStore } from 'pinia';
 import { Notification } from '@arco-design/web-vue';
 import type { NotificationReturn } from '@arco-design/web-vue/es/notification/interface';
 import type { RouteRecordNormalized } from 'vue-router';
-import defaultSettings from '@/config/settings.json';
 import { getMenuList } from '@/api/user';
-import type { AppState } from './types';
+import type { AppState, DeviceType } from './types';
 
 const useAppStore = defineStore('app', {
-    state: (): AppState => ({ ...defaultSettings }),
+    state: (): AppState => ({
+        theme: 'light',
+        colorWeak: false,
+        navbar: true,
+        menu: true,
+        topMenu: false,
+        hideMenu: false,
+        menuCollapse: false,
+        footer: true,
+        themeColor: '#165DFF',
+        menuWidth: 220,
+        globalSettings: false,
+        device: 'desktop',
+        tabBar: false,
+        menuFromServer: false,
+        serverMenu: [],
+    }),
 
     getters: {
         appCurrentSetting(state: AppState): AppState {
@@ -38,7 +53,7 @@ const useAppStore = defineStore('app', {
                 document.body.removeAttribute('arco-theme');
             }
         },
-        toggleDevice(device: string) {
+        toggleDevice(device: DeviceType) {
             this.device = device;
         },
         toggleMenu(value: boolean) {

@@ -1,13 +1,15 @@
 <template>
     <a-layout class="layout" :class="{ mobile: appStore.hideMenu }">
-        <div v-if="navbar" class="layout-navbar">
+        <!-- LAYOUT: 控制是否显示页面的顶部 -->
+        <div v-show="navbar" class="layout-navbar">
             <NavBar />
         </div>
         <a-layout>
+            <!-- TODO: 这里为什么要有两个 layout ? -->
             <a-layout>
+                <!-- LAYOUT: 控制侧边栏是否显示在左侧 -->
                 <a-layout-sider
-                    v-if="renderMenu"
-                    v-show="!hideMenu"
+                    v-show="renderMenu && !hideMenu"
                     class="layout-sider"
                     breakpoint="xl"
                     :collapsed="collapsed"
@@ -21,8 +23,8 @@
                         <Menu />
                     </div>
                 </a-layout-sider>
+                <!-- LAYOUT: 当页面宽度不够时，侧边栏将放在抽屉中。这里删掉了 v-if="hideMenu" -->
                 <a-drawer
-                    v-if="hideMenu"
                     :visible="drawerVisible"
                     placement="left"
                     :footer="false"
@@ -33,11 +35,14 @@
                     <Menu />
                 </a-drawer>
                 <a-layout class="layout-content" :style="paddingStyle">
-                    <TabBar v-if="appStore.tabBar" />
+                    <!-- LAYOUT: 控制是否显示标签页 -->
+                    <TabBar v-show="appStore.tabBar" />
+                    <!-- LAYOUT: 页面的主体内容 -->
                     <a-layout-content>
                         <PageLayout />
                     </a-layout-content>
-                    <Footer v-if="footer" />
+                    <!-- LAYOUT: 控制是否显示底部 -->
+                    <Footer v-show="footer" />
                 </a-layout>
             </a-layout>
         </a-layout>

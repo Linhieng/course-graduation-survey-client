@@ -12,13 +12,14 @@
         :visible="visible"
         :cancel-text="$t('settings.close')"
         :ok-text="$t('settings.copySettings')"
+        :footer="false"
         @ok="copySettings"
         @cancel="cancel"
     >
         <template #title>{{ $t('settings.title') }}</template>
         <Block :options="contentOpts" :title="$t('settings.content')" />
         <Block :options="othersOpts" :title="$t('settings.otherSettings')" />
-        <a-alert>{{ $t('settings.alertContent') }}</a-alert>
+        <!-- <a-alert>{{ $t('settings.alertContent') }}</a-alert> -->
     </a-drawer>
 </template>
 
@@ -50,11 +51,11 @@ const contentOpts = computed(() => [
     },
     { name: 'settings.footer', key: 'footer', defaultVal: appStore.footer },
     { name: 'settings.tabBar', key: 'tabBar', defaultVal: appStore.tabBar },
-    {
-        name: 'settings.menuFromServer',
-        key: 'menuFromServer',
-        defaultVal: appStore.menuFromServer,
-    },
+    // {
+    //     name: 'settings.menuFromServer',
+    //     key: 'menuFromServer',
+    //     defaultVal: appStore.menuFromServer,
+    // },
     {
         name: 'settings.menuWidth',
         key: 'menuWidth',
