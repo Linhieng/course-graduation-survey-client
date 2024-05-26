@@ -1,13 +1,5 @@
 <template>
     <div class="container">
-        <div class="logo">
-            <img
-                alt="logo"
-                src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/dfdba5317c0c20ce20e64fac803d52bc.svg~tplv-49unhts6dw-image.image"
-            />
-            <div class="logo-text">Arco Design Pro</div>
-        </div>
-        <LoginBanner />
         <div class="content">
             <div class="content-inner">
                 <LoginForm />
@@ -16,6 +8,10 @@
                 <Footer />
             </div>
         </div>
+        <div class="logo">
+            <div class="logo-text">{{ $t('问卷系统') }}</div>
+        </div>
+        <LoginBanner />
     </div>
 </template>
 
@@ -42,6 +38,7 @@ import LoginForm from './components/login-form.vue';
         align-items: center;
         justify-content: center;
         padding-bottom: 40px;
+        background: linear-gradient(to bottom, #aadeee, white);
     }
 
     .footer {
@@ -63,7 +60,8 @@ import LoginForm from './components/login-form.vue';
     &-text {
         margin-right: 4px;
         margin-left: 4px;
-        color: var(--color-fill-1);
+        color: black;
+
         font-size: 20px;
     }
 }

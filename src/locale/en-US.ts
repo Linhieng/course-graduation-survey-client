@@ -1,3 +1,5 @@
+import apiInfo from '@/api/locale/en-US'
+// 
 import localeMessageBox from '@/components/message-box/locale/en-US';
 import localeLogin from '@/views/login/locale/en-US';
 
@@ -14,6 +16,10 @@ import localeUserSetting from '@/views/user/setting/locale/en-US';
 import localeSettings from './en-US/settings';
 
 export default {
+    '': '',
+    ' ': '',
+    ...apiInfo,
+    
   'menu.dashboard': 'Dashboard',
   'menu.server.dashboard': 'Dashboard-Server',
   'menu.server.workplace': 'Workplace-Server',

@@ -1,10 +1,17 @@
 import { defineStore } from 'pinia';
-import { login as userLogin, logout as userLogout, getUserInfo } from '@/api/user';
-import type { LoginData } from '@/api/user';
+import {
+    login as userLogin,
+    logout as userLogout,
+    getUserInfo,
+    updateUserInfo as apiUpdateUserInfo,
+    type LoginData,
+    type UserInfoCanModified,
+} from '@/api/user';
 import { setToken, clearToken } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
 import type { UserState } from './types';
 import useAppStore from '../app';
+import { msgError, msgSuccess } from '@/utils/msg';
 
 const useUserStore = defineStore('user', {
     state: (): UserState => ({
@@ -33,6 +40,16 @@ const useUserStore = defineStore('user', {
     },
 
     actions: {
+        /** 更新用户信息 */
+        async updateUserInfo(data: Partial<UserInfoCanModified>) {
+            const res = await apiUpdateUserInfo(data);
+            if (res.ok) {
+                msgSuccess('更新成功');
+                this.info();
+            } else {
+                msgError(res.msg);
+            }
+        },
         switchRoles() {
             return new Promise((resolve) => {
                 this.role = this.role === 'user' ? 'admin' : 'user';
@@ -53,17 +70,29 @@ const useUserStore = defineStore('user', {
         async info() {
             const res = await getUserInfo();
 
+            if (!res.ok) {
+                throw new Error(res.msg);
+            }
+
             this.setInfo(res.data);
         },
 
         // Login
         async login(loginForm: LoginData) {
-            try {
-                const res = await userLogin(loginForm);
+            const res = await userLogin(loginForm);
+            if (res.ok) {
                 setToken(res.data.token);
-            } catch (err) {
+                /** 每个用户，都有对应的最近访问入口记录 */
+                const rawAllLastRouter = localStorage.getItem('all-last-router');
+                const allLastRouter = JSON.parse(rawAllLastRouter || '{}');
+                const userId = res.data.userId;
+                const lastRouter = allLastRouter[userId] || [];
+                localStorage.setItem('lastRouter', JSON.stringify(lastRouter || '[]'));
+                useAppStore().lastRouter = lastRouter;
+                return true;
+            } else {
                 clearToken();
-                throw err;
+                return false;
             }
         },
         logoutCallBack() {

@@ -1,16 +1,16 @@
 <template>
     <div class="login-form-wrapper">
-        <div class="login-form-title">{{ $t('login.form.title') }}</div>
-        <div class="login-form-sub-title">{{ $t('login.form.title') }}</div>
+        <div class="login-form-title">{{ $t('欢迎使用问卷系统') }}</div>
+        <div class="login-form-sub-title">{{ $t('请先登录') }}</div>
         <div class="login-form-error-msg">{{ errorMessage }}</div>
         <a-form ref="loginForm" :model="userInfo" class="login-form" layout="vertical" @submit="handleSubmit">
             <a-form-item
                 field="username"
-                :rules="[{ required: true, message: $t('login.form.userName.errMsg') }]"
+                :rules="[{ required: true, message: $t('用户名不能为空') }]"
                 :validate-trigger="['change', 'blur']"
                 hide-label
             >
-                <a-input v-model="userInfo.username" :placeholder="$t('login.form.userName.placeholder')">
+                <a-input v-model="userInfo.username" :placeholder="$t('请输入用户名')">
                     <template #prefix>
                         <icon-user />
                     </template>
@@ -18,15 +18,11 @@
             </a-form-item>
             <a-form-item
                 field="password"
-                :rules="[{ required: true, message: $t('login.form.password.errMsg') }]"
+                :rules="[{ required: true, message: $t('密码不能为空') }]"
                 :validate-trigger="['change', 'blur']"
                 hide-label
             >
-                <a-input-password
-                    v-model="userInfo.password"
-                    :placeholder="$t('login.form.password.placeholder')"
-                    allow-clear
-                >
+                <a-input-password v-model="userInfo.password" :placeholder="$t('请输入密码')" allow-clear>
                     <template #prefix>
                         <icon-lock />
                     </template>
@@ -39,22 +35,28 @@
                         :model-value="loginConfig.rememberPassword"
                         @change="setRememberPassword as any"
                     >
-                        {{ $t('login.form.rememberPassword') }}
+                        {{ $t('记住账号和密码') }}
                     </a-checkbox>
-                    <a-link>{{ $t('login.form.forgetPassword') }}</a-link>
                 </div>
                 <a-button type="primary" html-type="submit" long :loading="loading">
-                    {{ $t('login.form.login') }}
+                    {{ $t('点击登录') }}
                 </a-button>
-                <a-button type="text" long class="login-form-register-btn">
-                    {{ $t('login.form.register') }}
+                <a-button type="text" long class="login-form-register-btn" @click="registerVisible = true">
+                    {{ $t('还没账号？请先注册') }}
                 </a-button>
             </a-space>
         </a-form>
     </div>
+    <a-modal v-model:visible="registerVisible" draggable ok-text="已注册" cancel-text="取消">
+        <template #title>注册账户</template>
+        <div>
+            <signup-form></signup-form>
+        </div>
+    </a-modal>
 </template>
 
 <script lang="ts" setup>
+import SignupForm from './signup-form.vue';
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { Message } from '@arco-design/web-vue';
@@ -64,6 +66,7 @@ import { useStorage } from '@vueuse/core';
 import { useUserStore } from '@/store';
 import useLoading from '@/hooks/loading';
 import type { LoginData } from '@/api/user';
+import { msgSuccess } from '@/utils/msg';
 
 const router = useRouter();
 const { t } = useI18n();
@@ -91,32 +94,46 @@ const handleSubmit = async ({
     if (loading.value) return;
     if (!errors) {
         setLoading(true);
-        try {
-            await userStore.login(values as LoginData);
-            const { redirect, ...othersQuery } = router.currentRoute.value.query;
+        const ok = await userStore.login(values as LoginData);
+        setLoading(false);
+
+        if (ok) {
+            let { redirect, ...othersQuery } = router.currentRoute.value.query;
+            // 这里没有传递 survey id 时，vue-router 直接不允许跳转，导致卡死在登录界面
+            // 除非修正状态栏的值。但用户可不懂这些。
+            if (redirect === 'collect-table') {
+                redirect = 'collect-entry';
+            } else if (redirect === 'login') {
+                // 解决登录后依旧停留在登录界面的问题
+                redirect = 'Workplace';
+            } else if (redirect === 'Create') {
+                redirect = 'Workplace';
+            } else if (!redirect || redirect.length === 0) {
+                redirect = 'Workplace';
+            }
+            const nextName = redirect as string;
             router.push({
-                name: (redirect as string) || 'Workplace',
+                name: nextName,
                 query: {
                     ...othersQuery,
                 },
             });
-            Message.success(t('login.form.login.success'));
+            msgSuccess('login.form.login.success');
             const { rememberPassword } = loginConfig.value;
             const { username, password } = values;
             // 实际生产环境需要进行加密存储。
             // The actual production environment requires encrypted storage.
             loginConfig.value.username = rememberPassword ? username : '';
             loginConfig.value.password = rememberPassword ? password : '';
-        } catch (err) {
-            errorMessage.value = (err as Error).message;
-        } finally {
-            setLoading(false);
         }
     }
 };
 const setRememberPassword = (value: boolean) => {
     loginConfig.value.rememberPassword = value;
 };
+
+//
+const registerVisible = ref(false);
 </script>
 
 <style lang="scss" scoped>
