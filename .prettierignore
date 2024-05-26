@@ -7,3 +7,7 @@
 **/*.sh
 **/zh-CN.ts
 **/en-US.ts
+
+auto-imports.d.ts
+components.d.ts
+pnpm-lock.yaml
