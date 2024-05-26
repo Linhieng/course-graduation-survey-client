@@ -8,6 +8,8 @@ import { SearchParams } from '@/views/collect/entry/index.vue';
 import { msgError } from '@/utils/msg';
 import { getSurveyById } from '@/api/survey';
 import ExcelJS from 'exceljs';
+import { QuestionItem } from '../create/types';
+import { uniqueId } from 'lodash';
 
 const useCollectStore = defineStore('collect', () => {
     const state = reactive<CollectStore>({
@@ -123,7 +125,7 @@ const useCollectStore = defineStore('collect', () => {
             state.cur.survey.id = res.data.id;
             state.cur.survey.title = res.data.title;
             state.cur.survey.comment = res.data.comment;
-            state.cur.survey.questionList = res.data.structure_json.questionList;
+            state.cur.survey.questionList = convertQuestionList(res.data.structure_json.questionList);
         }
 
         state.loading.fetchSurveyById = false;
@@ -207,3 +209,49 @@ const useCollectStore = defineStore('collect', () => {
     };
 });
 export default useCollectStore;
+
+/**
+ * 临时抱佛脚解决方案：统计数据时，需要将矩阵单选和矩阵多选转换为单选和多选，因为答案收集部分也是这样的。
+ */
+export function convertQuestionList(data: QuestionItem[]): QuestionItem[] {
+    const res: QuestionItem[] = [];
+    data.forEach((item) => {
+        if (item.type === 'matrix_single_select' || item.type === 'matrix_multi_select') {
+            const type2 = (item.type.substring(7) as 'single_select') || 'multi_select';
+            // 标题和描述转换为 desc 问题类型
+            const desc: QuestionItem = {
+                id: uniqueId(),
+                title: item.title + '\n\n' + item.desc,
+                type: 'desc',
+                desc: '',
+                options: [],
+                titles: [],
+                order: 0,
+                required: item.required,
+            };
+            res.push(desc);
+            // 所有子问题重新转换为单选或多选
+            item.titles.forEach(({ text: title }) => {
+                const q: QuestionItem = {
+                    id: uniqueId(),
+                    title,
+                    type: type2,
+                    desc: '',
+                    options: item.options,
+                    titles: [],
+                    order: 0,
+                    required: item.required,
+                };
+                res.push(q);
+            });
+        } else {
+            res.push(item);
+        }
+    });
+
+    // 最后，需要重新生成问题的 order
+    res.forEach((item, i) => {
+        item.order = i;
+    });
+    return res;
+}

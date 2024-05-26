@@ -5,6 +5,7 @@ import { ref } from 'vue';
 import AnswerStat from './answer-stat.vue';
 import { CollectAnswer } from '@/store/modules/collect/types';
 import { useAiStore } from '@/store';
+import { convertQuestionList } from '@/store/modules/collect';
 
 const props = defineProps({
     surveyId: {
@@ -30,7 +31,7 @@ const stat = async () => {
         getOk.value = true;
         generateData(res.data);
         aiStore.state.showIcon = true;
-        aiStore.state.questionList = res.data.surveyData.structure_json.questionList;
+        aiStore.state.questionList = convertQuestionList(res.data.surveyData.structure_json.questionList);
         aiStore.state.answerList = res.data.answerList;
     }
     loading.value = false;
@@ -38,7 +39,7 @@ const stat = async () => {
 
 /** 将答案数据转换为 eChart 图表数据 */
 const generateData = (data: AnswerCollect) => {
-    questionList.value = data.surveyData.structure_json.questionList;
+    questionList.value = convertQuestionList(data.surveyData.structure_json.questionList);
     answerList.value = data.answerList;
 };
 </script>
