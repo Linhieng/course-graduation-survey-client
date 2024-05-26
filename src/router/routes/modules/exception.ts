@@ -20,6 +20,7 @@ const EXCEPTION: AppRouteRecordRaw = {
                 locale: 'menu.exception.403',
                 requiresAuth: true,
                 roles: ['admin'],
+                disabled: true,
             },
         },
         {

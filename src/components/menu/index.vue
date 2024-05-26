@@ -103,6 +103,7 @@ export default defineComponent({
                 if (!_route) return;
 
                 _route.forEach((element) => {
+                    const disabled = element?.meta?.disabled || false;
                     const title = t(element?.meta?.locale || '');
                     const iconComp = element?.meta?.icon ? resolveComponent(element.meta.icon) : null;
                     const icon = iconComp ? () => h(iconComp) : undefined;
@@ -119,7 +120,12 @@ export default defineComponent({
                                 {travel(element?.children)}
                             </a-sub-menu>
                         ) : (
-                            <a-menu-item key={element?.name} onClick={() => goto(element)} v-slots={{ icon }}>
+                            <a-menu-item
+                                key={element?.name}
+                                onClick={() => goto(element)}
+                                v-slots={{ icon }}
+                                disabled={disabled}
+                            >
                                 {menuItemContent(t(element?.meta?.locale || ''), !!element?.meta?.isExternal)}
                             </a-menu-item>
                         );
