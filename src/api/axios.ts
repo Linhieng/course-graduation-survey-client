@@ -66,6 +66,7 @@ export function interceptRequest(axios: AxiosInstance) {
             const token = getToken();
             if (token) {
                 if (!config.headers) {
+                    // @ts-ignore
                     config.headers = {};
                 }
                 config.headers.Authorization = `Bearer ${token}`;
@@ -135,9 +136,11 @@ export function interceptResponse(axios: AxiosInstance) {
                     const response = error.response;
                     // 请求成功发出且服务器也响应了状态码，但状态代码超出了 2xx 的范围
                     // 后台保证返回一个 HttpResponse 对象
+                    // @ts-ignore
                     res = response.data;
 
                     // 遇到无效的 token 时，需要重新登录！
+                    // @ts-ignore
                     if (response.status === 403 && response.data.msg === 'api.error.token-invalid') {
                         const currentRoute = router.currentRoute.value;
 

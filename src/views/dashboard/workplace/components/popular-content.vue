@@ -68,6 +68,12 @@ import useLoading from '@/hooks/loading';
 import { queryPopularList } from '@/api/dashboard';
 import type { TableData } from '@arco-design/web-vue/es/table/interface';
 
+export interface RankItem {
+    rank: number;
+    count_answer: number;
+    title: string;
+}
+
 const type = ref('text');
 const { loading, setLoading } = useLoading();
 const renderList = ref<TableData[]>();

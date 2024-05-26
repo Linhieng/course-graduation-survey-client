@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { get, post } from './axios';
+import type { UserMessageItem } from '@/store/modules/message/types';
 
 export interface MessageRecord {
     id: number;
@@ -35,4 +37,26 @@ export interface ChatRecord {
 
 export function queryChatList() {
     return axios.post<ChatRecord[]>('/api/chat/list');
+}
+
+//
+//
+//
+//
+//
+//
+//
+//
+
+export function getMessageUnread() {
+    return get<{
+        unread: UserMessageItem[];
+        read: UserMessageItem[];
+        all: UserMessageItem[];
+    }>('/api/message/unread');
+}
+export function setMessageRead(ids: number[]) {
+    return post('/api/message/set-read', {
+        ids,
+    });
 }

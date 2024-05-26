@@ -13,7 +13,7 @@ export interface UserState {
     locationName?: string;
     phone?: string;
     registrationDate?: string;
-    accountId?: string;
+    accountId?: number; // 对应 user id。所以改为 number string;
     certification?: number;
     role: RoleType;
 }
