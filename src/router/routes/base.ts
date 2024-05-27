@@ -13,6 +13,7 @@ export const REDIRECT_MAIN: RouteRecordRaw = {
     },
     children: [
         {
+            // 只能提供 path
             path: '/redirect/:path',
             name: REDIRECT_ROUTE_NAME,
             component: () => import('@/views/redirect/index.vue'),

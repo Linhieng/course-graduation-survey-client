@@ -47,6 +47,7 @@ const useAppStore = defineStore('tabBar', {
         addCache(name: string) {
             if (isString(name) && name !== '') this.cacheTabList.add(name);
         },
+        /** TODO: 实际上这里就只用到了 name 字段，那为何还非要用 TagProps 类型呢…… */
         deleteCache(tag: TagProps) {
             this.cacheTabList.delete(tag.name);
         },
