@@ -134,6 +134,7 @@ function showMore(number = 10) {
             <a-button v-if="renderData.length < draftData.length" style="margin: 10px" @click="() => showMore()">
                 {{ $t('加载更多') }}
             </a-button>
+            <a-empty v-if="renderData.length < 1"></a-empty>
         </template>
     </div>
 </template>

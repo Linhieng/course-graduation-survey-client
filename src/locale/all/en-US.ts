@@ -330,4 +330,8 @@ export default {
     'AI 助手': 'AI assistant',
     '分析收集到的答案': 'Analyze answers',
     '你好，我是问卷系统的 AI 助手，能够帮助你分析问卷的统计答案。': 'Hello, I am the AI assistant of the questionnaire system, which can help you analyze the statistical answers of the questionnaire.',
+    //
+    //
+    //
+    '登出成功': 'logout successfully'
 }

@@ -149,6 +149,7 @@ function showMore(number = 10) {
             </div>
         </a-col>
         <a-col
+            v-if="renderData.length < draftData.length"
             :xs="12"
             :sm="12"
             :md="12"
@@ -156,10 +157,10 @@ function showMore(number = 10) {
             :xl="6"
             :xxl="6"
             class="list-col"
-            v-if="renderData.length < draftData.length"
         >
             <a-button @click="() => showMore()">{{ $t('加载更多') }}</a-button>
         </a-col>
+        <a-empty v-if="renderData.length < 1"></a-empty>
     </a-row>
 </template>
 
