@@ -11,6 +11,7 @@ const md = markdownit();
 const useAiStore = defineStore('ai', () => {
     const state = reactive<AiStoreState>({
         VITE_AI_SOCKET: VITE_AI_SOCKET,
+        typing: false,
         showIcon: false,
         socket: null,
         status: null,
@@ -50,9 +51,11 @@ const useAiStore = defineStore('ai', () => {
         state.socket.on('response', (data: 'done' | { content: string; role: 'assistant' }) => {
             state.answerLoading = false;
             if (data !== 'done') {
+                state.typing = true;
                 state.chatHistoryList.oneTemp += data.content;
                 state.chatHistoryList.stat[0].content = md.render(state.chatHistoryList.oneTemp);
             } else {
+                state.typing = false;
                 state.chatHistoryList.oneTemp = '';
                 state.chatHistoryList.stat.unshift({ role: 'assistant', content: '' });
             }

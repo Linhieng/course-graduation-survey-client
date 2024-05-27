@@ -16,7 +16,8 @@
         <div class="chat-icon">
             <a-button type="primary" shape="round" @click="() => (visible = !visible)">
                 <template #icon>
-                    <icon-font name="bot" />
+                    <icon-loading v-if="aiStore.state.typing" />
+                    <icon-robot v-else />
                 </template>
             </a-button>
         </div>

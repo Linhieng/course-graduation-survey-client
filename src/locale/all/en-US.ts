@@ -292,4 +292,6 @@ export default {
     'IP 来源': 'IP from',
     '提交时间': 'submit at',
     '使用设备': 'device',
+    '次': 'times',
+    '份': 'part',
 }
