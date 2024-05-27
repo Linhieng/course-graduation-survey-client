@@ -42,7 +42,7 @@ export default {
     // end dashboard/create-entry
     //
     //
-    // dashboard/create-entry
+    // dashboard/create
     '最近缓存': 'Recent cache',
     '不允许': 'Not allow',
     '是否允许删除最后一个选项': 'Whether to allow the last option to be removed',
@@ -116,4 +116,28 @@ export default {
     '已关闭': 'off',
     '非填空的文本描述': 'textual description',
     '退出全屏': 'Exit full screen',
+    '发布成功': 'Publish success',
+    // end dashboard/create
+    //
+    //
+    // user/info
+    '操作日志': 'log',
+    '行为：': 'activity: ',
+    '时间：': 'time: ',
+    'IP地址': 'IP address',
+    '操作系统': 'Operating System',
+    '浏览器': 'browser',
+    '登录': 'login',
+    '退出登录': 'logout',
+    '修改密码': 'change password',
+    '最近通知': 'Recent notice',
+    '没有信息': 'No information',
+    '你收到 1 条新消息': 'You received a new message',
+    '全部已读': 'All read',
+    '已读': 'read',
+    '收到一份新的回答': 'A new reply was received',
+    '问卷': 'survey',
+    // end user/info
+
+
 }

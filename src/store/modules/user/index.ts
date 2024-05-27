@@ -34,6 +34,7 @@ const useUserStore = defineStore('user', {
     }),
 
     getters: {
+        /** 目前来看，这个 getter 没有意义。 */
         userInfo(state: UserState): UserState {
             return { ...state };
         },

@@ -1,8 +1,5 @@
 <template>
-    <a-card class="general-card" :title="$t('userInfo.title.latestActivity')">
-        <template #extra>
-            <a-link>{{ $t('userInfo.viewAll') }}</a-link>
-        </template>
+    <a-card class="general-card" :title="$t('操作日志')">
         <a-list :bordered="false">
             <a-list-item v-for="activity in activityList" :key="activity.id" action-layout="horizontal">
                 <a-skeleton v-if="loading" :loading="loading" :animation="true" class="skeleton-item">
@@ -15,11 +12,25 @@
                         </a-col>
                     </a-row>
                 </a-skeleton>
-                <a-list-item-meta v-else :title="activity.title" :description="activity.description">
+                <a-list-item-meta v-else>
                     <template #avatar>
-                        <a-avatar>
-                            <img :src="activity.avatar" />
-                        </a-avatar>
+                        <!-- TODO: 这样就会报错，而且整个系统会奔溃，我觉得是 vue 内部 bug -->
+                        <!-- <a-avatar :imageUrl="useUserStore().userInfo.avatar" object-fit="cover"></a-avatar> -->
+                        <a-avatar :imageUrl="userStore.avatar" object-fit="cover"></a-avatar>
+                    </template>
+                    <template #title>
+                        <p>
+                            <span>{{ $t('行为：') }}</span>
+                            <a-tag color="arcoblue">{{ $t(activity.info) }}</a-tag>
+                            <span style="margin-left: 1rem">{{ $t('时间：') }}</span>
+                            <a-tag color="arcoblue">{{ new Date(activity.created_at).toLocaleString() }}</a-tag>
+                        </p>
+                    </template>
+                    <template #description>
+                        <a-descriptions
+                            :data="[{ label: $t('IP地址'), value: activity.ip }, ...showUA(activity.user_agent)]"
+                            bordered
+                        />
                     </template>
                 </a-list-item-meta>
             </a-list-item>
@@ -29,22 +40,60 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { queryLatestActivity, type LatestActivity } from '@/api/user-center';
 import useLoading from '@/hooks/loading';
+import { type UserActionLog, getUserActionLog } from '@/api/user';
+import { msgError } from '@/utils/msg';
+import { useUserStore } from '@/store';
+import { useI18n } from 'vue-i18n';
+import UAParser from 'ua-parser-js';
+import { type DescData } from '@arco-design/web-vue';
 
+const { t } = useI18n();
 const { loading, setLoading } = useLoading(true);
-const activityList = ref<LatestActivity[]>(new Array(7).fill({}));
-const fetchData = async () => {
-    try {
-        const { data } = await queryLatestActivity();
-        activityList.value = data;
-    } catch (err) {
-        // you can report use errorHandler or other
-    } finally {
-        setLoading(false);
+const activityList = ref<UserActionLog[]>(new Array(7).fill({}));
+const userStore = useUserStore();
+
+const getUserActionLately = async () => {
+    setLoading(true);
+
+    const res = await getUserActionLog(0, 7);
+    if (res.ok) {
+        activityList.value = res.data;
+    } else {
+        msgError(res.msg);
     }
+    setLoading(false);
 };
-fetchData();
+getUserActionLately();
+
+function showUA(userAgent: string) {
+    const ua = new UAParser().setUA(userAgent);
+
+    const show: DescData[] = [];
+    const device = ua.getDevice().vendor;
+    const os = ua.getOS().name;
+    const browser = ua.getBrowser().name;
+    if (device) {
+        show.push({
+            label: t('设备'),
+            value: device,
+        });
+    }
+    if (os) {
+        show.push({
+            label: t('操作系统'),
+            value: os,
+        });
+    }
+    if (browser) {
+        show.push({
+            label: t('浏览器'),
+            value: browser,
+        });
+    }
+
+    return show;
+}
 </script>
 
 <style scoped lang="scss">
