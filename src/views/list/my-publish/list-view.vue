@@ -6,6 +6,11 @@ import { useRouter } from 'vue-router';
 import { useCreateStore } from '@/store';
 import dayjs from 'dayjs';
 
+import { useClipboard } from '@vueuse/core';
+const { copy } = useClipboard();
+
+const url_base = import.meta.env.VITE_SURVEY_URL;
+
 /*
     目前无法使用 useScroll 获取页面滚动的状态 document.body 无效。
     所以我通过 document.body.scrollHeight - document.body.clientHeight 获取滚动条可滚动的高度
@@ -91,18 +96,25 @@ function showMore(number = 10) {
             <div v-for="item in renderData" :key="item.id">
                 <div class="list-item">
                     <div class="data-show">
-                        <a-tooltip :content="$t('id')">
-                            <a-tag class="no-flex" size="large" color="blue">{{ item.id }}</a-tag>
+                        <a-tooltip :content="$t('跳转到填写地址')">
+                            <a-tag class="no-flex" size="large" color="blue">
+                                <a-link :href="url_base + item.id" target="_blank">
+                                    <span style="margin-right: 1px">{{ item.id }}</span>
+                                    <icon-launch />
+                                </a-link>
+                            </a-tag>
                         </a-tooltip>
                         <span class="space"></span>
                         <a-tooltip :content="$t('问卷标题')">
                             <a-tag class="no-flex" size="large">{{ item.title }}</a-tag>
                         </a-tooltip>
                         <span class="space"></span>
-                        <a-tooltip :content="$t('问卷描述：') + item.comment" v-if="item.comment.trim()">
-                            <span class="ellipsis">
-                                {{ item.comment }}
-                            </span>
+                        <a-tooltip :content="`${$t('拷贝填写地址')}: ${url_base + item.id}`">
+                            <a-button @click="() => copy(url_base + item.id)">
+                                <template #icon>
+                                    <icon-copy />
+                                </template>
+                            </a-button>
                         </a-tooltip>
                     </div>
                     <div class="action">

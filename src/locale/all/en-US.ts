@@ -264,4 +264,6 @@ export default {
     '立刻刷新': 'refresh',
     '没有未读消息': 'Empty message',
     '未读': 'Unread',
+    '拷贝填写地址': 'Copy fill address',
+    '跳转到填写地址': 'Jump to fill in the address',
 }

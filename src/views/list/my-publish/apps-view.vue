@@ -6,6 +6,8 @@ import { useRouter } from 'vue-router';
 import { useCreateStore } from '@/store';
 import { useWindowScroll } from '@vueuse/core';
 
+const url_base = import.meta.env.VITE_SURVEY_URL;
+
 const { y: pageY } = useWindowScroll();
 const createStore = useCreateStore();
 const router = useRouter();
@@ -119,10 +121,26 @@ function showMore(number = 10) {
                                 </a-typography-text>
                             </template>
                             <template #description>
+                                <a-typography-paragraph copyable>
+                                    <a-link :href="url_base + item.id" target="_blank">
+                                        {{ url_base + item.id }}
+                                    </a-link>
+                                </a-typography-paragraph>
                                 {{ $t('更新时间：') + new Date(item.updated_at).toLocaleString() }}
                                 <br />
                                 <br />
-                                <a-typography-paragraph :ellipsis="{ rows: 3, showTooltip: true }">
+                                <a-typography-paragraph
+                                    :ellipsis="{
+                                        rows: 3,
+                                        showTooltip: {
+                                            type: 'popover',
+                                            props: { style: { maxHeight: `300px` } },
+                                        },
+                                    }"
+                                >
+                                    <template #expand-node="{ expanded }">
+                                        {{ expanded ? '' : '关闭' }}
+                                    </template>
                                     {{ item.comment }}
                                 </a-typography-paragraph>
                                 <br />
