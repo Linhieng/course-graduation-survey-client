@@ -1,5 +1,8 @@
 export type RoleType = '' | '*' | 'admin' | 'user';
 export interface UserState {
+    /** 这是登录名，全局唯一。 */
+    username: string;
+
     name?: string;
     avatar?: string;
     job?: string;

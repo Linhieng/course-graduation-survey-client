@@ -15,6 +15,7 @@ import { msgError, msgSuccess } from '@/utils/msg';
 
 const useUserStore = defineStore('user', {
     state: (): UserState => ({
+        username: '',
         name: undefined,
         avatar: undefined,
         job: undefined,

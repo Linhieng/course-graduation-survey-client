@@ -10,36 +10,36 @@
                 @change="uploadChange"
             >
                 <template #upload-button>
-                    <a-avatar :size="100" class="info-avatar">
+                    <a-avatar :size="100" class="info-avatar" :imageUrl="fileList[0].url" object-fit="cover">
                         <template #trigger-icon>
                             <icon-camera />
                         </template>
-                        <img v-if="fileList.length" :src="fileList[0].url" />
+                        <!-- <img v-if="fileList.length" :src="fileList[0].url" /> -->
                     </a-avatar>
                 </template>
             </a-upload>
             <a-descriptions
-                :data="renderData"
+                :data="renderData as any"
                 :column="2"
                 align="right"
                 layout="inline-horizontal"
                 :label-style="{
-                    width: '140px',
+                    width: '160px',
                     fontWeight: 'normal',
                     color: 'rgb(var(--gray-8))',
                 }"
                 :value-style="{
-                    width: '200px',
+                    width: '240px',
                     paddingLeft: '8px',
+                    marginBottom: '12px',
                     textAlign: 'left',
                 }"
             >
                 <template #label="{ label }">{{ $t(label) }} :</template>
                 <template #value="{ value, data }">
-                    <a-tag v-if="data.label === 'userSetting.label.certification'" color="green" size="small">
-                        已认证
+                    <a-tag size="large" :color="data.label === '登录名' ? 'blue' : 'gray'">
+                        {{ value }}
                     </a-tag>
-                    <span v-else>{{ value }}</span>
                 </template>
             </a-descriptions>
         </a-space>
@@ -47,11 +47,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import type { FileItem, RequestOption } from '@arco-design/web-vue/es/upload/interfaces';
 import { useUserStore } from '@/store';
 import { userUploadApi } from '@/api/user-center';
-import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
+import { msgError } from '@/utils/msg';
+import NProgress from 'nprogress';
 
 const userStore = useUserStore();
 const file = {
@@ -59,30 +60,31 @@ const file = {
     name: 'avatar.png',
     url: userStore.avatar,
 };
-const renderData = [
+const renderData = computed(() => [
     {
-        label: 'userSetting.label.name',
-        value: userStore.name,
+        label: '登录名',
+        value: userStore.username,
     },
     {
-        label: 'userSetting.label.certification',
-        value: userStore.certification,
-    },
-    {
-        label: 'userSetting.label.accountId',
+        label: '用户 ID',
         value: userStore.accountId,
     },
     {
-        label: 'userSetting.label.phone',
+        label: '用户姓名',
+        value: userStore.name,
+    },
+    {
+        label: '用户手机',
         value: userStore.phone,
     },
     {
-        label: 'userSetting.label.registrationDate',
-        value: userStore.registrationDate,
+        label: '注册时间',
+        value: new Date(userStore.registrationDate || '').toLocaleString(),
     },
-] as DescData[];
+]);
 const fileList = ref<FileItem[]>([file]);
 const uploadChange = (fileItemList: FileItem[], fileItem: FileItem) => {
+    // 这里获得的 fileItem 是本地的
     fileList.value = [fileItem];
 };
 const customRequest = (options: RequestOption) => {
@@ -102,18 +104,27 @@ const customRequest = (options: RequestOption) => {
             onProgress(parseInt(String(percent), 10), event);
         };
 
+        NProgress.start();
         try {
-            // https://github.com/axios/axios/issues/1630
-            // https://github.com/nuysoft/Mock/issues/127
+            // 报错 TypeError: request.upload.addEventListener is not a function
+            // 请见： https://github.com/axios/axios/issues/1630
+            //       https://github.com/nuysoft/Mock/issues/127
 
             const res = await userUploadApi(formData, {
                 controller,
                 onUploadProgress,
             });
-            onSuccess(res);
+            if (res.ok) {
+                onSuccess(res);
+                userStore.updateUserInfo({ avatar: res.data.url });
+            } else {
+                onError(res);
+                msgError(res.msg);
+            }
         } catch (error) {
             onError(error);
         }
+        NProgress.done();
     })();
     return {
         abort() {
