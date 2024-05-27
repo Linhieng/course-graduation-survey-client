@@ -1,0 +1,28 @@
+{
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+
+    "files.exclude": {
+        "node_modules": true,
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always"
+    },
+    "[vue][typescript][json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.detectIndentation": false,
+        "editor.tabSize": 4,
+        "editor.formatOnSave": true
+    },
+    "workbench.editor.customLabels.patterns": {
+        "**/index.ts": "/${dirname}.${extname}",
+        "**/index.vue": "/${dirname}.${extname}",
+        "**/types.ts": "/types-${dirname}.${extname}"
+    },
+    "cSpell.words": [
+        "doption",
+        "echart",
+        "echarts",
+    ]
+}
