@@ -1,30 +1,29 @@
 <template>
-    <div class="header">
+    <div class="header" :style="{ '--bg-url': `url(${bg})` }">
         <a-space :size="12" direction="vertical" align="center">
-            <a-avatar :size="64">
+            <a-avatar :size="64" @click="gotoSettings" :imageUrl="userInfo.avatar" object-fit="cover">
                 <template #trigger-icon>
                     <icon-camera />
                 </template>
-                <img :src="userInfo.avatar" />
             </a-avatar>
-            <a-typography-title :heading="6" style="margin: 0">
-                {{ userInfo.name }}
+            <a-typography-title :heading="6" style="margin: 0; text-shadow: 0 0 4px white">
+                {{ userInfo.introduction }}
             </a-typography-title>
             <div class="user-msg">
                 <a-space :size="18">
                     <div>
                         <icon-user />
-                        <a-typography-text>{{ userInfo.jobName }}</a-typography-text>
+                        <a-typography-text>{{ userInfo.name }}</a-typography-text>
                     </div>
                     <div>
-                        <icon-home />
+                        <icon-email />
                         <a-typography-text>
-                            {{ userInfo.organizationName }}
+                            <a-link :href="'mailto:' + userInfo.email">{{ userInfo.email }}</a-link>
                         </a-typography-text>
                     </div>
                     <div>
                         <icon-location />
-                        <a-typography-text>{{ userInfo.locationName }}</a-typography-text>
+                        <a-typography-text>{{ userInfo.location }}</a-typography-text>
                     </div>
                 </a-space>
             </div>
@@ -34,8 +33,14 @@
 
 <script lang="ts" setup>
 import { useUserStore } from '@/store';
-
+import bg from '@/assets/images/bg.png';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 const userInfo = useUserStore();
+
+const gotoSettings = () => {
+    router.push({ name: 'Setting' });
+};
 </script>
 
 <style scoped lang="scss">
@@ -45,8 +50,7 @@ const userInfo = useUserStore();
     justify-content: center;
     height: 204px;
     color: var(--gray-10);
-    background: url(//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/41c6b125cc2e27021bf7fcc9a9b1897c.svg~tplv-49unhts6dw-image.image)
-        no-repeat;
+    background: var(--bg-url) no-repeat;
     background-size: cover;
     border-radius: 4px;
 
