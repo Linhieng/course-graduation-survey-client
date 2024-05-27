@@ -2,13 +2,13 @@
     <div class="navbar">
         <div class="left-side">
             <a-space>
-                <img
-                    alt="logo"
-                    src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/dfdba5317c0c20ce20e64fac803d52bc.svg~tplv-49unhts6dw-image.image"
-                />
-                <a-typography-title :style="{ margin: 0, fontSize: '18px' }" :heading="5">Arco Pro</a-typography-title>
+                <img alt="logo" class="hide-mobile" style="width: 25px; height: 25px" src="/logo.png" />
+                <a-typography-title class="hide-mobile" :style="{ margin: 0, fontSize: '18px' }" :heading="5">
+                    {{ $t('问卷系统') }}
+                </a-typography-title>
+                <!-- LAYOUT: 当侧边栏放在抽屉中时，就在顶部显示抽屉开关按钮 -->
                 <icon-menu-fold
-                    v-if="!topMenu && appStore.device === 'mobile'"
+                    v-show="!topMenu && appStore.device === 'mobile'"
                     style="font-size: 22px; cursor: pointer"
                     @click="toggleDrawerMenu"
                 />
@@ -276,6 +276,19 @@ const toggleDrawerMenu = inject('toggleDrawerMenu') as () => void;
 .message-popover {
     .arco-popover-content {
         margin-top: 0;
+    }
+}
+
+@import '@/assets/style/breakpoint.scss';
+@media (max-width: $screen-lg) {
+    .navbar {
+        .left-side {
+            /* 由于 a-space 的原因，左侧默认会留有空白 */
+            padding-left: 0px;
+        }
+        .hide-mobile {
+            display: none;
+        }
     }
 }
 </style>

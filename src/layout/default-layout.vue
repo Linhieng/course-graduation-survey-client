@@ -35,8 +35,8 @@
                     <Menu />
                 </a-drawer>
                 <a-layout class="layout-content" :style="paddingStyle">
-                    <!-- LAYOUT: 控制是否显示标签页 -->
-                    <TabBar v-show="appStore.tabBar" />
+                    <!-- LAYOUT: 控制是否显示标签页。当设备为移动端时，不显示标签页 -->
+                    <TabBar v-show="appStore.tabBar && appStore.device !== 'mobile'" />
                     <!-- LAYOUT: 页面的主体内容 -->
                     <a-layout-content>
                         <PageLayout />
