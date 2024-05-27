@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCollectStore } from '@/store';
+import BaseContainer from '@/components/base-container/index.vue';
+
 const collectStore = useCollectStore();
 const router = useRouter();
 const gotoCollectTable = (surveyId: number) => {
@@ -38,9 +40,8 @@ const onPageChange = (current: number) => {
 </script>
 
 <template>
-    <div class="container">
-        <Breadcrumb :items="['问卷收集', '选择问卷']" />
-        <a-card title="选择一份问卷">
+    <base-container :items="['问卷收集', '选择问卷']" title="选择一份问卷">
+        <a-card>
             <a-row :gutter="8">
                 <a-col :flex="1">
                     <a-form :model="searchForm" layout="inline">
@@ -66,9 +67,9 @@ const onPageChange = (current: number) => {
                             <a-col :span="12">
                                 <a-form-item field="survey_status" :label="$t('发布状态')">
                                     <a-select v-model="searchForm.survey_status">
-                                        <a-option value="all">所有</a-option>
-                                        <a-option value="publish">正在发布</a-option>
-                                        <a-option value="stop">已停止收集</a-option>
+                                        <a-option value="all">{{ $t('所有') }}</a-option>
+                                        <a-option value="publish">{{ $t('正在发布') }}</a-option>
+                                        <a-option value="stop">{{ $t('已停止收集') }}</a-option>
                                     </a-select>
                                 </a-form-item>
                             </a-col>
@@ -114,32 +115,25 @@ const onPageChange = (current: number) => {
                 @page-change="onPageChange"
             >
                 <template #columns>
-                    <a-table-column :width="50" title="id" data-index="id" align="center"></a-table-column>
-                    <a-table-column :width="200" title="标题" data-index="title"></a-table-column>
-                    <a-table-column :width="200" title="描述" data-index="comment">
-                        <template #cell="{ record }">
-                            <a-typography-paragraph :ellipsis="{ rows: 2 }">
-                                {{ record.comment }}
-                            </a-typography-paragraph>
-                        </template>
-                    </a-table-column>
-                    <a-table-column :width="100" title="状态" data-index="is_valid">
+                    <a-table-column :width="60" title="id" data-index="id" align="center"></a-table-column>
+                    <a-table-column :width="200" :title="$t('标题')" data-index="title"></a-table-column>
+                    <a-table-column :width="100" :title="$t('状态')" data-index="is_valid">
                         <template #cell="{ record }">
                             <a-tag v-if="record.is_valid" color="green">{{ $t('正在发布') }}</a-tag>
                             <a-tag v-else color="red">{{ $t('已停止') }}</a-tag>
                         </template>
                     </a-table-column>
-                    <a-table-column :width="200" title="创建时间" data-index="created_at">
+                    <a-table-column :width="200" :title="$t('创建时间')" data-index="created_at">
                         <template #cell="{ record }">
                             <a-statistic
                                 :value-style="{ 'font-size': '1rem' }"
                                 :value="new Date(record.created_at)"
                                 animation
-                                format="YYYY-MM-DD HH:mm:ss"
+                                format="YYYY-MM-DD HH:mm"
                             ></a-statistic>
                         </template>
                     </a-table-column>
-                    <a-table-column :width="100" title="回答数量" data-index="collect_answer">
+                    <a-table-column :width="120" :title="$t('回答数量')" data-index="collect_answer">
                         <template #cell="{ record }">
                             <a-statistic
                                 :value="record.collect_answer"
@@ -152,7 +146,7 @@ const onPageChange = (current: number) => {
                             </a-statistic>
                         </template>
                     </a-table-column>
-                    <a-table-column :width="100" title="访问次数" data-index="collect_visited">
+                    <a-table-column :width="100" :title="$t('访问次数')" data-index="collect_visited">
                         <template #cell="{ record }">
                             <a-statistic
                                 :value="record.collect_visited"
@@ -165,10 +159,12 @@ const onPageChange = (current: number) => {
                             </a-statistic>
                         </template>
                     </a-table-column>
-                    <a-table-column :width="100" title="操作">
+                    <a-table-column :width="100" :title="$t('操作')">
                         <template #cell="{ record }">
                             <a-space direction="vertical" fill>
-                                <a-button type="primary" @click="gotoCollectTable(record.id)">查看数据</a-button>
+                                <a-button type="primary" @click="gotoCollectTable(record.id)">
+                                    {{ $t('查看数据') }}
+                                </a-button>
                             </a-space>
                         </template>
                     </a-table-column>
@@ -180,11 +176,7 @@ const onPageChange = (current: number) => {
                 </template>
             </a-table>
         </a-card>
-    </div>
+    </base-container>
 </template>
 
-<style scoped lang="scss">
-.container {
-    padding: 0 20px 20px 20px;
-}
-</style>
+<style scoped lang="scss"></style>

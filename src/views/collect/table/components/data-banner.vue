@@ -18,20 +18,27 @@ const exportData = (type: 'xlsx' | 'csv') => {
         <template #split>
             <a-divider direction="vertical"></a-divider>
         </template>
-        <a-button class="btn" type="primary" @click="collectStore.fetchAnswerCollectBySurveyId">点击刷新数据</a-button>
+        <a-button class="btn" type="primary" @click="collectStore.fetchAnswerCollectBySurveyId">
+            {{ $t('点击刷新数据') }}
+        </a-button>
         <a-dropdown trigger="hover" class="btn">
-            <a-button>导出数据</a-button>
+            <a-button>{{ $t('导出数据') }}</a-button>
             <template #content>
-                <a-space></a-space>
-                <a-doption><a-button text @click="() => exportData('xlsx')">导出 xlsx 格式</a-button></a-doption>
-                <a-space></a-space>
-                <a-doption><a-button text @click="() => exportData('csv')">导出 csv 格式</a-button></a-doption>
-                <a-space></a-space>
+                <a-doption>
+                    <a-space @click="() => exportData('xlsx')">
+                        <span>{{ $t('导出 xlsx 格式') }}</span>
+                    </a-space>
+                </a-doption>
+                <a-doption>
+                    <a-space @click="() => exportData('csv')">
+                        <span>{{ $t('导出 csv 格式') }}</span>
+                    </a-space>
+                </a-doption>
             </template>
         </a-dropdown>
     </a-space>
 
-    <h2>收集到的数据总数：{{ collectStore.state.cur.answerList.length }}</h2>
+    <h2>{{ $t('收集到的数据总数') }} ：{{ collectStore.state.cur.answerList.length }}</h2>
 </template>
 <style scoped lang="scss">
 .btn-group {

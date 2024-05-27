@@ -140,7 +140,7 @@ const clickChange = async ({ errors }: { errors: Record<string, ValidatedError> 
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .form {
     &-wrapper {
         width: 320px;

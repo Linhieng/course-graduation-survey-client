@@ -3,6 +3,9 @@ import { type QuestionItem } from '../create/types';
 import { type CollectAnswer } from '../collect/types';
 
 export interface AiStoreState {
+    /** 后台 ai socket 接口路径，比如 //localhost::5000 */
+    VITE_AI_SOCKET: string;
+
     /** 显示 ai 图标。只有点用户点击分析所有答案后，才可以显示 ai */
     showIcon: boolean;
     /** 连接 socket 后的对象 */

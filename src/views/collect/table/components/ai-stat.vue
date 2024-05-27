@@ -62,8 +62,9 @@ const socketRef = ref();
 const connectSocket = () => {
     aiStore.connectSocket();
 
+    console.log(aiStore.state.VITE_AI_SOCKET);
     connecting.value = true;
-    const socket = io('http://localhost:3002');
+    const socket = io(aiStore.state.VITE_AI_SOCKET);
     socketRef.value = socket;
     socket.on('connect', function () {
         showData.socketStatus = '已连接';

@@ -13,4 +13,7 @@ export default {
     '已停止的问卷': 'Stopped',
     '我的模版': 'Private Template',
     '共享模版': 'Public Template',
+    '问卷收集': 'Collection',
+    '选择问卷': 'Select',
+    '可视化分析': 'Visual analysis',
 }

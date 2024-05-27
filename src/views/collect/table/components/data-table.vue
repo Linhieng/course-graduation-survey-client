@@ -148,7 +148,7 @@ const changeOneAnswer = async () => {
             <template #columns>
                 <a-table-column
                     v-for="item in columns"
-                    :title="typeof item.title === 'string' ? item.title : ''"
+                    :title="typeof item.title === 'string' ? $t(item.title) : ''"
                     :data-index="item.dataIndex"
                     :sortable="item.sortable ? item.sortable : undefined"
                     :width="item.width"
@@ -163,35 +163,45 @@ const changeOneAnswer = async () => {
                     </template> -->
                 </a-table-column>
                 <a-table-column
-                    title="是否有效"
+                    :title="$t('是否有效')"
                     data-index="is_valid_text"
                     :width="110"
                     :filterable="is_valid_filterable"
                 >
                     <template #cell="{ record }">
-                        <a-tag v-if="record.is_valid === 1" color="green">有效</a-tag>
-                        <a-tag v-else color="red">无效</a-tag>
+                        <a-tag v-if="record.is_valid === 1" color="green">{{ $t('有效') }}</a-tag>
+                        <a-tag v-else color="red">{{ $t('无效') }}</a-tag>
                     </template>
                 </a-table-column>
-                <a-table-column title="操作" :width="100">
+                <a-table-column :title="$t('操作')" :width="100">
                     <template #cell="{ record }">
-                        <a-button @click="() => openChangeOneAnswer(record)">修改</a-button>
+                        <a-button @click="() => openChangeOneAnswer(record)">{{ $t('修改') }}</a-button>
                     </template>
                 </a-table-column>
             </template>
         </a-table>
     </div>
     <a-modal v-model:visible="optionPaneVisual" @ok="changeOneAnswer" @cancel="() => (optionPaneVisual = false)">
-        <template #title>修改问题</template>
+        <template #title>{{ $t('修改问题') }}</template>
         <div>
-            <a-form-item tooltip="请选择答案的有效性" label="设置答案的有效性">
-                <a-radio-group v-model="curChangeData.is_valid">
-                    <a-radio :value="0">无效</a-radio>
-                    <a-radio :value="1">有效</a-radio>
-                </a-radio-group>
-            </a-form-item>
+            <a-form :model="curChangeData">
+                <a-form-item
+                    :tooltip="$t('请选择答案的有效性')"
+                    :label="$t('设置答案的有效性')"
+                    label-col-flex="max-content"
+                >
+                    <a-radio-group v-model="curChangeData.is_valid">
+                        <a-radio :value="0">{{ $t('无效') }}</a-radio>
+                        <a-radio :value="1">{{ $t('有效') }}</a-radio>
+                    </a-radio-group>
+                </a-form-item>
+            </a-form>
         </div>
     </a-modal>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+:deep(.arco-form-item-label-col.arco-form-item-label-col-flex) {
+    flex: 0 0 max-content;
+}
+</style>

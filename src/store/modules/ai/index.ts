@@ -4,11 +4,13 @@ import type { AiStoreState } from './types';
 import io from 'socket.io-client';
 import markdownit from 'markdown-it';
 
+const VITE_AI_SOCKET: string = import.meta.env.VITE_AI_SOCKET || '//localhost::5000';
 const md = markdownit();
 
 // @ts-ignore
 const useAiStore = defineStore('ai', () => {
     const state = reactive<AiStoreState>({
+        VITE_AI_SOCKET: VITE_AI_SOCKET,
         showIcon: false,
         socket: null,
         status: null,
@@ -37,7 +39,7 @@ const useAiStore = defineStore('ai', () => {
     /** 连接 socket */
     function connectSocket() {
         state.status = 'connecting';
-        state.socket = io('http://localhost:3002');
+        state.socket = io(VITE_AI_SOCKET);
         state.socket.on('connect', () => {
             state.status = 'connected';
         });
