@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, toRefs, computed } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { queryMessageList, setMessageStatus, type MessageRecord, type MessageListType } from '@/api/message';
 import useLoading from '@/hooks/loading';
@@ -41,7 +41,7 @@ const messageData = reactive<{
     renderList: [],
     messageList: [],
 });
-toRefs(messageData);
+
 const tabList: TabItem[] = [
     {
         key: 'message',
