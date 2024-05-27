@@ -258,4 +258,10 @@ export default {
     '使用该模版': 'use',
     '所有共享模版': 'All public template',
     '编辑模版': 'edit',
+    //
+    //
+    '通知': 'Notice',
+    '立刻刷新': 'refresh',
+    '没有未读消息': 'Empty message',
+    '未读': 'Unread',
 }

@@ -65,7 +65,7 @@
             <li>
                 <a-tooltip :content="$t('settings.navbar.alerts')">
                     <div class="message-box-trigger">
-                        <a-badge :count="9" dot>
+                        <a-badge :count="messageStore.state.message.unread.length" dot>
                             <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setPopoverVisible">
                                 <icon-notification />
                             </a-button>
@@ -73,6 +73,7 @@
                     </div>
                 </a-tooltip>
                 <a-popover
+                    position="br"
                     trigger="click"
                     :arrow-style="{ display: 'none' }"
                     :content-style="{ padding: 0, minWidth: '400px' }"
@@ -106,7 +107,7 @@
                 </a-tooltip>
             </li>
             <li>
-                <a-dropdown trigger="click">
+                <a-dropdown trigger="click" position="br">
                     <a-avatar :size="32" :style="{ marginRight: '8px', cursor: 'pointer' }">
                         <img alt="avatar" :src="avatar" />
                     </a-avatar>
@@ -160,7 +161,9 @@ import useLocale from '@/hooks/locale';
 import useUser from '@/hooks/user';
 import Menu from '@/components/menu/index.vue';
 import MessageBox from '../message-box/index.vue';
+import { useMessageStore } from '@/store';
 
+const messageStore = useMessageStore();
 const appStore = useAppStore();
 const userStore = useUserStore();
 const { logout } = useUser();
