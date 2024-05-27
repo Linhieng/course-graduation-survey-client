@@ -6,10 +6,10 @@ const DASHBOARD: AppRouteRecordRaw = {
     name: 'dashboard',
     component: DEFAULT_LAYOUT,
     meta: {
-        locale: 'menu.dashboard',
+        locale: '工作台',
         requiresAuth: true,
         icon: 'icon-dashboard',
-        order: 0,
+        order: 1,
     },
     children: [
         {
@@ -17,9 +17,30 @@ const DASHBOARD: AppRouteRecordRaw = {
             name: 'Workplace',
             component: () => import('@/views/dashboard/workplace/index.vue'),
             meta: {
-                locale: 'menu.dashboard.workplace',
+                locale: '主面板',
                 requiresAuth: true,
                 roles: ['*'],
+            },
+        },
+        {
+            path: 'create-entry',
+            name: 'create-entry',
+            component: () => import('@/views/dashboard/create-entry/index.vue'),
+            meta: {
+                locale: '新建问卷',
+                requiresAuth: true,
+                roles: ['*'],
+            },
+        },
+        {
+            path: 'create',
+            name: 'Create',
+            component: () => import('@/views/dashboard/create/index.vue'),
+            meta: {
+                locale: '编辑问卷',
+                requiresAuth: true,
+                roles: ['*'],
+                disabled: true,
             },
         },
     ],

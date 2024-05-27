@@ -1,4 +1,6 @@
+import tmp from './all/en-US'
 import apiInfo from '@/api/locale/en-US'
+import routerInfo from '@/router/locale/en-US'
 // 
 import localeMessageBox from '@/components/message-box/locale/en-US';
 import localeLogin from '@/views/login/locale/en-US';
@@ -16,9 +18,11 @@ import localeUserSetting from '@/views/user/setting/locale/en-US';
 import localeSettings from './en-US/settings';
 
 export default {
+    ...tmp,
     '': '',
     ' ': '',
     ...apiInfo,
+    ...routerInfo,
     
   'menu.dashboard': 'Dashboard',
   'menu.server.dashboard': 'Dashboard-Server',

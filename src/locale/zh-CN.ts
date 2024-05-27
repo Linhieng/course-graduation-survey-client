@@ -1,4 +1,6 @@
+import tmp from './all/zh-CN'
 import apiInfo from '@/api/locale/zh-CN'
+import routerInfo from '@/router/locale/zh-CN'
 // 
 import localeMessageBox from '@/components/message-box/locale/zh-CN';
 import localeLogin from '@/views/login/locale/zh-CN';
@@ -16,9 +18,12 @@ import localeUserSetting from '@/views/user/setting/locale/zh-CN';
 import localeSettings from './zh-CN/settings';
 
 export default {
+    ...tmp,
     '': '',
     ' ': '',
     ...apiInfo,
+    ...routerInfo,
+
   'menu.dashboard': '仪表盘',
   'menu.server.dashboard': '仪表盘-服务端',
   'menu.server.workplace': '工作台-服务端',
