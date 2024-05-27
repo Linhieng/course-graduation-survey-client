@@ -5,6 +5,7 @@ const TEMPLATE: AppRouteRecordRaw = {
     path: '/template',
     name: 'template',
     component: DEFAULT_LAYOUT,
+    redirect: { name: 'template-my' },
     meta: {
         locale: '模版市场',
         requiresAuth: true,

@@ -5,6 +5,7 @@ const LIST: AppRouteRecordRaw = {
     path: '/list',
     name: 'list',
     component: DEFAULT_LAYOUT,
+    redirect: { name: 'my-all-survey' },
     meta: {
         locale: '我的问卷',
         requiresAuth: true,

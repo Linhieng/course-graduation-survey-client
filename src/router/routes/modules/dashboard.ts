@@ -5,6 +5,7 @@ const DASHBOARD: AppRouteRecordRaw = {
     path: '/dashboard',
     name: 'dashboard',
     component: DEFAULT_LAYOUT,
+    redirect: { name: 'Workplace' },
     meta: {
         locale: '工作台',
         requiresAuth: true,

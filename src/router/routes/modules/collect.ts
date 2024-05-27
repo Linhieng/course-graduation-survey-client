@@ -5,6 +5,7 @@ const COLLECT: AppRouteRecordRaw = {
     path: '/collect',
     name: 'collect',
     component: DEFAULT_LAYOUT,
+    redirect: { name: 'collect-entry' },
     meta: {
         locale: '问卷收集',
         requiresAuth: true,

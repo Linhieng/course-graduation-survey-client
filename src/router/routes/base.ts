@@ -11,6 +11,7 @@ export const REDIRECT_MAIN: RouteRecordRaw = {
         requiresAuth: true,
         hideInMenu: true,
     },
+    redirect: { name: 'notFound' },
     children: [
         {
             // 只能提供 path

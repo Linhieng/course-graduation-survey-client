@@ -11,7 +11,7 @@ export interface AppRouteRecordRaw {
     name?: string | symbol;
     /** 具体类型在 typing.d.ts 中可见 */
     meta?: RouteMeta;
-    redirect?: string;
+    redirect?: string | { name: string };
     component: Component | string;
     children?: AppRouteRecordRaw[];
     alias?: string | string[];

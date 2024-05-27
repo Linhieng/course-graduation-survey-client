@@ -5,6 +5,7 @@ const USER: AppRouteRecordRaw = {
     path: '/user',
     name: 'user',
     component: DEFAULT_LAYOUT,
+    redirect: { name: 'Info' },
     meta: {
         locale: 'menu.user',
         icon: 'icon-user',
