@@ -1,4 +1,5 @@
 export default {
+    // end dashboard/create-entry
     '可以新建全新问卷，也可以从草稿箱中选择问卷': 'You can create a new questionnaire or select a questionnaire from the draft box',
     '添加基本的问卷标题和问卷描述': 'Add the basic questionnaire title and description',
     '开始创建问卷，然后添加问题': 'Start creating the questionnaire, and then add questions',
@@ -38,4 +39,7 @@ export default {
     '请确认你的问卷信息没有填写错误：': "Please make sure that your questionnaire information is correct:",
     '返回修改': "Return to modify",
     '确认创建问卷': "Confirm questionnaire creation",
+    // end dashboard/create-entry
+    // 
+    // 
 }
