@@ -2,7 +2,7 @@
 const api_base_url = import.meta.env.VITE_API_BASE_URL;
 import { useCreateStore } from '@/store';
 import { getToken } from '@/utils/auth';
-import { FileItem } from '@arco-design/web-vue';
+import type { FileItem } from '@arco-design/web-vue';
 import GradientBox from './gradient-box.vue';
 const createStore = useCreateStore();
 const uploadSuccess = (fileItem: FileItem) => {
@@ -31,9 +31,9 @@ const uploadSuccess = (fileItem: FileItem) => {
                     :min="40"
                     :max="100"
                     :default-value="60"
-                    @change="(val:any) => useCreateStore().updateSurveyWidth(val + '%')"
+                    @change="(val: any) => useCreateStore().updateSurveyWidth(val + '%')"
                     :style="{ width: '200px' }"
-                    :format-tooltip="(val:number) => `${Math.round(val)}%`"
+                    :format-tooltip="(val: number) => `${Math.round(val)}%`"
                 />
             </a-space>
 
@@ -91,15 +91,15 @@ const uploadSuccess = (fileItem: FileItem) => {
                     :min="30"
                     :max="100"
                     :default-value="50"
-                    @change="(val:any) => useCreateStore().updateBgWidth(val + '%')"
+                    @change="(val: any) => useCreateStore().updateBgWidth(val + '%')"
                     :style="{ width: '200px' }"
-                    :format-tooltip="(val:number) => `${Math.round(val)}%`"
+                    :format-tooltip="(val: number) => `${Math.round(val)}%`"
                 />
             </a-space>
             <a-space direction="vertical">
                 <span>{{ $t('背景颜色') }}</span>
                 <a-button @click="useCreateStore().resetBgColor()">{{ $t('重置') }}</a-button>
-                <a-color-picker @change="(val:any) => useCreateStore().updateBgColor(val)" />
+                <a-color-picker @change="(val: any) => useCreateStore().updateBgColor(val)" />
             </a-space>
             <a-space direction="vertical">
                 <span>{{ $t('背景图片') }}</span>

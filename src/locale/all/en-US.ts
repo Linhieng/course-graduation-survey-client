@@ -158,7 +158,7 @@ export default {
     '保存成功': 'save successfully',
     '登录密码':"Login password",
     '已设置。推荐密码至少包含 6 位字符，且同时包含数字和大小写字母。':"You have set this parameter. It is recommended that the password contain at least six characters, digits, and uppercase and lowercase letters.",
-    '未绑定手机':"Untethered phone",
+    '未绑定手机':"You haven't set up your phone yet",
     '已绑定：':"Bound:",
     '修改手机号':"Modify mobile phone number",
     '用户邮箱':"User mailbox",
