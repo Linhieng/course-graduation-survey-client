@@ -18,27 +18,27 @@
         <template #content>
             <a-doption :disabled="disabledReload" :value="Eaction.reload">
                 <icon-refresh />
-                <span>重新加载</span>
+                <span>{{ $t('重新加载') }}</span>
             </a-doption>
             <a-doption class="sperate-line" :disabled="disabledCurrent" :value="Eaction.current">
                 <icon-close />
-                <span>关闭当前标签页</span>
+                <span>{{ $t('关闭当前标签页') }}</span>
             </a-doption>
             <a-doption :disabled="disabledLeft" :value="Eaction.left">
                 <icon-to-left />
-                <span>关闭左侧标签页</span>
+                <span>{{ $t('关闭左侧标签页') }}</span>
             </a-doption>
             <a-doption class="sperate-line" :disabled="disabledRight" :value="Eaction.right">
                 <icon-to-right />
-                <span>关闭右侧标签页</span>
+                <span>{{ $t('关闭右侧标签页') }}</span>
             </a-doption>
             <a-doption :value="Eaction.others">
                 <icon-swap />
-                <span>关闭其它标签页</span>
+                <span>{{ $t('关闭其它标签页') }}</span>
             </a-doption>
             <a-doption :value="Eaction.all">
                 <icon-folder-delete />
-                <span>关闭全部标签页</span>
+                <span>{{ $t('关闭全部标签页') }}</span>
             </a-doption>
         </template>
     </a-dropdown>

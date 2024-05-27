@@ -31,7 +31,7 @@ const useAiStore = defineStore('ai', () => {
                 },
                 {
                     role: 'assistant',
-                    content: '<p>你好，我是问卷系统的 AI 助手，能够帮助你分析问卷的统计答案。</p>',
+                    content: '你好，我是问卷系统的 AI 助手，能够帮助你分析问卷的统计答案。',
                 },
             ],
         },

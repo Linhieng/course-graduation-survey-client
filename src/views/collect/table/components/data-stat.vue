@@ -46,7 +46,7 @@ const generateData = (data: AnswerCollect) => {
 
 <template>
     <div class="wrap">
-        <a-button :loading="loading" type="primary" @click="stat">点击分析所有答案</a-button>
+        <a-button :loading="loading" type="primary" @click="stat">{{ $t('点击分析所有答案') }}</a-button>
         <br />
         <div class="visual-box">
             <template v-if="getOk">

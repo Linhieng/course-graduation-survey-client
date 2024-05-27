@@ -107,8 +107,8 @@ async function render() {
 <template>
     <!-- <a-button @click="echartObj?.resize()">刷新</a-button> -->
     <a-radio-group type="button" v-model="echartType">
-        <a-radio value="pie">饼图</a-radio>
-        <a-radio value="bar">柱状图</a-radio>
+        <a-radio value="pie">{{ $t('饼图') }}</a-radio>
+        <a-radio value="bar">{{ $t('柱状图') }}</a-radio>
     </a-radio-group>
     <div v-show="echartType === 'pie'" class="echart-box" ref="echartEl"></div>
     <div v-show="echartType === 'bar'" class="echart-box" ref="echartBarEl"></div>

@@ -13,7 +13,9 @@ defineProps<{
 <template>
     <div>
         <template v-if="isNaN(Number(surveyId))">
-            <NotFound backName="collect-entry" backText="回到查询列表">找不到对应问卷 {{ surveyId }}</NotFound>
+            <NotFound backName="collect-entry" :backText="$t('回到查询列表')">
+                {{ $t('找不到对应问卷') }} {{ surveyId }}
+            </NotFound>
         </template>
         <template v-else>
             <div class="wrap">

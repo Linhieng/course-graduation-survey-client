@@ -88,7 +88,7 @@ function generateEchartOption() {
     <a-space direction="vertical" fill>
         <a-space v-for="(q, i) in questionList" direction="vertical" fill size="mini">
             <a-space>
-                <a-tag :color="questionTypeMappingColor[q.type]">{{ questionTypeMappingText[q.type] }}</a-tag>
+                <a-tag :color="questionTypeMappingColor[q.type]">{{ $t(questionTypeMappingText[q.type]) }}</a-tag>
                 <h2 style="margin: 0">{{ q.title }}</h2>
             </a-space>
             <a-space>

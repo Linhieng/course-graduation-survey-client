@@ -98,8 +98,8 @@ async function render() {
 <template>
     <div>
         <a-radio-group class="margin-t margin-b" type="button" v-model="showType">
-            <a-radio value="cloud">词云</a-radio>
-            <a-radio value="raw">所有数据</a-radio>
+            <a-radio value="cloud">{{ $t('词云') }}</a-radio>
+            <a-radio value="raw">{{ $t('所有数据') }}</a-radio>
         </a-radio-group>
         <div class="wrap" v-show="showType === 'raw'">
             <a-tag style="margin: 10px" size="large" v-for="val of echartData">{{ val }}</a-tag>

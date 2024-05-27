@@ -294,4 +294,40 @@ export default {
     '使用设备': 'device',
     '次': 'times',
     '份': 'part',
+    //
+    //
+    //
+    '重新加载': 'Reload',
+    '关闭当前标签页': 'Close',
+    '关闭左侧标签页': 'Close to the Right',
+    '关闭右侧标签页': 'Close to the Left',
+    '关闭其它标签页': 'Close Others',
+    '关闭全部标签页': 'Close All',
+    //
+    //
+    //
+    '找不到对应问卷': "can't find survey: ",
+    '回到查询列表': 'Back to search list',
+    '用户回答：': 'answer: ',
+    '数据分析：': 'Data analysis:',
+    '浏览器类型分布': 'Browser type distribution',
+    '操作系统分布': 'Operating system distribution',
+    '有效率分布': 'Efficient distribution',
+    '浏览器类型': 'browser',
+    '系统类型': 'operating system',
+    '苹果': 'Apple',
+    '其他': 'Other',
+    '谷歌': 'Google',
+    '火狐': 'Firefox',
+    '点击分析所有答案': 'Visualize answer data',
+    '词云': 'Word Cloud',
+    '所有数据': 'Raw Data',
+    '饼图': 'pie',
+    '柱状图': 'bar',
+    '激活 AI 助手': 'active AI assistant',
+    '思考中...': 'thinking...',
+    '重置聊天历史': 'reset chatting history',
+    'AI 助手': 'AI assistant',
+    '分析收集到的答案': 'Analyze answers',
+    '你好，我是问卷系统的 AI 助手，能够帮助你分析问卷的统计答案。': 'Hello, I am the AI assistant of the questionnaire system, which can help you analyze the statistical answers of the questionnaire.',
 }

@@ -2,11 +2,11 @@
     <div class="ai-box" v-show="aiStore.state.showIcon">
         <div class="chat-box" v-show="visible">
             <a-button v-if="showData.socketStatus === '未连接'" :loading="connecting" @click="connectSocket">
-                激活 AI 助手
+                {{ $t('激活 AI 助手') }}
             </a-button>
             <div v-if="showData.socketStatus === '已连接'">
                 <AiChatBox :showData="showData" />
-                <p :class="{ hide: !answerLoading }">思考中...</p>
+                <p :class="{ hide: !answerLoading }">{{ $t('思考中...') }}</p>
                 <div class="input-box">
                     <!-- <a-textarea auto-size v-model="sendData.message" placeholder="请输入"></a-textarea>
                     <a-button class="input-btn" type="primary" @click="sendMessage">发送</a-button> -->

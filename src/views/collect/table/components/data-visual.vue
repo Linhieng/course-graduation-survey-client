@@ -1,17 +1,17 @@
 <template>
     <div class="wrap">
-        <p style="font-size: 1.3rem">数据分析：</p>
+        <p style="font-size: 1.3rem">{{ $t('数据分析：') }}</p>
         <div class="base-visual">
             <div class="base-visual-item">
-                <p>浏览器类型分布</p>
+                <p>{{ $t('浏览器类型分布') }}</p>
                 <Chart height="200px" width="300px" :option="chartOption1" />
             </div>
             <div class="base-visual-item">
-                <p>操作系统分布</p>
+                <p>{{ $t('操作系统分布') }}</p>
                 <Chart height="200px" width="300px" :option="chartOption2" />
             </div>
             <div class="base-visual-item">
-                <p>有效率分布</p>
+                <p>{{ $t('有效率分布') }}</p>
                 <Chart height="200px" width="300px" :option="chartOption3" />
             </div>
         </div>
@@ -23,6 +23,8 @@
 import useChartOption from '@/hooks/chart-option';
 import { useCollectStore } from '@/store';
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 const collectStore = useCollectStore();
 const browserCount = computed(() => {
     const res = [0, 0, 0, 0];
@@ -53,7 +55,7 @@ const { chartOption: chartOption1 } = useChartOption((isDark) => {
         legend: {
             orient: 'vertical',
             left: 'right',
-            data: ['Edge', '谷歌', '火狐', '其他'],
+            data: ['Edge', t('谷歌'), t('火狐'), t('其他')],
             icon: 'circle',
             itemWidth: 8,
             textStyle: {
@@ -74,7 +76,7 @@ const { chartOption: chartOption1 } = useChartOption((isDark) => {
                     left: 'center',
                     top: '47%',
                     style: {
-                        text: '浏览器类型',
+                        text: t('浏览器类型'),
                         textAlign: 'center',
                         fill: isDark ? '#ffffffb3' : '#4E5969',
                         fontSize: 14,
@@ -106,21 +108,21 @@ const { chartOption: chartOption1 } = useChartOption((isDark) => {
                     },
                     {
                         value: [browserCount.value[1]],
-                        name: '谷歌',
+                        name: t('谷歌'),
                         itemStyle: {
                             color: isDark ? '#A079DC' : '#4CAF50',
                         },
                     },
                     {
                         value: [browserCount.value[2]],
-                        name: '火狐',
+                        name: t('火狐'),
                         itemStyle: {
                             color: isDark ? '#666666' : '#FFC107',
                         },
                     },
                     {
                         value: [browserCount.value[3]],
-                        name: '其他',
+                        name: t('其他'),
                         itemStyle: {
                             color: isDark ? '#4D4D4D' : '#FF5722',
                         },
@@ -137,7 +139,7 @@ const { chartOption: chartOption2 } = useChartOption((isDark) => {
         legend: {
             orient: 'vertical',
             left: 'right',
-            data: ['Windows', 'Android', '苹果', 'linux', '其他'],
+            data: ['Windows', 'Android', t('苹果'), 'linux', t('其他')],
             icon: 'circle',
             itemWidth: 8,
             textStyle: {
@@ -158,7 +160,7 @@ const { chartOption: chartOption2 } = useChartOption((isDark) => {
                     left: 'center',
                     top: '47%',
                     style: {
-                        text: '系统类型',
+                        text: t('系统类型'),
                         textAlign: 'center',
                         fill: isDark ? '#ffffffb3' : '#4E5969',
                         fontSize: 14,
@@ -197,7 +199,7 @@ const { chartOption: chartOption2 } = useChartOption((isDark) => {
                     },
                     {
                         value: [osCount.value[2]],
-                        name: '苹果',
+                        name: t('苹果'),
                         itemStyle: {
                             color: isDark ? '#666666' : '#00BCD4',
                         },
@@ -211,7 +213,7 @@ const { chartOption: chartOption2 } = useChartOption((isDark) => {
                     },
                     {
                         value: [osCount.value[4]],
-                        name: '其他',
+                        name: t('其他'),
                         itemStyle: {
                             color: isDark ? '#4D4D4D' : '#009688',
                         },
@@ -228,7 +230,7 @@ const { chartOption: chartOption3 } = useChartOption((isDark) => {
         legend: {
             orient: 'vertical',
             left: 'right',
-            data: ['有效', '无效'],
+            data: [t('有效'), t('无效')],
             icon: 'circle',
             itemWidth: 8,
             textStyle: {
@@ -249,7 +251,7 @@ const { chartOption: chartOption3 } = useChartOption((isDark) => {
                     left: 'center',
                     top: '47%',
                     style: {
-                        text: '是否有效',
+                        text: t('是否有效'),
                         textAlign: 'center',
                         fill: isDark ? '#ffffffb3' : '#4E5969',
                         fontSize: 14,
@@ -274,14 +276,14 @@ const { chartOption: chartOption3 } = useChartOption((isDark) => {
                 data: [
                     {
                         value: [validCount.value[0]],
-                        name: '无效',
+                        name: t('无效'),
                         itemStyle: {
                             color: isDark ? '#3B8D4E' : '#AB47BC',
                         },
                     },
                     {
                         value: [validCount.value[1]],
-                        name: '有效',
+                        name: t('有效'),
                         itemStyle: {
                             color: isDark ? '#A079DC' : '#CDDC39',
                         },

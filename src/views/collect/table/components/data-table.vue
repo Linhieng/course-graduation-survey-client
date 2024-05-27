@@ -5,7 +5,10 @@ import { reactive, ref } from 'vue';
 import OneAnswer from './one-answer.vue';
 import type { TableColumnData, TableData } from '@arco-design/web-vue';
 import { changeAnswerValid } from '@/api/answer';
+import { useI18n } from 'vue-i18n';
 const collectStore = useCollectStore();
+
+const { t } = useI18n();
 
 const props = defineProps<{
     surveyId: number;
@@ -96,7 +99,7 @@ const columns: TableColumnData[] = [
 ] as TableColumnData[];
 
 const expandable = reactive({
-    title: '展开',
+    title: t('展开'),
     width: 80,
 });
 
