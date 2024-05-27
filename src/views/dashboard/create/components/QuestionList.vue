@@ -3,7 +3,7 @@
 import Sortable from 'sortablejs';
 import { computed, onMounted, ref } from 'vue';
 import { useCreateStore } from '@/store';
-import { QuestionItem } from '@/store/modules/create/types';
+import type { QuestionItem } from '@/store/modules/create/types';
 import AddQuestion from './AddQuestion.vue';
 import { questionTypeMappingText, questionTypeMappingColor } from '@/store/modules/create/utils';
 import AssignQuestionEdit from './assign-question-edit.vue';
@@ -100,7 +100,7 @@ const addBtnOrder = computed(() => {
             </div>
             <a-space class="li-top-title">
                 <a-tag :color="questionTypeMappingColor[question.type]">
-                    {{ questionTypeMappingText[question.type] }}
+                    {{ $t(questionTypeMappingText[question.type]) }}
                 </a-tag>
             </a-space>
             <a-space class="li-top-util hide-item">

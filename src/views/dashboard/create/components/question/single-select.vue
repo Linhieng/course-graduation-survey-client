@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QuestionItem } from '@/store/modules/create/types';
+import type { QuestionItem } from '@/store/modules/create/types';
 import { useCreateStore } from '@/store';
 import { ref } from 'vue';
 import { uniqueId } from 'lodash';
@@ -89,7 +89,7 @@ const updateBatchOptionsStr = () => {
             </div>
         </template>
         <div class="flex-right">
-            <a-button @click="updateBatchOptionsStr">批量编辑</a-button>
+            <a-button @click="updateBatchOptionsStr">{{ $t('批量编辑') }}</a-button>
 
             <a-modal v-model:visible="visible" @ok="handleOk" hide-title width="300px">
                 <a-textarea auto-size v-model="batchOptionsStr"></a-textarea>

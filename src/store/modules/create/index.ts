@@ -232,7 +232,6 @@ const useCreateStore = defineStore('create', {
             this.survey.questionList.forEach((q, i) => {
                 q.order = i;
             });
-            console.log(toRaw(this.survey.questionList));
         },
 
         /** 交换两个问题的位置 */

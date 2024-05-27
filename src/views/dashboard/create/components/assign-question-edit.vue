@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QuestionItem } from '@/store/modules/create/types';
+import type { QuestionItem } from '@/store/modules/create/types';
 import SingleText from './question/single-text.vue';
 import MultiText from './question/multi-text.vue';
 import SingleSelect from './question/single-select.vue';

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QuestionItem } from '@/store/modules/create/types';
+import type { QuestionItem } from '@/store/modules/create/types';
 import { useCreateStore } from '@/store';
 import { ref } from 'vue';
 import { uniqueId } from 'lodash';
@@ -43,11 +43,11 @@ const updateBatch = (type: 'titles' | 'options') => {
             v-model="createStore.survey.questionList[questionIndex].desc"
             class="desc"
             :auto-size="{ minRows: 3 }"
-            placeholder="在这里输入问题描述信息"
+            :placeholder="$t('在这里输入问题描述信息')"
         ></a-textarea>
 
         <div class="titles-container">
-            <p class="font-h2">所有子问题的标题：</p>
+            <p class="font-h2">{{ $t('所有子问题的标题：') }}</p>
             <template v-if="createStore.survey.questionList[questionIndex].titles.length < 1">
                 <a-button shape="circle" @click="createStore.addTitleItem(questionIndex, 0, question.type)">
                     <template #icon>
@@ -93,12 +93,12 @@ const updateBatch = (type: 'titles' | 'options') => {
                 </div>
             </template>
             <div class="flex-right">
-                <a-button @click="() => updateBatch('titles')">批量编辑</a-button>
+                <a-button @click="() => updateBatch('titles')">{{ $t('批量编辑') }}</a-button>
             </div>
         </div>
 
         <div class="options-container">
-            <p class="font-h2">所有子问题的选项（相同）：</p>
+            <p class="font-h2">{{ $t('所有子问题的选项（相同）：') }}</p>
             <template v-if="createStore.survey.questionList[questionIndex].options.length < 1">
                 <a-button shape="circle" @click="createStore.addOption(questionIndex, 0, question.type)">
                     <template #icon>
@@ -150,7 +150,7 @@ const updateBatch = (type: 'titles' | 'options') => {
                 </div>
             </template>
             <div class="flex-right">
-                <a-button @click="() => updateBatch('options')">批量编辑</a-button>
+                <a-button @click="() => updateBatch('options')">{{ $t('批量编辑') }}</a-button>
             </div>
         </div>
     </a-space>

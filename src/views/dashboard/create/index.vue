@@ -45,6 +45,7 @@ watch(
                 createStore.cacheSurvey();
             }, 60_000);
         } else {
+            // @ts-ignore
             clearInterval(cacheTimer);
         }
     },
@@ -115,8 +116,8 @@ const handlePublish = () => {
                     </a-button>
                 </a-tooltip>
                 <a-tooltip
-                    position="bottom"
-                    :content="createStore.survey.is_template !== 0 ? '模版问卷不能发布' : '发布问卷后将不能修改'"
+                    position="left"
+                    :content="$t(createStore.survey.is_template !== 0 ? '模版问卷不能发布' : '发布问卷后将不能修改')"
                 >
                     <a-button
                         :disabled="createStore.survey.is_template !== 0"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QuestionItem } from '@/store/modules/create/types';
+import type { QuestionItem } from '@/store/modules/create/types';
 import { useCreateStore } from '@/store';
 const createStore = useCreateStore();
 defineProps<{
