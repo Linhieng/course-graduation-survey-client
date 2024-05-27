@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    BaseContainer: typeof import('./src/components/base-container/index.vue')['default']
     Block: typeof import('./src/components/global-setting/block.vue')['default']
     Breadcrumb: typeof import('./src/components/breadcrumb/index.vue')['default']
     Chart: typeof import('./src/components/chart/index.vue')['default']
