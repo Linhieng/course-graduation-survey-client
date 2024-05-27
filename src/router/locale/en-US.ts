@@ -8,7 +8,7 @@ export default {
     "个人设置": "User Setting",
     '我的问卷': 'My Survey',
     '所有问卷': 'All Survey',
-    '问卷草稿箱': 'Draft Survey',
-    '已发布的问卷': 'Published Survey',
-    '已停止的问卷': 'Deleted Survey',
+    '问卷草稿箱': 'Draft',
+    '已发布的问卷': 'Publishing',
+    '已停止的问卷': 'Stopped',
 }
