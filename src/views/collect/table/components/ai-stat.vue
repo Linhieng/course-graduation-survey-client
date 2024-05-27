@@ -93,7 +93,7 @@ const sendMessage = () => {
 };
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .ai-box {
     position: fixed;
     bottom: 0px;

@@ -39,7 +39,7 @@ defineProps<{
     </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .ai-chat-box {
     overflow: auto;
 
@@ -56,7 +56,7 @@ defineProps<{
     flex-direction: row-reverse;
 }
 </style>
-<style lang="less">
+<style lang="scss">
 .ai-chat-box {
     p,
     li {

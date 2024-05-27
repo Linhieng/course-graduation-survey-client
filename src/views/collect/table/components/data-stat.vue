@@ -56,7 +56,7 @@ const generateData = (data: AnswerCollect) => {
     </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .visual-box {
     padding: 20px;
 }

@@ -183,7 +183,7 @@ const onPageChange = (current: number) => {
     </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .container {
     padding: 0 20px 20px 20px;
 }

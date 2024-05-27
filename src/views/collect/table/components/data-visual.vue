@@ -293,7 +293,7 @@ const { chartOption: chartOption3 } = useChartOption((isDark) => {
 });
 </script>
 
-<style scope lang="less">
+<style scope lang="scss">
 .wrap {
     padding: 20px;
 }

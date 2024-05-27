@@ -33,7 +33,7 @@ const exportData = (type: 'xlsx' | 'csv') => {
 
     <h2>收集到的数据总数：{{ collectStore.state.cur.answerList.length }}</h2>
 </template>
-<style scoped lang="less">
+<style scoped lang="scss">
 .btn-group {
     display: flex;
     justify-content: end;

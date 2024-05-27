@@ -110,7 +110,7 @@ async function render() {
     </div>
 </template>
 
-<style scoped lang="less">
+<style scoped lang="scss">
 .wrap {
     width: 100%;
     background-color: #fff;
