@@ -13,6 +13,7 @@ declare module 'vue' {
     Footer: typeof import('./src/components/footer/index.vue')['default']
     FormWrapper: typeof import('./src/components/global-setting/form-wrapper.vue')['default']
     GlobalSetting: typeof import('./src/components/global-setting/index.vue')['default']
+    IconFont: typeof import('./src/components/icon-font/index.vue')['default']
     List: typeof import('./src/components/message-box/list.vue')['default']
     Menu: typeof import('./src/components/menu/index.vue')['default']
     MessageBox: typeof import('./src/components/message-box/index.vue')['default']
