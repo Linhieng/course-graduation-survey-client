@@ -248,4 +248,14 @@ export default {
     '停止': 'Stop',
     '已停止问卷': 'Stopped Survey',
     '所有已经停止回收的问卷': 'All questionnaires have stopped being collected',
+    //
+    //
+    '模版市场': 'Stencil market',
+    '这是共享模版': 'A shared template',
+    '这是私有模版': 'A private template',
+    '设为私有': 'Make private',
+    '刷新': 'refresh',
+    '使用该模版': 'use',
+    '所有共享模版': 'All public template',
+    '编辑模版': 'edit',
 }

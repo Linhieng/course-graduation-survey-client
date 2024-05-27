@@ -11,4 +11,6 @@ export default {
     '问卷草稿箱': 'Draft',
     '已发布的问卷': 'Publishing',
     '已停止的问卷': 'Stopped',
+    '我的模版': 'Private Template',
+    '共享模版': 'Public Template',
 }
