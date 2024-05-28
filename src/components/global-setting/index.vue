@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!appStore.navbar" class="fixed-settings" @click="setVisible">
+    <div v-if="!appStore.navbar && !appStore.focusMode" class="fixed-settings" @click="setVisible">
         <a-button type="primary">
             <template #icon>
                 <icon-settings />
@@ -24,6 +24,9 @@
 </template>
 
 <script lang="ts" setup>
+defineOptions({
+    name: 'global-setting',
+});
 import { computed } from 'vue';
 import { Message } from '@arco-design/web-vue';
 import { useI18n } from 'vue-i18n';
