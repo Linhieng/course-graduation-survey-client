@@ -9,6 +9,11 @@ const uploadSuccess = (fileItem: FileItem) => {
     const url = fileItem.response?.data.url;
     createStore.updateBgUrl(url);
 };
+
+const removeImgBefore = async () => {
+    useCreateStore().resetBgUrl();
+    return true;
+};
 </script>
 
 <template>
@@ -38,7 +43,7 @@ const uploadSuccess = (fileItem: FileItem) => {
             </a-space>
 
             <a-space direction="vertical">
-                <a-space>
+                <a-space direction="vertical">
                     <span>{{ $t('选择背景图片：') }}</span>
                     <a-upload
                         @success="uploadSuccess"
@@ -47,16 +52,9 @@ const uploadSuccess = (fileItem: FileItem) => {
                         :headers="{
                             Authorization: `Bearer ${getToken()}`,
                         }"
-                        :show-remove-button="false"
+                        :on-before-remove="removeImgBefore"
                     />
                 </a-space>
-                <a-button
-                    v-if="createStore.$state.skin.background_image"
-                    type="dashed"
-                    @click="useCreateStore().resetBgUrl()"
-                >
-                    取消背景图片
-                </a-button>
             </a-space>
             <a-space direction="vertical">
                 <span>{{ $t('图片填充模式：') }}</span>
