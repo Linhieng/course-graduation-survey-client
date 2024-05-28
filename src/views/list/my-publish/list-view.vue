@@ -124,7 +124,7 @@ function showMore(number = 10) {
                             </a-tooltip>
                             <a-divider direction="vertical"></a-divider>
                             <a-tooltip :content="$t('更新时间')">
-                                <span>{{ dayjs(item.created_at).format('YYYY-MM-DD HH:mm') }}</span>
+                                <span>{{ dayjs(item.updated_at).format('YYYY-MM-DD HH:mm') }}</span>
                             </a-tooltip>
                             <a-divider direction="vertical"></a-divider>
                             <!-- 4,5 -->
