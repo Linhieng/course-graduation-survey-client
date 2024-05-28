@@ -293,7 +293,7 @@ export default {
     '提交时间': 'submit at',
     '使用设备': 'device',
     '次': 'times',
-    '份': 'part',
+    '份': 'pecs',
     //
     //
     //

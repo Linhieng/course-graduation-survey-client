@@ -14,36 +14,70 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { graphic } from 'echarts';
+import { type LineSeriesOption } from 'echarts';
 import useLoading from '@/hooks/loading';
-import { queryContentData, type ContentDataRecord } from '@/api/dashboard';
-import useChartOption from '@/hooks/chart-option';
 import { type ToolTipFormatterParams } from '@/types/echarts';
-import { type AnyObject } from '@/types/global';
+import useChartOption from '@/hooks/chart-option';
+import { useStatStore } from '@/store';
+import { computed } from 'vue';
+import dayjs from 'dayjs';
 
-function graphicFactory(side: AnyObject) {
+const tooltipItemsHtmlString = (items: ToolTipFormatterParams[]) => {
+    return items
+        .map(
+            (el) => `
+            <div class="content-panel">
+                <p>
+                    <span style="background-color: ${el.color}" class="tooltip-item-icon"></span>
+                    <span>${el.seriesName}</span>
+                </p>
+                <span class="tooltip-value">${el.value && el.value.toLocaleString()}</span>
+            </div>`,
+        )
+        .reverse()
+        .join('');
+};
+
+const generateSeries = (name: string, lineColor: string, itemBorderColor: string, data: number[]): LineSeriesOption => {
     return {
-        type: 'text',
-        bottom: '8',
-        ...side,
-        style: {
-            text: '',
-            textAlign: 'center',
-            fill: '#4E5969',
-            fontSize: 12,
+        name,
+        data,
+        stack: 'Total',
+        type: 'line',
+        smooth: true,
+        symbol: 'circle',
+        symbolSize: 10,
+        itemStyle: {
+            color: lineColor,
+        },
+        emphasis: {
+            focus: 'series',
+            itemStyle: {
+                color: lineColor,
+                borderWidth: 2,
+                borderColor: itemBorderColor,
+            },
+        },
+        lineStyle: {
+            width: 2,
+            color: lineColor,
+        },
+        showSymbol: false,
+        areaStyle: {
+            opacity: 0.1,
+            color: lineColor,
         },
     };
-}
+};
 const { loading, setLoading } = useLoading(true);
-const xAxis = ref<string[]>([]);
-const chartsData = ref<number[]>([]);
-const graphicElements = ref([graphicFactory({ left: '2.6%' }), graphicFactory({ right: 0 })]);
-const { chartOption } = useChartOption(() => {
+const stat = useStatStore();
+const xAxis = computed(() => stat.state.statGroupByDay.xAxis);
+// @ts-ignore
+const { chartOption } = useChartOption((dark) => {
     return {
         grid: {
             left: '2.6%',
-            right: '0',
+            right: '2.6%',
             top: '10',
             bottom: '30',
         },
@@ -54,10 +88,13 @@ const { chartOption } = useChartOption(() => {
             boundaryGap: false,
             axisLabel: {
                 color: '#4E5969',
-                formatter(value: number, idx: number) {
-                    if (idx === 0) return '';
-                    if (idx === xAxis.value.length - 1) return '';
-                    return `${value}`;
+                formatter(date_str: string, idx: number) {
+                    const d = dayjs(date_str);
+                    if (idx === 0 || idx === xAxis.value.length - 1) {
+                        return d.format('MM-DD');
+                    } else {
+                        return d.format('YYYY-MM-DD');
+                    }
                 },
             },
             axisLine: {
@@ -86,16 +123,8 @@ const { chartOption } = useChartOption(() => {
             },
         },
         yAxis: {
-            type: 'value',
-            axisLine: {
-                show: false,
-            },
-            axisLabel: {
-                formatter(value: any, idx: number) {
-                    if (idx === 0) return value;
-                    return `${value}k`;
-                },
-            },
+            // 不显示数值，因为不准确。
+            axisLabel: { show: false },
             splitLine: {
                 show: true,
                 lineStyle: {
@@ -107,88 +136,35 @@ const { chartOption } = useChartOption(() => {
         tooltip: {
             trigger: 'axis',
             formatter(params) {
-                const [firstElement] = params as any;
-                return `<div>
-            <p class="tooltip-title">${firstElement.axisValueLabel}</p>
-            <div class="content-panel"><span>总内容量</span><span class="tooltip-value">${(
-                Number(firstElement.value) * 10000
-            ).toLocaleString()}</span></div>
-          </div>`;
+                const [firstElement] = params as ToolTipFormatterParams[];
+                return `
+                <div>
+                    <p class="tooltip-title">${new Date(firstElement.axisValueLabel).toLocaleDateString()}</p>
+                    ${tooltipItemsHtmlString(params as ToolTipFormatterParams[])}
+                </div>`;
             },
             className: 'echarts-tooltip-diy',
         },
         graphic: {
-            elements: graphicElements.value,
+            elements: [],
         },
         series: [
-            {
-                data: chartsData.value,
-                type: 'line',
-                smooth: true,
-                // symbol: 'circle',
-                symbolSize: 12,
-                emphasis: {
-                    focus: 'series',
-                    itemStyle: {
-                        borderWidth: 2,
-                    },
-                },
-                lineStyle: {
-                    width: 3,
-                    color: new graphic.LinearGradient(0, 0, 1, 0, [
-                        {
-                            offset: 0,
-                            color: 'rgba(30, 231, 255, 1)',
-                        },
-                        {
-                            offset: 0.5,
-                            color: 'rgba(36, 154, 255, 1)',
-                        },
-                        {
-                            offset: 1,
-                            color: 'rgba(111, 66, 251, 1)',
-                        },
-                    ]),
-                },
-                showSymbol: false,
-                areaStyle: {
-                    opacity: 0.8,
-                    color: new graphic.LinearGradient(0, 0, 0, 1, [
-                        {
-                            offset: 0,
-                            color: 'rgba(17, 126, 255, 0.16)',
-                        },
-                        {
-                            offset: 1,
-                            color: 'rgba(17, 128, 255, 0)',
-                        },
-                    ]),
-                },
-            },
+            generateSeries('创建问卷的数量', '#F77234', '#FFE4BA', useStatStore().state.statGroupByDay.data[0].value),
+            generateSeries('发布问卷的数量', '#33D1C9', '#E8FFFB', useStatStore().state.statGroupByDay.data[1].value),
+            generateSeries('问卷草稿的数量', '#37bdff', '#37bdff', useStatStore().state.statGroupByDay.data[2].value),
+            generateSeries('停止收集的数量', '#df78fe', '#df78fe', useStatStore().state.statGroupByDay.data[3].value),
+            generateSeries('删除问卷的数量', '#3469FF', '#3469FF', useStatStore().state.statGroupByDay.data[4].value),
         ],
     };
 });
 const fetchData = async () => {
     setLoading(true);
     try {
-        const { data: chartData } = await queryContentData();
-        chartData.forEach((el: ContentDataRecord, idx: number) => {
-            xAxis.value.push(el.x);
-            chartsData.value.push(el.y);
-            if (idx === 0) {
-                graphicElements.value[0].style.text = el.x;
-            }
-            if (idx === chartData.length - 1) {
-                graphicElements.value[1].style.text = el.x;
-            }
-        });
-    } catch (err) {
-        // you can report use errorHandler or other
+        await useStatStore().fetchGroupByDay();
     } finally {
         setLoading(false);
     }
 };
 fetchData();
 </script>
-
 <style scoped lang="scss"></style>
