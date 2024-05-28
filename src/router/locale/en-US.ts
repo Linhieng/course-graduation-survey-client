@@ -16,4 +16,5 @@ export default {
     '问卷收集': 'Collection',
     '选择问卷': 'Select',
     '可视化分析': 'Visual analysis',
+    '个人网站': 'Personal Website',
 }

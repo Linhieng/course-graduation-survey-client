@@ -1,9 +1,9 @@
 export default {
-    path: 'https://arco.design/vue/docs/pro/faq',
+    path: 'http://oonoo.cn',
     name: 'faq',
     meta: {
         isExternal: true,
-        locale: 'menu.faq',
+        locale: '个人网站',
         icon: 'icon-question-circle',
         requiresAuth: true,
         order: 9,
