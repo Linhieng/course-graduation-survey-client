@@ -108,6 +108,8 @@ const gotoEditSurvey = async (id: number) => {
             <div class="item" v-for="item in surveyList">
                 <a-spin :loading="fetching" dot>
                     <div class="card" :style="{ '--bg-url': `url(${bg2})` }">
+                        <!-- TODO: 不理解，为什么这里总会报错，没时间弄了，只能放着。 -->
+                        <!-- <a-image width="200" height="200" :src="item.skin.background_image" show-loader /> -->
                         <div class="pin">
                             <a-space>
                                 <a-tag :color="item.is_template === 1 ? 'red' : 'green'">

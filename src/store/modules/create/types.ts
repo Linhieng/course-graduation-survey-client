@@ -81,6 +81,10 @@ export interface Survey {
     /** 问卷类型，0 表示常规。1 表示调研，2 表示心理问卷 */
     survey_type: 0 | 1 | 2;
     questionList: QuestionItem[];
+    /** TODO: 新增字段，先随便直接写一个属性 */
+    skin: {
+        background_image: string;
+    };
 }
 export interface CreateState {
     /** 仅用于前端相关工作 */
