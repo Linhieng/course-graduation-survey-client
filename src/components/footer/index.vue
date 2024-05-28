@@ -1,5 +1,5 @@
 <template>
-    <a-layout-footer class="footer">问卷系统</a-layout-footer>
+    <a-layout-footer class="footer">{{ $t('问卷系统') }}</a-layout-footer>
 </template>
 
 <script lang="ts" setup></script>

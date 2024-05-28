@@ -1,19 +1,18 @@
 <template>
     <a-card
         class="general-card"
-        :title="$t('workplace.announcement')"
+        :title="$t('功能特性')"
         :header-style="{ paddingBottom: '0' }"
         :body-style="{ padding: '15px 20px 13px 20px' }"
     >
-        <template #extra>
-            <a-link>{{ $t('workplace.viewMore') }}</a-link>
-        </template>
         <div>
             <div v-for="(item, idx) in list" :key="idx" class="item">
-                <a-tag :color="item.type" size="small">{{ item.label }}</a-tag>
-                <span class="item-content">
-                    {{ item.content }}
-                </span>
+                <a-tag :color="item.type" size="small">{{ $t(item.label) }}</a-tag>
+                <a-tooltip :content="$t(item.content)" position="left">
+                    <span class="item-content">
+                        {{ $t(item.content) }}
+                    </span>
+                </a-tooltip>
             </div>
         </div>
     </a-card>
@@ -23,28 +22,28 @@
 const list = [
     {
         type: 'orangered',
-        label: '活动',
-        content: '内容最新优惠活动',
+        label: '模版',
+        content: '提供私有和共享问卷模版市场',
     },
     {
         type: 'cyan',
-        label: '消息',
-        content: '新增内容尚未通过审核，详情请点击查看。',
+        label: '统计',
+        content: '提供了多维度的数据分析图表',
     },
     {
         type: 'blue',
-        label: '通知',
-        content: '当前产品试用期即将结束，如需续费请点击查看。',
+        label: '排行榜',
+        content: '提供问卷排行榜共用户快捷查看与分析',
     },
     {
         type: 'blue',
-        label: '通知',
-        content: '1月新系统升级计划通知',
+        label: '皮肤',
+        content: '编辑问卷界面提供了丰富的皮肤功能',
     },
     {
         type: 'cyan',
-        label: '消息',
-        content: '新增内容已经通过审核，详情请点击查看。',
+        label: 'Ai 助手',
+        content: '答案统计页面提供了 AI 助手帮助用户分析',
     },
 ];
 </script>

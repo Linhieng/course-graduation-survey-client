@@ -17,20 +17,20 @@
         </div>
         <div class="right-side">
             <a-grid :cols="24" :row-gap="16">
-                <a-grid-item :span="24">
-                    <div class="panel moduler-wrap">
-                        <QuickOperation />
-                        <RecentlyVisited />
-                    </div>
-                </a-grid-item>
-                <a-grid-item class="panel" :span="24">
-                    <Carousel />
-                </a-grid-item>
                 <a-grid-item class="panel" :span="24">
                     <Announcement />
                 </a-grid-item>
                 <a-grid-item class="panel" :span="24">
-                    <Docs />
+                    <today-data />
+                </a-grid-item>
+                <a-grid-item :span="24">
+                    <div class="panel moduler-wrap">
+                        <RecentlyVisited />
+                        <QuickOperation />
+                    </div>
+                </a-grid-item>
+                <a-grid-item class="panel" :span="24">
+                    <Carousel />
                 </a-grid-item>
             </a-grid>
         </div>
@@ -46,14 +46,12 @@ import CategoriesPercent from './components/categories-percent.vue';
 import RecentlyVisited from './components/recently-visited.vue';
 import QuickOperation from './components/quick-operation.vue';
 import Announcement from './components/announcement.vue';
+import TodayData from './components/today-data.vue';
 import Carousel from './components/carousel.vue';
-import Docs from './components/docs.vue';
-</script>
 
-<script lang="ts">
-export default {
-    name: 'Dashboard', // If you want the include property of keep-alive to take effect, you must name the component
-};
+defineOptions({
+    name: 'Dashboard',
+});
 </script>
 
 <style lang="scss" scoped>

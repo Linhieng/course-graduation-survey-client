@@ -1,13 +1,24 @@
+<script lang="ts" setup>
+import { useAppStore } from '@/store';
+</script>
+
 <template>
     <a-card
         class="general-card"
         :title="$t('workplace.recently.visited')"
         :header-style="{ paddingBottom: '0' }"
-        :body-style="{ paddingTop: '26px' }"
+        :body-style="{ paddingTop: '14px' }"
     >
         <div style="margin-bottom: -1rem">
             <a-row :gutter="8">
-                <a-col v-for="link in links" :key="link.text" :span="8" class="wrapper">
+                <a-empty v-if="useAppStore().$state.lastRouter.length < 1" />
+                <a-col
+                    v-for="link in useAppStore().$state.lastRouter"
+                    :key="link.text"
+                    :span="8"
+                    class="wrapper"
+                    @click="() => $router.push({ name: link.name })"
+                >
                     <div class="icon">
                         <component :is="link.icon" />
                     </div>
@@ -19,23 +30,6 @@
         </div>
     </a-card>
 </template>
-
-<script lang="ts" setup>
-const links = [
-    {
-        text: 'workplace.contentManagement',
-        icon: 'icon-storage',
-    },
-    {
-        text: 'workplace.contentStatistical',
-        icon: 'icon-file',
-    },
-    {
-        text: 'workplace.advanced',
-        icon: 'icon-settings',
-    },
-];
-</script>
 
 <style lang="scss" scoped>
 :deep(.arco-card-header-title) {
