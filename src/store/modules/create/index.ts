@@ -61,17 +61,20 @@ const useCreateStore = defineStore('create', {
         async importFromTemplate(surveyId: number) {
             const res = await getShareSurveyTemplate(surveyId);
             if (res.ok) {
-                this.importSurvey({
-                    // 从模版创建时，问卷 id 设置为 undefined
-                    // 然后通过立刻缓存的方式，自动创建一份新的问卷。
-                    id: undefined,
-                    title: res.data.title,
-                    comment: res.data.comment,
-                    survey_type: res.data.survey_type,
-                    // 根据模版创建问卷时，新的问卷肯定不能是模版问卷！
-                    is_template: 0,
-                    questionList: res.data.structure_json.questionList || [],
-                });
+                this.importSurvey(
+                    {
+                        // 从模版创建时，问卷 id 设置为 undefined
+                        // 然后通过立刻缓存的方式，自动创建一份新的问卷。
+                        id: undefined,
+                        title: res.data.title,
+                        comment: res.data.comment,
+                        survey_type: res.data.survey_type,
+                        // 根据模版创建问卷时，新的问卷肯定不能是模版问卷！
+                        is_template: 0,
+                        questionList: res.data.structure_json.questionList || [],
+                    },
+                    res.data.skin,
+                );
                 this.cacheSurvey();
             }
         },
@@ -79,38 +82,50 @@ const useCreateStore = defineStore('create', {
         async importFromDraft(surveyId: number) {
             const res = await getSurveyById(surveyId);
             if (res.ok) {
-                this.importSurvey({
-                    id: surveyId,
-                    title: res.data.title,
-                    comment: res.data.comment,
-                    survey_type: res.data.survey_type,
-                    is_template: res.data.is_template,
-                    questionList: res.data.structure_json.questionList,
-                });
+                this.importSurvey(
+                    {
+                        id: surveyId,
+                        title: res.data.title,
+                        comment: res.data.comment,
+                        survey_type: res.data.survey_type,
+                        is_template: res.data.is_template,
+                        questionList: res.data.structure_json.questionList,
+                    },
+                    res.data.skin,
+                );
             }
         },
         /** 编辑问卷模版 */
         async editSurveyTemplate(surveyId: number) {
             const res = await getSurveyById(surveyId);
             if (res.ok) {
-                this.importSurvey({
-                    id: surveyId,
-                    title: res.data.title,
-                    comment: res.data.comment,
-                    survey_type: res.data.survey_type,
-                    is_template: res.data.is_template,
-                    questionList: res.data.structure_json.questionList,
-                });
+                this.importSurvey(
+                    {
+                        id: surveyId,
+                        title: res.data.title,
+                        comment: res.data.comment,
+                        survey_type: res.data.survey_type,
+                        is_template: res.data.is_template,
+                        questionList: res.data.structure_json.questionList,
+                    },
+                    res.data.skin,
+                );
             }
         },
         /** 导入问卷，可能来自本地，可能来自模版，也可能来自草稿箱，总之，他需要提供一个 survey */
-        async importSurvey(survey: Survey) {
+        async importSurvey(survey: Survey, skin: any) {
             // 不用这样一个属性一个属性地修改，这样当你缺失了每个属性时，你完全不知道！
             // this.survey.id = survey.id;
             // this.survey.title = survey.title;
             // this.survey.comment = survey.comment;
             // this.survey.survey_type = survey.survey_type;
             // this.survey.questionList = survey.questionList;
+            /** TODO 先这样简单处理一下 */
+            if (skin.survey_width) {
+                this.skin = skin;
+            } else {
+                this.skin.background_image = skin.background_image;
+            }
             this.survey = survey;
         },
         //

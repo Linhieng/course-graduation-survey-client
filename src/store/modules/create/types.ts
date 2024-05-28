@@ -82,7 +82,7 @@ export interface Survey {
     survey_type: 0 | 1 | 2;
     questionList: QuestionItem[];
     /** TODO: 新增字段，先随便直接写一个属性 */
-    skin: {
+    skin?: {
         background_image: string;
     };
 }

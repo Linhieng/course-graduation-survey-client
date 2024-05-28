@@ -61,6 +61,7 @@ export function getShareSurveyTemplate(surveyId: number) {
         created_at: string;
         updated_at: string;
         structure_json: StructureJson;
+        skin: any;
     }>(`/api/survey/get-share-template/${surveyId}`);
 }
 export function setSurveyToTemplate(surveyId: number) {
@@ -115,6 +116,7 @@ export function getSurveyById(surveyId: number) {
             version: '0.2.0';
             questionList: QuestionItem[];
         };
+        skin: any;
     }>(`/api/survey/get/${surveyId}`);
 }
 export function cacheSurvey(data: ApiCacheSurveyData) {
