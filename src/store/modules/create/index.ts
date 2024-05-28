@@ -136,6 +136,7 @@ const useCreateStore = defineStore('create', {
                     version: '0.2.0',
                     questionList: this.survey.questionList,
                 },
+                skin: this.skin,
             });
             if (res.ok) {
                 msgSuccess('发布成功');
@@ -164,6 +165,7 @@ const useCreateStore = defineStore('create', {
                     version: '0.2.0',
                     questionList: this.survey.questionList,
                 },
+                skin: this.skin,
             });
             if (res.ok) {
                 msgSuccess('缓存成功');

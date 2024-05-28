@@ -181,6 +181,8 @@ export interface ApiCacheSurveyData {
     structure_json: StructureJson;
     survey_type: 0 | 1 | 2;
     is_template: 0 | 1 | 2;
+    /** 新增字段，问卷皮肤设置 */
+    skin: Record<string, any>;
 }
 /** 问题的 json 结果。存储在数据库 questionnaire_detail 中 */
 export interface StructureJson {

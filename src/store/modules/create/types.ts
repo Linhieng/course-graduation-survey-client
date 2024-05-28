@@ -100,12 +100,13 @@ export interface CreateState {
     skin: {
         survey_width: string;
         survey_position: 'center' | 'left' | 'right';
+        /** 这是背景图片，由用户上传一张特定图片 */
         background_image: undefined | string;
         background_image_position: 'left' | 'right' | 'top';
         bg_object_fit: 'contain' | 'cover' | 'fill' | 'none';
         bg_width: undefined | string;
         // prettier-ignore
-        bg_position: 
+        bg_position:
             'reset'|
             'leftTop'   | 'centerTop'    | 'rightTop'|
             'leftCenter'| 'centerCenter' | 'rightCenter'|
@@ -113,7 +114,7 @@ export interface CreateState {
         ;
 
         bg_color: undefined | string;
-        // 渐变背景
+        /** 这是渐变背景图片，具体值时 css 生成的渐变图片 */
         bg_img: undefined | string;
         suggestBgImgList: string[];
     };

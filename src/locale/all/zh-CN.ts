@@ -366,4 +366,5 @@ export default {
     '创建': '创建',
     '日志': '日志',
     '问卷系统': '问卷系统',
+    'api.error.default.unknown': '未知错误',
 }

@@ -365,4 +365,6 @@ export default {
     '创建': 'Create',
     '日志': 'Log',
     '问卷系统': 'Survey System',
+
+    'api.error.default.unknown': 'unknown error',
 }
