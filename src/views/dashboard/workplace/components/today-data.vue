@@ -18,12 +18,12 @@ const { chartOption } = useChartOption((isDark) => {
             left: 50,
             right: 20,
             top: 0,
-            bottom: 20,
+            bottom: 0,
         },
         xAxis: {
             type: 'value',
             axisLabel: {
-                show: true,
+                show: false,
                 formatter(value: number, idx: number) {
                     if (idx === 0) return String(value);
                     return value;
