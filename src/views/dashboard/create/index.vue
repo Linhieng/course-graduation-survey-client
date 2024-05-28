@@ -5,6 +5,9 @@ import EditSkin from './components/EditSkin.vue';
 import EditSurvey from './components/EditSurvey.vue';
 import EditConfig from './components/edit-config.vue';
 import { useFullscreen } from '@vueuse/core';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 const { isFullscreen, toggle: toggleFullScreen } = useFullscreen();
 const createStore = useCreateStore();
 const appStore = useAppStore();
@@ -53,7 +56,7 @@ watch(
 
 /** 发布问卷 */
 const handlePublish = () => {
-    createStore.publishSurvey(() => {
+    createStore.publishSurvey(router, () => {
         if (appStore.focusMode) toggleFocusMode();
     });
 };

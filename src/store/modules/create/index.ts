@@ -5,8 +5,8 @@ import { getNewOption, getNewQuestion } from './utils';
 import { msgError, msgSuccess, msgWarning } from '@/utils/msg';
 import { getShareSurveyTemplate, getSurveyById, cacheSurvey as reqCacheSurvey } from '@/api/survey';
 import { updateAndPublishSurvey } from '@/api/survey';
-import router from '@/router';
 import { uniqueId } from 'lodash';
+import type { Router } from 'vue-router';
 
 const useCreateStore = defineStore('create', {
     state: (): CreateState => ({
@@ -119,8 +119,8 @@ const useCreateStore = defineStore('create', {
         //
         //
 
-        /** 发布问卷 */
-        async publishSurvey(successCb: Function) {
+        /** 发布问卷。这里的 router 需要组件传递，因为通过 import router from '@/router'; 获取的 router 在跳转页面时有时会失效。 */
+        async publishSurvey(router: Router, successCb: Function) {
             // 如果正在缓存，这里不能发布
             // 但目前先不处理，因为实现后可能出现死锁问题。
             if (this.local.isPublishing) return;
