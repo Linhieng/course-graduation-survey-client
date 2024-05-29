@@ -367,4 +367,6 @@ export default {
     '日志': '日志',
     '问卷系统': '问卷系统',
     'api.error.default.unknown': '未知错误',
+    '答案统计': '答案统计',
+    'api.error.password': '密码错误',
 }

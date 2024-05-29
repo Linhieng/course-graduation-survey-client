@@ -367,4 +367,6 @@ export default {
     '问卷系统': 'Survey System',
 
     'api.error.default.unknown': 'unknown error',
+    '答案统计': 'stat answer',
+    'api.error.password': 'password error'
 }
