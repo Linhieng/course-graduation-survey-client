@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAppStore, useCreateStore } from '@/store';
-import { computed, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import EditSkin from './components/EditSkin.vue';
 import EditSurvey from './components/EditSurvey.vue';
 import EditConfig from './components/edit-config.vue';
@@ -41,6 +41,9 @@ const drawerPosition = computed(() => {
     return 'right';
 });
 
+onBeforeUnmount(() => {
+    createStore.config.autoCacheSurvey = false;
+});
 watch(
     () => createStore.config.autoCacheSurvey,
     (newV, oldV) => {
