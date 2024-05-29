@@ -19,7 +19,7 @@
             <Menu v-show="topMenu" />
         </div>
         <ul class="right-side">
-            <li>
+            <!-- <li>
                 <a-tooltip :content="$t('settings.search')">
                     <a-button class="nav-btn" type="outline" :shape="'circle'">
                         <template #icon>
@@ -27,7 +27,7 @@
                         </template>
                     </a-button>
                 </a-tooltip>
-            </li>
+            </li> -->
             <li>
                 <a-tooltip :content="$t('settings.language')">
                     <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setDropDownVisible">
@@ -109,7 +109,7 @@
             <li>
                 <a-dropdown trigger="click" position="br">
                     <a-avatar :size="32" :style="{ marginRight: '8px', cursor: 'pointer' }">
-                        <img alt="avatar" :src="avatar" />
+                        <img alt="avatar" :src="avatar" style="object-fit: cover" />
                     </a-avatar>
                     <template #content>
                         <a-doption>
