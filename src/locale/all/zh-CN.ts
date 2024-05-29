@@ -373,4 +373,6 @@ export default {
     '个问题': ' 个问题',
     '点击进入拖拽操作': '点击进入拖拽操作',
     '问卷答案统计': '问卷答案统计',
+    'api.error.token-invalid': '登录凭据已过期',
+    'Visual analysis': '可视化分析'
 }

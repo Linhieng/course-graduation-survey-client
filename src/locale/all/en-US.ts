@@ -373,4 +373,6 @@ export default {
     '个问题': ' question',
     '点击进入拖拽操作': 'Enter drag view',
     '问卷答案统计': 'Questionnaire answer statistics',
+    'api.error.token-invalid': 'token invalid',
+    'Visual analysis': 'Visual analysis'
 }
