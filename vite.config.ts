@@ -12,7 +12,7 @@ import { ArcoResolver } from 'unplugin-vue-components/resolvers';
 // https://vitejs.dev/config/
 export default defineConfig({
     server: {
-        port: 5177,
+        port: 5173,
     },
     plugins: [
         vue(),
