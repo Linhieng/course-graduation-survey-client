@@ -5,6 +5,7 @@ import DataBanner from './components/data-banner.vue';
 import DataVisual from './components/data-visual.vue';
 import DataStat from './components/data-stat.vue';
 import AiStat from './components/ai-stat.vue';
+import BaseContainer from '@/components/base-container/index.vue';
 defineProps<{
     surveyId: string | number;
 }>();
@@ -18,30 +19,15 @@ defineProps<{
             </NotFound>
         </template>
         <template v-else>
-            <div class="wrap">
-                <a-breadcrumb>
-                    <a-breadcrumb-item>{{ $t('查看问卷') }}</a-breadcrumb-item>
-                    <a-breadcrumb-item>{{ surveyId }}</a-breadcrumb-item>
-                </a-breadcrumb>
-            </div>
-            <div class="box">
-                <DataBanner />
-                <DataTable :surveyId="Number(surveyId)" />
-            </div>
-            <DataVisual />
-            <DataStat :surveyId="Number(surveyId)" />
-            <AiStat class="ai-box" />
+            <base-container :items="[$t('可视化分析'), '' + surveyId]" title="问卷答案统计">
+                <div class="box">
+                    <DataBanner />
+                    <DataTable :surveyId="Number(surveyId)" />
+                </div>
+                <DataVisual />
+                <DataStat :surveyId="Number(surveyId)" />
+                <AiStat class="ai-box" />
+            </base-container>
         </template>
     </div>
 </template>
-
-<style>
-.wrap {
-    padding: 10px 20px;
-}
-.box {
-    margin: 4px 20px;
-    padding: 10px 20px;
-    background-color: var(--color-bg-2);
-}
-</style>

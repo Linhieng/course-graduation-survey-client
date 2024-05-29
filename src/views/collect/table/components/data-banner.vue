@@ -1,9 +1,16 @@
 <script setup lang="ts">
+import { reloadRouter } from '@/router/util';
 import { useCollectStore } from '@/store';
+import { useRouter } from 'vue-router';
 const collectStore = useCollectStore();
+const router = useRouter();
 
 const exportData = (type: 'xlsx' | 'csv') => {
     collectStore.exportAnswerList(type);
+};
+
+const reload = async () => {
+    await reloadRouter(router);
 };
 </script>
 
@@ -18,7 +25,7 @@ const exportData = (type: 'xlsx' | 'csv') => {
         <template #split>
             <a-divider direction="vertical"></a-divider>
         </template>
-        <a-button class="btn" type="primary" @click="collectStore.fetchAnswerCollectBySurveyId">
+        <a-button class="btn" type="primary" @click="reload">
             {{ $t('点击刷新数据') }}
         </a-button>
         <a-dropdown trigger="hover" class="btn">

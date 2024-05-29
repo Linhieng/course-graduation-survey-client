@@ -306,7 +306,6 @@ const { chartOption: chartOption3 } = useChartOption((isDark) => {
     &-item {
         flex: 1 0 auto;
         margin: 20px;
-        background-color: white;
         border-radius: 4px;
         padding: 0 10px 30px 10px;
         display: flex;
