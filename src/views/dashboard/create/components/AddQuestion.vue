@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useCreateStore } from '@/store';
 import type { QuestionType } from '@/store/modules/create/types';
 const createStore = useCreateStore();
@@ -26,7 +26,15 @@ const createQuestion = (evt: MouseEvent) => {
             <icon-font name="add" />
         </template>
         <template #default>
-            {{ $t('在第 ') + (order + 1) + $t('个问题后面添加') }}
+            <span v-if="createStore.survey.questionList.length === 0">
+                {{ $t('添加第') + 1 + $t('个问题') }}
+            </span>
+            <span v-else-if="order === createStore.survey.questionList.length">
+                {{ $t('添加第') + (order + 1) + $t('个问题') }}
+            </span>
+            <span v-else>
+                {{ $t('在第') + (order + 1) + $t('个问题后面添加') }}
+            </span>
         </template>
     </a-button>
     <a-drawer

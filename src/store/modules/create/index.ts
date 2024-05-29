@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { CreateState, QuestionType, Survey } from './types';
+import type { CreateState, QuestionItem, QuestionType, Survey } from './types';
 import { toRaw } from 'vue';
 import { getNewOption, getNewQuestion } from './utils';
 import { msgError, msgSuccess, msgWarning } from '@/utils/msg';
@@ -10,6 +10,7 @@ import type { Router } from 'vue-router';
 
 const useCreateStore = defineStore('create', {
     state: (): CreateState => ({
+        showEditOrder: false,
         config: {
             confirmBeforeDel: true,
             canDelLastQuestion: false,
@@ -253,11 +254,15 @@ const useCreateStore = defineStore('create', {
 
         /** 交换两个问题的位置 */
         swapQuestionOrder(oldIndex: number, newIndex: number) {
-            const questionList = toRaw(this.survey.questionList);
+            // TODO: 之前不用替换整个对象也可以触发响应时的，
+            // 但重新实现一下拖拽后又需要替换整个数组对象，才能触发响应式。
+            const questionList = JSON.parse(JSON.stringify(toRaw(this.survey.questionList))) as QuestionItem[];
             [questionList[oldIndex], questionList[newIndex]] = [questionList[newIndex], questionList[oldIndex]];
             questionList.forEach((q, i) => {
                 q.order = i;
             });
+            // 在未替换整个对象之前，这里的赋值似乎是多余的，如果修改 toRaw 后得到的数组，
+            // 发生的变更还是会对应到这里上，所以根本不需要重新赋值。
             this.survey.questionList = questionList;
         },
         //////////////////////////////////////////////////////////

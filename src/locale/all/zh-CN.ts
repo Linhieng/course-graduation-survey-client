@@ -369,4 +369,7 @@ export default {
     'api.error.default.unknown': '未知错误',
     '答案统计': '答案统计',
     'api.error.password': '密码错误',
+    '添加第': '添加第 ',
+    '个问题': ' 个问题',
+    '点击进入拖拽操作': '点击进入拖拽操作',
 }

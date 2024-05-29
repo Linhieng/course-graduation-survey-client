@@ -4,6 +4,7 @@ import { computed, ref, watch } from 'vue';
 import EditSkin from './components/EditSkin.vue';
 import EditSurvey from './components/EditSurvey.vue';
 import EditConfig from './components/edit-config.vue';
+import EditOrder from './components/edit-order.vue';
 import { useFullscreen } from '@vueuse/core';
 import { useRouter } from 'vue-router';
 
@@ -193,6 +194,9 @@ const handlePublish = () => {
             </template>
             <div><EditConfig /></div>
         </a-drawer>
+        <a-modal v-model:visible="createStore.showEditOrder" :footer="false" hide-title>
+            <EditOrder />
+        </a-modal>
     </div>
 </template>
 

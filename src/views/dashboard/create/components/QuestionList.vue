@@ -15,8 +15,8 @@ const preSelected = ref<HTMLElement | null>(null);
 const curSelectedQuestion = ref<QuestionItem | null>(null);
 
 onMounted(() => {
-    initSortable(ul.value);
-    Sortable.create(ul.value);
+    // initSortable(ul.value);
+    // Sortable.create(ul.value);
 });
 /**
  * 经过实际测试，问卷的拖拽使用这种方式实现并对用户不友好。
@@ -30,38 +30,38 @@ onMounted(() => {
  * 到上方或者下方时才可以滚动。但这个滚动的速度又是不受控制的，还有的就是滚动的位置也是
  * 未知的——到底得将指针移动到哪里，才会发生滚动。
  */
-function initSortable(el: HTMLElement) {
-    new Sortable(el, {
-        // 动画
-        animation: 150,
+// function initSortable(el: HTMLElement) {
+//     new Sortable(el, {
+//         // 动画
+//         animation: 150,
 
-        // 选中元素时添加对应类名
-        chosenClass: 'chosen',
+//         // 选中元素时添加对应类名
+//         chosenClass: 'chosen',
 
-        // 只能在 .move-icon 上进行拖拽
-        handle: '.move-icon',
+//         // 只能在 .move-icon 上进行拖拽
+//         handle: '.move-icon',
 
-        onStart() {
-            clearStatus();
-            dragging.value = true;
-        },
-        onEnd(evt) {
-            // TODO:  evt.oldDraggableIndex 什么时候，可能会为 undefined ?
-            // @ts-ignore
-            createStore.swapQuestionOrder(evt.oldDraggableIndex, evt.newDraggableIndex);
-            dragging.value = false;
-        },
-    });
-}
+//         onStart() {
+//             clearStatus();
+//             dragging.value = true;
+//         },
+//         onEnd(evt) {
+//             // TODO:  evt.oldDraggableIndex 什么时候，可能会为 undefined ?
+//             // @ts-ignore
+//             createStore.swapQuestionOrder(evt.oldDraggableIndex, evt.newDraggableIndex);
+//             dragging.value = false;
+//         },
+//     });
+// }
 
-function clearStatus() {
-    if (preSelected.value !== null) {
-        preSelected.value.classList.remove('selected');
-    }
-    preSelected.value = null;
-    curSelectedQuestion.value = null;
-    dragging.value = false;
-}
+// function clearStatus() {
+//     if (preSelected.value !== null) {
+//         preSelected.value.classList.remove('selected');
+//     }
+//     preSelected.value = null;
+//     curSelectedQuestion.value = null;
+//     dragging.value = false;
+// }
 
 function focusQuestion(evt: Event, question: QuestionItem) {
     curSelectedQuestion.value = question;
@@ -83,7 +83,7 @@ const addBtnOrder = computed(() => {
 <template>
     <ul ref="ul" class="ul" :class="{ dragging }">
         <li
-            v-for="(question, index) in createStore.$state.survey.questionList"
+            v-for="(question, index) in createStore.survey.questionList"
             :key="question.id"
             class="li"
             :style="{
@@ -95,15 +95,36 @@ const addBtnOrder = computed(() => {
             @click="(evt) => focusQuestion(evt, question)"
             @focusin="(evt) => focusQuestion(evt, question)"
         >
-            <div class="move-icon hide-item">
-                <icon-font style="width: 26px; height: 26px" name="hand" />
-            </div>
+            <a-tooltip :content="$t('点击进入拖拽操作')" position="right">
+                <div class="move-icon hide-item" @click="createStore.showEditOrder = true">
+                    <icon-font style="width: 26px; height: 26px" name="hand" />
+                </div>
+            </a-tooltip>
             <a-space class="li-top-title">
                 <a-tag :color="questionTypeMappingColor[question.type]">
                     {{ $t(questionTypeMappingText[question.type]) }}
                 </a-tag>
             </a-space>
             <a-space class="li-top-util hide-item">
+                <a-button
+                    shape="circle"
+                    :disabled="index === 0"
+                    @click="createStore.swapQuestionOrder(index, index - 1)"
+                >
+                    <template #icon>
+                        <icon-caret-up style="font-size: 20px" />
+                    </template>
+                </a-button>
+                <a-button
+                    shape="circle"
+                    :disabled="index === createStore.survey.questionList.length - 1"
+                    @click="createStore.swapQuestionOrder(index, index + 1)"
+                >
+                    <template #icon>
+                        <icon-caret-down style="font-size: 20px" />
+                    </template>
+                </a-button>
+
                 <a-space size="mini" v-if="question.type !== 'desc'">
                     <a-switch type="line" size="small" v-model="question.required" />
                     <span>{{ question.required ? $t('必填') : $t('选填') }}</span>

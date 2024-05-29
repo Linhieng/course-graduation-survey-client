@@ -368,5 +368,8 @@ export default {
 
     'api.error.default.unknown': 'unknown error',
     '答案统计': 'stat answer',
-    'api.error.password': 'password error'
+    'api.error.password': 'password error',
+    '添加第': 'Add # ',
+    '个问题': ' question',
+    '点击进入拖拽操作': 'Enter drag view',
 }

@@ -87,6 +87,8 @@ export interface Survey {
     };
 }
 export interface CreateState {
+    /** 显示编辑问题的顺序 */
+    showEditOrder: boolean;
     /** 仅用于前端相关工作 */
     local: {
         isCaching: boolean;
