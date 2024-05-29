@@ -19,10 +19,10 @@ import { useAppStore } from '@/store';
                     class="wrapper"
                     @click="() => $router.push({ name: link.name })"
                 >
-                    <div class="icon">
+                    <div class="icon" v-if="link.icon">
                         <component :is="link.icon" />
                     </div>
-                    <a-typography-paragraph class="text">
+                    <a-typography-paragraph class="text" v-if="link.text">
                         {{ $t(link.text) }}
                     </a-typography-paragraph>
                 </a-col>

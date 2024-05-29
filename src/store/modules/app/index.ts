@@ -50,6 +50,7 @@ const useAppStore = defineStore('app', {
             if (name === 'login') return;
             if (name === 'collect-table') return;
             if (name === 'Create') return;
+            if (name === 'Redirect') return;
             const had = this.$state.lastRouter.some((v, i, arr) => {
                 if (v.name === name) {
                     arr[i].count++;
