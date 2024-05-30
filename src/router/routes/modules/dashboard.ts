@@ -42,6 +42,7 @@ const DASHBOARD: AppRouteRecordRaw = {
                 requiresAuth: true,
                 roles: ['*'],
                 disabled: true,
+                noAffix: true,
             },
         },
     ],

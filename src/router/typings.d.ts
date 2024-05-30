@@ -22,7 +22,7 @@ declare module 'vue-router' {
         activeMenu?: string;
         /** 在侧边栏菜单中的顺序，从小到大排序。the higher the value, the more forward it is */
         order?: number;
-        /** if set true, the tag will not affix in the tab-bar */
+        /** 为 true 时，标签页中将不显示该路由页。 */
         noAffix?: boolean;
         /** 控制是否缓存页面，注意，缓存的也只是组件中的数据，如果数据放在 pinia state 中，则不受影响。 */
         ignoreCache?: boolean; // if set true, the page will not be cached
