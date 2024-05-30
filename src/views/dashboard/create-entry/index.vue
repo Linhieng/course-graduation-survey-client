@@ -33,13 +33,26 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import SelectSurvey from './components/select-survey.vue';
 import SurveyBase from './components/survey-base.vue';
 import SurveyCreate from './components/survey-create.vue';
 import { useWindowSize } from '@vueuse/core';
+import { useCreateStore } from '@/store';
 const { width } = useWindowSize();
 const step = ref(1);
+const createStore = useCreateStore();
+
+/**
+ * TODO: 由于数据都放在 store 里面了，所以导致很多页面中的数据都是旧数据
+ * 不仅仅这里，其他地方肯定也有这个问题，但目前先放着了
+ */
+onBeforeMount(() => {
+    createStore.$state.survey.title = '未定义的问卷标题';
+    createStore.$state.survey.comment = '';
+    createStore.$state.survey.survey_type = 0;
+    createStore.$state.survey.is_template = 0;
+});
 </script>
 
 <script lang="ts">

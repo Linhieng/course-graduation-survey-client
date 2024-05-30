@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
 import type { CreateState, QuestionItem, QuestionType, Survey } from './types';
 import { toRaw } from 'vue';
-import { getNewOption, getNewQuestion } from './utils';
+import { getDefaultSkin, getNewOption, getNewQuestion } from './utils';
 import { msgError, msgSuccess, msgWarning } from '@/utils/msg';
-import { getShareSurveyTemplate, getSurveyById, cacheSurvey as reqCacheSurvey } from '@/api/survey';
+import { apiCreateSurvey, getShareSurveyTemplate, getSurveyById, cacheSurvey as reqCacheSurvey } from '@/api/survey';
 import { updateAndPublishSurvey } from '@/api/survey';
 import { uniqueId } from 'lodash';
 import type { Router } from 'vue-router';
@@ -45,6 +45,7 @@ const useCreateStore = defineStore('create', {
         },
         local: {
             isCaching: false,
+            isCreating: false,
             isPublishing: false,
             latelyCacheTime: undefined,
         },
@@ -194,6 +195,81 @@ const useCreateStore = defineStore('create', {
             this.local.isCaching = false;
             return res.data.surveyId;
         },
+        /** 创建一份新的问卷 */
+        async createSurvey(
+            router: Router,
+            {
+                title,
+                comment,
+                survey_type,
+                is_template,
+            }: {
+                title?: string;
+                comment?: string;
+                survey_type?: 0 | 1 | 2;
+                is_template?: 0 | 1 | 2;
+            },
+        ) {
+            if (this.local.isCreating) return;
+            this.local.isCreating = true;
+
+            const res = await apiCreateSurvey({
+                title: title || this.survey.title || '未命名的问卷标题',
+                comment: comment || this.survey.comment || '',
+                survey_type: survey_type || this.survey.survey_type || 0,
+                is_template: is_template || this.survey.is_template || 0,
+                structure_json: {
+                    version: '0.2.0',
+                    questionList: [],
+                },
+                skin: getDefaultSkin(),
+            });
+            if (res.ok) {
+                this.$state.survey.id = res.data.surveyId;
+                this.$state.local.latelyCacheTime = new Date(res.data.time);
+                this.$state.survey.questionList = [];
+                this.$state.skin = getDefaultSkin();
+                router.push({
+                    name: 'Create',
+                });
+            } else {
+                msgError(res.msg);
+            }
+
+            this.local.isCreating = false;
+            return res.data.surveyId;
+        },
+
+        // reset(data: {
+        //     surveyId?: number;
+        //     title?: string;
+        //     comment?: string;
+        //     is_template?: 0 | 1 | 2;
+        //     survey_type?: 0 | 1 | 2;
+        // }) {
+        //     this.$state.survey.id = data.surveyId;
+        //     this.$state.survey.title = data.title || '未命名问卷标题';
+        //     this.$state.survey.comment = data.comment || '';
+        //     this.$state.survey.is_template = data.is_template || 0;
+        //     this.$state.survey.survey_type = data.survey_type || 0;
+        //     this.$state.survey.questionList = [];
+        //     this.$state.survey.skin = {
+        //         survey_width: '60%',
+        //         survey_position: 'left',
+        //         background_image: undefined,
+        //         background_image_position: 'right',
+        //         bg_object_fit: 'cover',
+        //         bg_position: 'reset',
+        //         bg_width: undefined,
+        //         bg_color: undefined,
+        //         bg_img: 'repeating-linear-gradient(0deg, #48c6ef 0%,#6f86d6 100%)',
+        //         suggestBgImgList: [
+        //             'repeating-linear-gradient(0deg, #48c6ef 0%,#6f86d6 100%)',
+        //             'repeating-linear-gradient(45deg, #d299c2 0%,#fef9d7 100%)',
+        //             'repeating-linear-gradient(240deg, rgba(158, 180, 218, 0.91) 0%,#04befe 100%)',
+        //         ],
+        //     } as any;
+        // },
 
         /** 添加一个选项（适用单选多选） */
         addOption(questionIndex: number, optionIndex: number, type: QuestionType) {

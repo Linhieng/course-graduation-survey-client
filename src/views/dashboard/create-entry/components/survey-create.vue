@@ -8,10 +8,7 @@ const emit = defineEmits<{
 }>();
 
 const createSurvey = () => {
-    createStore.cacheSurvey();
-    router.push({
-        name: 'Create',
-    });
+    createStore.createSurvey(router, {});
 };
 </script>
 
@@ -164,8 +161,10 @@ const createSurvey = () => {
                 </a-radio-group>
             </a-form-item>
             <a-space size="large" class="btn-group">
-                <a-button @click="emit('back')">{{ $t('返回修改') }}</a-button>
-                <a-button type="primary" @click="createSurvey">{{ $t('确认创建问卷') }}</a-button>
+                <a-button :disabled="createStore.local.isCreating" @click="emit('back')">{{ $t('返回修改') }}</a-button>
+                <a-button :loading="createStore.local.isCreating" type="primary" @click="createSurvey">
+                    {{ $t('确认创建问卷') }}
+                </a-button>
             </a-space>
         </a-form>
     </a-space>

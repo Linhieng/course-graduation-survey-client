@@ -119,6 +119,13 @@ export function getSurveyById(surveyId: number) {
         skin: any;
     }>(`/api/survey/get/${surveyId}`);
 }
+/** 创建一份新的问卷 */
+export function apiCreateSurvey(data: ApiCacheSurveyData) {
+    return post<{
+        surveyId: number;
+        time: Date;
+    }>('/api/survey/create', data);
+}
 export function cacheSurvey(data: ApiCacheSurveyData) {
     return post<{
         surveyId: number;

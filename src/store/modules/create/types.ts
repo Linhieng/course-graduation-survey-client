@@ -92,6 +92,7 @@ export interface CreateState {
     /** 仅用于前端相关工作 */
     local: {
         isCaching: boolean;
+        isCreating: boolean;
         latelyCacheTime: undefined | Date;
         isPublishing: boolean;
     };

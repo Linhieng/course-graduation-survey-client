@@ -98,3 +98,23 @@ export function getNewOption(type: QuestionType): QuestionOption {
         index: -1,
     };
 }
+
+/** TODO: 先简单处理 */
+export function getDefaultSkin(): any {
+    return {
+        survey_width: '60%',
+        survey_position: 'left',
+        background_image: undefined,
+        background_image_position: 'right',
+        bg_object_fit: 'cover',
+        bg_position: 'reset',
+        bg_width: undefined,
+        bg_color: undefined,
+        bg_img: 'repeating-linear-gradient(0deg, #48c6ef 0%,#6f86d6 100%)',
+        suggestBgImgList: [
+            'repeating-linear-gradient(0deg, #48c6ef 0%,#6f86d6 100%)',
+            'repeating-linear-gradient(45deg, #d299c2 0%,#fef9d7 100%)',
+            'repeating-linear-gradient(240deg, rgba(158, 180, 218, 0.91) 0%,#04befe 100%)',
+        ],
+    };
+}
