@@ -60,7 +60,7 @@ const useAppStore = defineStore('app', {
             });
             if (!had) {
                 this.$state.lastRouter.sort((a, b) => b.count - a.count);
-                this.$state.lastRouter.splice(6);
+                this.$state.lastRouter.splice(5);
                 this.$state.lastRouter.push({
                     name,
                     count: 0,
