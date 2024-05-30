@@ -43,6 +43,7 @@ async function render() {
                 name: 'Access From',
                 type: 'pie',
                 radius: [20, 100],
+                padAngle: 8,
                 itemStyle: {
                     borderRadius: 4,
                 },
