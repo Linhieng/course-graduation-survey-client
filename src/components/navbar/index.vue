@@ -101,7 +101,7 @@
                 <a-tooltip :content="$t('settings.title')">
                     <a-button class="nav-btn" type="outline" :shape="'circle'" @click="setVisible">
                         <template #icon>
-                            <icon-settings />
+                            <icon-skin />
                         </template>
                     </a-button>
                 </a-tooltip>
