@@ -41,14 +41,6 @@ async function render() {
     });
 
     let keywords = Array.from(counts).map(([name, value]) => ({ name, value }));
-    keywords.sort((a, b) => b.value - a.value);
-    keywords.reduce(
-        (pre, cur) => {
-            cur.value = pre.value + 0.02;
-            return cur;
-        },
-        { value: 1 },
-    );
 
     var option = {
         series: [
