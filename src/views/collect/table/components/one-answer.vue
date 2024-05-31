@@ -14,7 +14,7 @@ defineProps<{
         <a-space v-for="(q, i) in questionList" direction="vertical" fill size="mini">
             <a-space>
                 <a-tag :color="questionTypeMappingColor[q.type]">{{ $t(questionTypeMappingText[q.type]) }}</a-tag>
-                <h2 style="margin: 0">{{ q.title }}</h2>
+                <h3 style="margin: 0">{{ q.title }}</h3>
             </a-space>
             <a-space v-if="q.type !== 'desc'">
                 <p style="margin-left: 2rem">{{ $t('用户回答：') }}</p>
