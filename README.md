@@ -1,33 +1,12 @@
-# .
+# 问卷系统
 
-This template should help get you started developing with Vue 3 in Vite.
+完结撒花？不，是烂尾。
 
-## Recommended IDE Setup
+虽然项目还有很多问题，但至少目前大多数功能是实现了。
+所以，就到这里为止吧，后续新的内容将会放在 main 分支上。
+到时候就是自己的业余爱好了，想怎么弄就怎么弄。
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-pnpm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-pnpm build
-```
+简单说一下项目历程吧。
+1. 最开始的自己设计 UI (对应 old-main 分支和 refactor 分支)。
+2. 因为自己设计的太丑，所以只能使用 arco design 设计的 UI（对应 refactor2 分支）
+3. 为了打包部署，又再次重构项目（对应 refactor3 分支）
