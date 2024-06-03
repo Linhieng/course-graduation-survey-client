@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
 const links = [
-    { name: 'Create', text: '创建', icon: 'icon-file' },
+    { name: 'create-entry', text: '创建', icon: 'icon-file' },
     { name: 'collect-entry', text: '统计', icon: 'icon-eye' },
     { name: 'template-my', text: '模版', icon: 'icon-file' },
 ];
